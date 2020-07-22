@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
 
 <!-- ##### Breadcrumb Area Start ##### -->
@@ -29,6 +29,7 @@
 <!-- ##### Breadcrumb Area End ##### -->
 
 <!-- ##### Single Product Details Area Start ##### -->
+<c:set value="${auction}" var="a"/>
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
@@ -44,24 +45,23 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
-						<h4 class="title">상품 제목! 신선한 음료수를 팝니다~</h4>
+						<h4 class="title">${a.PTitle}</h4>
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
 							onclick="location.href='${ pageContext.request.contextPath }/views/product/productUpdate.jsp'">수정하기</button>
 						<br />
 
-						<h4 class="price">10,000 won</h4>
+						<h4 class="price">${a.PPrice}원</h4>
 						<br />
 
-						<h5>경매 종료일</h5>
-						<p>2020-08-09</p>
+						<h5>경매 시작일</h5>
+						<p>${a.PDate }</p>
 						<br />
 						
-						<h5>경매 종료 시각</h5>
-						<p>2020-08-09</p>
+						<h5>경매 종료일</h5>
+						<p>${a.aeDate}</p>
 						<br />
 
 					</div>
@@ -92,15 +92,7 @@
 									<!-- 썸머노트 -->
 									<div class="col-12 col-md-12">
 										<br /> <br />
-										<p>여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글
-											관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게
-											써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다.
-											멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다.
-											여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을
-											멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다.
-											써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게
-											써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기는 써머노트를
-											불러다가 앉힐 자리</p>
+										<p>${a.PContent}</p>
 									</div>
 
 								</div>

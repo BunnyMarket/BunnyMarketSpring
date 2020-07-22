@@ -139,7 +139,7 @@
 											<li><a href="${ pageContext.request.contextPath }/views/admin/customerList.jsp">관리자-고객리스트</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/message.jsp">관리자-메세지</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/tansactions.jsp">관리자-트랜잭션</a></li>
+											<li><a href="${ pageContext.request.contextPath }/views/admin/transactions.jsp">관리자-트랜잭션</a></li>
 										</ul></li>
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
@@ -152,7 +152,7 @@
 									<li><a href="#">상품</a>
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/auction/auctionList.jsp">경매 상품</a></li>
+											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
 											<li><a href="#">상품 지도로 보기</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/member/review.jsp">후기 작성하기</a></li>
 										</ul>
