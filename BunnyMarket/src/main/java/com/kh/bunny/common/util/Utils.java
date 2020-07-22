@@ -72,7 +72,7 @@ public class Utils {
 		pageBar += "}";
 		pageBar += "</script>";
 		
-		return pageBar; //boardList.jsp에 가서 <c:out value = >에 값을 준다. 
+		return pageBar;  
 	}
 
 }

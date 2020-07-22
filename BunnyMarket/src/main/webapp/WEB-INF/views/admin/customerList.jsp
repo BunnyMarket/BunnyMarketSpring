@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Dashboard by Creative Tim
+ 
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -112,7 +112,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="background : orange;">
                   <h4 class="card-title ">거래 현황 확인</h4>
                   <p class="card-category"> </p>
                 </div>
