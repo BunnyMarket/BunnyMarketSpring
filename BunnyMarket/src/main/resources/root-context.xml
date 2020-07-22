@@ -11,7 +11,7 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:49161:xe"/> 
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> 
 											<!-- 윈도우는 1572인가..1571인가.. -->
 		<property name="username" value="BUNNY"/>
 		<property name="password" value="BUNNY"/>
@@ -33,6 +33,20 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+	
+	<!-- Gmail -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.naver.com" />
+    <property name="port" value="465" />
+    <property name="username" value="model_so@naver.com" />
+    <property name="password" value="zxc2754" />
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+    </props>
+    </property>
+  </bean>
 	
 	
 	<!-- 트랜잭션 처리 방식 -->
@@ -57,6 +71,9 @@
 		<aop:pointcut expression="execution(* com.kh.bunny..*ServiceImpl.*(..))" id="servicePc"/>
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="servicePc"/>
 	</aop:config>
+	
+	
+	
 	
 </beans>
 

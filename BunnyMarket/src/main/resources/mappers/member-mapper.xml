@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+	
+
+	<select id="loginMember" parameterType="string" resultType="member">
+		SELECT * FROM MEMBER
+		WHERE USERID = #{userId}
+	</select>
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER 
+		VALUES (#{userId}, #{userName}, #{userPwd},  #{email}, 
+		        #{nickName}, #{phone}, #{birth}, NULL,
+		       NULL , NULL , 0 , 0, 1)
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER
+		<set>
+			USERNAME = #{userName},
+			USERPWD = #{userPwd},
+			EMAIL = #{email},
+			PHONE = #{phone},
+			INTRODUCE = #{introduce},
+			ADDRESS = #{address}
+			
+			
+		</set>
+		WHERE USERID = #{userId}
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		DELETE FROM MEMBER
+		WHERE USERID = #{userId}
+	</delete>
+	
+	<select id="checkIdDuplicate" parameterType="hashmap" statementType="CALLABLE">
+		{ CALL ID_DUP_CHK(
+                       #{userId, mode=IN, jdbcType=VARCHAR}, 
+		               #{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} ) 
+		 }
+	</select>
+	
+	
+	 <!-- 이메일 중복확인 관련 mapper-->
+    <select id = "email_check" resultType="String">
+        SELECT EMAIL FROM MEMBER
+        WHERE EMAIL = #{email}
+    </select>
+    
+    
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
