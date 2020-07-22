@@ -27,22 +27,22 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product selectOneProduct(int pno) {
-		return null;
+		return productDAO.selectOneProduct(pno);
 	}
 
 	@Override
 	public int insertProduct(Product product) {
-		return 0;
+		return productDAO.insertProduct(product);
 	}
 
 	@Override
 	public int updateProduct(Product product) {
-		return 0;
+		return productDAO.updateProduct(product);
 	}
 
 	@Override
 	public int deleteProduct(int pno) {
-		return 0;
+		return productDAO.deleteProduct(pno);
 	}
 
 }

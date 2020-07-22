@@ -50,17 +50,17 @@
 
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
-						<h4 class="title">상품 제목! 신선한 음료수를 팝니다~</h4>
+						<h4 class="title">${ product.PTitle }</h4>
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
-							onclick="location.href='${ pageContext.request.contextPath }/views/product/productUpdate.jsp'">수정하기</button>
+							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do'">수정하기</button>
 						<br />
 
-						<h4 class="price">10,000 won</h4>
+						<h4 class="price">${ product.PPrice } won</h4>
 						<br />
 
 						<h5>글 작성날짜</h5>
-						<p>2020-08-09</p>
+						<p>${ product.PDate }</p>
 						<br />
 
 					</div>
@@ -91,25 +91,17 @@
 									<!-- 썸머노트 -->
 									<div class="col-12 col-md-12">
 										<br /> <br />
-										<p>여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글
-											관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게
-											써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다.
-											멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다.
-											여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을
-											멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다.
-											써봅니다. 멋드러지게 써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게
-											써봅니다. 여기다가 게시글 관련 글을 멋드러지게 써봅니다. 써봅니다. 멋드러지게 써봅니다. 여기는 써머노트를
-											불러다가 앉힐 자리</p>
+										<p>${ product.PContent }</p>
 									</div>
 
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="addi-info">
 								<div class="additional_info_area">
-									<div class="col-12 col-md-6">
+									<div class="col-12">
 										<br /> <br />
 										<h4>판매자의 직거래 선호 지역</h4>
-										<div id="map" style="height: 460px;"></div>
+										<div id="map" style="width:100%; height: 460px;"></div>
 									</div>
 									<div class="col-12 col-md-6">
 										<br /> <br />
@@ -233,8 +225,10 @@
 <!-- ##### Single Product Details Area End ##### -->
 
 <script>
-	
 		
+	$().ready(function(){
+		
+	
 	// 지도 넣기 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -249,7 +243,7 @@
 	var geocoder = new kakao.maps.services.Geocoder();
 	
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('<%-- <%= p.getpAddress() %> --%>', function(result, status) {
+	geocoder.addressSearch('${product.PAddress}', function(result, status) {
 	    // 정상적으로 검색이 완료됐으면 
 	    if (status === kakao.maps.services.Status.OK) {
 
@@ -263,13 +257,15 @@
 
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new kakao.maps.InfoWindow({
-	            				content: '<div style="width:150px;text-align:center;padding:6px 0;"><%-- <%= p.getpName() %> --%></div>'
+	            				content: '<div style="width:150px;text-align:center;padding:6px 0;">거래자가 원하는 거래 지역</div>'
 			});
 			infowindow.open(map, marker);
 
 			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			map.setCenter(coords);
 		}
+	});
+	
 	});
 </script>
 

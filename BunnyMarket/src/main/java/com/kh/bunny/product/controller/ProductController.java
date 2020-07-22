@@ -58,10 +58,10 @@ public class ProductController {
 	@RequestMapping("/product/productDetail.do")
 	public String selectOne(@RequestParam int pno, Model model) {
 		Product p = productService.selectOneProduct(pno);
+		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		
 		model.addAttribute("product", productService.selectOneProduct(pno));
 		
-		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		
 		return "product/productDetail";
 	}
@@ -75,8 +75,10 @@ public class ProductController {
 	
 	@RequestMapping("/product/productInsertEnd.do")
 	public String insertProduct(Product product, Model model, HttpSession session,
-			@RequestParam(value = "pImg", required = false) MultipartFile pImg) {
+			@RequestParam(value = "pTitleImg", required = false) MultipartFile pImg) {
 		
+		
+		System.out.println("pImg가져오나 확인 : " + pImg);
 		System.out.println("jsp에서 insertProduct할때 객체 받아오나 확인 : " + product);
 		
 		// 1. 파일을 저장할 경로 생성 
@@ -106,6 +108,7 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
+		product.setPImg(saveDir + "/" + renamedName);
 		int result = productService.insertProduct(product);
 		String msg = "";
 		

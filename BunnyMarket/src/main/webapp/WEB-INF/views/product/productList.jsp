@@ -132,7 +132,7 @@
                         </div>
 						<nav aria-label="Page navigation">
                             <button type="submit" class="btn alazea-btn mt-15" 
-									onclick="location.href='${ pageContext.request.contextPath }/views/product/productInsert.jsp'">등록하기</button>
+									onclick="location.href='${ pageContext.request.contextPath }/product/productInsert.do'">등록하기</button>
                         </nav>
                         <!-- Pagination -->
                         <nav aria-label="Page navigation">
