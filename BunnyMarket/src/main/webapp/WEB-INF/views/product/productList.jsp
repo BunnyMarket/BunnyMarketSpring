@@ -18,7 +18,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i>홈화면</a></li>
+                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }"><i class="fa fa-home"></i>홈화면</a></li>
                             <li class="breadcrumb-item active" aria-current="page">상품</li>
                         </ol>
                     </nav>
@@ -111,7 +111,7 @@
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
 	                                    <div class="product-img">
-	                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/41.png" alt=""></a>
+	                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" alt=""></a>
 	                                        <div class="product-meta d-flex">
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>

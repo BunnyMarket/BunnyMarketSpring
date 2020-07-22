@@ -108,7 +108,7 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
-		product.setPImg(saveDir + "/" + renamedName);
+		product.setPImg(renamedName);
 		int result = productService.insertProduct(product);
 		String msg = "";
 		

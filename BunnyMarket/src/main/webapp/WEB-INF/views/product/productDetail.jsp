@@ -18,7 +18,7 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a
-							href="${ pageContext.request.contextPath }/index.jsp"><i
+							href="${ pageContext.request.contextPath }"><i
 								class="fa fa-home"></i> 홈화면</a></li>
 						<li class="breadcrumb-item"><a
 							href="${ pageContext.request.contextPath }/views/product/productList.jsp">상품</a></li>
@@ -41,7 +41,7 @@
 					<div class="single_product_thumb">
 						<div>
 							<div id="pImgArea">
-								<img id="titleImg" class="d-block w-100" width="344.8px"
+								<img id="titleImg" src="${ pageContext.request.contextPath }/resources/upload/product/${ product.PImg }" class="d-block w-100" width="344.8px"
 									height="357.56px">
 							</div>
 						</div>
