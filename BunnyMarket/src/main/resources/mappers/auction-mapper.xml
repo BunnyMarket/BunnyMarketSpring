@@ -36,6 +36,12 @@
 		WHERE P.PNO = #{pno} 
 	</select>
 	
+	<select id="bidderCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+	</select>
+	
 </mapper>
 
 

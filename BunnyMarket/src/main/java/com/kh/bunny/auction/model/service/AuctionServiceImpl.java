@@ -25,7 +25,7 @@ public class AuctionServiceImpl implements AuctionService {
 	public int selectAuctionTotalContents() {
 		return auctionDAO.selectAuctionTotalContents();
 	}
-
+	
 	@Override
 	public int selectBidderCount(int pno) {
 		
@@ -38,6 +38,11 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public Auction selectOneAuction(int pno) {
 		return auctionDAO.selectOneAuction(pno);
+	}
+
+	@Override
+	public int bidderCount(int pno) {
+		return auctionDAO.bidderCount(pno);
 	}
 
 }

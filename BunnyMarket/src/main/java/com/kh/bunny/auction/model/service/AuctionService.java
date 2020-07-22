@@ -15,4 +15,6 @@ public interface AuctionService {
 
 	Auction selectOneAuction(int pno);
 
+	int bidderCount(int pno);
+
 }

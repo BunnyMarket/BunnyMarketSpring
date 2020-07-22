@@ -47,21 +47,21 @@
 				</div>
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
-						<h4 class="title">${a.PTitle}</h4>
+						<h3 class="title">${a.PTitle}</h3>
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
 							onclick="location.href='${ pageContext.request.contextPath }/views/product/productUpdate.jsp'">수정하기</button>
 						<br />
 
-						<h4 class="price">${a.PPrice}원</h4>
+						<h4 class="price">${a.PPrice} 당근</h4>
 						<br />
 
 						<h5>경매 시작일</h5>
-						<p>${a.PDate }</p>
+						<h5>${a.PDate }</h5>
 						<br />
 						
 						<h5>경매 종료일</h5>
-						<p>${a.aeDate}</p>
+						<h5>${a.aeDate}</h5>
 						<br />
 
 					</div>

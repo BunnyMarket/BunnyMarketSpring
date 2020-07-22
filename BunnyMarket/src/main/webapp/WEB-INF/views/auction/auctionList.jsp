@@ -110,7 +110,7 @@
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
 	                                    <div class="product-img">
-	                                        <input type="hidden" id="pno-${st.index}" value="${p.pno}">
+	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/40.png" alt=""></a>
 	                                        <div class="product-meta d-flex">
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
@@ -123,11 +123,38 @@
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
 	                                            <p>${p.PTitle}</p>
 	                                        </a>
-	                                      	<p>${st.index}입니다.</p>
-	                                        <!-- <p id="bidderCount"></p> -->
-	                                        <div id="bidderCount"></div>
+	                                        <p id="bidderCount-${st.index}"></p>
 											
-	                                        <h6>${p.PPrice}원</h6>
+	                                        <h6>${p.PPrice} 당근</h6>
+	                                            <script type="text/javascript">
+																							
+													var list = ${list.size()};
+													
+												   	var pno = $("#pno-${st.index}").val();
+												   	
+												   	$(function(){
+												    	$.ajax({
+												    		  data : {pno : pno}
+												    		, dataType : "json"
+												    		, url : "${pageContext.request.contextPath}/auction/bidderCount.do"
+												    		, success : function(data){
+												    			console.log("data : " + data);
+												    			$("#bidderCount-${st.index}").html("경매 참가자 : " + data + "명");
+												    		}, error : function(jqxhr, textStatus, errorThrown){
+												    			alert("ajax 실패!");
+												
+												    			console.log("ajax 처리 실패함");
+												    			console.log(jqxhr);
+												    			console.log(textStatus);
+												    			console.log(errorThrown);
+												    			
+												    		}
+												    		
+												    	});
+												   		
+												   	});
+												   		
+											    </script>
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -135,8 +162,8 @@
 							</c:forEach>
 						</div>
 						<nav aria-label="Page navigation">
-                            <button type="submit" class="btn alazea-btn mt-15" 
-									onclick="location.href='${ pageContext.request.contextPath }/views/auction/auctionInsert.jsp'">등록하기</button>
+                            <button type="button" class="btn alazea-btn mt-15" 
+									onclick="location.href='${ pageContext.request.contextPath }/auction/auctionInsertForm.do'">등록하기</button>
                         </nav>
                         <c:out value="${pageBar}" escapeXml="false"/>
                      </div>
@@ -145,40 +172,6 @@
         </div>
     </section>
     <!-- ##### Shop Area End ##### -->
-    <script type="text/javascript">
-												
-		var list = ${list.size()};
-		
-		for(var i = 0; i < list; i++){
-			
-			// var pindex = ${st.index};
-			// console.log("pindex + "+pindex);
-	
-		   	var pno = $("#pno-"+i).val();
-		   	
-		   	$(function(){
-		    	$.ajax({
-		    		  data : {pno : pno}
-		    		, dataType : "json"
-		    		, url : "${pageContext.request.contextPath}/auction/bidderCount.do"
-		    		, success : function(data){
-		    			console.log("data : " + data);
-		    			$("#bidderCount").html("경매 참가자 : " + data + "명");
-		    		}, error : function(jqxhr, textStatus, errorThrown){
-		    			alert("ajax 실패!");
-		
-		    			console.log("ajax 처리 실패함");
-		    			console.log(jqxhr);
-		    			console.log(textStatus);
-		    			console.log(errorThrown);
-		    			
-		    		}
-		    		
-		    	});
-		   		
-		   	});
-		}
-	   		
-    </script>
+
 
 <c:import url="../../views/common/footer.jsp"/>

@@ -21,7 +21,7 @@ public class Product implements Serializable {
 	private String pTitle;   
 	private String pContent;
 	private int pPrice;   
-	private Date pDate;   
+	private String pDate;   
 	private int pStatus;  
 	private int pType;    
 	private String pAddress; 

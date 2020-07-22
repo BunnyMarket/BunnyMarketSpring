@@ -16,5 +16,6 @@ public interface AuctionDAO {
 
 	Auction selectOneAuction(int pno);
 
+	int bidderCount(int pno);
 
 }

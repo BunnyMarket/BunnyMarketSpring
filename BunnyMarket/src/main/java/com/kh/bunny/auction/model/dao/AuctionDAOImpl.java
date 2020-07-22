@@ -44,6 +44,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return sqlSession.selectOne("auctionMapper.selectOneAuction", pno);
 	}
 
+	@Override
+	public int bidderCount(int pno) {
+		return sqlSession.selectOne("auctionMapper.bidderCount", pno);
+	}
+
 
 
 }

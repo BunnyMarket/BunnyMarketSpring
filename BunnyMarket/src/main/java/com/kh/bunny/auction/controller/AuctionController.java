@@ -1,8 +1,11 @@
 package com.kh.bunny.auction.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,7 @@ public class AuctionController {
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
 				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
-				, Model model
+				, Model model, HttpServletRequest request
 			) {
 		
 		int numPerPage = 10;
@@ -32,6 +35,7 @@ public class AuctionController {
 		
 		System.out.println("무엇이 들어있느냐? : " + list);
 		System.out.println("무엇이 들어있느냐? : " + list.size());
+		
 		int totalContents = auctionService.selectAuctionTotalContents();
 		
 		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionList.do");
@@ -41,21 +45,20 @@ public class AuctionController {
 			 .addAttribute("numPerPage", numPerPage)
 			 .addAttribute("pageBar", pageBar);
 		
-		
 		return "auction/auctionList";
 	}
 	
 	@RequestMapping("/auction/bidderCount.do")
 	@ResponseBody
-	public Map<String, Object> bidderCount(@RequestParam int pno) {
+	public int bidderCount(@RequestParam int pno) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		int bidderCount = auctionService.selectBidderCount(pno);
-		
+		System.out.println("bidderCount는 무엇일랑가? "+bidderCount);
 		map.put("bidderCount", bidderCount);
 		
-		return map;
+		return bidderCount;
 	}
 	
 	@RequestMapping("/auction/auctionDetail.do")
@@ -68,7 +71,12 @@ public class AuctionController {
 		return "auction/auctionDetail";
 	}
 	
-	
+	@RequestMapping("/auction/auctionInsertForm.do")
+	public String auctionInsertForm() {
+		
+		return "auction/auctionInsert";
+		
+	}
 	
 	
 }
