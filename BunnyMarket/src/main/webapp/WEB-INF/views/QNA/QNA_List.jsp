@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<c:set var="qc" value="${sessionScope.qComment }"/>
 <c:import url="/views/common/header.jsp" />
 <div class="breadcrumb-area">
 	<!-- Top Breadcrumb Area -->
@@ -33,42 +33,51 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="cart-table clearfix">
+				<br />
+				  <p>총 ${totalContents}건의 게시물이 있습니다.</p>
+				  <br />
 					<table class="table table-responsive">
 						<thead class="col-12">
 							<tr>
-								<th style="width: 10%">번호</th>
-								<th colspan="2" style="width: 50%; text-align: center;">제목</th>
-								<th style="padding-left: 8px; width: 20%; text-align: center;">작성자</th>
-								<th style="padding-left: 8px; width: 20%; text-align: center;">등록일자</th>
+								<th style="width: 5%">번호</th>
+								<th colspan="2" style="width: 35%; text-align: center;">제목</th>
+								<th style="padding-right: 80px; width: 25%; text-align: center;" >작성자</th>
+								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
+								<th style="padding-left: 8px; width: 20%; text-align: center;">답변여부</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<%
-								for (int i = 1; i < 11; i++) {
-							%>
-							<tr onclick="goQnAdetail();">
-								<td>
-									<h5><%=i%></h5>
-								</td>
-								<td colspan="2" style="width: 50%; text-align: center;">
-									<a href="<%=request.getContextPath()%>/views/QNA/QNA_Detail.jsp"><h5>제목</h5></a>
-								</td>
-								<td style=" text-align: center;"><h5>바니</h5></td>
-								<td style=" text-align: center;"><h5>2020-07-12</h5></td>
-								<td style=" text-align: center;"></td>
+						<c:forEach items= "${list}" var="q">
+							
+							<tr  id="${q.qNo}">
+								<td><input type="hidden" value="${q.qNo}" /></td>
+										<td onclick="selectOne(${q.qNo});">${q.qNo}</td>
+										<td onclick="selectOne(${q.qNo});">${q.qTitle}</td>
+										<td onclick="selectOne(${q.qNo});">${q.qWriter}</td>
+										<td onclick="selectOne(${q.qNo});">${q.qDate}</td>
+										<td></td>
+										<c:if test="${qc.qWriter eq 'admin'}">
+											<td onclick="selectOne(${q.qNo});"
+												style="color: red;">완료</td>
+										</c:if>
+										
+										<c:if test="${qc.qWriter ne 'admin'}">
+											<td onclick="selectOne(${q.qNo});"
+												style="color: black;">대기중</td>
+										</c:if>
 							</tr>
-							<%
-								}
-							%>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="checkout_btn_inner" align="right">
 						<br /><br />
+						<c:if test="${!empty member && member.userId ne 'admin' }">
 						<a class="btn alazea-btn mr-30"
-							href="<%=request.getContextPath()%>/views/QNA/QNA_Insert.jsp">등록하기</a>
+							href="${pageContext.request.contextPath}/QNA/QNA_Detail.do">등록하기</a>
+						</c:if>
 						<a class="btn alazea-btn mr-30"
-							href="<%=request.getContextPath()%>/index.jsp">메인으로</a> <br />
+							href="${pageContext.request.contextPath}">메인으로</a> <br />
 						<br />
 					</div>
 					<!-- Pagination -->
@@ -84,5 +93,16 @@
 		</div>
 	</div>
 </div>
+
+<script>
+function selectOne(qNo){
+	if(${member.userId eq 'admin'})
+	location.href = '${pageContext.request.contextPath}/QNA/QNA_Detail.do?no=' + qNo;
+	else
+	location.href = '${pageContext.request.contextPath}/qna/qnaPwd.do?no=' + qNo;
+};
+
+
+</script>
 
 <c:import url="/views/common/footer.jsp" />

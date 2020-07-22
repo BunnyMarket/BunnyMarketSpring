@@ -43,7 +43,7 @@
 							</div>
 							<div class="post-meta mb-30">
 								<button type="button" class="btn alazea-btn mt-15"
-										onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_Update.jsp'">수정하기</button>
+										onclick="location.href='${ pageContext.request.contextPath }/QNA/QNA_Update.do'">수정하기</button>
 							</div>
 							<div class="post-thumbnail mb-30">
 								<img src="${pageContext.request.contextPath}/resources/img/bg-img/35.jpg" alt="">
