@@ -15,6 +15,7 @@ public class Auction extends Product implements Serializable {
 	
 	private String aeDate;
 	private int pno;
+	private int pTime;
 	
 	public Auction() {
 		super();
@@ -25,15 +26,17 @@ public class Auction extends Product implements Serializable {
 		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer);
 	}
 	public Auction(int pno, String pWriter, int pcno, String pImg, String pTitle, String pContent, int pPrice,
-			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, String aeDate, int pno2) {
+			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, String aeDate, int pno2, int pTime) {
 		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer);
 		this.aeDate = aeDate;
 		pno = pno2;
+		this.pTime = pTime;
 	}
-	public Auction(String aeDate, int pno) {
+	public Auction(String aeDate, int pno, int pTime) {
 		super();
 		this.aeDate = aeDate;
 		this.pno = pno;
+		this.pTime = pTime;
 	}
 	
 	@Override

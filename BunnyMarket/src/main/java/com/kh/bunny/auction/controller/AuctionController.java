@@ -1,11 +1,15 @@
 package com.kh.bunny.auction.controller;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
@@ -78,7 +83,80 @@ public class AuctionController {
 		
 	}
 	
+	@RequestMapping("/auction/auctionInsertEnd.do")
+	public String insertProduct(Auction auction, Model model, HttpSession session,
+			@RequestParam(value="pImg", required = false) MultipartFile pImg) {
+		
+		System.out.println("옥션이 잘 들어왓느냐~ : " +auction );
+		
+		String saveDir = session.getServletContext().getRealPath("resources/upload/auction");
+		
+		File dir = new File(saveDir);
+		if(dir.exists() == false) dir.mkdirs();
+		
+		String originName = pImg.getOriginalFilename();
+		String ext = originName.substring(originName.lastIndexOf(".") + 1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		
+		int rndNum = (int)(Math.random() * 1000); // 이름바꾸기 수행. 랜덤번호..
+		
+		// 서버에서 저장 후 관리할 파일 명 
+		String renamedName = sdf.format(new Date() + "_" + rndNum + "." + ext);
+		
+		// 실제 파일을 지정한 파일명으로 변환하며 데이터를 저장한다.
+		try {
+			pImg.transferTo(new File(saveDir + "/" + renamedName)); 
+			// transferTo는 우리가 원래 받은 원본 파일 이름을 변경된 파일 이름으로 바꾸어서 해당 경로에 저장해달라는 것.
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		auction.setPImg(renamedName);
+		
+		System.out.println("파일은 잘 들어왔느냐~ : " +auction );
+		int result = auctionService.insertAuction(auction);
+		String msg = "";
+		
+		if (result >0) {
+			msg = "Success Insert Auction";
+			System.out.println("Success Insert Auction");
+		} else {
+			msg = "Fail Insert Auction";
+			System.out.println("Fail Insert Auction");
+		}
+		
+		return "redirect:/auction/auctionList.do";
+	}
 	
+	@RequestMapping("/auction/aImgInsert.do")
+	@ResponseBody
+	public String auctionImgInsert(
+				  @RequestParam(value="file", required = false) MultipartFile file
+				, Model model, HttpSession session
+			) {
+		
+		String saveDir = session.getServletContext().getRealPath("resources/upload/auction/desc");
+		
+		File dir = new File(saveDir);
+		if(dir.exists() == false) dir.mkdirs();
+		
+		String originName = file.getOriginalFilename();
+		String ext = originName.substring(originName.lastIndexOf(".") + 1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		
+		int rndNum = (int)(Math.random() * 1000);
+		
+		String renamedName = sdf.format(new Date() + "_" + rndNum + "." + ext);
+		
+		try {
+			file.transferTo(new File(saveDir + "/" + renamedName)); 
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		String msg = saveDir + "/" + renamedName;
+		
+		return msg;
+	}
 }
 
 

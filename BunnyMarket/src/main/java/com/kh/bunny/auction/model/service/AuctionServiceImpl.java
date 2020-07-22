@@ -41,8 +41,9 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 
 	@Override
-	public int bidderCount(int pno) {
-		return auctionDAO.bidderCount(pno);
+	public int insertAuction(Auction auction) {
+		return auctionDAO.insertAuction(auction);
 	}
 
+	
 }

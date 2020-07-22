@@ -32,11 +32,8 @@ public class AuctionDAOImpl implements AuctionDAO {
 
 	@Override
 	public int selectBidderCount(HashMap<String, Object> hmap) {
-		
 		sqlSession.selectOne("auctionMapper.selectBidderCount", hmap);
-		
 		return (Integer)hmap.get("result");
-		
 	}
 
 	@Override
@@ -45,10 +42,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 
 	@Override
-	public int bidderCount(int pno) {
-		return sqlSession.selectOne("auctionMapper.bidderCount", pno);
+	public int insertAuction(Auction auction) {
+		return sqlSession.insert("auctionMapper.insertAuction", auction);
 	}
 
+	
 
 
 }
