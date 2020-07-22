@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class QNA implements Serializable{
 	
 	private static final long serialVersionUID = 9999L;
-	private int qNo;
+	private int qno;
 	private String qWriter;
 	private String qTitle;
 	private String qContent;

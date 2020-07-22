@@ -24,14 +24,14 @@ public class QNADAOImpl implements QNADAO {
 
 	@Override
 	public int selectQNATotalContents() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.selectOne("qnaMapper.selectQNATotalContent");
 	}
 
 	@Override
 	public int insertQNA(QNA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.insert("qnaMapper.insertQNA", qna);
 	}
 
 	@Override

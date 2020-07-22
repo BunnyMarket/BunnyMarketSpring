@@ -144,8 +144,8 @@
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/views/QNA/FAQ.jsp">F.A.Q</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/QNA/QNA_List.jsp">Q&A</a></li>
+											<li><a href="${ pageContext.request.contextPath }/QNA/FAQ.jsp">F.A.Q</a></li>
+											<li><a href="${ pageContext.request.contextPath }/QNA/QNAList.do">Q&A</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/report/reportList.jsp">신고하기</a></li>
 										</ul>
 									</li>

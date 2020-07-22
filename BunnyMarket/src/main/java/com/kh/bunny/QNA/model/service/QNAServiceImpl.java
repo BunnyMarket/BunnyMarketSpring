@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.bunny.QNA.model.dao.QNADAO;
+import com.kh.bunny.QNA.model.exception.QNAException;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 @Service("QNAService")
@@ -29,8 +30,20 @@ QNADAO qnaDAO;
 
 	@Override
 	public int insertQNA(QNA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result =0;
+		int qno = 0;
+		
+		try {
+		result = qnaDAO.insertQNA(qna);
+		if(result == QNA_SERVICE_ERROR) throw new QNAException();
+		
+		qno = qna.getQno();
+		
+		}catch(Exception e) {
+			throw e;
+		}
+	
+		return result;
 	}
 
 	@Override
