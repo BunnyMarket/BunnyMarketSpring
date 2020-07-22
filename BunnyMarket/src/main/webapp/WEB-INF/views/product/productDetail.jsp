@@ -53,7 +53,7 @@
 						<h4 class="title">${ product.PTitle }</h4>
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
-							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do'">수정하기</button>
+							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
 						<br />
 
 						<h4 class="price">${ product.PPrice } won</h4>

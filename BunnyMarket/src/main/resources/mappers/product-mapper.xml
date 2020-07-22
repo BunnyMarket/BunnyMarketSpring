@@ -36,8 +36,22 @@
 	<delete id = "deleteProduct" parameterType = "_int">
 		DELETE FROM PRODUCT
 		WHERE PNO = #{pno}
-	
 	</delete>
+	
+	<!-- 상품 게시글 수정하는 쿼리 -->
+	<update id = "updateProduct" parameterType = "Product">
+		UPDATE PRODUCT
+		<set>
+			PTITLE = #{pTitle},
+			PPRICE = #{pPrice},
+			PADDRESS = #{pAddress},
+			PCONTENT = #{pContent},
+			<if test = "pImg != null">
+				PIMG = #{pImg}
+			</if>
+		</set>
+		WHERE PNO = #{pno}
+	</update>
 	
 	
 </mapper>

@@ -17,7 +17,7 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i> 홈화면</a></li>
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }"><i class="fa fa-home"></i> 홈화면</a></li>
 						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/views/product/productList.jsp">상품</a></li>
 						<li class="breadcrumb-item active" aria-current="page">상품 게시글 등록</li>
 					</ol>
@@ -33,16 +33,17 @@
 	<div class="produts-details--content mb-50">
 		<div class="container">
 
-			<form id = "productInsert" method = "post" action="${pageContext.request.contextPath}/product/productInsertEnd.do" enctype="multipart/form-data">
+			<form id = "productUpdate" method = "post" action="${pageContext.request.contextPath}/product/productUpdate.do" enctype="multipart/form-data">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
 							<div>
 								<div id="pImgArea">
-									<img id="titleImg" class = "d-block w-100" width="344.8px" height="357.56px">
+									<img id="titleImg" src="${ pageContext.request.contextPath }/resources/upload/product/${ product.PImg }" class = "d-block w-100" width="344.8px" height="357.56px">
 								</div>
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name = "pImg"
+									<input type="hidden" name="pno" value = "${ product.pno }" />
+									<input type="file" id="titleImgArea" name = "pTitleImg"
 										onchange="loadImg(this, 1);" />
 								</div>
 							</div>
@@ -53,11 +54,11 @@
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
+							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" value="${ product.PTitle }" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type = "text" name = "pPrice" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
+							<input type = "text" name = "pPrice" class = "form-control" id = "pPrice" value="${ product.PPrice }" />
 							<br />
 
 							<!-- <label for="pEndDate">경매 종료일 *</label>
@@ -80,17 +81,18 @@
 							<br /> -->
 
 							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "pAddress" name = "pAddress" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							<input type = "text" id = "pAddress" name = "pAddress" class = "form-control" value = "${ product.PAddress }" onclick = "addrSearch();" required />
 						</div>
 					</div>
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name = "pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name = "pContent" class="summernote" placeholder = "내용 입력">${ product.PContent }</textarea>
 					</div>
 				</div>
 				<div align="center">
+					<input type="button" class="btn alazea-btn mt-15" value="삭제" onclick="location.href='${pageContext.request.contextPath}/product/productDelete.do?pno=${product.pno}'"/>
 					<button type="submit" class="btn alazea-btn mt-15">수정완료</button>
 				</div>
 			</form>
