@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 마이바티스 설정과 관련된 태그 -->
+	<settings>
+		<!-- 만약에 Null 값이 들어온다면 DB에서도 Null 이라고 받아라! -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<!-- 마이바티스에서 사용하기 위한 
+	    VO 클래스의 별칭을 정의하는 태그 -->
+	<typeAliases>
+		<!-- 
+			<typeAlias type="실제 VO객체" alias="mybatis에서 사용할 클래스 별칭">
+		 -->
+		 <typeAlias type = "com.kh.bunny.product.model.vo.Product" alias = "Product" />
+		 <typeAlias type = "com.kh.bunny.common.Str2ArrayHandler" alias = "Str2ArrayHandler" />
+		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/> 
+
+	</typeAliases>
+	
+	<typeHandlers>
+	<!-- 특정 타입을 변경해주는 typeHandler 등록 태그 -->
+		<!-- 패키지를 지정해줘서 그 안의 타입핸들러를 찾아오는 방법 -->
+		<package name="com.kh.bunny.common"/>
+	</typeHandlers>
+</configuration>
+
+
+
+
+
+
+
+
+
+
