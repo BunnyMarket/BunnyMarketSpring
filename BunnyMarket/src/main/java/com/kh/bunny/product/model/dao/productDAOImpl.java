@@ -34,20 +34,17 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int insertProduct(Product product) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("productMapper.insertProduct", product);
 	}
 
 	@Override
 	public int updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("productMapper.updateProduct", product);
 	}
 
 	@Override
 	public int deleteProduct(int pno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete("productMapper.deleteProduct", pno);
 	}
 
 }
