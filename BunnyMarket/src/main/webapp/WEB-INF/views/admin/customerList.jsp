@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="utf-8" />
@@ -122,14 +125,12 @@
                       <thead class=" text-primary">
                         <th>가입일 </th>
                         <th>회원 아이디</th>
-                        <th>판매 횟수</th>
-                        <th>구매 횟수</th>
                         <th>현재 포인트 </th>
                         <th>경고 횟수 </th>
                         <th>제재</th>
                       </thead>
-                      <tbody>
-                        <tr>
+                      <c:forEach items="${customer}" var="c">
+                        <tr id="${c.}">
                           <td>2020-07-11</td>
                           <td>test1</td>
                           <td>3</td>
@@ -140,18 +141,7 @@
                           <button class="btnw">제재</button>
                           </td>
                         </tr>
-                         <tr>
-                          <td>2020-07-03</td>
-                          <td>test2</td>
-                          <td>2</td>
-                          <td>1</td>
-                          <td>3000</td>
-                          <td>0</td>
-                          <td>
-                          <button class="btnw">제재</button>
-                          </td>
-                        </tr>
-                      </tbody>
+                       </c:forEach>
                     </table>
                   </div>
                 </div>

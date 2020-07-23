@@ -125,22 +125,18 @@
 		<option value="content">내용</option>
 	</select>&nbsp;&nbsp;
 	<input type="search" id="keyword"> &nbsp;
-	<button class=" btn paging">검색</button>
+	<button class=" btn paging" onclick="search();">검색</button>
 	<button class="btn paging" onclick="noticeInsert();">글쓰기</button>
 </div>
 	
 <br>
 <br>
  <script>
+ 	// 입력
   	function noticeInsert(){
   		location.href="${pageContext.request.contextPath}/admin/notice/noticeInsertForm.do";
   	}
-   /* 	$(function(){
-  		$("tr[id]").on("click",function(){
-  			var noticeNo = $(this).attr("id");
-  			location.href="${pageContext.request.contextPath}/admin/notice/noticeDetail.do?no="+noticeNo;
-  		});
-  	});  */
+  	// 메뉴 바 색
   	 	$(function(){
   		$("#tableArea td").mouseenter(function(){
   			$(this).parent().css({"background":"#FAD7A0","cursor":"pointer"});
@@ -152,6 +148,11 @@
   			location.href="${pageContext.request.contextPath}/admin/notice/noticeDetail.do?no="+noticeNo;
   		});
   	}); 
+  	
+  	function search(){
+  		location.href="${ pageContext.request.contextPath}/admin/notice/searchNotice.do?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+  	}
+  	
   </script>
 <c:import url="../admin/common/footer.jsp"/>
 

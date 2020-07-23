@@ -25,20 +25,21 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<style>
+.navbarTest{
+	background-color : #FAD7A0;
+	cursor : pointer;
+}
+</style>
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="orange" data-background-color="white" data-image="../../resources/img/sidebar-1.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
+    <div class="sidebar" data-color="white" data-background-color="white" data-image="../../resources/img/sidebar-1.jpg">
       <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
          	관리자
         </a></div>
-      <div class="sidebar-wrapper">
+      <div class="sidebar-wrapper" id="menu">
         <ul class="nav">
           <li class="nav-item active ">
             <a class="nav-link" href="${ pageContext.request.contextPath }/views/admin/transactions.jsp">
@@ -170,3 +171,12 @@
         </div>
       </nav>
       <!-- End Navbar -->
+      <script>
+  	$(function(){
+  		$("p").mouseenter(function(){
+  			$(this).parent().parent().addClass('navbarTest');
+  		}).mouseout(function(){
+  			$(this).parent().parent().removeClass('navbarTest');
+  		});
+  	});
+      </script>
