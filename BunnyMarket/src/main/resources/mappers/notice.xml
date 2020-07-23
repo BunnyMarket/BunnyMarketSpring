@@ -27,6 +27,19 @@
 	<update id="updateNoticeCount" parameterType="Notice" >
 		UPDATE NOTICE SET NTOTAL = NTOTAL+1 WHERE NNO = #{nno}	
 	</update>
+	
+	<update id="updateNotice" parameterType="Notice">
+		UPDATE NOTICE 
+			<set>
+				 NTITLE = #{nTitle},
+				 NCONTENT = #{nContent}
+			</set> 		  
+		 WHERE NNO = #{nno}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		DELETE FROM NOTICE WHERE NNO = #{nno}
+	</delete>
 </mapper>
 
 

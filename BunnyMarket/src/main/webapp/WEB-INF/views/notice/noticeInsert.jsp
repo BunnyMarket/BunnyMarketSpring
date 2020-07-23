@@ -47,7 +47,8 @@
 				<div align="center">
 					<button type="submit" class="btn alazea-btn mt-15">등록완료</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="reset" class="btn alazea-btn mt-15">취소하기</button>
+					<button type="reset" class="btn alazea-btn mt-15"
+						onclick="goback();">취소하기</button>
 				</div>	
                     </form>
                   </div>
@@ -88,5 +89,8 @@
         }
        e.preventDefault();
 	});
+	function goback(){
+		location.href="${pageContext.request.contextPath}/admin/notice/noticeList.do";
+	}
 </script>
 <c:import url="../admin/common/footer.jsp"/>

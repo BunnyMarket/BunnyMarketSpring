@@ -62,109 +62,16 @@
 									<h5>“바로 당신의 니즈, 저희 바니마켓이 충족시켜드리겠습니다.”</h5>
 									<h5>YOUNG BUNNY</h5>
 								</div>
+							
 							</blockquote>
-
+								<button type="button" class="btn mt-15"
+										onclick="location.href='${pageContext.request.contextPath}/notice/mNotice.do'">돌아가기</button> 
 						</div>
 					</div>
-
-					<%-- <!-- Comment Area Start -->
-					<div class="comment_area clearfix">
-						<h4 class="headline">댓글</h4>
-
-						<ol>
-							<!-- Single Comment Area -->
-							<li class="single_comment_area">
-								<div class="comment-wrapper d-flex">
-									<!-- Comment Meta -->
-									<div class="comment-author">
-										<img
-											src="${pageContext.request.contextPath}/resources/img/bg-img/37.jpg"
-											alt="#">
-									</div>
-									<!-- Comment Content -->
-									<div class="comment-content">
-										<div class="d-flex align-items-center justify-content-between">
-											<h5>당근이</h5>
-											<span class="comment-date">09:00 AM, 20 Jun 2018</span>
-										</div>
-										<p>저도 궁금해요!</p>
-										<a class="active" href="#">Reply</a>
-									</div>
-								</div>
-								<ol class="children">
-									<li class="single_comment_area">
-										<div class="comment-wrapper d-flex">
-											<!-- Comment Meta -->
-											<div class="comment-author">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/bg-img/38.jpg"
-													alt="">
-											</div>
-											<!-- Comment Content -->
-											<div class="comment-content">
-												<div
-													class="d-flex align-items-center justify-content-between">
-													<h5>관리자</h5>
-													<span class="comment-date">09:30 AM, 20 Jun 2018</span>
-												</div>
-												<p>빠른 시일 내에 답변드리겠습니다.</p>
-												<a class="active" href="#">Reply</a>
-											</div>
-										</div>
-									</li>
-								</ol>
-							</li>
-							<li class="single_comment_area">
-								<div class="comment-wrapper d-flex">
-									<!-- Comment Meta -->
-									<div class="comment-author">
-										<img
-											src="${pageContext.request.contextPath}/resources/img/bg-img/29.jpg"
-											alt="">
-									</div>
-									<!-- Comment Content -->
-									<div class="comment-content">
-										<div class="d-flex align-items-center justify-content-between">
-											<h5>바니</h5>
-											<span class="comment-date">02:20 PM, 20 Jun 2018</span>
-										</div>
-										<p>와우</p>
-										<a class="active" href="#">Reply</a>
-									</div>
-								</div>
-							</li>
-						</ol>
-					</div>
-
-					<!-- Leave A Comment -->
-					<div class="leave-comment-area clearfix">
-						<div class="comment-form">
-							<h4 class="headline">댓글 작성하기</h4>
-
-							<div class="contact-form-area">
-								Comment Form
-								<form action="#" method="post">
-									<div class="row">
-										<div class="col-12">
-											<div class="form-group">
-												<textarea class="form-control" name="message" id="message"
-													cols="30" rows="10" placeholder="댓글을 남겨주세요."></textarea>
-											</div>
-										</div>
-										<div class="col-12">
-											<button type="submit" class="btn alazea-btn">댓글 작성하기</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					Leave A Comment End  --%>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
-<!--  여기까지 -->
 <c:import url="../../views/common/footer.jsp" />

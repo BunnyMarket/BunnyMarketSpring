@@ -3,6 +3,8 @@ package com.kh.bunny.notice.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class NoticeController {
 		model.addAttribute("pageBar", pageBar);
 		
 		
-		return "notice/notice";
+		return "notice/noticeList";
 	}
 	
 	// list member
@@ -70,7 +72,7 @@ public class NoticeController {
 		model.addAttribute("pageBar", pageBar);
 		
 		
-		return "notice/mNotice";
+		return "notice/mNoticeList";
 	}
 	
 	// insertView
@@ -83,14 +85,12 @@ public class NoticeController {
 	@RequestMapping("/admin/notice/noticeInsert.do")
 	public String noticeInsert(Notice notice) {
 		
-		System.out.println(notice);
-		
 		int result = noticeService.insertNotice(notice);
 		
 		String loc ="";
 		
 		if(result > 0 ) {
-			loc ="/admin/notice/noticeList.do";
+			loc ="/admin/notice/noticeDetail.do?no="+notice.getNno();
 		} else {
 			loc ="/admin/notice/noticeList.do";
 		}
@@ -116,4 +116,49 @@ public class NoticeController {
 		
 		return "notice/mNoticeDetail";
 	}	
+	//updateView
+	@RequestMapping("/admin/notice/noticeUpdateForm.do")
+	public String noticeUpdateView(@RequestParam int no, Model model) {
+		
+		model.addAttribute("notice", noticeService.selectOneNotice(no));
+		return "notice/noticeUpdate";
+	}
+	
+	// update
+	@RequestMapping("/admin/notice/noticeUpdate.do")
+	public String noticeUpdate(Notice notice, HttpSession session, Model model) {
+	
+		int result = noticeService.updateNotice(notice);
+	
+		String loc ="";
+		
+		if(result > 0 ) {
+			loc ="/admin/notice/noticeDetail.do?no="+notice.getNno();
+		} else {
+			loc ="/admin/notice/noticeList.do";
+		}
+		
+		
+		return "notice/noticeDetail";
+	}
+
+	// delete
+	@RequestMapping("/admin/notice/noticeDelete.do")
+	public String noticeDelete(@RequestParam int no) {
+		
+		int result = noticeService.deleteNotice(no);
+		
+		String loc ="";
+		
+		if(result > 0 ) {
+			loc ="redirect:/admin/notice/noticeList.do";
+		} else {
+			
+		}
+		
+		return loc;	
+		
+	}
+
 }
+

@@ -139,9 +139,10 @@
        
   
 	
-	 <button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeList.do'">리스트로</button>
+	 <button class="btn paging" style="float: left;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeList.do'">리스트로</button>
 		    &nbsp; &nbsp; &nbsp;
-	<button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeUpdate.do?noticeNo=${notice.nno}'">수정하기</button> 
+	<button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeUpdateForm.do?no=${notice.nno}'">수정하기</button> 
+	<button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeDelete.do?no=${notice.nno}'">삭제하기</button> 
 
 
 <c:import url="../admin/common/footer.jsp"/>

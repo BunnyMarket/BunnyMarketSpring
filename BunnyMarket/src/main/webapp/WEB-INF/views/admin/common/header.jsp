@@ -70,6 +70,12 @@
               <p>메세지</p>
             </a>
           </li>
+           <li class="nav-item ">
+            <a class="nav-link" href="${ pageContext.request.contextPath }/">
+              <i class="material-icons">library_books</i>
+              <p>홈</p>
+            </a>
+          </li>
           <!-- <li class="nav-item ">
             <a class="nav-link" href="./icons.html">
               <i class="material-icons">bubble_chart</i>
