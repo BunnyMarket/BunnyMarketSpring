@@ -7,18 +7,18 @@
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
-		FROM PRODUCT ORDER BY PDATE DESC, PNO DESC
+		FROM PRODUCT WHERE PTYPE = 1 ORDER BY PDATE DESC, PNO DESC
 	</select>
 
 	<!-- 총 상품의 개수를 출력하는 쿼리 -->
 	<select id="selectProductTotalContent" resultType = "_int">
-		SELECT COUNT(*) FROM PRODUCT
+		SELECT COUNT(*) FROM PRODUCT WHERE PTYPE = 1
 	</select>
 	
 	<!-- 상품 게시글의 상세보기를 하는 쿼리 -->
 	<select id="selectOneProduct" resultType = "Product">
 		SELECT * FROM PRODUCT
-		WHERE PNO = #{pno}
+		WHERE PNO = #{pno} AND PTYPE = 1
 	</select>
 	
 	<!-- 상품 게시글 생성하는 쿼리 -->
@@ -35,7 +35,7 @@
 	<!-- 상품 게시글 삭제하는 쿼리 -->
 	<delete id = "deleteProduct" parameterType = "_int">
 		DELETE FROM PRODUCT
-		WHERE PNO = #{pno}
+		WHERE PNO = #{pno} AND PTYPE = 1
 	</delete>
 	
 	<!-- 상품 게시글 수정하는 쿼리 -->
@@ -50,7 +50,7 @@
 				PIMG = #{pImg}
 			</if>
 		</set>
-		WHERE PNO = #{pno}
+		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
 	
