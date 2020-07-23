@@ -33,7 +33,19 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-	
+			<!-- Gmail -->
+  <bean id="javaMailSesnder" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.naver.com" />
+    <property name="port" value="465" />
+    <property name="username" value="model_so@naver.com" />
+    <property name="password" value="zxc2754" />
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+    </props>
+    </property>
+  </bean>
 	
 	<!-- 트랜잭션 처리 방식 -->
 	<!-- 커밋/롤백은 모든 메소드에 동작시켜야 하기 때문에 프로그래밍적인 방식을 메소드마다 지정해야하기 때문에 선언적 방식을 더 선호한다. -->	
