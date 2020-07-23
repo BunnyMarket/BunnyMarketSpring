@@ -35,7 +35,7 @@ public class ProductController {
 		
 		List<Map<String, String>> list = productService.selectProductList(pPage, numPerPage);
 		
-//		System.out.println("productController에서 list를 가져오나 확인 : " + list);
+		System.out.println("productController에서 list를 가져오나 확인 : " + list);
 		// Product list는 잘 가져오는 것 확인 완료 
 		
 		// 페이지 계산을 위한 총 페이지 개수 

@@ -1,6 +1,7 @@
 package com.kh.bunny.product.model.vo;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +23,8 @@ public class Product implements Serializable {
 	private String pImg;    
 	private String pTitle;   
 	private String pContent;
-	private String pPrice;   
-	private Date pDate;   
+	private int pPrice;   
+	private String pDate;   
 	private int pStatus;  
 	private int pType;    
 	private String pAddress; 

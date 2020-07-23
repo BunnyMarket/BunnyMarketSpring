@@ -78,9 +78,27 @@
 								max : 입력 가능한 가장 늦은 시간
 							
 							<br /> -->
+							
+							
+							<label for="pcno" style="float: none;">카테고리 설정 *</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%">
+                                  <option value="" hidden>물품의 종류를 선택해주세요.</option>
+                                  <option value="1">컴퓨터</option>
+                                  <option value="2">옷</option>
+                                  <!-- <option value="3">컴퓨터1</option>
+                                  <option value="4">3</option>
+                                  <option value="5">ㅎㅎ</option>
+                                  <option value="6">ㄴㄴ</option>
+                                  <option value="7">33</option> -->
+                                </select>
+	                        </div>
+	                        
+	                        <br />
 
 							<label for="pAddress">주소 입력 </label>
 							<input type = "text" id = "pAddress" name = "pAddress" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							
 						</div>
 					</div>
 					
