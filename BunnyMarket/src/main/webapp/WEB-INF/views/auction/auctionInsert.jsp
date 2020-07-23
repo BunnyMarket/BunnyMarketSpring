@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
 
 <!-- ##### Breadcrumb Area Start ##### -->
@@ -48,7 +48,7 @@
 									아직 원격저장소 새로 안만들어졌으니 이걸 확인하면 그때 제이쿼리 파일 넣어주세요~!
 								 -->
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name="pImg" 
+									<input type="file" id="titleImgArea" name="pImage" 
 										onchange="loadImg(this, 1);" />
 								</div>
 							</div>
@@ -68,7 +68,7 @@
 							
 							<label for="aeDate">경매 기간 설정</label><label style="float: right;" id="pEndDate" for="pEndDate">경매 종료날짜 :</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="aeDate">
+                                <select class="custom-select widget-title" name="aeTime">
                                   <option value="6" selected>6시간</option>
                                   <option value="12">12시간</option>
                                   <option value="24">24시간(1일)</option>
@@ -85,9 +85,9 @@
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%">
                                   <option value="1" selected>컴퓨터</option>
                                   <option value="2">옷</option>
-                                  <!-- <option value="3">컴퓨터1</option>
-                                  <option value="4">3</option>
-                                  <option value="5">ㅎㅎ</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
+                                  <!-- <option value="5">ㅎㅎ</option>
                                   <option value="6">ㄴㄴ</option>
                                   <option value="7">33</option> -->
                                 </select>
@@ -115,7 +115,7 @@
 
 							<label for="pAddress">주소 입력 </label>
 							<input type="text" id="address" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
-							
+							<input type="hidden" name="pWriter" value="TEST1">
 						</div>
 					</div>
 					
@@ -126,8 +126,7 @@
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href=''">등록완료</button>
+					<button type="submit" class="btn alazea-btn mt-15">등록완료</button>
 				</div>
 			</form>
 		</div>

@@ -40,6 +40,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 	public Auction selectOneAuction(int pno) {
 		return sqlSession.selectOne("auctionMapper.selectOneAuction", pno);
 	}
+	
+	@Override
+	public int insertProduct(Auction auction) {
+		return sqlSession.insert("auctionMapper.insertProduct", auction);
+	}
 
 	@Override
 	public int insertAuction(Auction auction) {

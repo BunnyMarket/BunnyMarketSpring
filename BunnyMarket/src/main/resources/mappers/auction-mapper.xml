@@ -42,10 +42,10 @@
 		 WHERE PNO = #{pno}
 	</select>
 	
-	<insert id="insertProduct" parameterType="Product">
+	<insert id="insertProduct" parameterType="Auction">
 		INSERT INTO PRODUCT
 		VALUES (SEQ_PNO.NEXTVAL
-			  , 'TEST1'
+			  , #{pWriter}
 			  , #{pcno}
 			  , #{pImg}
 			  , #{pTitle}
@@ -54,16 +54,22 @@
 			  , TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2')
 			  , 1
 			  , 2
-			  , pAddress
+			  , #{pAddress}
 			  , DEFAULT
-			  , NULL);
+			  , NULL)
 	</insert>
+	
 	<insert id="insertAuction" parameterType="Auction">
 		<selectKey keyProperty="pno" resultType="_int" order="BEFORE">
 			SELECT SEQ_PNO.CURRVAL FROM DUAL
 		</selectKey>
 		INSERT INTO AUCTION(PNO, AEDATE)
-		VALUES (#{pNo}, TO_CHAR(SYSTIMESTAMP + INTERVAL '0 #{aeDate}:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
+		<if test="aeTime gte 24">
+		VALUES (#{pno}, TO_CHAR(SYSTIMESTAMP + INTERVAL '${aeTime/24} 00:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
+		</if>
+		<if test="aeTime lt 24">
+		VALUES (#{pno}, TO_CHAR(SYSTIMESTAMP + INTERVAL '0 ${aeTime}:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
+		</if>
 	</insert>
 </mapper>
 

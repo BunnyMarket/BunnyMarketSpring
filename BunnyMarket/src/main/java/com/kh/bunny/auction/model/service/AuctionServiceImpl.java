@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.bunny.auction.model.dao.AuctionDAO;
+import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.vo.Auction;
 
 @Service("auctionService")
@@ -15,7 +16,7 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Autowired
 	AuctionDAO auctionDAO;
-	
+
 	@Override
 	public List<Map<String, String>> selectAuctionList(int aPage, int numPerPage) {
 		return auctionDAO.selectAuctionList(aPage, numPerPage);
@@ -42,7 +43,27 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public int insertAuction(Auction auction) {
-		return auctionDAO.insertAuction(auction);
+		int result = 0;
+		int pno = 0;
+		
+		try {
+			
+			result = auctionDAO.insertProduct(auction);
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("상품에서 문제발생함");
+	        System.out.println("상품 옥션 : " + auction);
+			pno = auction.getPno();
+			
+			result = auctionDAO.insertAuction(auction);
+			System.out.println("그냥 옥션 : " + auction);
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("옥션에서 문제발생함");
+			
+		} catch (Exception e) {
+			System.out.println("문제가 발생한 옥션 : " + auction);
+			throw new AuctionException("인서트 하다 문제발생함" + e.getMessage());
+		}
+		
+		
+		return result;
 	}
 
 	

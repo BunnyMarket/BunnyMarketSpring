@@ -7,6 +7,9 @@ import com.kh.bunny.auction.model.vo.Auction;
 
 public interface AuctionService {
 
+	static int AUCTION_SERVICE_ERROR = 0;
+	static int AUCTION_SERVICE_COMPLETE = 1;
+	
 	List<Map<String, String>> selectAuctionList(int aPage, int numPerPage);
 
 	int selectAuctionTotalContents();

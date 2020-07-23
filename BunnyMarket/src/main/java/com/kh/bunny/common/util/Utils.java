@@ -8,7 +8,7 @@ public class Utils {
 	
 	public static String getPageBar(int totalContents, int pPage, int numPerPage, String url ){
 		String pageBar = "";
-		int pageBarSize = 8; // 5개씩 페이지 목록을 보여주세요 
+		int pageBarSize = 6; // 5개씩 페이지 목록을 보여주세요 
 		pPage = pPage==0?1:pPage;
 		
 		//총페이지수 구하기

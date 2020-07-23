@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.common.util.Utils;
@@ -85,7 +86,7 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionInsertEnd.do")
 	public String insertProduct(Auction auction, Model model, HttpSession session,
-			@RequestParam(value="pImg", required = false) MultipartFile pImg) {
+			@RequestParam(value="pImage", required = false) MultipartFile pImage) {
 		
 		System.out.println("옥션이 잘 들어왓느냐~ : " +auction );
 		
@@ -94,18 +95,18 @@ public class AuctionController {
 		File dir = new File(saveDir);
 		if(dir.exists() == false) dir.mkdirs();
 		
-		String originName = pImg.getOriginalFilename();
+		String originName = pImage.getOriginalFilename();
 		String ext = originName.substring(originName.lastIndexOf(".") + 1);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		
 		int rndNum = (int)(Math.random() * 1000); // 이름바꾸기 수행. 랜덤번호..
 		
 		// 서버에서 저장 후 관리할 파일 명 
-		String renamedName = sdf.format(new Date() + "_" + rndNum + "." + ext);
+		String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
 		
 		// 실제 파일을 지정한 파일명으로 변환하며 데이터를 저장한다.
 		try {
-			pImg.transferTo(new File(saveDir + "/" + renamedName)); 
+			pImage.transferTo(new File(saveDir + "/" + renamedName)); 
 			// transferTo는 우리가 원래 받은 원본 파일 이름을 변경된 파일 이름으로 바꾸어서 해당 경로에 저장해달라는 것.
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
@@ -114,18 +115,31 @@ public class AuctionController {
 		auction.setPImg(renamedName);
 		
 		System.out.println("파일은 잘 들어왔느냐~ : " +auction );
-		int result = auctionService.insertAuction(auction);
+		
+		int result;
+		try {
+			result = auctionService.insertAuction(auction);
+			
+		} catch (Exception e) {
+			throw new AuctionException("게시글 등록 오류" + e.getMessage());
+		}
+		
+		String loc = "/auction/auctionList.do";
 		String msg = "";
 		
 		if (result >0) {
 			msg = "Success Insert Auction";
+			loc = "/auction/auctionDetail.do?pno="+auction.getPno();
 			System.out.println("Success Insert Auction");
 		} else {
 			msg = "Fail Insert Auction";
 			System.out.println("Fail Insert Auction");
 		}
 		
-		return "redirect:/auction/auctionList.do";
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
 	}
 	
 	@RequestMapping("/auction/aImgInsert.do")
