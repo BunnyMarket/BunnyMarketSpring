@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 /test/
+=======
+*/target/*
+/.classpath
+/.settings/*
+/.settings/
+/target/
+/workspace/
+>>>>>>> refs/remotes/origin/dev_member_bch

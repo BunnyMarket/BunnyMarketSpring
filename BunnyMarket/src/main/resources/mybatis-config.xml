@@ -15,6 +15,7 @@
 		<!-- 
 			<typeAlias type="실제 VO객체" alias="mybatis에서 사용할 클래스 별칭">
 		 -->
+		 <typeAlias type = "com.kh.bunny.member.model.vo.Member"  alias = "member"/> 
 		 <typeAlias type = "com.kh.bunny.product.model.vo.Product" alias = "Product" />
 		 <typeAlias type = "com.kh.bunny.common.Str2ArrayHandler" alias = "Str2ArrayHandler" />
 		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/> 

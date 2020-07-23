@@ -86,10 +86,26 @@
 										</div>
 									</div>
 								</div>
+								<c:if test="${empty member}">
 								<!-- Login -->
 								<div class="login">
-									<a href="${ pageContext.request.contextPath }/login.jsp"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
+									<a href="login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
 								</div>
+								</c:if>
+								<c:if test="${!empty member}">
+
+									<span><a
+										href="${pageContext.request.contextPath}/member/memberView.do?userId=${member.userId}"
+										title="내정보보기">${member.userName}님,&nbsp;안녕하세요</a></span>
+							        &nbsp;
+							        <div class="login">
+							        <%-- <button class="login" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button> --%>
+							        <a href="${pageContext.request.contextPath}/member/memberLogout.do"><i class="fa fa-user" aria-hidden="true"></i><span>Logout</span></a>
+							        </div>
+							        </c:if>
+
+
+
 								<!-- Cart -->
 								<div class="cart">
 									<a href="#"> <i class="fa fa-shopping-cart"
