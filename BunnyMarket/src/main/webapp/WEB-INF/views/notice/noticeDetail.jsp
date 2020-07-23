@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-<head>  
+<head> 
 <style>
   .btn {
 	box-shadow:inset 0px 0px 0px 0px #97c4fe;
@@ -76,10 +76,10 @@
 	 text-align: center;
 	 border-radius:5px;
 	 }
+  
   </style>
- 
-	<c:import url="../admin/common/header.jsp"/>
-      <div class="content">
+<c:import url="../admin/common/header.jsp"/>
+	 <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -90,70 +90,58 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                    <table class="table" id="tableArea" >
-                      <thead class=" text-primary">
-                        <th>번호 </th>
-                        <th>제목</th>
-                        <th>날짜</th>
-                        <th>조회수 </th>
-                      </thead>
-                     <c:forEach items="${list}" var ="n">
-                     	<tr id="${n.nno}" >
-	                     	<td>${n.nno}</td>
-							<td>${n.NTitle}</td>
-							<td>${n.NDate}</td>
-							<td>${n.NTotal}</td>
-						</tr>
-                     </c:forEach>
-                    </table>
+                   <%-- <table>
+                   	<tr>
+                   		<th>글번호</th>
+                   		<td name="nno">${notice.nno}</td>
+                   		<th>작성일</th>
+                   		<td name="NDate">${notice.NDate}</td>
+                   		<th>조회수</th>
+                   		<td name="NCount">${notice.NTotal}</td>
+                   	</tr>
+                   	<tr>
+                   	<tr><div></div></tr>
+                   	<th>내용</th>
+                   	<td name="NContent">${notice.NContent}</td>
+                   	</tr>              
+                   </table> --%>
+                   <div class="single-post-details-area">
+						<div class="post-content">
+							<h4 class="post-title">${notice.NTitle }</h4>
+							<br />
+							<div class="post-meta mb-30">
+								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>작성자  : ${notice.NDate}</a> 
+								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>조회수 : ${notice.NTotal}</a>
+							</div>
+							<div class="post-meta mb-30">
+								<%-- <button type="button" class="btn mt-15"
+										onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeUpdate.do?noticeNo=${notice.nno}'">수정하기</button> --%>
+							</div>
+							<div><p></p></div>
+							<%-- <div class="post-thumbnail mb-30">
+								<img src="${pageContext.request.contextPath}/resources/img/bg-img/35.jpg" alt="">
+							</div> --%>
+							<br/>
+							<div style="font-size : 30px;">${notice.NContent}</div>
+							<br /> <br /> <br />
+							<blockquote>
+								<div class="blockquote-text">
+									<h5>“바로 당신의 니즈, 저희 바니마켓이 충족시켜드리겠습니다.”</h5>
+									<h5>YOUNG BUNNY</h5>
+								</div>
+							</blockquote>
+
+						</div>
+					</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-         </div>
-      </div>
-	<br/>
-<div class="pagingArea" >
-	<c:out value="${pageBar}" escapeXml="false"/>
-</div>
-<br/>
-<br/>
-<div class="searchArea">
-	<select id="searchCondition" name="searchCondition" >
-		<option value="title">제목</option>
-		<option value="content">내용</option>
-	</select>&nbsp;&nbsp;
-	<input type="search" id="keyword"> &nbsp;
-	<button class=" btn paging">검색</button>
-	<button class="btn paging" onclick="noticeInsert();">글쓰기</button>
-</div>
+       
+  
 	
-<br>
-<br>
- <script>
-  	function noticeInsert(){
-  		location.href="${pageContext.request.contextPath}/admin/notice/noticeInsertForm.do";
-  	}
-   /* 	$(function(){
-  		$("tr[id]").on("click",function(){
-  			var noticeNo = $(this).attr("id");
-  			location.href="${pageContext.request.contextPath}/admin/notice/noticeDetail.do?no="+noticeNo;
-  		});
-  	});  */
-  	 	$(function(){
-  		$("#tableArea td").mouseenter(function(){
-  			$(this).parent().css({"background":"#FAD7A0","cursor":"pointer"});
-  		}).mouseout(function(){
-  			$(this).parent().css({"background" : "white"});
-  		}).click(function(){
-  			var noticeNo = $(this).parent().attr("id");
-  			console.log("noticeNo="+noticeNo);
-  			location.href="${pageContext.request.contextPath}/admin/notice/noticeDetail.do?no="+noticeNo;
-  		});
-  	}); 
-  </script>
+	 <button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeList.do'">리스트로</button>
+		    &nbsp; &nbsp; &nbsp;
+	<button class="btn paging" style="float: right;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeUpdate.do?noticeNo=${notice.nno}'">수정하기</button> 
+
+
 <c:import url="../admin/common/footer.jsp"/>
-
-
-

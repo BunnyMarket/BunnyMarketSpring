@@ -19,6 +19,14 @@
 			SEQ_NNO.NEXTVAL, #{NTitle}, #{NContent}, SYSDATE, 0)
 	</insert>
 	
+	<!-- detail -->
+	<select id="selectOneNotice" parameterType="_int" resultType="Notice">
+		SELECT * FROM NOTICE WHERE NNO = #{nno}
+	</select>
+	
+	<update id="updateNoticeCount" parameterType="Notice" >
+		UPDATE NOTICE SET NTOTAL = NTOTAL+1 WHERE NNO = #{nno}	
+	</update>
 </mapper>
 
 

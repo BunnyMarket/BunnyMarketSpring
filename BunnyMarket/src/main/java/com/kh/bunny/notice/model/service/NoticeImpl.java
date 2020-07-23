@@ -35,8 +35,13 @@ public class NoticeImpl implements NoticeService {
 
 	@Override
 	public Notice selectOneNotice(int nno) {
-	
-		return noticeDAO.selectOneNotice(nno);
+		
+		Notice n = noticeDAO.selectOneNotice(nno);
+		
+		if(n!= null) {
+			int result = noticeDAO.updateCount(nno);
+		}
+		return n;
 	}
 
 	@Override

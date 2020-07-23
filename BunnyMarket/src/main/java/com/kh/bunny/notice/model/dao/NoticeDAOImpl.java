@@ -37,7 +37,7 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public Notice selectOneNotice(int nno) {
 		
-		return sqlSession.selectOne("noticeMapper.selectneNotice",nno);
+		return sqlSession.selectOne("noticeMapper.selectOneNotice",nno);
 	}
 
 	@Override
@@ -52,4 +52,8 @@ public class NoticeDAOImpl implements NoticeDAO {
 		return sqlSession.delete("noticeMapper.deleteNotice", nno);
 	}
 
+	@Override
+	public int updateCount(int nno) {
+		return sqlSession.update("noticeMapper.updateNoticeCount",nno);
+	}
 }

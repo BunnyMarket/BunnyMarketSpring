@@ -14,6 +14,7 @@ public interface NoticeDAO {
 	Notice selectOneNotice(int nno);
 	int updateNotice(Notice notice);
 	int deleteNotice(int nno);
+	int updateCount(int nno);
 
 
 }
