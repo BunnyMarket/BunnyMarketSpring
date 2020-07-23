@@ -35,20 +35,21 @@
 					<!-- Post Details Area -->
 					<div class="single-post-details-area">
 						<div class="post-content">
-							<h4 class="post-title">제목</h4>
+						<input type="hidden"   value="${qna.qno }"/>
+							<h4 class="post-title">${qna.QTitle}</h4>
 							<br />
 							<div class="post-meta mb-30">
-								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>등록일</a> 
-								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>작성자</a>
+								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>${qna.QDate}</a> 
+								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>${qna.QWriter}</a>
 							</div>
 							<div class="post-meta mb-30">
 								<button type="button" class="btn alazea-btn mt-15"
-										onclick="location.href='${ pageContext.request.contextPath }/QNA/QNA_Update.do'">수정하기</button>
+										onclick="location.href='${ pageContext.request.contextPath }/QNA/QNAUpdateView.do?qno=${qna.qno}'">수정하기</button>
 							</div>
 							<div class="post-thumbnail mb-30">
 								<img src="${pageContext.request.contextPath}/resources/img/bg-img/35.jpg" alt="">
 							</div>
-							<p>요즘 당근마켓보다 바니마켓이 더 대세라는데.. 사실인가요?</p>
+							<p>${qna.QContent}</p>
 							<br /> <br /> <br />
 							<blockquote>
 								<div class="blockquote-text">
@@ -136,7 +137,7 @@
 
 							<div class="contact-form-area">
 								<!-- Comment Form -->
-								<form action="#" method="post">
+								<form id="cmtForm" method="post">
 									<div class="row">
 										<div class="col-12">
 											<div class="form-group">
@@ -145,7 +146,8 @@
 											</div>
 										</div>
 										<div class="col-12">
-											<button type="submit" class="btn alazea-btn">댓글 작성하기</button>
+											<button type="button" class="btn alazea-btn mt-15" 
+							                       onclick="comment();">댓글 작성하기</button>
 										</div>
 									</div>
 								</form>
@@ -158,6 +160,10 @@
 		</div>
 	</div>
 </section>
-
+<script>
+ function  comment(){
+		$("#cmtForm").attr("action", "${ pageContext.request.contextPath }/QNA/QNADetail.do").submit();
+ }
+</script>
 <!--  여기까지 -->
 <c:import url="../common/footer.jsp" />

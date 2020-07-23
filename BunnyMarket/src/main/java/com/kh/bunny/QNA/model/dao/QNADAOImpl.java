@@ -30,26 +30,26 @@ public class QNADAOImpl implements QNADAO {
 
 	@Override
 	public int insertQNA(QNA qna) {
-		
+		System.out.println("DAO qna : " + qna);
 		return sqlSession.insert("qnaMapper.insertQNA", qna);
 	}
 
 	@Override
 	public QNA selectOneQNA(int qNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sqlSession.selectOne("qnaMapper.selectOneQNA", qNo) ;
 	}
 
 	@Override
 	public int updateQNA(QNA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.insert("qnaMapper.updateQNA", qna);
 	}
 
 	@Override
 	public int deleteQNA(int qNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.delete("qnaMapper.deleteQNA", qNo);
 	}
 	
 }

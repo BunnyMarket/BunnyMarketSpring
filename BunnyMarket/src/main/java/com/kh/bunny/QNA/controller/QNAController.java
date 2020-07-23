@@ -48,18 +48,20 @@ public class QNAController {
 		
 	}
 	
-	@RequestMapping("/QNA/QNADetail.do")	
-	public void insertQNA() {
+	@RequestMapping("/QNA/QNAInsertView.do")	
+	public String detailQNA() {
+		
+		return "QNA/QNA_Insert";
 		
 	}
 	
-	@RequestMapping("/QNA/QNA_Insert.do")
+	@RequestMapping("/QNA/QNAInsert.do")
 	public String insertQNA(QNA qna, Model model, HttpSession session) {
 		int result;
 		
 		try {
-		result = qnaService.insertQNA(qna);
-		}catch(Exception e) {
+			result = qnaService.insertQNA(qna);
+	}catch(Exception e) {
 			throw new QNAException("QNA 등록 오류!");
 		}
 	
@@ -75,16 +77,95 @@ public class QNAController {
 		
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		
-		return "common/msg";
+		return "QNA/QNA_Detail";
 }
 	
+	@RequestMapping("/QNA/QNADetail.do")
+	public String selectOne(@RequestParam int no, Model model) {
+		QNA q = qnaService.selectOneQNA(no);
+		
+		model.addAttribute("qna", q);
+		
+		return "QNA/QNA_Detail";
+		
+	}
 	
+	@RequestMapping("/QNA/QNAUpdateView.do")
+	public String QNAUpdateView(@RequestParam int qno, Model model) {
+		
+		model.addAttribute("qna", qnaService.selectOneQNA(qno));
+		
+		return "QNA/QNA_Update";
+	}
 	
+	@RequestMapping("/QNA/QNAUpdate.do")
+	public String QNAUpdate(QNA qna, HttpSession session, Model model) {
+		
+		int qNo = qna.getQno();
+		
+		System.out.println("QNA번호왔냐?" + qNo);
+		
+		QNA originQNA = qnaService.selectOneQNA(qNo);
+		
+		System.out.println("원본 QNA" + originQNA);
+		
+		originQNA.setQTitle(qna.getQTitle());
+		originQNA.setQContent(qna.getQContent());
+		
+		int result = qnaService.updateQNA(originQNA);
+		qna = qnaService.selectOneQNA(qna.getQno());
+		
+		String loc ="/QNA/QNAList.do";
+		String msg ="";
+		
+		if(result >0) {
+			msg = "게시글 수정 성공!";
+		}else {
+			msg ="게시글 수정 실패!";
+		}
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
 	
+	@RequestMapping("/QNA/QNADelete.do")
+	public String QNADelete(@RequestParam int qno, HttpSession session, Model model) {
+		int result = qnaService.deleteQNA(qno);
+		
+		String loc = "/QNA/QNAList.do";
+		String msg ="";
+		
+		  if(result > 0) {
+		         msg = "QNA 삭제 성공!";
+		         
+		      } else {
+		         msg = "QNA 삭제 실패!";
+		      }
+		   model.addAttribute("loc", loc).addAttribute("msg", msg);
+		   
+		   System.out.println("Model받아오나: " +model);
+		   
+		   return "common/msg";
+	}
 	
+	@RequestMapping("/QNA/QNAPassword.do")
+	public String pwdQNA(@RequestParam("no")int qno, Model model) {
+		QNA q = qnaService.selectOneQNA(qno);
+		
+		model.addAttribute("qna", q);
+		return "QNA/QNAPassword";
+		
+	}
 	
-	
-	
+	@RequestMapping("/QNA/QNASelectOnePassword.do")
+	public String selectOneQNAPwd(QNA qna, @RequestParam("userPwd") String checkPwd, Model model, HttpSession session) {
+		String msg="";
+		String loc ="";
+		QNA q = qnaService.selectOneQNA(qna.getQno());
+		
+		System.out.println(session.getAttribute("member"));
+		Member m =(Member)session.getAttribute("member");
+	}
 	
 	
 	

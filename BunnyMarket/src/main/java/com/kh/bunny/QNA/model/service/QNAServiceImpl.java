@@ -31,37 +31,44 @@ QNADAO qnaDAO;
 	@Override
 	public int insertQNA(QNA qna) {
 		int result =0;
-		int qno = 0;
 		
-		try {
 		result = qnaDAO.insertQNA(qna);
+		
 		if(result == QNA_SERVICE_ERROR) throw new QNAException();
-		
-		qno = qna.getQno();
-		
-		}catch(Exception e) {
-			throw e;
-		}
 	
 		return result;
 	}
 
 	@Override
 	public QNA selectOneQNA(int qNo) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return qnaDAO.selectOneQNA(qNo);
 	}
 
 	@Override
 	public int updateQNA(QNA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+		result = qnaDAO.updateQNA(qna);
+		
+		if(result == QNA_SERVICE_ERROR)throw new QNAException();
+		}catch (Exception e) {
+			throw new QNAException("QNA 수정 오류 발생!" + e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteQNA(int qNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	int result = qnaDAO.deleteQNA(qNo);
+	
+	if(result == QNA_SERVICE_ERROR) throw new QNAException();
+	else if(result > QNA_SERVICE_ERROR)result = QNA_SERVICE_COMPLETE;
+	else throw new QNAException("QNA 삭제 실패!");
+	
+		return result;
 	}
 
 }

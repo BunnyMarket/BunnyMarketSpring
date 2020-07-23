@@ -15,10 +15,26 @@
 	</select>
 
    <insert id="insertQNA">
-   INSERT INTO QNA(QNO, QTITLE, QCONTENT)
-   VALUES
-   (SEQ_QNO.NEXTVAL,#{qTitle},#{qContent})
+   INSERT INTO QNA
+   VALUES (SEQ_QNO.NEXTVAL, #{qWriter}, #{qTitle},#{qContent}, DEFAULT)
    </insert>
+   
+   <select id="selectOneQNA" parameterType="_int" resultType="QNA">
+      SELECT * FROM QNA
+      WHERE QNO =#{qno}
+   </select>
+   
+   <update id="updateQNA" parameterType="QNA">
+     UPDATE QNA SET
+     QTITLE =#{qTitle},
+     QCONTENT =#{qContent}
+     WHERE QNO =#{qno}
+   </update>
+   
+   <delete id="deleteQNA" parameterType="_int">
+   DELETE FROM QNA
+   WHERE QNO =#{qno}
+   </delete>
 </mapper>
 
 

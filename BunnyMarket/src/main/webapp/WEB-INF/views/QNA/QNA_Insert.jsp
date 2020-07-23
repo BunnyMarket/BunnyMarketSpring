@@ -28,7 +28,7 @@
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
-			<form action="">
+			<form id="formArea"   method="post">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-2">
 						<div class="single_product_desc" style="text-align: center; padding-top: 7px;">
@@ -40,7 +40,8 @@
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
-							<input type="text" class="form-control" id="" placeholder="게시글 제목을 입력" required />
+							<input type="hidden" name="qWriter" value="TEST1">
+							<input type="text" class="form-control" id="qTitle"  name="qTitle" placeholder="게시글 제목을 입력" required />
 							<br />
 						</div>
 					</div>
@@ -48,15 +49,15 @@
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea class="summernote" name="qContent" placeholder = "내용 입력"></textarea>
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_Detail.jsp'">등록완료</button>
+					<button type="button" class="btn alazea-btn mt-15" 
+							onclick="goInsert();">등록완료</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_Detail.jsp'">취소하기</button>
+					<button type="button" class="btn alazea-btn mt-15" 
+							onclick="goList();">취소하기</button>
 				</div>
 			</form>
 		</div>
@@ -94,5 +95,15 @@
         }
        e.preventDefault();
 	});
+	
+	function goInsert(){
+		$("#formArea").attr("action", "${ pageContext.request.contextPath }/QNA/QNAInsert.do").submit();
+		/* location.href="${ pageContext.request.contextPath }/QNA/QNAInsert.do"; */
+	}
+	
+	function goList(){
+		$("#formArea").attr("action", "${ pageContext.request.contextPath}/QNA/QNAList.do").submit();
+		
+	}
 </script>
 <c:import url="../common/footer.jsp" />

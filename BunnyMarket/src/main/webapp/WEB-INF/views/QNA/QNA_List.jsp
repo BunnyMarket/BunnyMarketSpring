@@ -75,7 +75,7 @@
 						<br /><br />
 					
 						<a class="btn alazea-btn mr-30"
-							href="${pageContext.request.contextPath}/QNA/QNADetail.do">등록하기</a>
+							href="${pageContext.request.contextPath}/QNA/QNAInsertView.do">등록하기</a>
 					
 						<a class="btn alazea-btn mr-30"
 							href="${pageContext.request.contextPath}">메인으로</a> <br />
@@ -97,10 +97,10 @@
 
 <script>
 function selectOne(qno){
-	if(${member.userId eq 'admin'})
-	location.href = '${pageContext.request.contextPath}/QNA/QNA_Detail.do?no=' + qno;
-	else
-	location.href = '${pageContext.request.contextPath}/qna/qnaPwd.do?no=' + qno;
+//	if(${member.userId eq 'admin'})
+	location.href = '${pageContext.request.contextPath}/QNA/QNADetail.do?no=' + qno;
+//	else
+//	location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?no=' + qno;
 };
 
 
