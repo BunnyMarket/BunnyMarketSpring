@@ -157,17 +157,27 @@ public class MemberController {
 
 		return "redirect:/";
 	}
+	
+	// 마이페이지 이동
+	@RequestMapping("/member/memberMyPage.do")
+	public String memberMyPage(@RequestParam String userId, Model model) {
+		model.addAttribute("member", memberService.selectOne(userId));
+		
+		return "member/myPage";
+	}
 
-	// 회원정보 수정 페이지 이동
+	// 회원정보 정보 페이지 이동
 	@RequestMapping("/member/memberView.do")
 	public String memberView(@RequestParam String userId, Model model) {
 		logger.debug("[" + userId + "] : 회원 정보 페이지 접근!");
 
 		model.addAttribute("member", memberService.selectOne(userId));
 
-		return "member/myPage";
+		return "member/profileUpdate";
 	}
-
+	
+	
+	
 	// 회원 정보 수정 기능 메소드
 	@RequestMapping("/member/memberUpdate.do")
 	public String memberUpdate(Member member, Model model) {
@@ -268,14 +278,15 @@ public class MemberController {
 	}
 
 	// mailSending 코드
-	@RequestMapping(value = "/member/auth.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/auth.do", method = {RequestMethod.GET , RequestMethod.POST})
 	public ModelAndView mailSending(HttpServletRequest request, String e_mail, HttpServletResponse response_email)
 			throws IOException {
-
+		
+		int result;
 		Random r = new Random();
 		int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
 
-		String setfrom = "dlgkstjq623@gamil.com";
+		String setfrom = "model_so@naver.com";
 		String tomail = request.getParameter("email"); // 받는 사람 이메일
 		String title = "회원가입 인증 이메일 입니다."; // 제목
 		String content =
@@ -296,7 +307,7 @@ public class MemberController {
 
 						System.getProperty("line.separator") +
 
-						"받으신 인증번호를 홈페이지에 입력해 주시면 다음으로 넘어갑니다."; // 내용
+						"받으신 인증번호를 홈페이지에 입력해 주세요"; // 내용
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -311,9 +322,9 @@ public class MemberController {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
+		
 		ModelAndView mv = new ModelAndView(); // ModelAndView로 보낼 페이지를 지정하고, 보낼 값을 지정한다.
-		mv.setViewName("/member/email_injeung"); // 뷰의이름
+		mv.setViewName("redirect:memberEnrollEnd.do"); // 뷰의이름
 		mv.addObject("dice", dice);
 
 		System.out.println("mv : " + mv);
@@ -348,7 +359,7 @@ public class MemberController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.setViewName("/member/join.do");
+		mv.setViewName("memberEnrollEnd.do");
 
 		mv.addObject("e_mail", email_injeung);
 
@@ -356,9 +367,9 @@ public class MemberController {
 
 			// 인증번호가 일치할 경우 인증번호가 맞다는 창을 출력하고 회원가입창으로 이동함
 
-			mv.setViewName("member/join");
+			mv.setViewName("redirect:memberEnrollEnd.do");
 
-			mv.addObject("e_mail", email_injeung);
+			mv.addObject("email", email_injeung);
 
 			// 만약 인증번호가 같다면 이메일을 회원가입 페이지로 같이 넘겨서 이메일을
 			// 한번더 입력할 필요가 없게 한다.
@@ -374,7 +385,7 @@ public class MemberController {
 
 			ModelAndView mv2 = new ModelAndView();
 
-			mv2.setViewName("member/email_injeung");
+			mv2.setViewName("redirect:memberEnrollEnd.do");
 
 			response_equals.setContentType("text/html; charset=UTF-8");
 			PrintWriter out_equals = response_equals.getWriter();
@@ -388,5 +399,7 @@ public class MemberController {
 		return mv;
 
 	}
+	
+	
 
 }

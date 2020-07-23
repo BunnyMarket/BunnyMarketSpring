@@ -18,6 +18,8 @@ public interface MemberService {
 
 	
 	 public boolean email_check(String email) throws Exception;    //이메일 중복확인을 하는 메소드
+
+	
 	 
 	 
 	

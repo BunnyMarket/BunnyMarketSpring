@@ -34,8 +34,8 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- Gmail -->
-  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- Gmail -->
+  <bean id="javaMailSesnder" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.naver.com" />
     <property name="port" value="465" />
     <property name="username" value="model_so@naver.com" />
@@ -47,6 +47,10 @@
     </props>
     </property>
   </bean>
+ 
+  
+ 
+  
 	
 	
 	<!-- 트랜잭션 처리 방식 -->

@@ -36,7 +36,7 @@
                   <h3>아이디</h3>
                </div>
                <div>
-                  <p><a href="#" style="font-size: 20px;">회원정보 상세보기</a></p>
+                  <p><a href="memberUpdate.do" style="font-size: 20px;">회원정보 상세보기</a></p>
                   <p><a href="#" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
                   <br /><br />
                </div>

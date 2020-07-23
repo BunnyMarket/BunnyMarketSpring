@@ -13,7 +13,7 @@
 <body>
 		<h2 align="center">회원 정보 수정</h2>
 		
-		<form id="updateForm" action="" method="post">
+		<form id="updateForm" action="memberUpdate.do" method="post">
 			
 			<table align="center">
 				<tr>
