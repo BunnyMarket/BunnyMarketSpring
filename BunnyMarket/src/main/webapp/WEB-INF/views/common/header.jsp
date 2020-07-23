@@ -95,18 +95,23 @@
 								<c:if test="${!empty member}">
 
 									<span><a
-										href="${pageContext.request.contextPath}/member/memberView.do?userId=${member.userId}"
+										href="${pageContext.request.contextPath}/member/memberMyPage.do?userId=${member.userId}"
 										title="내정보보기">${member.userName}님,&nbsp;안녕하세요</a></span>
-							        &nbsp;
+							        &nbsp; 
 							        <div class="login">
 							        <%-- <button class="login" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button> --%>
 							        <a href="${pageContext.request.contextPath}/member/memberLogout.do"><i class="fa fa-user" aria-hidden="true"></i><span>Logout</span></a>
+							        <a href="${pageContext.request.contextPath}/member/memberDelete.do"><i class="fa fa-user" aria-hidden="true"></i><span>회원탈퇴</span></a>
+							        
+							        &nbsp;
+							        
 							        </div>
 							        </c:if>
 
-
+								 
 
 								<!-- Cart -->
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<div class="cart">
 									<a href="#"> <i class="fa fa-shopping-cart"
 										aria-hidden="true"></i> <span>Cart <span
