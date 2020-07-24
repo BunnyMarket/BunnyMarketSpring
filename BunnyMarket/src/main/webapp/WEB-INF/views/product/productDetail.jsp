@@ -2,7 +2,22 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../common/header.jsp"%>
+<style>
+/* 커스텀 오버레이  */
+.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 
+/* 좌표로 주소 띄우기위한 css */
+.map_wrap {position:relative;width:100%;height:350px;}
+.title {font-weight:bold;display:block;}
+.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+#centerAddr {display:block;margin-top:2px;font-weight: normal;}
+.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+
+</style>
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
 	<!-- Top Breadcrumb Area -->
@@ -66,6 +81,7 @@
 					</div>
 				</div>
 			</div>
+			<br /><br />
 			<div class="row justify-content-between">
 				<div class="col-12">
 					<div class="product_details_tab clearfix">
@@ -93,16 +109,21 @@
 										<br /> <br />
 										<p>${ product.PContent }</p>
 									</div>
+									<br /><br />
+									<hr />
+									<div class="col-12">
+										<br /> <br />
+										<h4>판매자의 직거래 선호 지역</h4>
+										<div class="map_wrap">
+											<div id="map" style="width:100%; height: 460px; position:relative;overflow:hidden;"></div>
+										</div>
+										<br /><br /><br /><br /><br /><br />
+									</div>
 
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="addi-info">
 								<div class="additional_info_area">
-									<div class="col-12">
-										<br /> <br />
-										<h4>판매자의 직거래 선호 지역</h4>
-										<div id="map" style="width:100%; height: 460px;"></div>
-									</div>
 									<div class="col-12 col-md-6">
 										<br /> <br />
 										<h4>판매자 정보</h4>
@@ -226,9 +247,6 @@
 
 <script>
 		
-	$().ready(function(){
-		
-	
 	// 지도 넣기 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -242,31 +260,66 @@
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
 	
+	
+	var coords; // 주소로 좌표를 받을 변수 선언
+	
+	var imageSrc = 'https://www.pngrepo.com/png/264372/79/easter-bunny-rabbit.png', // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(60, 60), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+	    markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+
+	
 	// 주소로 좌표를 검색합니다
 	geocoder.addressSearch('${product.PAddress}', function(result, status) {
 	    // 정상적으로 검색이 완료됐으면 
 	    if (status === kakao.maps.services.Status.OK) {
-
-	    	var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            				content: '<div style="width:150px;text-align:center;padding:6px 0;">거래자가 원하는 거래 지역</div>'
-			});
-			infowindow.open(map, marker);
-
-			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			map.setCenter(coords);
+	    	coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		}
-	});
+	    
+	    
+	    // 결과값으로 받은 위치를 마커로 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: coords,
+	        image: markerImage
+	        
+	    });
+	    
+	 	// 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    var content = '<div class="customoverlay">' +
+	        		  '  <a href="https://map.kakao.com/?q=${product.PAddress}" target="_blank">' +
+	       			  '    <span class="title">판매자가 거래를 원하는 지역</span>' +
+	       			  '  </a>' +
+	       			  '</div>';
+
+	    // 커스텀 오버레이가 표시될 위치입니다 
+	    var position = coords;  
+
+	    // 커스텀 오버레이를 생성합니다
+	    var customOverlay = new kakao.maps.CustomOverlay({
+	        map: map,
+	        position: position,
+	        content: content,
+	        yAnchor: 1 
+	    });
 	
+	    /* // 인포윈도우로 장소에 대한 설명을 표시합니다
+	    var infowindow = new kakao.maps.InfoWindow({
+	        				content: '<div style="width:180px;text-align:center;padding:6px 0;">거래자가 원하는 거래 지역</div>'
+		});
+		infowindow.open(map, marker);  */
+	
+		// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		map.setCenter(coords);
+		
+	    
 	});
+	    
+	
+	
 </script>
 
 
