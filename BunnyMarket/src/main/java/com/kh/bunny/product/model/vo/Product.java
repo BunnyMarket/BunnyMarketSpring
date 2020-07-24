@@ -2,6 +2,8 @@ package com.kh.bunny.product.model.vo;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

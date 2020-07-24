@@ -33,7 +33,7 @@
 	<div class="produts-details--content mb-50">
 		<div class="container">
 
-			<form action="">
+			<form id = "productInsert" method = "post" action="${pageContext.request.contextPath}/product/productInsertEnd.do" enctype="multipart/form-data">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
@@ -41,14 +41,8 @@
 								<div id="pImgArea">
 									<img id="titleImg" class = "d-block w-100" width="344.8px" height="357.56px">
 								</div>
-								
-								<!--  
-									이거 script에서 .hide해줬는데 왜 안없어질꼬...
-									아 제이쿼리 파일 안넣어서인듯.
-									아직 원격저장소 새로 안만들어졌으니 이걸 확인하면 그때 제이쿼리 파일 넣어주세요~!
-								 -->
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name="ptitleImg"
+									<input type="file" id="titleImgArea" name = "pTitleImg"
 										onchange="loadImg(this, 1);" />
 								</div>
 							</div>
@@ -59,11 +53,11 @@
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type = "text" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
+							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type = "text" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
+							<input type = "text" name = "pPrice" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
 							<br />
 
 							<!-- <label for="pEndDate">경매 종료일 *</label>
@@ -86,7 +80,7 @@
 							<br /> -->
 
 							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "address" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							<input type = "text" id = "pAddress" name = "pAddress" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
 						</div>
 					</div>
 					
@@ -97,8 +91,7 @@
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/product/productList.jsp'">수정완료</button>
+					<button type="submit" class="btn alazea-btn mt-15">수정완료</button>
 				</div>
 			</form>
 		</div>
@@ -221,7 +214,7 @@
 	                }
 
 	                // 주소 정보를 해당 필드에 넣는다.
-	                $('#address').val(fullAddr);
+	                $('#pAddress').val(fullAddr);
 
 	            }
 	        }).open();
