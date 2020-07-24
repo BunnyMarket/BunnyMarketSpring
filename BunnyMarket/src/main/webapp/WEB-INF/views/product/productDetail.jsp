@@ -297,8 +297,12 @@
 	    // 정상적으로 검색이 완료됐으면 
 	    if (status === kakao.maps.services.Status.OK) {
 	    	coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	    	sellerLat = result[0].y;
-	    	sellerLong = result[0].x;
+	    	/*
+	    		sellerLat = result[0].y;
+	    		sellerLong = result[0].x;
+	    		
+	    		coords.getLat(), .getLng()으로 위경도를 가져올 수 있다. 
+	    	*/
 		}
 	    
 	    
@@ -314,7 +318,7 @@
 	    console.log("lat : " + sellerLat);
 	    console.log("long : " + sellerLong); */
 	    
-	    var sellerURL = 'https://map.kakao.com/link/to/${product.PAddress},'+sellerLat+','+sellerLong;
+	    var sellerURL = 'https://map.kakao.com/link/to/${product.PAddress},'+coords.getLat()+','+coords.getLng();
 	    // console.log(sellerURL); 
 	    
 	 	// 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -346,6 +350,21 @@
 		
 	    
 	});
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 	/* 
 	// geolocation을 통해 사용자 위치 표시를 받아서 판매자와 사용자의 위경도를 받아 url에 한번에 도착지와 출발지로 이어주려고 했지만 
