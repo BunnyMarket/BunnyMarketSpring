@@ -3,6 +3,7 @@ package com.kh.bunny.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -399,7 +401,49 @@ public class MemberController {
 		return mv;
 
 	}
+	//admin
+	@RequestMapping("/admin/member/memberList.do")
+	public String memberList(
+			 @RequestParam(
+					 value="cPage",
+					 required=false, 
+					 defaultValue="1")
+				int cPage, Model model
+			) {
+		int numPerPage = 10; 
+		
+		List<Map<String, String>> list
+			= memberService.selectMemberList(cPage, numPerPage);
 	
-	
+		int totalContents = memberService.selectMemberTotalContents();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "memberList.do");
+		
+		model.addAttribute("user", list);
+		model.addAttribute("totalContents", totalContents);
+		model.addAttribute("numPerPage",numPerPage);
+		model.addAttribute("pageBar", pageBar);
+		
+		
+		return "admin/customerList";
+	}
 
+	@RequestMapping("/admin/member/memberCountUp.do")
+	@ResponseBody
+	public Map<String, Object> memberCountUp(@RequestParam String userId) {
+		System.out.println("controller : " + userId);
+//		int result = memberService.selectOneCountUp(userId);
+//		String msg ="";
+//		if(result > 0) {
+//			msg = "바뀜";
+//		} else {
+//			msg = "열받게하지마";
+//		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean memberKill =memberService.selectOneCountUp(userId) > 0 ? true : false;
+		
+		map.put("kill", memberKill);
+		
+		return map; 
+	}
 }

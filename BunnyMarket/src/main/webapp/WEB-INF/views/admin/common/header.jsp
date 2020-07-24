@@ -54,7 +54,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="${ pageContext.request.contextPath }/views/admin/customerList.jsp">
+            <a class="nav-link" href="${ pageContext.request.contextPath }/admin/member/memberList.do">
               <i class="material-icons">person</i>
               <p>회원 리스트</p>
             </a>

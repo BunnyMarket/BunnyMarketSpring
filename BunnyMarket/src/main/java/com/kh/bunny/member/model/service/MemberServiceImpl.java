@@ -2,6 +2,7 @@ package com.kh.bunny.member.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +52,27 @@ public class MemberServiceImpl implements MemberService {
 	        return result;
 	}
 
-	
+	//admin
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		
+		return memberDAO.selectMemberList(cPage, numPerPage);
+	}
 
+	@Override
+	public int selectMemberTotalContents() {
+		
+		return memberDAO.selectMemberTotalContents();
+	}
 	
-
+	@Override
+	public int selectOneCountUp(String userId) {
+//		HashMap<String, Object> hmap = new HashMap<>();
+//		hmap.put("userId", userId);
+		System.out.println("service : " + userId);
+		return memberDAO.selectOneCountUp(userId);
+	}
+	
 	
 	
 }

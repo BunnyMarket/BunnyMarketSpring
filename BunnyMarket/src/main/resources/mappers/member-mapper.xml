@@ -54,10 +54,25 @@
         WHERE EMAIL = #{email}
     </select>
     
-    
+    <!-- admin -->
+	<select  id="selectMemberList" resultType="member">
+		SELECT * FROM MEMBER ORDER BY USERID DESC
+	</select>
+	
+	
+	<select  id="selectMemberTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+	
+	<update id="selectOneCountUp" parameterType="_int" >
+		UPDATE MEMBER 
+		 <set>
+			MSTATUS = 0 	  
+		 </set> 
+		WHERE USERID = #{userId}		
+	</update>
 	
 </mapper>
-
 
 
 

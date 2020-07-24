@@ -107,6 +107,74 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #810e05;
   	}
+  	table{
+  	text-align : center;}
+  	
+  	/*
+  	/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+  	
+  	*/
   </style>
 </head>
 	<%@ include  file="common/header.jsp"  %>
@@ -116,47 +184,59 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary" style="background : orange;">
-                  <h4 class="card-title ">거래 현황 확인</h4>
+                  <h4 class="card-title ">회원 리스트 </h4>
                   <p class="card-category"> </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
                     <table class="table" >
                       <thead class=" text-primary">
-                        <th>가입일 </th>
-                        <th>회원 아이디</th>
-                        <th>현재 포인트 </th>
-                        <th>경고 횟수 </th>
-                        <th>제재</th>
+                      	<tr>
+	                        <th>아이디</th>
+	                        <th>이름</th>
+	                        <th>닉네임 </th>
+	                        <th>포인트 </th>
+	                        <th>경고 횟수 </th>
+	                        <th>제재</th>
+                      	</tr>
                       </thead>
-                      <c:forEach items="${customer}" var="c">
-                        <tr id="${c.}">
-                          <td>2020-07-11</td>
-                          <td>test1</td>
-                          <td>3</td>
-                          <td>5</td>
-                          <td>50000</td>
-                          <td>3</td>
-                          <td>
-                          <button class="btnw">제재</button>
+                      <tbody>
+                      <c:forEach items="${user}" var="c" varStatus="st">
+                        <tr id="${c.userId}">
+                        <td style="display:none;" id="${st.count}"></td>
+                          <td>${c.userId}</td>
+                          <td>${c.userName}</td>
+                          <td>${c.nickName}</td>
+                          <td>${c.nowPoint}</td>
+                          <td>${c.count}</td>
+                          <td><%-- <button class="btnw" id="btnw-${st.index}">제재</button> --%>
+                         <%--  <label class="switch">
+							  <input type="checkbox" class="checkbox" id="${st.count}">
+							  <span class="slider round"></span>
+							</label> --%>
+							<div _ngcontent-dqh-c114="" class="togglebutton">
+								<label _ngcontent-dqh-c114="">
+									<input _ngcontent-dqh-c114="" type="checkbox" checked="">
+									<span _ngcontent-dqh-c114="" class="toggle" ></span>
+								 </label>
+							</div>
                           </td>
                         </tr>
+                        
                        </c:forEach>
+                      </tbody>
                     </table>
                   </div>
                 </div>
               </div>
             </div>
+            </div>
+            </div>
+            </div>
 	<br/>
 <div class="pagingArea" >
 	<div class="pa">
-		<button class="paging"><</button>
-		<button class="paging">1</button>
-		<button class="paging">2</button>
-		<button class="paging">3</button>
-		<button class="paging">4</button>
-		<button class="paging">5</button>
-		<button class="paging">></button>
+	<c:out value="${pageBar}"  escapeXml="false"/>
 	</div>
 </div>
 <br/>
@@ -173,6 +253,57 @@
 </div>
 <br>
 <br>
+<script>
+       /*  $(function(){
+        	for(var i = 0; i < ${user.size()}; i++){
+        		
+   		 $('#btnw-'+i).on('click',function(){
+   			var id = $(this).parent().parent().attr('id');
+   			console.log(id);
+   			$.ajax({
+   				type : 'POST',
+   				url : '${pageContext.request.contextPath}/admin/member/memberCountUp.do',
+   				data : {"userId" : id},
+				dataType : "json",
+				success: function(data){
+					if(data.kill == true){
+						console.log(data);
+						alert('btnw-'+i);
+						//$('#btnw-'+i).css({'background-color':'black'});
+						$('#btnw-'+i).style.background-color = "black";
+					} else {
+						console.log(data);
+					}
+				},
+				fail : function(data){
+					alert("실패");
+					console.log(data);
+				}
+			});
+   		 });
+        	}
+   	 }); */
+   	 
+  /*  	 $(function(){
+   		 console.log("ckbox-${st.index}");
+   		 $("#ckbox").change(function(){
+   			 
+   		if( $("#ckbox").is("checked")){
+   		 alert("checked");
+   	 } else{
+   		 alert("unchecked");
+   	 }
+   		 });
+   	 }); */
+   
+
+    $(function (){
+	   $('input:checkbox').on('click',function(){
+  			var id = $(this).parent().parent().parent().parent().attr('id');
+  			console.log(id);
+	   });
+   }); 
+</script>
     <%@ include file="common/footer.jsp" %>
 
 
