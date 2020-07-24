@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +37,7 @@ public class AuctionController {
 				, Model model, HttpServletRequest request
 			) {
 		
-		int numPerPage = 10;
+		int numPerPage = 9;
 		List<Map<String, String>> list = auctionService.selectAuctionList(aPage, numPerPage);
 		
 		System.out.println("무엇이 들어있느냐? : " + list);
@@ -103,7 +104,7 @@ public class AuctionController {
 		
 		// 서버에서 저장 후 관리할 파일 명 
 		String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
-		
+		System.out.println("renamedName : " + renamedName);
 		// 실제 파일을 지정한 파일명으로 변환하며 데이터를 저장한다.
 		try {
 			pImage.transferTo(new File(saveDir + "/" + renamedName)); 
@@ -171,6 +172,15 @@ public class AuctionController {
 		
 		return msg;
 	}
+	
+	@RequestMapping("/auction/auctionBidView.do")
+	public String auctionBid(@RequestParam int pno, Model model) {
+		
+		model.addAttribute("pno", pno);
+		
+		return "";
+	}
+	
 }
 
 

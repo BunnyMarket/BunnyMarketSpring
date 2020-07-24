@@ -62,7 +62,6 @@ public class AuctionServiceImpl implements AuctionService {
 			throw new AuctionException("인서트 하다 문제발생함" + e.getMessage());
 		}
 		
-		
 		return result;
 	}
 

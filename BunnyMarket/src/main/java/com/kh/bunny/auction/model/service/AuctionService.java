@@ -20,4 +20,5 @@ public interface AuctionService {
 
 	int insertAuction(Auction auction);
 
+
 }

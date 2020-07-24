@@ -20,5 +20,4 @@ public interface AuctionDAO {
 
 	int insertAuction(Auction auction);
 
-
 }

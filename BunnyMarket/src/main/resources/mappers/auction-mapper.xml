@@ -71,6 +71,12 @@
 		VALUES (#{pno}, TO_CHAR(SYSTIMESTAMP + INTERVAL '0 ${aeTime}:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
 		</if>
 	</insert>
+	
+	<select id="selectImageOne" resultType="string">
+		SELECT PIMG
+		  FROM PRODUCT
+		 WHERE PNO = #{pno}
+	</select>
 </mapper>
 
 

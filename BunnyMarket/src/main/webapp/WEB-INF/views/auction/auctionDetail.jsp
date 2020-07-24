@@ -17,8 +17,8 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i> 홈화면</a></li>
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/views/auction/auctionList.jsp">경매</a></li>
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i class="fa fa-home"></i> 홈화면</a></li>
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매</a></li>
 						<li class="breadcrumb-item active" aria-current="page">상품 상세보기</li>
 					</ol>
 				</nav>
@@ -48,9 +48,9 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<button type="button" class="btn alazea-btn mt-15"
-							style="float: right"
-							onclick="location.href='${ pageContext.request.contextPath }/views/product/productUpdate.jsp'">수정하기</button>
+						<form action="${ pageContext.request.contextPath }/auction/auctionBidView.do?pno=${a.pno}">
+							<button type="submit" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
+						</form>
 						<br />
 
 						<h4 class="price">${a.PPrice} 당근</h4>

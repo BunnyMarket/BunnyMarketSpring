@@ -51,6 +51,7 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return sqlSession.insert("auctionMapper.insertAuction", auction);
 	}
 
+
 	
 
 
