@@ -22,6 +22,7 @@
 	</beans:bean>
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	<!-- 파일 업로드 시에 사용할 MultipartResolver 등록하기 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -31,6 +32,8 @@
 	</beans:bean>
 	
 >>>>>>> refs/heads/develop
+=======
+>>>>>>> refs/remotes/origin/dev_member_bch
 	<context:component-scan base-package="com.kh.bunny" />
 	
 	

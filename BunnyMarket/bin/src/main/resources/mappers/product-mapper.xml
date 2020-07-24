@@ -5,6 +5,7 @@
 <mapper namespace="productMapper">
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
 		FROM PRODUCT ORDER BY PDATE DESC, PNO DESC
@@ -79,3 +80,26 @@
 	
 </mapper>
 >>>>>>> refs/heads/develop
+=======
+	<select id="selectProductList" resultType = "Product"> 
+		SELECT *
+		FROM PRODUCT ORDER BY PDATE DESC, PNO DESC
+	</select>
+
+	<select id="selectProductTotalContent" resultType = "_int">
+		SELECT COUNT(*) FROM PRODUCT
+	</select>
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+>>>>>>> refs/remotes/origin/dev_member_bch
