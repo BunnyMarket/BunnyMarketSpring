@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +16,20 @@ import com.kh.bunny.QNA.model.exception.QNAException;
 import com.kh.bunny.QNA.model.service.QNAService;
 import com.kh.bunny.QNA.model.vo.QNA;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.member.model.service.MemberService;
 
 @Controller
 public class QNAController {
 
 	@Autowired
 	QNAService qnaService;
+	
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("/QNA/QNAList.do")
 	public String selectQNAList(
@@ -58,31 +67,36 @@ public class QNAController {
 	@RequestMapping("/QNA/QNAInsert.do")
 	public String insertQNA(QNA qna, Model model, HttpSession session) {
 		int result;
+		System.out.println("컨트롤러에서 qna객체 확인 : " + qna);
+		
+		int qno = 0;
 		
 		try {
 			result = qnaService.insertQNA(qna);
+			qno = qnaService.selectCurrentQno();
 	}catch(Exception e) {
-			throw new QNAException("QNA 등록 오류!");
+			throw new QNAException("QNA 등록 오류!" + e.getMessage());
 		}
 	
 		String loc = "QNA/QNAList.do";
 		String msg ="";
-		
+
 		if(result > 0) {
 			  msg = "QNA 등록 성공!";
-			  loc = "/QNA/QNA_Detail.do?no="+qna.getQno();
+			  loc = "/QNA/QNADetail.do?qno="+qno;
+//			  loc = "/QNA/QNAList.do";
 		}else {
 			msg ="QNA 등록 실패!";
 		}
 		
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		
-		return "QNA/QNA_Detail";
+		return "common/msg";
 }
 	
 	@RequestMapping("/QNA/QNADetail.do")
-	public String selectOne(@RequestParam int no, Model model) {
-		QNA q = qnaService.selectOneQNA(no);
+	public String selectOne(@RequestParam int qno, Model model) {
+		QNA q = qnaService.selectOneQNA(qno);
 		
 		model.addAttribute("qna", q);
 		
@@ -149,36 +163,59 @@ public class QNAController {
 	}
 	
 	@RequestMapping("/QNA/QNAPassword.do")
-	public String pwdQNA(@RequestParam("no")int qno, Model model) {
-		QNA q = qnaService.selectOneQNA(qno);
+	public String pwdQNA(@RequestParam int qno, Model model) {
+
+		model.addAttribute("qno", qno);
 		
-		model.addAttribute("qna", q);
 		return "QNA/QNAPassword";
 		
 	}
 	
 	@RequestMapping("/QNA/QNASelectOnePassword.do")
-	public String selectOneQNAPwd(QNA qna, @RequestParam("userPwd") String checkPwd, Model model, HttpSession session) {
+	public String selectOneQNAPwd(@RequestParam int qno, @RequestParam String checkPwd, Model model, HttpSession session) {
+		
 		String msg="";
 		String loc ="";
-		QNA q = qnaService.selectOneQNA(qna.getQno());
+		
+		QNA q = qnaService.selectOneQNA(qno);
 		
 		System.out.println(session.getAttribute("member"));
 		Member m =(Member)session.getAttribute("member");
+		
+		System.out.println("qwriter: " + q.getQWriter() );
+		System.out.println("userid : "+ m.getUserId() );
+		System.out.println("checkPwd : " + checkPwd);
+		System.out.println("userpwd : "+ m.getUserPwd());
+		
+		System.out.println("복호화 후  : " +  bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd()));
+		if(q.getQWriter().equals( m.getUserId()) && bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
+			System.out.println("비번가져오나: " + m.getUserPwd());
+			
+			msg= "입력 성공!";
+			loc = "/QNA/QNADetail.do?qno=" +q.getQno();
+			
+			System.out.println(m);
+		}else if(checkPwd.trim().length()!=0) {
+			msg ="비밀번호가 틀렸습니다.";
+			loc="/QNA/QNAList.do";
+		}else {
+			msg ="입력 실패!";
+			loc="/QNA/QNAList.do";
+		}
+		
+		model.addAttribute("msg", msg).addAttribute("loc", loc).addAttribute("qna", q);
+		
+		return "common/msg";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping("/QNA/QNASelectOneAdmin.do")
+	public String selectOneAdmin(@RequestParam int qno, Model model) {
+		QNA q = qnaService.selectOneQNA(qno);
+		
+		model.addAttribute("qna", q);
+		
+		return "QNA/QNA_Detail";
+	}
 	
 	
 	

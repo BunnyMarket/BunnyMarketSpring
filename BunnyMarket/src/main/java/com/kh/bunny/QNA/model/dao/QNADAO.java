@@ -23,5 +23,7 @@ public interface QNADAO {
 	int updateQNA(QNA qna);
 	
 	int deleteQNA(int qNo);
+
+	int selectCurrentQno();
 	
 }

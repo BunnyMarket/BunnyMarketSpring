@@ -38,7 +38,7 @@
                     <input type="button" value="인증번호 발송"  style="width:120px;height:30px;text-align:center;padding:10px;background: linear-gradient(to right, #ff105f, #ffad06);border: 0;
                 cursor: pointer; outline: none;border-radius: 30px;" onclick="send();"/>
                 <div id="verifyCode" class="verifyCode">
-                    <input type="text" class="input-field" style="width:150px" placeholder="Verification Code" required>
+                    <input type="text" class="input-field" style="width:150px" placeholder="Verification Code" >
                     <input type="button"  value="인증번호 확인" onclick="join_injeung.do${dice}" name="email_injeung" style="width:120px;height:30px;text-align:center;padding:10px;background: linear-gradient(to right, #ff105f, #ffad06);border: 0;
                 cursor: pointer; outline: none;border-radius: 30px;" />
                 </div>                

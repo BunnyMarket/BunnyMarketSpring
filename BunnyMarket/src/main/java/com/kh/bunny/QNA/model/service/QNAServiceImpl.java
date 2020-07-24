@@ -71,4 +71,9 @@ QNADAO qnaDAO;
 		return result;
 	}
 
+	@Override
+	public int selectCurrentQno() {
+		return qnaDAO.selectCurrentQno();
+	}
+
 }

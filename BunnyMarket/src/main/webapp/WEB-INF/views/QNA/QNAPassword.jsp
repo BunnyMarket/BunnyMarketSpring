@@ -42,21 +42,18 @@
                         <!-- Start Respond Form -->
                         <div style="border: solid 1px #D0D4D7; margin: auto; width:500px; height: 200px; padding-top:20px;">
                         <div id="respond" style="margin-left: 90px; margin-bottom: 20px;">
-                            <form  id="formArea" action="${pageContext.request.contextPath}/QNA/QNAPassword.do" method="post" style="width:600px; margin-right:300px;">
+                            <form  id="formArea" action="${pageContext.request.contextPath}/QNA/QNASelectOnePassword.do?qno=${qno}"  method="post" style="width:600px; margin-right:300px;">
                             <h2 class="respond-title"><b>비밀번호 입력</b></h2>
                                 <div class="row">
                                     <div class="col-md-8">
-                                    <input id="qNo" name="qNo" type="hidden" size="30" aria-required="true" value="${QNA.qNo} "/>
-                                    <input id="qWriter" name="qWriter" type="hidden" size="30" aria-required="true" value="${QNA.qWriter} "/>
                                         <label for="password">비밀번호 : <span class="required">*</span></label>
-                                        <input id="userPwd" name="userPwd" type="password" size="30" aria-required="true"/>
+                                        <input id="checkPwd" name="checkPwd" type="password" size="30" aria-required="true"/>
                                     </div>
                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12" style="padding-left:175px;">
-                                        <button type="button" class="btn alazea-btn mt-15" 
-						                       	onclick="goView();">입력</button>
+                                        <button type="submit" class="btn alazea-btn mt-15" >입력</button>
                                         
                                     </div>
                                 </div>
@@ -76,12 +73,6 @@
 		</div>
 	</div>
 </section>
-<script>
-function goView(){
-	$("#formArea").attr("action", "${ pageContext.request.contextPath }/QNA/QNADetail.do").submit();
-	
-}
-</script>
 
 
 <!--  여기까지 -->

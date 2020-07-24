@@ -35,6 +35,11 @@
    DELETE FROM QNA
    WHERE QNO =#{qno}
    </delete>
+   
+   <select  id="selectCurrentQno" parameterType="_int" resultType="_int">
+   		SELECT MAX(QNO) FROM QNA
+   </select>
+   
 </mapper>
 
 

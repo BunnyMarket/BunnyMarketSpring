@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<c:import url="../../views/common/header.jsp"/>
+<c:import url="../../views/common/header.jsp" />
 <div class="breadcrumb-area">
 	<!-- Top Breadcrumb Area -->
 	<div
@@ -16,7 +16,9 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						  <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i>홈화면</a></li>
+						<li class="breadcrumb-item"><a
+							href="${ pageContext.request.contextPath }/index.jsp"><i
+								class="fa fa-home"></i>홈화면</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 					</ol>
 				</nav>
@@ -32,63 +34,61 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="cart-table clearfix">
-				<br />
-				  <p>총 ${totalContents}건의 게시물이 있습니다.</p>
-				  <br />
-					<table class="table table-responsive">
+					<br />
+					<p>총 ${totalContents}건의 게시물이 있습니다.</p>
+					<br />
+					<table class="table table-responsive" id="tableArea">
 						<thead class="col-12">
 							<tr>
 								<th style="width: 10%">번호</th>
 								<th colspan="2" style="width: 40%; text-align: center;">제목</th>
-								<th style="padding-right: 80px; width: 15%; text-align: center;" >작성자</th>
+								<th style="padding-right: 80px; width: 15%; text-align: center;">작성자</th>
 								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
 								<th style="padding-left: 8px; width: 20%; text-align: center;">답변여부</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items= "${list}" var="q">
-							<%-- <c:set var="qc"  value="${QComment}"/> --%>
-							<tr  id="${q.qno}">
-							
-								        <input type="hidden" value="${q.qno}" />
-										<td onclick="selectOne(${q.qno});">${q.qno}</td>
-										<td colspan="2" onclick="selectOne(${q.qno});">${q.QTitle}</td>
-										<td onclick="selectOne(${q.qno});">${q.QWriter}</td>
-										<td onclick="selectOne(${q.qno});">${q.QDate}</td>
-										<td>완료</td>
-										<td></td>
-										<%-- <c:if test="${qc.qWriter eq 'admin'}">
+							<c:forEach items="${list}" var="q">
+								<%-- <c:set var="qc"  value="${QComment}"/> --%>
+								<tr id="${q.qno}">
+
+									<input type="hidden" value="${q.qno}" />
+									<td>${q.qno}</td>
+									<td colspan="2">${q.QTitle}</td>
+									<td>${q.QWriter}</td>
+									<td>${q.QDate}</td>
+									<td>완료</td>
+									<td></td>
+									<%-- <c:if test="${qc.qWriter eq 'admin'}">
 											<td onclick="selectOne(${q.qNo});"
 												style="color: red;">완료</td>
 										</c:if> --%>
-										
-										<%-- <c:if test="${qc.qWriter ne 'admin'}">
+
+									<%-- <c:if test="${qc.qWriter ne 'admin'}">
 											<td onclick="selectOne(${q.qNo});"
 												style="color: black;">대기중</td>
 										</c:if> --%>
-							</tr>
+								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 					<div class="checkout_btn_inner" align="right">
-						<br /><br />
-					
-						<a class="btn alazea-btn mr-30"
+						<br /> <br /> <a class="btn alazea-btn mr-30"
 							href="${pageContext.request.contextPath}/QNA/QNAInsertView.do">등록하기</a>
-					
+
 						<a class="btn alazea-btn mr-30"
-							href="${pageContext.request.contextPath}">메인으로</a> <br />
-						<br />
+							href="${pageContext.request.contextPath}">메인으로</a> <br /> <br />
 					</div>
 					<!-- Pagination -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
-                        </ul>
-                    </nav>
+					<nav aria-label="Page navigation">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#"><i
+									class="fa fa-angle-right"></i></a></li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
@@ -96,13 +96,24 @@
 </div>
 
 <script>
-function selectOne(qno){
-//	if(${member.userId eq 'admin'})
-	location.href = '${pageContext.request.contextPath}/QNA/QNADetail.do?no=' + qno;
-//	else
-//	location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?no=' + qno;
-};
+/* function selectOne(qno){
+	if(${member.userId eq 'admin'})
+		location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?no=' + qno;
+	else
+		location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?no=' + qno;
+	)
+}; */
 
+	$(function(){
+		$("#tableArea td").click(function(){
+			var qnaNo = $(this).parent().attr("id");
+			if(${member.userId eq 'admin'}){
+				location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?qno=' + qnaNo;
+			} else {
+				location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?qno=' + qnaNo;
+			}
+				});
+		}); 
 
 </script>
 

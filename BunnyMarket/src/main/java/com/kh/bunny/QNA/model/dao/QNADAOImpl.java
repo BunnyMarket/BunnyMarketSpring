@@ -30,7 +30,6 @@ public class QNADAOImpl implements QNADAO {
 
 	@Override
 	public int insertQNA(QNA qna) {
-		System.out.println("DAO qna : " + qna);
 		return sqlSession.insert("qnaMapper.insertQNA", qna);
 	}
 
@@ -50,6 +49,11 @@ public class QNADAOImpl implements QNADAO {
 	public int deleteQNA(int qNo) {
 		
 		return sqlSession.delete("qnaMapper.deleteQNA", qNo);
+	}
+
+	@Override
+	public int selectCurrentQno() {
+		return sqlSession.selectOne("qnaMapper.selectCurrentQno");
 	}
 	
 }

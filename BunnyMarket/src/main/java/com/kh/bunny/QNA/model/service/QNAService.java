@@ -20,5 +20,8 @@ public interface QNAService {
    int updateQNA(QNA qna);
    
    int deleteQNA(int qNo);
+
+   int selectCurrentQno();
+
    
 }

@@ -39,8 +39,8 @@
 							<h4 class="post-title">${qna.QTitle}</h4>
 							<br />
 							<div class="post-meta mb-30">
-								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>${qna.QDate}</a> 
-								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>${qna.QWriter}</a>
+								<a href="${pageContext.request.contextPath}/QNA/QNADetail.do"><i class="fa fa-clock-o" aria-hidden="true"></i>${qna.QDate}</a> 
+								<a href="${pageContext.request.contextPath}/QNA/QNADetail.do""><i class="fa fa-user" aria-hidden="true"></i>${qna.QWriter}</a>
 							</div>
 							<div class="post-meta mb-30">
 								<button type="button" class="btn alazea-btn mt-15"

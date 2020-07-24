@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<div align="center">
-					<input type="button" class="btn alazea-btn mt-15" value="취소하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADetail.do?no=${qna.qno}'"/>
+					<input type="button" class="btn alazea-btn mt-15" value="취소하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADetail.do?qno=${qna.qno}'"/>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="submit" class="btn alazea-btn mt-15" >수정하기</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
