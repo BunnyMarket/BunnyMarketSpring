@@ -94,9 +94,10 @@
                                 </select>
 	                        </div>
 	                        
-	                        <br />
+	                        <br /><br /><br /><br /><br />
 								<label for="pAddress">주소 입력 </label>
-								<input type = "text" id = "pAddress" name = "pAddress" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+								<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+								<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
 						</div>
 					</div>
 					
@@ -104,9 +105,11 @@
 					<div class="col-12 col-md-12">
 						<div class="single_product_thumb">
 							<div id="mapwrap"> 
-								<br /><br />
+								<br />
 							    <!-- 지도가 표시될 div -->
-							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;"></div>
+							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;">
+							    	<p style = "text-align : center;">주소를 입력하면 지도가 표시됩니다.⏎</p>
+							    </div>
 							</div>
 						</div>
 					</div>
@@ -219,7 +222,8 @@
 	
 	
 		/* 주소 검색을 위한 스크립트 */ 
-		var fullAddr; // 주소를 입력받는 변수 선언
+		var showfullAddr; // 화면단에서 보여주기 위한 주소를 입력받는 변수 선언
+		var fullAddr;
 		
 		function addrSearch() {
 	        new daum.Postcode({
@@ -264,14 +268,18 @@
 	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 	                    }
 	                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    showshowfullAddr = fullAddr + (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    // fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    	// 이건 주석처리한다. 주소 뒤에 괄호가 추가되면 지도에서 길찾기 url로 넘어갈때 도착지에 주소지를 입력받지 못하기 때문...
 	                }
 
 	                // 주소 정보를 해당 필드에 넣는다.
+	                $('#showpAddress').val(showshowfullAddr);
 	                $('#pAddress').val(fullAddr);
 	                
 	               
 			        console.log("입력받은 주소 : " + fullAddr);
+			        console.log("보여주기 위해 입력받은 주소 : " + showshowfullAddr); // 사용자에게 보여주기 위한 괄호까지 들어간 주소 
 
 			        
 			        
@@ -297,10 +305,15 @@
 
 			                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			                map.setCenter(coords);
+			                
+			                
+			                
+			                
+			                
 			            } 
 			        });    
 			        
-			        
+			        document.getElementById('map').style.border = "4px solid #bcbcbc";
 				 
 	            }
 	        }).open();
