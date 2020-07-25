@@ -52,6 +52,11 @@
 			 <!-- 모든 경로 차단 중 특정 경로를 제외할 수도 있다. -->
 			 <!-- <exclude-mapping path="/member/memberEnroll.do" /> -->
 			 
+			 <mapping path="/auction/insertBidder.do" />
+			 <mapping path="/auction/auctionInsertForm.do"/>
+			 <mapping path="/auction/auctionInsertEnd.do"/>
+			 <mapping path="/auction/auctionDetail.do"/>
+			 
 			 <!-- 게시글 전용 URL 등록하기 -->
 			 <mapping path="/board/**/*.do"/>
 			 <exclude-mapping path="/board/boardList.do"/>

@@ -30,10 +30,21 @@
 							)
 		}
 	</select>
-	
+
 	<select id="selectOneAuction" resultType="Auction">
-		<include refid="selectSQL"/>
-		WHERE P.PNO = #{pno} 
+		SELECT P.PNO, P.PWRITER, P.PCNO, P.PIMG
+			 , P.PTITLE, P.PCONTENT
+			 , (SELECT BPRICE
+				 FROM BIDDER
+				WHERE BNO =(SELECT MAX(BNO) 
+				              FROM BIDDER 
+				             WHERE PNO = #{pno}))
+             , P.PDATE, P.PSTATUS, P.PTYPE
+             , P.PADDRESS, P.PTOTAL, P.PBUYER
+             , A.AEDATE 
+		 FROM PRODUCT P
+		 JOIN AUCTION A ON(A.PNO = P.PNO)
+		WHERE P.PNO = #{pno}
 	</select>
 	
 	<select id="bidderCount" resultType="_int">
@@ -77,9 +88,21 @@
 		  FROM PRODUCT
 		 WHERE PNO = #{pno}
 	</select>
+	
+
+	<insert id="insertBidder" parameterType="Bidder">
+		INSERT INTO BIDDER
+		VALUES(SEQ_BNO.NEXTVAL, #{pno}, #{userId}, #{bPrice}, DEFAULT)
+	</insert>
+	
+	<select id="selectOneBidderCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+	</select>
 </mapper>
 
-
+<!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->
 
 
 

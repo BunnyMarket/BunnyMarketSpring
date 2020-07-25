@@ -17,9 +17,13 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i class="fa fa-home"></i> 홈화면</a></li>
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매</a></li>
-						<li class="breadcrumb-item active" aria-current="page">상품 상세보기</li>
+						<li class="breadcrumb-item"><a
+							href="${ pageContext.request.contextPath }/"><i
+								class="fa fa-home"></i> 홈화면</a></li>
+						<li class="breadcrumb-item"><a
+							href="${ pageContext.request.contextPath }/auction/auctionList.do">경매</a></li>
+						<li class="breadcrumb-item active" aria-current="page">상품
+							상세보기</li>
 					</ol>
 				</nav>
 			</div>
@@ -29,7 +33,7 @@
 <!-- ##### Breadcrumb Area End ##### -->
 
 <!-- ##### Single Product Details Area Start ##### -->
-<c:set value="${auction}" var="a"/>
+<c:set value="${auction}" var="a" />
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
@@ -39,7 +43,8 @@
 					<div class="single_product_thumb">
 						<div>
 							<div id="pImgArea">
-								<img id="titleImg" class="d-block w-100" width="344.8px" src="${pageContext.request.contextPath}/resources/upload/auction/${a.PImg}"
+								<img id="titleImg" class="d-block w-100" width="344.8px"
+									src="${pageContext.request.contextPath}/resources/upload/auction/${a.PImg}"
 									height="357.56px">
 							</div>
 						</div>
@@ -48,18 +53,23 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<form action="${ pageContext.request.contextPath }/auction/auctionBidView.do?pno=${a.pno}">
-							<button type="submit" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
-						</form>
+						<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+								data-toggle="modal" data-target="#myModal">
+							입찰하기
+						</button>
+						<div class="modal-layout" ></div>
 						<br />
+						
+						<h4 class="price"><span style="color:orange; font: bold;">${a.PPrice}</span>당근</h4>
+						<br /> 
 
-						<h4 class="price">${a.PPrice} 당근</h4>
+						<h5>총 입찰자 : ${bCount}명</h5>
 						<br />
-
+						
 						<h5>경매 시작일</h5>
 						<h5>${a.PDate }</h5>
 						<br />
-						
+
 						<h5>경매 종료일</h5>
 						<h5>${a.aeDate}</h5>
 						<br />
@@ -72,17 +82,13 @@
 					<div class="product_details_tab clearfix">
 						<!-- Tabs -->
 						<ul class="nav nav-tabs" role="tablist" id="product-details-tab">
-							<li class="nav-item">
-								<a href="#description" class="nav-link active" data-toggle="tab" role="tab">상세 설명</a>
-							</li>
-							<li class="nav-item">
-								<a href="#addi-info" class="nav-link" data-toggle="tab" role="tab">추가 정보</a>
-							</li>
-							<li class="nav-item">
-								<a href="#reviews" class="nav-link" data-toggle="tab" role="tab">
-									댓글<span class="text-muted">(1)</span>
-								</a>
-							</li>
+							<li class="nav-item"><a href="#description"
+								class="nav-link active" data-toggle="tab" role="tab">상세 설명</a></li>
+							<li class="nav-item"><a href="#addi-info" class="nav-link"
+								data-toggle="tab" role="tab">추가 정보</a></li>
+							<li class="nav-item"><a href="#reviews" class="nav-link"
+								data-toggle="tab" role="tab"> 댓글<span class="text-muted">(1)</span>
+							</a></li>
 						</ul>
 						<!-- Tab Content -->
 						<div class="tab-content">
@@ -107,6 +113,9 @@
 									<div class="col-12 col-md-6">
 										<br /> <br />
 										<h4>판매자 정보</h4>
+										<h4>${a.PWriter}</h4>
+										<h5><a href="#" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
+										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
 									<div class="col-12 col-md-12">
@@ -125,7 +134,9 @@
 											<div class="comment-wrapper d-flex">
 												<!-- Comment Meta -->
 												<div class="comment-author">
-													<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt="">
+													<img
+														src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg"
+														alt="">
 												</div>
 												<!-- Comment Content -->
 												<div class="comment-content">
@@ -145,7 +156,9 @@
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+															<img
+																src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg"
+																alt="">
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
@@ -167,7 +180,9 @@
 											<div class="comment-wrapper d-flex">
 												<!-- Comment Meta -->
 												<div class="comment-author">
-													<img src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg" alt="">
+													<img
+														src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg"
+														alt="">
 												</div>
 												<!-- Comment Content -->
 												<div class="comment-content">
@@ -197,8 +212,8 @@
 											<form action="#" method="post">
 												<div class="col-12">
 													<div class="form-group">
-														<textarea class="form-control" name="message"
-															id="message" cols="30" rows="10" placeholder="Comment"></textarea>
+														<textarea class="form-control" name="message" id="message"
+															cols="30" rows="10" placeholder="Comment"></textarea>
 													</div>
 												</div>
 												<div class="col-12">
@@ -220,50 +235,104 @@
 		</div>
 	</div>
 </section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">입찰</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form action="${pageContext.request.contextPath}/auction/insertBidder.do" method="post">
+				<input type="hidden" name="pno" value="${a.pno }" />
+				<div class="modal-body row">
+					<div class="col-12">
+						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.PPrice }</span>당근</h4>
+						<br />
+					</div>
+					<div class="col-12">
+						<div class="form-group">
+							<h4 class="title">입찰금액을 입력해주세요.</h4>
+							<input type="text" class="form-control" name="bPrice" id="contact-subject" style="border: 1px solid #e1e1e1;" />
+							<br />
+						</div>
+					</div>
+					<div class="col-12">
+						<h5>경매 시작일</h5>
+						<h5>${a.PDate }</h5>
+						<br />
+					</div>
+					<div class="col-12">
+						<h5>경매 종료일</h5>
+						<h5>${a.aeDate}</h5>
+						<br />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <!-- ##### Single Product Details Area End ##### -->
 
-	<script>
+<script>
+		
+	// 지도 넣기 
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+		center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		level: 3 // 지도의 확대 레벨
+	};  
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
-		
-		// 지도 넣기 
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
-		
-		// 주소-좌표 변환 객체를 생성합니다
-		var geocoder = new kakao.maps.services.Geocoder();
-		
-		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('<%-- <%= p.getpAddress() %> --%>', function(result, status) {
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;"><%-- <%= p.getpName() %> --%></div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('<%-- <%= p.getpAddress() %> --%>', function(result, status) {
+		// 정상적으로 검색이 완료됐으면 
+		if (status === kakao.maps.services.Status.OK) {
+	
+			var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			
+			// 결과값으로 받은 위치를 마커로 표시합니다
+			var marker = new kakao.maps.Marker({
+				map: map,
+				position: coords
+			});
+			
+			// 인포윈도우로 장소에 대한 설명을 표시합니다
+			var infowindow = new kakao.maps.InfoWindow({
+				content: '<div style="width:150px;text-align:center;padding:6px 0;"><%-- <%= p.getpName() %> --%></div>'
+			});
+			infowindow.open(map, marker);
+			
+			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			map.setCenter(coords);
 	    } 
 	});
-		
 	
-	</script>
+	// 취소시 모달창만 꺼지게 하는기능
+	function goBack(){
+		window.history.go();
+	}
+	$(function(){
+		$("#bidding").click(function(){
+			$('.modal').modal();
+		});
+	});
+	$(function(){
+		$(".modal-layout").click(function(){
+			$('.modal').modal('hide');
+		});
+	});
+	
+
+</script>
 
 
 <%@ include file="../common/footer.jsp"%>

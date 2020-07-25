@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.bunny.auction.model.vo.Auction;
+import com.kh.bunny.auction.model.vo.Bidder;
 
 public interface AuctionService {
 
@@ -19,6 +20,10 @@ public interface AuctionService {
 	Auction selectOneAuction(int pno);
 
 	int insertAuction(Auction auction);
+
+	int insertBidder(Bidder b);
+
+	int selectOneBidderCount(int pno);
 
 
 }

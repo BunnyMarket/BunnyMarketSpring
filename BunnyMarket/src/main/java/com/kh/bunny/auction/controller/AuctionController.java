@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
+import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.vo.Member;
 
 @Controller
 public class AuctionController {
@@ -68,13 +70,18 @@ public class AuctionController {
 		return bidderCount;
 	}
 	
+	
 	@RequestMapping("/auction/auctionDetail.do")
 	public String auctionDetail(@RequestParam int pno, Model model) {
 		System.out.println("pno : "+pno);
 		Auction a = auctionService.selectOneAuction(pno);
 		
-		model.addAttribute("auction", a);
+		int bidderCount = auctionService.selectOneBidderCount(pno);
 		
+		model.addAttribute("auction", a)
+			 .addAttribute("bCount", bidderCount);
+		
+		System.out.println("뭐가들어있는지 보여줘 : " + a);
 		return "auction/auctionDetail";
 	}
 	
@@ -113,7 +120,11 @@ public class AuctionController {
 			e.printStackTrace();
 		}
 		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
+		
 		auction.setPImg(renamedName);
+		auction.setPWriter(userId);
 		
 		System.out.println("파일은 잘 들어왔느냐~ : " +auction );
 		
@@ -173,14 +184,31 @@ public class AuctionController {
 		return msg;
 	}
 	
-	@RequestMapping("/auction/auctionBidView.do")
-	public String auctionBid(@RequestParam int pno, Model model) {
-		
-		model.addAttribute("pno", pno);
-		
-		return "";
-	}
 	
+	@RequestMapping("/auction/insertBidder.do")
+	public String insertBidder(@RequestParam int pno, @RequestParam int bPrice, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getUserId();
+		
+		Bidder b = new Bidder(pno, userId, bPrice);
+		int result = auctionService.insertBidder(b);
+		
+		String msg = "";
+		String loc = "/auction/auctionDetail.do?pno="+pno;
+		
+		if (result >0) {
+			msg = "입찰 성공!";
+			System.out.println("Success Insert Auction");
+		} else {
+			msg = "입찰 실패!";
+			System.out.println("Fail Insert Auction");
+		}
+		
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
 }
 
 

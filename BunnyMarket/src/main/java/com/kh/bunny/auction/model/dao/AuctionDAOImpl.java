@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.bunny.auction.model.vo.Auction;
+import com.kh.bunny.auction.model.vo.Bidder;
 
 @Repository("auctionDAO")
 public class AuctionDAOImpl implements AuctionDAO {
@@ -49,6 +50,16 @@ public class AuctionDAOImpl implements AuctionDAO {
 	@Override
 	public int insertAuction(Auction auction) {
 		return sqlSession.insert("auctionMapper.insertAuction", auction);
+	}
+
+	@Override
+	public int insertBidder(Bidder b) {
+		return sqlSession.insert("auctionMapper.insertBidder", b);
+	}
+
+	@Override
+	public int selectOneBidderCount(int pno) {
+		return sqlSession.selectOne("auctionMapper.selectOneBidderCount", pno);
 	}
 
 

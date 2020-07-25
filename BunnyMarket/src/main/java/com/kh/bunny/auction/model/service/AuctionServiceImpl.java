@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.bunny.auction.model.dao.AuctionDAO;
 import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.vo.Auction;
+import com.kh.bunny.auction.model.vo.Bidder;
 
 @Service("auctionService")
 public class AuctionServiceImpl implements AuctionService {
@@ -63,6 +64,16 @@ public class AuctionServiceImpl implements AuctionService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int insertBidder(Bidder b) {
+		return auctionDAO.insertBidder(b);
+	}
+
+	@Override
+	public int selectOneBidderCount(int pno) {
+		return auctionDAO.selectOneBidderCount(pno);
 	}
 
 	

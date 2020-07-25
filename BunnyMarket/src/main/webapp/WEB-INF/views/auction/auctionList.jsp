@@ -126,35 +126,35 @@
 	                                        <p id="bidderCount-${st.index}"></p>
 											
 	                                        <h6>${p.PPrice} 당근</h6>
-	                                            <script type="text/javascript">
-																							
-													var list = ${list.size()};
-													
-												   	var pno = $("#pno-${st.index}").val();
-												   	
-												   	$(function(){
-												    	$.ajax({
-												    		  data : {pno : pno}
-												    		, dataType : "json"
-												    		, url : "${pageContext.request.contextPath}/auction/bidderCount.do"
-												    		, success : function(data){
-												    			console.log("data : " + data);
-												    			$("#bidderCount-${st.index}").html("경매 참가자 : " + data + "명");
-												    		}, error : function(jqxhr, textStatus, errorThrown){
-												    			alert("ajax 실패!");
+                                            <script type="text/javascript">
+																						
+												var list = ${list.size()};
 												
-												    			console.log("ajax 처리 실패함");
-												    			console.log(jqxhr);
-												    			console.log(textStatus);
-												    			console.log(errorThrown);
-												    			
-												    		}
-												    		
-												    	});
-												   		
-												   	});
-												   		
-											    </script>
+											   	var pno = $("#pno-${st.index}").val();
+											   	
+											   	$(function(){
+											    	$.ajax({
+											    		  data : {pno : pno}
+											    		, dataType : "json"
+											    		, url : "${pageContext.request.contextPath}/auction/bidderCount.do"
+											    		, success : function(data){
+											    			console.log("data : " + data);
+											    			$("#bidderCount-${st.index}").html("경매 참가자 : " + data + "명");
+											    		}, error : function(jqxhr, textStatus, errorThrown){
+											    			alert("ajax 실패!");
+											
+											    			console.log("ajax 처리 실패함");
+											    			console.log(jqxhr);
+											    			console.log(textStatus);
+											    			console.log(errorThrown);
+											    			
+											    		}
+											    		
+											    	});
+											   		
+											   	});
+											   		
+										    </script>
 	                                    </div>
 	                                </div>
 	                            </div>
