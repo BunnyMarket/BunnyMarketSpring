@@ -124,6 +124,13 @@
 						<br />
 						<textarea name="pContent" class="summernote" placeholder = "내용 입력"></textarea>
 					</div>
+					
+					<!-- 주의사항 -->
+					<div class = "col-12 col-md-12">
+						<br />
+						<label for="Precautions"><a href="/auction/checkCautions.do">주의 사항 *</a></label>
+						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
+					</div>
 				</div>
 				<div align="center">
 					<button type="submit" class="btn alazea-btn mt-15">등록완료</button>

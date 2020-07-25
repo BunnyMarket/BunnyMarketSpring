@@ -20,12 +20,12 @@ public class Auction extends Product implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public Auction(int pno, String pWriter, int pcno, String pImg, String pTitle, String pContent, int pPrice,
-			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer) {
-		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer);
+			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, int bPrice) {
+		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer, bPrice);
 	}
 	public Auction(int pno, String pWriter, int pcno, String pImg, String pTitle, String pContent, int pPrice,
-			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, String aeDate, int pno2, int aeTime) {
-		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer);
+			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, int bPrice, String aeDate, int pno2, int aeTime) {
+		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer, bPrice);
 		this.aeDate = aeDate;
 		pno = pno2;
 		this.aeTime = aeTime;

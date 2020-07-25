@@ -3,10 +3,13 @@ package com.kh.bunny.auction.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +29,7 @@ import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.vo.Product;
 
 @Controller
 public class AuctionController {
@@ -81,7 +85,6 @@ public class AuctionController {
 		model.addAttribute("auction", a)
 			 .addAttribute("bCount", bidderCount);
 		
-		System.out.println("뭐가들어있는지 보여줘 : " + a);
 		return "auction/auctionDetail";
 	}
 	
@@ -190,18 +193,27 @@ public class AuctionController {
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getUserId();
 		
-		Bidder b = new Bidder(pno, userId, bPrice);
-		int result = auctionService.insertBidder(b);
+		Auction a = auctionService.selectOneAuction(pno);
 		
 		String msg = "";
 		String loc = "/auction/auctionDetail.do?pno="+pno;
 		
-		if (result >0) {
-			msg = "입찰 성공!";
-			System.out.println("Success Insert Auction");
-		} else {
-			msg = "입찰 실패!";
-			System.out.println("Fail Insert Auction");
+		if(a.getBPrice() > bPrice || a.getPPrice() > bPrice) {
+			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
+		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice) && bPrice % 10 != 0) {
+			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
+		} else if(a.getPBuyer().equals(userId)) { 
+			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
+		}else {
+			Bidder b = new Bidder(pno, userId, bPrice);
+			int result = auctionService.insertBidder(b);
+			
+			if (result >0) {
+				msg = "입찰 성공!";
+			} else {
+				msg = "입찰 실패!";
+			}
+			
 		}
 		
 		model.addAttribute("loc", loc)
@@ -209,6 +221,9 @@ public class AuctionController {
 		
 		return "common/msg";
 	}
+	
+//	@RequestMapping("/auction/checkCautions.do")
+//	public String 
 }
 
 

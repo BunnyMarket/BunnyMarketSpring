@@ -53,14 +53,22 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-								data-toggle="modal" data-target="#myModal">
-							입찰하기
-						</button>
+						<c:if test="${sessionScope.member.userId ne a.PWriter}">
+							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+									data-toggle="modal" data-target="#myModal">
+								입찰하기
+							</button>
+						</c:if>
 						<div class="modal-layout" ></div>
 						<br />
 						
-						<h4 class="price"><span style="color:orange; font: bold;">${a.PPrice}</span>당근</h4>
+						<c:if test="${a.PPrice gt a.BPrice }">
+                        	<h4 class="price"><span style="color:orange; font: bold;">${a.PPrice}</span>당근</h4>
+						</c:if>
+						<c:if test="${a.PPrice lt a.BPrice }">
+                        	<h4 class="price"><span style="color:orange; font: bold;">${a.BPrice}</span>당근</h4>
+						</c:if>
+						
 						<br /> 
 
 						<h5>총 입찰자 : ${bCount}명</h5>
@@ -246,7 +254,12 @@
 				<input type="hidden" name="pno" value="${a.pno }" />
 				<div class="modal-body row">
 					<div class="col-12">
+					<c:if test="${a.PPrice gt a.BPrice }">
 						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.PPrice }</span>당근</h4>
+					</c:if>
+					<c:if test="${a.PPrice lt a.BPrice }">
+						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.BPrice }</span>당근</h4>
+					</c:if>
 						<br />
 					</div>
 					<div class="col-12">

@@ -125,7 +125,12 @@
 	                                        </a>
 	                                        <p id="bidderCount-${st.index}"></p>
 											
-	                                        <h6>${p.PPrice} 당근</h6>
+											<c:if test="${p.PPrice gt p.BPrice }">
+		                                        <h6>${p.PPrice} 당근</h6>
+											</c:if>
+											<c:if test="${p.PPrice lt p.BPrice }">
+		                                        <h6>${p.BPrice} 당근</h6>
+											</c:if>
                                             <script type="text/javascript">
 																						
 												var list = ${list.size()};

@@ -25,4 +25,8 @@ public interface AuctionDAO {
 
 	int selectOneBidderCount(int pno);
 
+	int hasBidderCount(String string);
+
+	List<Map<String, String>> selectAuctionListAddBidder(int aPage, int numPerPage);
+
 }

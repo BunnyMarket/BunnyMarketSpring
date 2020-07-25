@@ -1,5 +1,6 @@
 package com.kh.bunny.auction.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public List<Map<String, String>> selectAuctionList(int aPage, int numPerPage) {
+		
 		return auctionDAO.selectAuctionList(aPage, numPerPage);
 	}
 
