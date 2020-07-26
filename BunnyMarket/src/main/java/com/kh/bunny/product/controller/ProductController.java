@@ -3,6 +3,7 @@ package com.kh.bunny.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Controller
 public class ProductController {
@@ -58,16 +60,24 @@ public class ProductController {
 	@RequestMapping("/product/productDetail.do")
 	public String selectOne(@RequestParam int pno, Model model) {
 		Product p = productService.selectOneProduct(pno);
-		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
+		List<Object> PComments = productService.selectPCommentList(pno);
 		
-		model.addAttribute("product", productService.selectOneProduct(pno));
+		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
+		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
+		System.out.println("PComment객체 갯수 : " + PComments.size());
+		
+		model.addAttribute("product", p)
+		     .addAttribute("pcomments", PComments)
+		     .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		
 		return "product/productDetail";
 	}
 	
-	// 상품 생성하기 
 	
+	
+	
+	// 상품 생성하기 
 	@RequestMapping("/product/productInsert.do")
 	public void productForm() {
 		// productInsert.jsp 로 이동하기 
@@ -229,10 +239,11 @@ public class ProductController {
 	
 	
 	
+	// 댓글 생성하기 
 	
+	// 댓글 수정하기 
 	
-	
-	
+	// 댓글 삭제하기 
 	
 	
 	

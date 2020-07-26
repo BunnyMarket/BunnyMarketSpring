@@ -1,8 +1,10 @@
 package com.kh.bunny.product.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.bunny.product.model.vo.PComment;
 import com.kh.bunny.product.model.vo.Product;
 
 public interface ProductService {
@@ -30,6 +32,21 @@ public interface ProductService {
 	
 	// 상품 게시글 삭제 
 	int deleteProduct(int pno);
+
+	// 상품 게시글의 댓글 목록 불러오기 
+	List<Object> selectPCommentList(int pno);
+	
+	// 댓글 생성 
+	int insertPComment(PComment pcomment);
+	
+	// 댓글 수정 
+	int updatePComemnt(PComment pcomment);
+	
+	// 댓글 삭제 
+	int deletePComment(int pcmno);
+	
+	
+	
 	
 
 }

@@ -100,7 +100,7 @@
 							</li>
 							<li class="nav-item">
 								<a href="#reviews" class="nav-link" data-toggle="tab" role="tab">
-									댓글<span class="text-muted">(1)</span>
+									댓글<span class="text-muted">(${ pcommentSize })</span>
 								</a>
 							</li>
 						</ul>
@@ -142,72 +142,59 @@
 							<div role="tabpanel" class="tab-pane fade" id="reviews">
 								<!-- Comment Area Start -->
 								<div class="comment_area clearfix">
-									<h4 class="headline">2 Comments</h4>
+									<h4 class="headline">${ pcommentSize } Comments</h4>
+									<c:if test = "${ pcommentSize eq 0 }">
+										<h5>첫번째 댓글의 주인공이 되어보세요!</h5>
+									</c:if>
 
 									<ol>
 										<!-- Single Comment Area -->
-										<li class="single_comment_area">
-											<div class="comment-wrapper d-flex">
-												<!-- Comment Meta -->
-												<div class="comment-author">
-													<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt="">
-												</div>
-												<!-- Comment Content -->
-												<div class="comment-content">
-													<div
-														class="d-flex align-items-center justify-content-between">
-														<h5>Simona Halep</h5>
-														<span class="comment-date">09:00 AM, 20 Jun 2018</span>
-													</div>
-													<p>Neque porro quisquam est, qui dolorem ipsum quia
-														dolor sit amet, consectetu adipisci velit, sed quia non
-														numquam eius modi</p>
-													<a class="active" href="#">Reply</a>
-												</div>
-											</div>
-											<ol class="children">
-												<li class="single_comment_area">
+										<c:forEach items="${ pcomments }" var="pcomment">
+											<li class="single_comment_area">
+												<c:if test = "${ pcomment.pcLevel eq 0}">
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt=""><!-- member의 대표이미지 경로 적어주기 -->
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
 															<div
 																class="d-flex align-items-center justify-content-between">
-																<h5>Rafael Nadal</h5>
-																<span class="comment-date">09:30 AM, 20 Jun 2018</span>
+																<h5>${ pcomment.pcWriter }</h5>
+																<span class="comment-date">${ pcomment.pcDate }</span>
 															</div>
-															<p>Neque porro quisquam est, qui dolorem ipsum quia
-																dolor sit amet, consectetu adipisci velit, sed quia non
-																numquam eius modi</p>
-															<a class="active" href="#">Reply</a>
+															<p>${ pcomment.pcContent }</p>
+															<a class="active" href="#">Reply</a>&nbsp;&nbsp;<a class="active" href="#">Update</a>&nbsp;&nbsp;<a class="active" href="#">Delete</a>
 														</div>
 													</div>
-												</li>
-											</ol>
-										</li>
-										<li class="single_comment_area">
-											<div class="comment-wrapper d-flex">
-												<!-- Comment Meta -->
-												<div class="comment-author">
-													<img src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg" alt="">
-												</div>
-												<!-- Comment Content -->
-												<div class="comment-content">
-													<div
-														class="d-flex align-items-center justify-content-between">
-														<h5>Maria Sharapova</h5>
-														<span class="comment-date">02:20 PM, 20 Jun 2018</span>
-													</div>
-													<p>Neque porro quisquam est, qui dolorem ipsum quia
-														dolor sit amet, consectetu adipisci velit, sed quia non
-														numquam eius modi</p>
-													<a class="active" href="#">Reply</a>
-												</div>
-											</div>
-										</li>
+													<c:forEach items="${ pcomments }" var="reComment"> <!-- 리댓들 달아주기 -->
+														<c:if test = "${ reComment.pcLevel eq 1 and reComment.ref_PCMNO eq pcomment.pcmno}">
+															<ol class="children">
+																<li class="single_comment_area">
+																	<div class="comment-wrapper d-flex">
+																		<!-- Comment Meta -->
+																		<div class="comment-author">
+																			<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+																		</div>
+																		<!-- Comment Content -->
+																		<div class="comment-content">
+																			<div
+																				class="d-flex align-items-center justify-content-between">
+																				<h5>${ reComment.pcWriter }</h5>
+																				<span class="comment-date">${ reComment.pcDate }</span>
+																			</div>
+																			<p>${ reComment.pcContent }</p>
+																			<a class="active" href="#">Reply</a>&nbsp;&nbsp;<a class="active" href="#">Update</a>&nbsp;&nbsp;<a class="active" href="#">Delete</a>
+																		</div>
+																	</div>
+																</li>
+															</ol>
+														</c:if>
+													</c:forEach>
+												</c:if>
+											</li>
+										</c:forEach>
 									</ol>
 								</div>
 								<!-- Comment Area End -->
@@ -215,7 +202,7 @@
 								<!-- Leave A Comment -->
 								<div class="leave-comment-area clearfix">
 									<div class="comment-form">
-										<h4 class="headline">Leave A Comment</h4>
+										<h4 class="headline">댓글 남기기</h4>
 
 										<div class="contact-form-area">
 											<!-- Comment Form -->
