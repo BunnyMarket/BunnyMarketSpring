@@ -1,5 +1,6 @@
 package com.kh.bunny.auction.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public interface AuctionService {
 	int insertBidder(Bidder b);
 
 	int selectOneBidderCount(int pno);
+
+	ArrayList<Bidder> selectAllBidder(int pno);
 
 
 }

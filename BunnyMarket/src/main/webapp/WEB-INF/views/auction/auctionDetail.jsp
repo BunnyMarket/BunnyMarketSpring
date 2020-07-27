@@ -59,7 +59,13 @@
 								입찰하기
 							</button>
 						</c:if>
-						<div class="modal-layout" ></div>
+						<c:if test="${sessionScope.member.userId eq a.PWriter}">
+							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
+									data-toggle="modal" data-target="#myModal">
+								입찰자 명단 보기
+							</button>
+						</c:if>
+						<div class="modal-layout"></div>
 						<br />
 						
 						<c:if test="${a.PPrice gt a.BPrice }">
@@ -243,7 +249,7 @@
 		</div>
 	</div>
 </section>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -282,6 +288,47 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" >
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">입찰자 명단보기</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form>
+				<input type="hidden" name="pno" value="${a.pno }" />
+				<div class="modal-body row">
+					<div class="col-12">
+						<h4>등록한 상품의 가격 : <span style="color:orange; font: bold;">${a.PPrice }</span>당근</h4>
+						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.BPrice }</span>당근</h4>
+						<hr />
+					</div>
+					<c:forEach items="${bList }" var="b" varStatus="bst">
+						<div class="col-12">
+							<h5><span style="font: bold; color: orange;">${bst.index +1 }.</span> 입찰자 닉네임 : ${b.userId}</h5>
+							<h5>입찰금액 : ${b.BPrice}</h5>
+							<br />
+						</div>
+					</c:forEach>
+					<div class="col-12">
+						<h5>경매 시작일</h5>
+						<h5>${a.PDate }</h5>
+						<br />
+					</div>
+					<div class="col-12">
+						<h5>경매 종료일</h5>
+						<h5>${a.aeDate}</h5>
+						<br />
+					</div>
+				</div>
+				<div class="modal-footer">
 					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
 				</div>
 			</form>
@@ -335,7 +382,12 @@
 	}
 	$(function(){
 		$("#bidding").click(function(){
-			$('.modal').modal();
+			$('#myModal1').modal();
+		});
+	});
+	$(function(){
+		$("#giveBidder").click(function(){
+			$('#myModal2').modal();
 		});
 	});
 	$(function(){

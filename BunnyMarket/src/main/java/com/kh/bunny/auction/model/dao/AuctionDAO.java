@@ -1,5 +1,6 @@
 package com.kh.bunny.auction.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,5 +29,7 @@ public interface AuctionDAO {
 	int hasBidderCount(String string);
 
 	List<Map<String, String>> selectAuctionListAddBidder(int aPage, int numPerPage);
+
+	ArrayList<Bidder> selectAllBidder(int pno);
 
 }

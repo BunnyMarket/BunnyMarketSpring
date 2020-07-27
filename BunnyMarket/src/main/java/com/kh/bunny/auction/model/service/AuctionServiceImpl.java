@@ -78,5 +78,10 @@ public class AuctionServiceImpl implements AuctionService {
 		return auctionDAO.selectOneBidderCount(pno);
 	}
 
+	@Override
+	public ArrayList<Bidder> selectAllBidder(int pno) {
+		return auctionDAO.selectAllBidder(pno);
+	}
+
 	
 }

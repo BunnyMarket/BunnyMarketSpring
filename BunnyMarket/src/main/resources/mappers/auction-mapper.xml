@@ -92,6 +92,17 @@
 		  FROM BIDDER
 		 WHERE PNO = #{pno}
 	</select>
+	
+	<select id="selectAllBidder" resultType="Bidder">
+		SELECT *
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+		 ORDER BY BNO DESC
+	</select>
+	
+	
+	
+	
 </mapper>
 
 <!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->

@@ -104,7 +104,6 @@
                     <div class="shop-products-area">
                         <div class="row">
 							<c:forEach items="${list}" var="p" varStatus="st">
-							<c:if test="${st.index gt -1}">
                             <!-- Single Product Area -->
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
@@ -120,9 +119,9 @@
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
-	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
-	                                            <p>${p.PTitle}</p>
-	                                        </a>
+	                                        <p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
+	                                            ${p.PTitle}
+	                                        </a></p>
 	                                        <p id="bidderCount-${st.index}"></p>
 											
 											<c:if test="${p.PPrice gt p.BPrice }">
@@ -136,7 +135,7 @@
 												var list = ${list.size()};
 												
 											   	var pno = $("#pno-${st.index}").val();
-											   	
+											   	console.log(pno);
 											   	$(function(){
 											    	$.ajax({
 											    		  data : {pno : pno}
@@ -163,7 +162,6 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-							</c:if>
 							</c:forEach>
 						</div>
 						<nav aria-label="Page navigation">

@@ -1,5 +1,6 @@
 package com.kh.bunny.auction.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
 		
 		return sqlSession.selectList("auctionMapper.selectAuctionListAddBidder", null, rows);
+	}
+
+	@Override
+	public ArrayList<Bidder> selectAllBidder(int pno) {
+		return new ArrayList<Bidder>(sqlSession.selectList("auctionMapper.selectAllBidder", pno));
 	}
 
 

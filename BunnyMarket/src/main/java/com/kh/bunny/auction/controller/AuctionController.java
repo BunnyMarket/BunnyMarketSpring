@@ -68,7 +68,7 @@ public class AuctionController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		int bidderCount = auctionService.selectBidderCount(pno);
-		System.out.println("bidderCount는 무엇일랑가? "+bidderCount);
+		System.out.println("pno : " + pno + " / bidderCount는 무엇일랑가? "+bidderCount);
 		map.put("bidderCount", bidderCount);
 		
 		return bidderCount;
@@ -82,8 +82,11 @@ public class AuctionController {
 		
 		int bidderCount = auctionService.selectOneBidderCount(pno);
 		
+		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
+		
 		model.addAttribute("auction", a)
-			 .addAttribute("bCount", bidderCount);
+			 .addAttribute("bCount", bidderCount)
+			 .addAttribute("bList" , bList);
 		
 		return "auction/auctionDetail";
 	}
@@ -204,7 +207,7 @@ public class AuctionController {
 			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
 		} else if(a.getPBuyer().equals(userId)) { 
 			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
-		}else {
+		} else {
 			Bidder b = new Bidder(pno, userId, bPrice);
 			int result = auctionService.insertBidder(b);
 			
@@ -222,8 +225,7 @@ public class AuctionController {
 		return "common/msg";
 	}
 	
-//	@RequestMapping("/auction/checkCautions.do")
-//	public String 
+	
 }
 
 
