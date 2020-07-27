@@ -401,7 +401,7 @@ public class MemberController {
 	}
 	
 	// 아이디 중복 체크
-	@RequestMapping(value="/member/idDupCheck.do")
+	@RequestMapping(value="/member/userIdDupCheck.do")
 	@ResponseBody
 	public Map<String,Object> idDupCheck(@RequestParam String userId){
 		

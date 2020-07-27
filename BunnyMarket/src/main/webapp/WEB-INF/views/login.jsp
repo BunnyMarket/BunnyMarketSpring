@@ -32,8 +32,18 @@
                     <button type="button" id="findBtn" onclick="window.open('findIdView.do', '아이디 찾기','width = 580, height = 600');return false">아이디/비밀번호 찾기</button>
                     </div>
                 </form>
+               
                 <form id="register" action="memberEnrollEnd.do"method="post" onsubmit="return validate();" class="input-group">
-                    <input type="text" class="input-field" placeholder="User ID" name="userId" id="userId"  >
+                
+                    <input type="text" class="input-field" placeholder="User ID" name="userId2" id="userId2" style="width:150px; display: inline-block;" >
+                    <label id="userIdAvailableLabel" style="color:green; font-size:10px; display:none; margin-left:1px;">사용 가능한 아이디입니다.</label>
+	                  	<label id="userIdDupLabel" style="color:red; font-size:10px; display:none; margin-left:1px;">사용중인 아이디입니다.</label>
+	                  	
+	                
+                    
+				    <!-- <span class="guide error">사용 불가</span>
+				    <span class="guide invalid">4글자 미만</span> -->
+				
                     <input type="email" class="input-field" style="width:150px" name="email" id="email" placeholder="Your Email"  >
                     <input type="button" value="인증번호 발송"  style="width:120px;height:30px;text-align:center;padding:10px;background: linear-gradient(to right, #ff105f, #ffad06);border: 0;
                 cursor: pointer; outline: none;border-radius: 30px;" onclick="send();"/>
@@ -42,15 +52,19 @@
                     <input type="button"  value="인증번호 확인" id="emailVerifyBtn"class="btn btn-sm btn btn-outline-info" style="width:120px;height:30px;text-align:center;padding:10px;background: linear-gradient(to right, #ff105f, #ffad06);border: 0;
                 cursor: pointer; outline: none;border-radius: 30px;" />
                 </div>                
-                    <input type="password" class="input-field" id="userPwd" name="userPwd" placeholder="Enter Password"  >
+                    <input type="password" class="input-field" id="userPwd2" name="userPwd2" placeholder="Enter Password"  >
                     
-                    <input type="password" class="input-field" id="userPwd2" placeholder="dup Password"  >
+                    <input type="password" class="input-field" id="userPwd3" placeholder="dup Password"  >
                     
                     <input type="text" class="input-field" id="userName" name="userName" placeholder="Your Name"  >
                     <input type="text" class="input-field" id="nickName" name="nickName" placeholder="Your NickName"  >
+                    <label id="nickDupCheckLabel" style="display:none; font-size:10px; color:red;">사용중인 닉네임입니다.</label>
+			            <label id="nickValidLabel" style="display:none; font-size:10px; color:green;">사용가능한 닉네임입니다.</label>
                     <input type="text" class="input-field" id="birth" name="birth" placeholder="생년월일 6자"  >
                     <input type="text" class="input-field" id="phone" name="phone" placeholder="Your Phone Number"  >
-                    <input type="checkbox" class="checkbox"><span>Terms and conditions</span>
+                    <label id="phoneDupCheckLabel" style="display:none; font-size:10px; color:red;">사용중인 휴대폰 번호 입니다.</label>
+			            <label id="phoneValidLabel" style="display:none; font-size:10px; color:green;">사용가능한 휴대폰 번호 입니다.</label>
+                   <br/><br/><br/>
                     <button class="submit" >회원가입</button>
                 </form>
             </div>
@@ -65,7 +79,8 @@
             var authNum = "";
             var authCheckNum = 0;   // 이메일인증 유효성 체크 통과 했는지?
             var userIdValidNum = 0; // 아이디 중복 체크 통과 했는지 ?
-            
+            var email = $("email").val();
+            var regEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
             
             function login(){
                 x.style.left = "50px";
@@ -83,12 +98,7 @@
             
         		var key ;
         		
-        		// 인증번호 전송 함수
-            function sendEmail(){
-           
-               
-                  
-            }
+        		
             
             
 		    
@@ -136,17 +146,50 @@
 		    	 }
 		     }
 		     
+		  // 아이디 유효성 체크
+				$("#userId2").on("keyup",function(){
+					var userId = $(this).val();
+					
+							 $.ajax({
+								url : "${pageContext.request.contextPath}/member/userIdDupCheck.do",
+								data : {userId : userId},
+								dataType : "json",
+								success : function(data){
+									if(data.isUsable == true ){
+										$('#userIdAvailableLabel').show();
+										$('#userIdDupLabel').hide();
+										
+										window.nickValidNum = 1;
+									}else{
+										$('#userIdAvailableLabel').hide();
+										$('#userIdDupLabel').show();
+										
+										window.nickValidNum = 0;
+									}
+								},
+								error : function(req,status,error){
+									console.log("아이디 중복 체크 실패!");
+									// 화면 에러 로그
+									console.log(req);
+									console.log(status);
+									console.log(error);
+								}
+								 
+							 }); // ajax끝
+				 
+					 });
+		     
 		  // 이메일 유효성 체크 이벤트
 				function send(){
-					var email = $("email").val();
-					var regEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+					
+					email= $("#email").val();
 
+						console.log(email); 
 					
 					// 유효한 이메일 형식인지 판별
 					
 					if(regEx.test(email) == false){
 						alert("이메일 형식이 유효하지 않습니다.");
-						console.log(email); 
 						window.emailValidNum = 0;
 						
 					}else if(true){ // 중복 이메일인지 판별
@@ -155,6 +198,7 @@
 								url : "${pageContext.request.contextPath}/member/emailDupCheck.do",
 								data : {email : email},
 								dataType : "json",
+								async:false,
 								success : function(data){
 									if(data.isUsable == true){
 										
@@ -164,7 +208,8 @@
 						                   var data = {"email": $("#email").val()}; 
 									         $.ajax({
 									                url : "${pageContext.request.contextPath}/member/mailAuth.do",
-									                data : data,
+									                data :{email : email},
+									                async:false,
 									                success : function (data) {
 									                    window.authNum = data;
 									               
@@ -176,6 +221,7 @@
 									}else{
 										
 										window.emailValidNum = 0;
+										alert("중복된 이메일입니다.");
 										
 									}
 								},
@@ -192,7 +238,7 @@
 					 }	
 
 				}
-				// 닉네임 유효성 체크
+				// 닉네임 중복 체크
 				$("#nickName").on("keyup",function(){
 					var nickName = $(this).val();
 					
@@ -201,7 +247,7 @@
 								data : {nickName : nickName},
 								dataType : "json",
 								success : function(data){
-									if(data.isUsable == true){
+									if(data.isUsable == true ){
 										$('#nickValidLabel').show();
 										$('#nickDupCheckLabel').hide();
 										window.nickValidNum = 1;
@@ -209,6 +255,37 @@
 										$('#nickValidLabel').hide();
 										$('#nickDupCheckLabel').show();
 										window.nickValidNum = 0;
+									}
+								},
+								error : function(req,status,error){
+									console.log("아이디 중복 체크 실패!");
+									// 화면 에러 로그
+									console.log(req);
+									console.log(status);
+									console.log(error);
+								}
+								 
+							 }); // ajax끝
+				 
+					 });
+				
+				// 핸드폰번호 중복 체크
+				$("#phone").on("keyup",function(){
+					var phone = $(this).val();
+					
+							 $.ajax({
+								url : "${pageContext.request.contextPath}/member/phoneDupCheck.do",
+								data : {phone : phone},
+								dataType : "json",
+								success : function(data){
+									if(data.isUsable == true){
+										$('#phoneValidLabel').show();
+										$('#phoneDupCheckLabel').hide();
+										window.phoneValidNum = 1;
+									}else{
+										$('#phoneValidLabel').hide();
+										$('#phoneDupCheckLabel').show();
+										window.phoneValidNum = 0;
 									}
 								},
 								error : function(req,status,error){
