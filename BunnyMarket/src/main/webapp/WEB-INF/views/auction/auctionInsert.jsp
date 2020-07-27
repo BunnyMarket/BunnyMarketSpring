@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
 
 <!-- ##### Breadcrumb Area Start ##### -->
@@ -33,13 +33,13 @@
 	<div class="produts-details--content mb-50">
 		<div class="container">
 
-			<form action="">
+			<form action="${ pageContext.request.contextPath }/auction/auctionInsertEnd.do" method="post" enctype="multipart/form-data">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
 							<div>
 								<div id="pImgArea">
-									<img id="titleImg" class = "d-block w-100" width="344.8px" height="357.56px">
+									<img id="titleImg" class="d-block w-100" width="344.8px" height="357.56px">
 								</div>
 								
 								<!--  
@@ -48,7 +48,7 @@
 									아직 원격저장소 새로 안만들어졌으니 이걸 확인하면 그때 제이쿼리 파일 넣어주세요~!
 								 -->
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name="ptitleImg"
+									<input type="file" id="titleImgArea" name="pImage" 
 										onchange="loadImg(this, 1);" />
 								</div>
 							</div>
@@ -59,47 +59,81 @@
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type = "text" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
+							<input type="text" class="form-control" id="pTitle" name="pTitle" placeholder="게시글 제목을 입력" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type = "text" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
+							<input type="text" class="form-control" id="pPrice" name="pPrice" placeholder="상품 하한가 설정" required />
 							<br />
-
-							<label for="pEndDate">경매 종료일 *</label>
+							
+							<label for="aeDate">경매 기간 설정</label><label style="float: right;" id="pEndDate" for="pEndDate">경매 종료날짜 :</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="aeTime">
+                                  <option value="6" selected>6시간</option>
+                                  <option value="12">12시간</option>
+                                  <option value="24">24시간(1일)</option>
+                                  <option value="48">48시간(2일)</option>
+                                  <option value="72">72시간(3일)</option>
+                                  <option value="120">120시간(5일)</option>
+                                  <option value="168">168시간(7일)</option>
+                                </select>
+	                        </div>
+							<br />
+							
+							<label for="pcno" style="float: none;">카테고리 설정</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%">
+                                  <option value="1" selected>컴퓨터</option>
+                                  <option value="2">옷</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
+                                  <!-- <option value="5">ㅎㅎ</option>
+                                  <option value="6">ㄴㄴ</option>
+                                  <option value="7">33</option> -->
+                                </select>
+	                        </div>
+							<br />
+							
+							<!-- <label for="pEndDate">경매 종료일 *</label>
 							<input type = "date" class = "form-control"  required />
-							<!--
+							
 								필요에 따라 해당 attribute추가  
 								value : 기본날짜 설정, 
 								min : 입력 가능한 가장 빠른 날짜, 
 								max : 입력 가능한 가장 늦은 날짜 
-							-->
+							
 							<br />
 							
 							<label for="pEndTime">경매 종료 시각 *</label>
 							<input type = "time" class = "form-control"  required />
-							<!--
+							
 								value : 기본 시간 설정, 
 								min : 입력 가능한 가장 빠른 시간, 
 								max : 입력 가능한 가장 늦은 시간
-							 -->
-							<br />
+							
+							<br /> -->
 
 							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "address" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
-							
+							<input type="text" id="address" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							<input type="hidden" name="pWriter" value="TEST1">
 						</div>
 					</div>
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name = "pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name="pContent" class="summernote" placeholder = "내용 입력"></textarea>
+					</div>
+					
+					<!-- 주의사항 -->
+					<div class = "col-12 col-md-12">
+						<br />
+						<label for="Precautions"><a href="/auction/checkCautions.do">주의 사항 *</a></label>
+						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/auction/auctionList.jsp'">수정완료</button>
+					<button type="submit" class="btn alazea-btn mt-15">등록완료</button>
 				</div>
 			</form>
 		</div>
@@ -163,12 +197,12 @@
 	               welEditorble) {
 	            data = new FormData();
 	            data.append("file", files[0]);
-	            var $note = $(this);
 	            
 	            $.ajax({
 	               data : data,
+	               dataType : "json",
 	               type : "post",
-	               url : '/dream/pImgInsert.pl', // servlet url
+	               url : '${pageContext.request.contextPath}/auction/aImgInsert.do', // servlet url
 	               cache : false,
 	               contentType : false,
 	               processData : false,
