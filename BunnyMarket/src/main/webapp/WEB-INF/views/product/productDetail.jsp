@@ -132,6 +132,9 @@
 									<div class="col-12 col-md-6">
 										<br /> <br />
 										<h4>판매자 정보</h4>
+										<h4>${a.PWriter}</h4>
+										<h5><a href="#" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
+										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
 									<div class="col-12 col-md-12">
@@ -211,6 +214,7 @@
 										<div class="contact-form-area">
 											<!-- Comment Form -->
 											<form action="#" method="post">
+												<input type="hidden" name="">
 												<div class="col-12">
 													<div class="form-group">
 														<textarea class="form-control" name="message"
@@ -342,21 +346,6 @@
 	    
 	});
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 	/* 
 	// geolocation을 통해 사용자 위치 표시를 받아서 판매자와 사용자의 위경도를 받아 url에 한번에 도착지와 출발지로 이어주려고 했지만 
 	// 웹용 길찾기 URL에서는 출발지를 지정하는 기능을 현재 제공하지 않는 이유로 도착지만을 지정해주었다. 
@@ -422,7 +411,7 @@
 <script>
 	function replyComment(){
 		console.log("댓글달기 버튼 클릭");
-		${'#commentHead'}.text('이걸 이렇게?');
+		$('#commentHead').text('이걸 이렇게?');
 	}
 
 	

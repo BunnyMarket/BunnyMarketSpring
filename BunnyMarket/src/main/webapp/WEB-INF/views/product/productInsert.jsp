@@ -43,7 +43,7 @@
 								</div>
 								<div id="pImgFileArea">
 									<input type="file" id="titleImgArea" name = "pTitleImg"
-										onchange="loadImg(this, 1);" />
+										onchange="loadImg(this, 1);" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -82,7 +82,7 @@
 							
 							<label for="pcno" style="float: none;">카테고리 설정 *</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="pcno" style="width: 100%">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
                                   <option value="" hidden>물품의 종류를 선택해주세요.</option>
                                   <option value="1">컴퓨터</option>
                                   <option value="2">옷</option>
@@ -119,7 +119,7 @@
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name = "pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name = "pContent" class="summernote" placeholder = "내용 입력" required></textarea>
 					</div>
 					
 					<!-- 주의사항 -->
