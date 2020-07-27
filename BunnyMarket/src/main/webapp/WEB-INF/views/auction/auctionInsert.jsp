@@ -100,6 +100,18 @@
 						</div>
 					</div>
 					
+					<div class="col-12 col-md-12">
+						<div class="single_product_thumb">
+							<div id="mapwrap"> 
+								<br />
+							    <!-- 지도가 표시될 div -->
+							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;">
+							    	<p style = "text-align : center;">주소를 입력하면 지도가 표시됩니다.⏎</p>
+							    </div>
+							</div>
+						</div>
+					</div>
+					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />

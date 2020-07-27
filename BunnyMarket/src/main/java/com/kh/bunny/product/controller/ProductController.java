@@ -3,6 +3,7 @@ package com.kh.bunny.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Controller
 public class ProductController {
@@ -35,7 +39,7 @@ public class ProductController {
 		
 		List<Map<String, String>> list = productService.selectProductList(pPage, numPerPage);
 		
-//		System.out.println("productController에서 list를 가져오나 확인 : " + list);
+		System.out.println("productController에서 list를 가져오나 확인 : " + list);
 		// Product list는 잘 가져오는 것 확인 완료 
 		
 		// 페이지 계산을 위한 총 페이지 개수 
@@ -58,16 +62,24 @@ public class ProductController {
 	@RequestMapping("/product/productDetail.do")
 	public String selectOne(@RequestParam int pno, Model model) {
 		Product p = productService.selectOneProduct(pno);
-		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
+		List<Object> PComments = productService.selectPCommentList(pno);
 		
-		model.addAttribute("product", productService.selectOneProduct(pno));
+		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
+		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
+		System.out.println("PComment객체 갯수 : " + PComments.size());
+		
+		model.addAttribute("product", p)
+		     .addAttribute("pcomments", PComments)
+		     .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		
 		return "product/productDetail";
 	}
 	
-	// 상품 생성하기 
 	
+	
+	
+	// 상품 생성하기 
 	@RequestMapping("/product/productInsert.do")
 	public void productForm() {
 		// productInsert.jsp 로 이동하기 
@@ -108,6 +120,10 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
+		
+		product.setPWriter(userId);
 		product.setPImg(renamedName);
 		int result = productService.insertProduct(product);
 		String msg = "";
@@ -227,16 +243,98 @@ public class ProductController {
 		
 	}
 	
+	// 댓글 생성하기 
+	@RequestMapping("/product/pcommentInsert.do")
+	public String pcommentInsert(PComment pcomment, Model model) {
+		
+		
+		
+		return "";
+	}
 	
+	// 댓글 수정하기 
+	@RequestMapping("/product/pcommentUpdate.do")
+	public String pcommentUpdate(PComment pcomment, Model model) {
+		
+		
+		return "";
+	}
 	
+	// 댓글 삭제하기 
+	@RequestMapping("/product/pcommentDelete.do")
+	public String pcommentDelete(@RequestParam int pcmno) {
+		
+		
+		
+		return "";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping("/product/pImgInsert.do")
+	@ResponseBody
+	public String auctionImgInsert(
+				  @RequestParam(value="file", required = false) MultipartFile[] file
+				, Model model, HttpSession session
+			) {
+		
+		String saveDir = session.getServletContext().getRealPath("resources/upload/product/desc");
+		
+		File dir = new File(saveDir);
+		if(dir.exists() == false) dir.mkdirs();
+		
+		String renamedName = "";
+		
+		for(MultipartFile f : file) {
+			
+			if(!f.isEmpty()) {
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf(".") + 1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				
+				int rndNum = (int)(Math.random() * 1000);
+				
+				renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+				
+				try {
+					f.transferTo(new File(saveDir + "/" + renamedName)); 
+					System.out.println("바뀐이름 : " + renamedName);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		// 192.168.20.214 - 민정
+		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
+	}
 	
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
