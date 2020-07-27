@@ -163,7 +163,7 @@ public class AuctionController {
 	@RequestMapping("/auction/aImgInsert.do")
 	@ResponseBody
 	public String auctionImgInsert(
-				  @RequestParam(value="file", required = false) MultipartFile file
+				  @RequestParam(value="file", required = false) MultipartFile[] file
 				, Model model, HttpSession session
 			) {
 		
@@ -172,22 +172,30 @@ public class AuctionController {
 		File dir = new File(saveDir);
 		if(dir.exists() == false) dir.mkdirs();
 		
-		String originName = file.getOriginalFilename();
-		String ext = originName.substring(originName.lastIndexOf(".") + 1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		String renamedName = "";
 		
-		int rndNum = (int)(Math.random() * 1000);
-		
-		String renamedName = sdf.format(new Date() + "_" + rndNum + "." + ext);
-		
-		try {
-			file.transferTo(new File(saveDir + "/" + renamedName)); 
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+		for(MultipartFile f : file) {
+			
+			if(!f.isEmpty()) {
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf(".") + 1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				
+				int rndNum = (int)(Math.random() * 1000);
+				
+				renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+				
+				try {
+					f.transferTo(new File(saveDir + "/" + renamedName)); 
+					System.out.println("바뀐이름 : " + renamedName);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
-		String msg = saveDir + "/" + renamedName;
-		
-		return msg;
+		// 192.168.20.214 - 민정
+		return "http://localhost:8088/bunny/resources/upload/auction/desc/" + renamedName;
 	}
 	
 	
@@ -205,7 +213,7 @@ public class AuctionController {
 			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
 		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice) && bPrice % 10 != 0) {
 			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
-		} else if(a.getPBuyer().equals(userId)) { 
+		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice)  && a.getPBuyer().equals(userId)) { 
 			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
 		} else {
 			Bidder b = new Bidder(pno, userId, bPrice);

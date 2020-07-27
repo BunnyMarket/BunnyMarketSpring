@@ -93,25 +93,6 @@
                                 </select>
 	                        </div>
 							<br />
-							
-							<!-- <label for="pEndDate">경매 종료일 *</label>
-							<input type = "date" class = "form-control"  required />
-							
-								필요에 따라 해당 attribute추가  
-								value : 기본날짜 설정, 
-								min : 입력 가능한 가장 빠른 날짜, 
-								max : 입력 가능한 가장 늦은 날짜 
-							
-							<br />
-							
-							<label for="pEndTime">경매 종료 시각 *</label>
-							<input type = "time" class = "form-control"  required />
-							
-								value : 기본 시간 설정, 
-								min : 입력 가능한 가장 빠른 시간, 
-								max : 입력 가능한 가장 늦은 시간
-							
-							<br /> -->
 
 							<label for="pAddress">주소 입력 </label>
 							<input type="text" id="address" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
@@ -200,7 +181,6 @@
 	            
 	            $.ajax({
 	               data : data,
-	               dataType : "json",
 	               type : "post",
 	               url : '${pageContext.request.contextPath}/auction/aImgInsert.do', // servlet url
 	               cache : false,
@@ -208,7 +188,7 @@
 	               processData : false,
 	               success : function(fileUrl) {
 	                  check.summernote('insertImage', fileUrl);
-	                  alert("이미지 등록 성공!");
+	                  alert("이미지 등록 성공!" + fileUrl);
 	               },
 	               error : function(request, status, error) {
 	                  alert("code:" + request.status + "\n"
