@@ -46,9 +46,7 @@
 								<button type="button" class="btn alazea-btn mt-15"
 										onclick="location.href='${ pageContext.request.contextPath }/QNA/QNAUpdateView.do?qno=${qna.qno}'">수정하기</button>
 							</div>
-							<div class="post-thumbnail mb-30">
-								<img src="${pageContext.request.contextPath}/resources/img/bg-img/35.jpg" alt="">
-							</div>
+							
 							<p>${qna.QContent}</p>
 							<br /> <br /> <br />
 							<blockquote>
@@ -63,11 +61,14 @@
 
 					<!-- Comment Area Start -->
 					<div class="comment_area clearfix">
-						<h4 class="headline">댓글</h4>
-
+						<h4 class="headline">${ qcommentSize } Comments</h4>
+                        <c:if test = "${ qcommentSize eq 0 }">
+                        <h5>첫번째 댓글의 주인공이 되어보세요!</h5>
+                        </c:if>
 						<ol>
 							<!-- Single Comment Area -->
 							<li class="single_comment_area">
+							<c:if test = "${ qcomment.qcLevel eq 0}">
 								<div class="comment-wrapper d-flex">
 									<!-- Comment Meta -->
 									<div class="comment-author">
@@ -78,57 +79,48 @@
 									<!-- Comment Content -->
 									<div class="comment-content">
 										<div class="d-flex align-items-center justify-content-between">
-											<h5>당근이</h5>
-											<span class="comment-date">09:00 AM, 20 Jun 2018</span>
+											<h5>${ qcomment.qWriter }</h5>
+											<span class="comment-date">${qcomment.qcDate }</span>
 										</div>
-										<p>저도 궁금해요!</p>
-										<a class="active" href="#">Reply</a>
+										<p>${qcomment.qcContent }</p>
+										<a class="active" href="#" onclick="replyComment();">답글</a>&nbsp;&nbsp;
+										<a class="active" href="#" onclick = "updateComment();">댓글 수정</a>&nbsp;&nbsp;
+									    <a class="active" href="#" onclick = "deleteComment();">댓글 삭제</a>
 									</div>
 								</div>
+								<c:forEach items="${ qcomment }" var="replyComment">
+								<c:if test = "${ replyComment.qcLevel eq 1 and replyComment.ref_qcNO eq qcomment.qcNo}">
 								<ol class="children">
 									<li class="single_comment_area">
 										<div class="comment-wrapper d-flex">
 											<!-- Comment Meta -->
 											<div class="comment-author">
-												<img
-													src="${pageContext.request.contextPath}/resources/img/bg-img/38.jpg"
-													alt="">
+												<img src="${pageContext.request.contextPath}/resources/img/bg-img/38.jpg" alt="">
 											</div>
 											<!-- Comment Content -->
 											<div class="comment-content">
 												<div
 													class="d-flex align-items-center justify-content-between">
-													<h5>관리자</h5>
-													<span class="comment-date">09:30 AM, 20 Jun 2018</span>
+													<h5>${ qcomment.qWriter }</h5>
+													<span class="comment-date">${qcomment.qcDate }</span>
 												</div>
-												<p>빠른 시일 내에 답변드리겠습니다.</p>
-												<a class="active" href="#">Reply</a>
+												<p>${qcomment.qcContent }</p>
+												<a class="active" href="#" onclick = "replyComment();">답글</a>
+												<a class="active" href="#" onclick = "updateComment();">댓글 수정</a>&nbsp;&nbsp;
+												<a class="active" href="#" onclick = "deleteComment();">댓글 삭제</a>
 											</div>
 										</div>
 									</li>
 								</ol>
+								</c:if>
+								</c:forEach>
+								</c:if>
 							</li>
-							<li class="single_comment_area">
-								<div class="comment-wrapper d-flex">
-									<!-- Comment Meta -->
-									<div class="comment-author">
-										<img
-											src="${pageContext.request.contextPath}/resources/img/bg-img/29.jpg"
-											alt="">
-									</div>
-									<!-- Comment Content -->
-									<div class="comment-content">
-										<div class="d-flex align-items-center justify-content-between">
-											<h5>바니</h5>
-											<span class="comment-date">02:20 PM, 20 Jun 2018</span>
-										</div>
-										<p>와우</p>
-										<a class="active" href="#">Reply</a>
-									</div>
-								</div>
-							</li>
-						</ol>
-					</div>
+							
+							</ol>
+							</div>
+							
+							
 
 					<!-- Leave A Comment -->
 					<div class="leave-comment-area clearfix">
@@ -164,6 +156,15 @@
  function  comment(){
 		$("#cmtForm").attr("action", "${ pageContext.request.contextPath }/QNA/QNADetail.do").submit();
  }
+ 
+ function replyComment(){
+	 $("#cmtForm").attr("action", $)
+ }
+ 
+ function updateComment(){
+	 $(obj).parent().parent().next().find("#cmfForm")
+ }
+ 
 </script>
 <!--  여기까지 -->
 <c:import url="../common/footer.jsp" />

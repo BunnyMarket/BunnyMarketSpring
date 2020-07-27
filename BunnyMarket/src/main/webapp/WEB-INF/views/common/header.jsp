@@ -89,7 +89,7 @@
 								<c:if test="${empty member}">
 								<!-- Login -->
 								<div class="login">
-									<a href="login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
+									<a href="${ pageContext.request.contextPath }/login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
 								</div>
 								</c:if>
 								<c:if test="${!empty member}">
@@ -160,9 +160,9 @@
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/QNA/FAQ.jsp">F.A.Q</a></li>
+											<li><a href="${ pageContext.request.contextPath }/QNA/FAQ.do">F.A.Q</a></li>
 											<li><a href="${ pageContext.request.contextPath }/QNA/QNAList.do">Q&A</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/report/reportList.jsp">신고하기</a></li>
+											<li><a href="${ pageContext.request.contextPath }/report/reportList.do">신고하기</a></li>
 										</ul>
 									</li>
 									<li><a href="#">상품</a>

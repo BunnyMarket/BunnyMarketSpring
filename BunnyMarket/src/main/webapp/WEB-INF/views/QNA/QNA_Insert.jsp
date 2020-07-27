@@ -28,7 +28,7 @@
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
-			<form id="formArea"   method="post">
+			<form id="formArea" method="post">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-2">
 						<div class="single_product_desc" style="text-align: center; padding-top: 7px;">
@@ -67,7 +67,7 @@
 <script>
 	//여기 아래 부분
 	//여기 아래 부분
-	$('.summernote').summernote({
+	var check = $('.summernote').summernote({
 		  height : 600 // 에디터 높이
 		, minHeight : null // 최소 높이
 		, maxHeight : null // 최대 높이
@@ -86,9 +86,34 @@
             ['height', ['height']],
             ['insert', ['link', 'picture', 'video']],
             ['view', ['fullscreen', 'codeview', 'help']]
-         ]
-		
-	});
+            ], callbacks : {
+   	         onImageUpload : function(files, editor,
+   	               welEditorble) {
+   	            data = new FormData();
+   	            data.append("file", files[0]);
+   	            
+   	            $.ajax({
+   	               data : data,
+   	               type : "post",
+   	               url : '${pageContext.request.contextPath}/QNA/QNAImgInsert.do', // servlet url
+   	               cache : false,
+   	               contentType : false,
+   	               processData : false,
+   	               success : function(fileUrl) {
+   	                  check.summernote('insertImage', fileUrl);
+   	                  alert("이미지 등록 성공!" + fileUrl);
+   	               },
+   	               error : function(request, status, error) {
+   	                  alert("code:" + request.status + "\n"
+   	                        + "message:"
+   	                        + request.responseText + "\n"
+   	                        + "error:" + error);
+   	               }
+   	            });
+   	         }
+   	      }
+   	   });
+
 	$("div.note-editable").on('drop',function(e){
         for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
         	uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$(".summernote")[0]);

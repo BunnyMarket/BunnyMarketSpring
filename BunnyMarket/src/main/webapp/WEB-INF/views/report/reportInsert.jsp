@@ -39,14 +39,22 @@
 					</div>
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
-							<!-- <h4 class="title">상품 제목</h4> -->
-							<input type="text" class="form-control" id="" placeholder="게시글 제목을 입력" required />
+							<input type="text" class="form-control" id="rTitle" placeholder="신고글 제목을 입력" required />
 							<br />
 						</div>
 					</div>
+					<label for="rcNo" style="float: none;">신고 카테고리 설정 *</label>
+					<div class="search_by_terms">
+                                <select class="custom-select widget-title" name="rcNo" style="width: 100%">
+                                  <option value="" hidden>신고 사유를 선택해주세요.</option>
+                                  <option value="1">욕설 혹은 비방</option>
+                                  <option value="2">홍보성 글 작성</option>
+                                  <option value="3">사기 - 물품이 없는경우(허위매물)</option>
+                                  <option value="4">기타</option>
+                                </select>
+	                        </div>
 					<div class="col-12 col-md-2" style="text-align: center; padding-top: 7px;">
 						<div class="single_product_desc">
-							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="p">신고할 아이디 *</label>
 							<br />
 						</div>
@@ -54,7 +62,7 @@
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
-							<input type="text" class="form-control" id="" placeholder="아이디 입력" required />
+							<input type="text" class="form-control" id="reported" placeholder="아이디 입력" required />
 							<br />
 						</div>
 					</div>
@@ -67,10 +75,10 @@
 				</div>
 				<div align="center">
 					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/report/reportDetail.jsp'">등록완료</button>
+							onclick="location.href='${ pageContext.request.contextPath }/report/reportDetail.do'">등록완료</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/report/reportDetail.jsp'">취소하기</button>
+					<a class="btn alazea-btn mr-30"
+							href="${pageContext.request.contextPath}">메인으로</a> <br /> <br />
 				</div>
 			</form>
 		</div>

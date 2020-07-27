@@ -16,7 +16,7 @@ public class QComment implements Serializable {
 	
 	private int qcNo;
 	private int qNo;
-	private String qcWriter;
+	private String qWriter;
 	private String qcContent;
 	private Date qcDate;
 	private int ref_qcNo;
