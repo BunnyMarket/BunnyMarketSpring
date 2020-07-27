@@ -237,17 +237,62 @@ public class ProductController {
 		
 	}
 	
-	
-	
 	// 댓글 생성하기 
+	@RequestMapping("/product/pcommentInsert.do")
+	public String pcommentInsert(PComment pcomment, Model model) {
+		
+		
+		
+		return "";
+	}
 	
 	// 댓글 수정하기 
+	@RequestMapping("/product/pcommentUpdate.do")
+	public String pcommentUpdate(PComment pcomment, Model model) {
+		
+		
+		return "";
+	}
 	
 	// 댓글 삭제하기 
-	
-	
+	@RequestMapping("/product/pcommentDelete.do")
+	public String pcommentDelete(@RequestParam int pcmno) {
+		
+		
+		
+		return "";
+	}
 	
 	
 	
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

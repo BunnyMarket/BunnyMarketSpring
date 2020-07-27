@@ -165,7 +165,9 @@
 																<span class="comment-date">${ pcomment.pcDate }</span>
 															</div>
 															<p>${ pcomment.pcContent }</p>
-															<a class="active" href="#">Reply</a>&nbsp;&nbsp;<a class="active" href="#">Update</a>&nbsp;&nbsp;<a class="active" href="#">Delete</a>
+															<a class="active" href="#" onclick = "replyComment();">Reply</a>&nbsp;&nbsp;
+															<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
+															<a class="active" href="#" onclick = "deleteComment();">Delete</a>
 														</div>
 													</div>
 													<c:forEach items="${ pcomments }" var="reComment"> <!-- 리댓들 달아주기 -->
@@ -185,7 +187,9 @@
 																				<span class="comment-date">${ reComment.pcDate }</span>
 																			</div>
 																			<p>${ reComment.pcContent }</p>
-																			<a class="active" href="#">Reply</a>&nbsp;&nbsp;<a class="active" href="#">Update</a>&nbsp;&nbsp;<a class="active" href="#">Delete</a>
+																			<a class="active" href="#" onclick = "replyComment();">Reply</a>&nbsp;&nbsp;
+																			<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
+																			<a class="active" href="#" onclick = "deleteComment();">Delete</a>
 																		</div>
 																	</div>
 																</li>
@@ -202,7 +206,7 @@
 								<!-- Leave A Comment -->
 								<div class="leave-comment-area clearfix">
 									<div class="comment-form">
-										<h4 class="headline">댓글 남기기</h4>
+										<h4 class="headline" id = "commentHead">댓글 남기기</h4>
 
 										<div class="contact-form-area">
 											<!-- Comment Form -->
@@ -413,6 +417,25 @@
 	    
 	
 	
+</script>
+
+<script>
+	function replyComment(){
+		console.log("댓글달기 버튼 클릭");
+		${'#commentHead'}.text('이걸 이렇게?');
+	}
+
+	
+	function updateComment(){
+		console.log("댓글 수정 클릭!");
+	}
+	
+	
+	function deleteComment(){
+		console.log('삭제 버튼 클릭!');
+	}
+	
+
 </script>
 
 
