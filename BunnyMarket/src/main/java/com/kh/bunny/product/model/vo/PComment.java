@@ -20,7 +20,7 @@ public class PComment implements Serializable{
 	private String pcWriter;
 	private String pcContent;
 	private String pcDate;
-	private int ref_PCMNO;
+	private int ref_pcmno;
 	private int pcLevel;
 	
 	

@@ -37,4 +37,6 @@ public interface ProductDAO {
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
+
+
 }

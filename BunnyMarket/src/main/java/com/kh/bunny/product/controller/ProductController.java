@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.common.util.Utils;
@@ -126,7 +129,7 @@ public class ProductController {
 		product.setPImg(renamedName);
 		int result = productService.insertProduct(product);
 		String msg = "";
-		
+		String loc = "/product/productList.do";
 		if (result >0) {
 			msg = "상품 정보 생성 완료";
 			System.out.println("상품생성완료");
@@ -134,8 +137,8 @@ public class ProductController {
 			msg = "상품 정보 생성 실패";
 			System.out.println("상품수정실패");
 		}
-		
-		return "redirect:/product/productList.do";
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
 	}
 	
 	// 상품 게시글 수정 페이지 이동하기 
@@ -210,7 +213,7 @@ public class ProductController {
 		
 		int result = productService.updateProduct(product);
 		String msg = "";
-		
+		String loc = "/product/productList.do";
 		if (result >0) {
 			msg = "상품 정보 수정 완료";
 			System.out.println("상품 수정 완료");
@@ -218,16 +221,17 @@ public class ProductController {
 			msg = "상품 정보 수정 실패";
 			System.out.println("상품 수정 실패");
 		}
-		
-		return "redirect:/product/productList.do";
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		return "common/msg";
 	}
 	
 	
 	// 상품 삭제하기 
 	@RequestMapping("/product/productDelete.do")
-	public String deleteProduct(@RequestParam int pno) {
+	public String deleteProduct(@RequestParam int pno, Model model) {
 		
 		String msg = "";
+		String loc = "/product/productList.do";
 		int result = productService.deleteProduct(pno);
 		
 		if (result >0) {
@@ -238,18 +242,67 @@ public class ProductController {
 			System.out.println("상품삭제실패");
 		}
 		
-		return "redirect:/product/productList.do";
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		return "common/msg";
 		
 	}
 	
 	// 댓글 생성하기 
 	@RequestMapping("/product/pcommentInsert.do")
-	public String pcommentInsert(PComment pcomment, Model model) {
+	public String pcommentInsert(PComment pcomment, Model model, HttpSession session) {
 		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
 		
+		pcomment.setPcWriter(userId);
+		System.out.println("댓글 들어옴 ? " + pcomment);
+		String msg = "";
+		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 		
-		return "";
+		try	{
+			int result = productService.insertPComment(pcomment);
+			
+			if(result > 0) {
+				msg = "댓글 달기 성공!";
+			} else {
+				msg = "댓글 달기 실패ㅠ";
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
 	}
+	
+//	@RequestMapping("/product/pcommentInserta.do")
+//	@ResponseBody
+//	public Map<String, Object> pcommentInserta(PComment pcomment, Model model, HttpSession session) {
+//		
+//		Member m = (Member)session.getAttribute("member");
+//		String userId = m.getNickName();
+//		
+//		pcomment.setPcWriter(userId);
+//		System.out.println("댓글 들어옴 ? " + pcomment);
+//		String msg = "";
+//		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
+//		
+//		int result = productService.insertPComment(pcomment);
+//		PComment pcm = productService.selectOnePComment(pcomment.getPno()); 
+//		System.out.println();
+//		boolean isInsert = result > 0 ? true : false;
+//		Map<String, Object> hmap = new HashMap<String, Object>();
+//		hmap.put("isInsert", isInsert);
+//		hmap.put("pcomment", pcm);
+//		 
+////		model.addAttribute("loc", loc)
+////			 .addAttribute("msg", msg);
+//		
+//		return hmap;
+//	}
 	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")

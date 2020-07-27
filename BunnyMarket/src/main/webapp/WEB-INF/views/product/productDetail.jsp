@@ -174,7 +174,7 @@
 														</div>
 													</div>
 													<c:forEach items="${ pcomments }" var="reComment"> <!-- 리댓들 달아주기 -->
-														<c:if test = "${ reComment.pcLevel eq 1 and reComment.ref_PCMNO eq pcomment.pcmno}">
+														<c:if test = "${ reComment.pcLevel eq 1 and reComment.ref_pcmno eq pcomment.pcmno}">
 															<ol class="children">
 																<li class="single_comment_area">
 																	<div class="comment-wrapper d-flex">
@@ -213,16 +213,19 @@
 
 										<div class="contact-form-area">
 											<!-- Comment Form -->
-											<form action="#" method="post">
-												<input type="hidden" name="">
+											<form action="${pageContext.request.contextPath }/product/pcommentInsert.do" method="post">
+												<input type="hidden" id="commentpno" name="pno" value="${product.pno }"/>
+												<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="0">
+												<input type="hidden" id="pcLevel" name="pcLevel" value="0">
 												<div class="col-12">
 													<div class="form-group">
-														<textarea class="form-control" name="message"
+														<textarea class="form-control" name="pcContent"
 															id="message" cols="30" rows="10" placeholder="Comment"></textarea>
 													</div>
 												</div>
 												<div class="col-12">
 													<button type="submit" class="btn alazea-btn">
+													<!-- <button type="button" class="btn alazea-btn" onclick="replyComment();"> -->
 														Post Comment
 													</button>
 												</div>
@@ -407,12 +410,46 @@
 	
 	
 </script>
-
 <script>
-	function replyComment(){
+	/* function replyComment(){
 		console.log("댓글달기 버튼 클릭");
-		$('#commentHead').text('이걸 이렇게?');
-	}
+		var pno = $("#commentpno").val();
+		var ref = $("#ref_pcmno").val();
+		var pcLevel = $("#pcLevel").val();
+		var content = $("#message").val();
+		console.log(pno);
+		$.ajax({
+			  data : {
+						pno : pno
+				 	  , ref_pcmno : ref
+				 	  , pcLevel : pcLevel
+				 	  , pcContent : content
+				 	}
+			, url : '${pageContext.request.contextPath }/product/pcommentInserta.do'
+			, success : function(data){
+				if(data.isInsert == true){
+					alert("성공" + data);
+					$('#commentHead').html('이걸 이렇게?');
+					$('.comment_area ol').html("나오냐구");
+					$('.comment_area ol').html("<li class='single_comment_area'>"
+												+ "<div class='comment-wrapper d-flex'>"
+												+ "<div class='comment-author'>"
+												+ "<img src='${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg'></div>"
+												+ "<div class='comment-content'>"
+												+ "<div class='d-flex align-items-center justify-content-between'>"
+												+ "<h5>" + data.pcomment.pcWriter + "</h5>"
+												+ "<span class='comment-date'>" + data.pcomment.pcDate + "</span></div>"
+												+ "<p>" + content + "</p>"
+												+ "<a class='active' href='#' onclick = 'replyComment();'>Reply</a>&nbsp;&nbsp;"
+												+ "<a class='active' href='#' onclick = 'updateComment();'>Update</a>&nbsp;&nbsp;"
+												+ "<a class='active' href='#' onclick = 'deleteComment();'>Delete</a>"
+												+ "</div></div></li>"
+											);
+				}
+			}
+		});
+		$('#commentHead').html('이걸 이렇게?');
+	} */
 
 	
 	function updateComment(){

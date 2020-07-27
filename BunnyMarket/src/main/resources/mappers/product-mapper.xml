@@ -60,9 +60,6 @@
 	 -->
 	</insert>
 	
-	
-	
-	
 	<!-- 상품 게시글 삭제하는 쿼리 -->
 	<delete id = "deleteProduct" parameterType = "_int">
 		DELETE FROM PRODUCT

@@ -156,8 +156,7 @@
 												</div>
 												<!-- Comment Content -->
 												<div class="comment-content">
-													<div
-														class="d-flex align-items-center justify-content-between">
+													<div class="d-flex align-items-center justify-content-between">
 														<h5>Simona Halep</h5>
 														<span class="comment-date">09:00 AM, 20 Jun 2018</span>
 													</div>

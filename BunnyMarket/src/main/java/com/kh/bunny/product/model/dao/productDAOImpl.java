@@ -56,7 +56,7 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int insertPComment(PComment pcomment) {
-		return sqlSession.insert("productMapper.", pcomment);
+		return sqlSession.insert("productMapper.insertPComment", pcomment);
 	}
 
 	@Override
@@ -68,5 +68,7 @@ public class productDAOImpl implements ProductDAO {
 	public int deletePComment(int pcmno) {
 		return sqlSession.delete("productMapper.", pcmno);
 	}
+
+
 
 }
