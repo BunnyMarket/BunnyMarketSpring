@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.bunny.report.model.dao.ReportDAO;
+import com.kh.bunny.report.model.exception.ReportException;
+import com.kh.bunny.report.model.vo.Report;
 
 
 @Service("ReportService")
@@ -25,6 +27,23 @@ public class ReportServiceImpl implements ReportService {
 	public int selectReportTotalContents() {
 		
 		return reportDAO.selectReportTotalContents();
+	}
+
+	@Override
+	public int insertReport(Report r) {
+		int result =0;
+		
+		result = reportDAO.insertReport(r);
+		
+		if(result == REPORT_SERVICE_ERROR) throw new ReportException();
+		
+		return result;
+	}
+
+	@Override
+	public int selectCurrentRno() {
+	
+		return reportDAO.selectCurrentRno();
 	}
 
 }

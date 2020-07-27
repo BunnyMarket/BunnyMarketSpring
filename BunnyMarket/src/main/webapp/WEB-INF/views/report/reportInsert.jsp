@@ -28,23 +28,24 @@
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
-			<form action="">
+			<form id="formArea" method="post">
 				<div class="row justify-content-between">
-					<div class="col-12 col-md-2" style="text-align: center; padding-top: 7px;">
-						<div class="single_product_desc">
-							<!-- <h4 class="title">상품 제목</h4> -->
-							<label for="p">제목 *</label>
+					<div class="col-12 col-md-2">
+						<div class="single_product_desc"  style="text-align: center; padding-top: 7px;">
+							
+							<label for="p">신고글 제목*</label>
 							<br />
 						</div>
 					</div>
-					<div class="col-12 col-md-10">
+					<div class="col-12 col-md-10" style="text-align: center;">
 						<div class="single_product_desc">
+						<input type="hidden" name="rWriter"  value="${member.userId}">
 							<input type="text" class="form-control" id="rTitle" placeholder="신고글 제목을 입력" required />
 							<br />
 						</div>
 					</div>
-					<label for="rcNo" style="float: none;">신고 카테고리 설정 *</label>
-					<div class="search_by_terms">
+					<label for="rcNo" style="float: none;padding-left: 49px;">신고 카테고리 설정 *</label>
+					<div class="col-12 col-md-9" style="text-align: center;">
                                 <select class="custom-select widget-title" name="rcNo" style="width: 100%">
                                   <option value="" hidden>신고 사유를 선택해주세요.</option>
                                   <option value="1">욕설 혹은 비방</option>
@@ -52,10 +53,10 @@
                                   <option value="3">사기 - 물품이 없는경우(허위매물)</option>
                                   <option value="4">기타</option>
                                 </select>
-	                        </div>
+	                        </div> 
 					<div class="col-12 col-md-2" style="text-align: center; padding-top: 7px;">
 						<div class="single_product_desc">
-							<label for="p">신고할 아이디 *</label>
+							<label for="p" style="padding-left: 15px;">신고할 아이디 *</label>
 							<br />
 						</div>
 					</div>
@@ -70,7 +71,7 @@
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea class="summernote" name="rContent"  placeholder = "내용 입력"></textarea>
 					</div>
 				</div>
 				<div align="center">
@@ -78,7 +79,7 @@
 							onclick="location.href='${ pageContext.request.contextPath }/report/reportDetail.do'">등록완료</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a class="btn alazea-btn mr-30"
-							href="${pageContext.request.contextPath}">메인으로</a> <br /> <br />
+							href="${pageContext.request.contextPath}" style="margin-top: 15px;">메인으로</a> <br /> <br />
 				</div>
 			</form>
 		</div>
@@ -105,9 +106,34 @@
             ['height', ['height']],
             ['insert', ['link', 'picture', 'video']],
             ['view', ['fullscreen', 'codeview', 'help']]
-         ]
-		
-	});
+            ], callbacks : {
+      	         onImageUpload : function(files, editor,
+      	               welEditorble) {
+      	            data = new FormData();
+      	            data.append("file", files[0]);
+      	            
+      	            $.ajax({
+      	               data : data,
+      	               type : "post",
+      	               url : '${pageContext.request.contextPath}/report/reportImgInsert.do', // servlet url
+      	               cache : false,
+      	               contentType : false,
+      	               processData : false,
+      	               success : function(fileUrl) {
+      	                  check.summernote('insertImage', fileUrl);
+      	                  alert("이미지 등록 성공!" + fileUrl);
+      	               },
+      	               error : function(request, status, error) {
+      	                  alert("code:" + request.status + "\n"
+      	                        + "message:"
+      	                        + request.responseText + "\n"
+      	                        + "error:" + error);
+      	               }
+      	            });
+      	         }
+      	      }
+      	   });
+	
 	$("div.note-editable").on('drop',function(e){
         for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
         	uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$(".summernote")[0]);

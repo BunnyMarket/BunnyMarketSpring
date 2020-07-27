@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.bunny.report.model.vo.Report;
+
 @Repository("ReportDAO")
 public class ReportDAOImpl implements ReportDAO {
 
@@ -24,6 +26,18 @@ public class ReportDAOImpl implements ReportDAO {
 	public int selectReportTotalContents() {
 		
 		return sqlSession.selectOne("reportMapper.selectReportTotalContents");
+	}
+
+	@Override
+	public int insertReport(Report r) {
+		
+		return sqlSession.insert("reportMapper.insertReport", r);
+	}
+
+	@Override
+	public int selectCurrentRno() {
+		
+		return sqlSession.selectOne("reportMapper.selectCurrenRno");
 	}
 
 }

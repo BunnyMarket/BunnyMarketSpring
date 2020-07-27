@@ -13,6 +13,11 @@
    SELECT COUNT(*)
    FROM REPORT
    </select>
+   
+   <insert id="insertReport">
+   INSERT INTO REPORT
+   VALUES (SEQ_QNO.NEXTVAL, #{rWriter}, #{rTitle}, #{rcNo}, #{reported}, #{rContent}, DEFAULT)
+   </insert>
 </mapper>
 
 
