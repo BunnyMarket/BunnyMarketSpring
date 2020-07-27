@@ -42,14 +42,44 @@ public class MemberDAOImpl implements MemberDAO {
 		return (Integer)hmap.get("result");
 	}
 
+	
+
 	@Override
-	public boolean email_check(String email) throws Exception {
-		 email
-	        =sqlSession.selectOne("member.email_check", email);
-	    
-	        //조건식 ? true일때의 값 : false일때의 값
-	        return (email==null) ? true : false;
+	public Member findId(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findId",m);
 	}
+
+	@Override
+	public int pwdUpdate(Member m) {
+		
+		return sqlSession.update("memberMapper.pwdUpdate",m);
+	}
+
+	@Override
+	public int idDupCheck(String userId) {
+	
+		return sqlSession.selectOne("memberMapper.idDupCheck",userId);
+	}
+
+	@Override
+	public int nickDupCheck(String nickName) {
+		return sqlSession.selectOne("memberMapper.nickDupCheck",nickName);
+	}
+
+	@Override
+	public int emailDupCheck(String email) {
+	
+		return sqlSession.selectOne("memberMapper.emailDupCheck",email);
+	}
+
+	@Override
+	public int phoneDupCheck(String phone) {
+	
+		return sqlSession.selectOne("memberMapper.phoneDupCheck",phone);
+	}
+
+	
 
 	
 	

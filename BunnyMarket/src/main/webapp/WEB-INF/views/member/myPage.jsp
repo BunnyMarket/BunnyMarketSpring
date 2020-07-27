@@ -32,7 +32,14 @@
             <div class="row">
                <div class="col-12" align="center">
                     <div class="cart-table clearfix">
-                  <img src="/bunny/resources/img/usericon.png" height="70px" alt="userimg" /> <br />
+                  <c:if test="${member.photo == null }">
+				<img src="/bunny/resources/img/usericon.png" id="userImg" width="100px"
+				alt="userImg" />
+			</c:if>
+			<c:if test="${member.photo != null }">
+				<img src="/bunny/resources/member/profile/${member.photo}" id="userImg" width="100px"
+				alt="userImg"/>
+			</c:if> <br />
                   <h3>아이디</h3>
                </div>
                <div>

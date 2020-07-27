@@ -22,6 +22,25 @@
 		<beans:property name="order" value="1"/>
 	</beans:bean>
 	
+			 <!-- mail bean -->
+<beans:bean id="javaMailSender" 
+    class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <beans:property name="host" value="smtp.naver.com"/>
+    <beans:property name="port" value="465"/>        
+    <beans:property name="username" value="model_so@naver.com"/>
+    <beans:property name="password" value="zxc2754"/>
+    <beans:property name="protocol" value="smtps"/>        
+    <beans:property name="defaultEncoding" value="utf-8"/>
+    <beans:property name="javaMailProperties">
+        <beans:props>
+            <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+            <beans:prop key="mail.smtp.auth">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.checkserveridentity">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.trust">*</beans:prop>
+        </beans:props>
+    </beans:property>        
+</beans:bean>
+	
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
 	<!-- @ResponseBody 사용을 위한 객체 등록 -->
@@ -64,6 +83,15 @@
 			            class="com.kh.bunny.common.interceptor.LoginCheckInterceptor" />
 		</interceptor>
 		</interceptors>
+	
+	
+	<!--  파일 업로드 시에 사용할 MultipartResolver 등록하기  -->
+	<beans:bean id="multipartResolver" 
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/>
+		<!--  10MB = 1024 byte => 1kb, 1024kb => 1mb * 10 = 10485760  -->
+	</beans:bean>
+	
 	
 	<context:component-scan base-package="com.kh.bunny" />
 	

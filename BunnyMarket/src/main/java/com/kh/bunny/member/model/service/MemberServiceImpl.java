@@ -44,12 +44,45 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
+
 	@Override
-	public boolean email_check(String email) throws Exception {
-		 boolean result = memberDAO.email_check(email);
-	        
-	        return result;
+	public Member findId(Member m) {
+		
+		return memberDAO.findId(m);
 	}
+
+	@Override
+	public int pwdUpdate(Member m) {
+		
+		return memberDAO.pwdUpdate(m);
+	}
+
+	@Override
+	public int idDupCheck(String userId) {
+		
+		return memberDAO.idDupCheck(userId);
+	}
+
+	@Override
+	public int nickDupCheck(String nickName) {
+		
+		return memberDAO.nickDupCheck(nickName);
+	}
+
+	@Override
+	public int emailDupCheck(String email) {
+
+		return memberDAO.emailDupCheck(email);
+	}
+
+	@Override
+	public int phoneDupCheck(String phone) {
+
+		return memberDAO.phoneDupCheck(phone);
+	}
+
+	
 
 	
 

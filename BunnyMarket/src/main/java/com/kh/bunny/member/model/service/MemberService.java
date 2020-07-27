@@ -17,7 +17,20 @@ public interface MemberService {
 	int checkIdDuplicate(String userId);
 
 	
-	 public boolean email_check(String email) throws Exception;    //이메일 중복확인을 하는 메소드
+	
+
+	Member findId(Member m);
+
+	int pwdUpdate(Member m);
+
+	int idDupCheck(String userId);
+
+	int nickDupCheck(String nickName);
+
+	int emailDupCheck(String email);
+
+	int phoneDupCheck(String phone);
+
 
 	
 	 

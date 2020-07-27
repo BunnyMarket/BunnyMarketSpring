@@ -1,7 +1,10 @@
 package com.kh.bunny.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +12,7 @@ import java.util.Random;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.bunny.member.model.exception.MemberException;
@@ -50,6 +55,12 @@ public class MemberController {
 		logger.debug("회원 등록 페이지 이동~!");
 
 		return "login";
+	}
+
+	// 아이디 찾기 비밀번호 찾기 이동하기.
+	@RequestMapping("findIdView.do")
+	public String findId() {
+		return "/member/findId";
 	}
 
 	// 회원 가입 기능 실행하기
@@ -87,8 +98,7 @@ public class MemberController {
 			msg = "회원 가입 성공!";
 		else
 			msg = "회원 가입 실패!";
-		
-		
+
 		model.addAttribute("loc", loc); // like request.setAttribute("loc", loc);
 		model.addAttribute("msg", msg);
 
@@ -157,12 +167,12 @@ public class MemberController {
 
 		return "redirect:/";
 	}
-	
+
 	// 마이페이지 이동
 	@RequestMapping("/member/memberMyPage.do")
 	public String memberMyPage(@RequestParam String userId, Model model) {
 		model.addAttribute("member", memberService.selectOne(userId));
-		
+
 		return "member/myPage";
 	}
 
@@ -175,14 +185,13 @@ public class MemberController {
 
 		return "member/profileUpdate";
 	}
-	
-	
-	
+
 	// 회원 정보 수정 기능 메소드
 	@RequestMapping("/member/memberUpdate.do")
-	public String memberUpdate(Member member, Model model) {
+	public String memberUpdate(Member member, Model model,
+			@RequestParam(value = "userPhoto", required = false) MultipartFile userPhoto, HttpSession session) {
 		logger.debug("회원 정보 수정 발생!");
-		
+
 		String plainPassword = member.getUserPwd();
 		System.out.println("비밀번호 암호화 전 : " + plainPassword);
 
@@ -200,25 +209,59 @@ public class MemberController {
 		System.out.println("비밀번호 암호화 후 : " + encryptPassword);
 
 		member.setUserPwd(encryptPassword);
-		
-		// 1. 서비스 로직 수행! (비즈니스 로직)
-		int result = memberService.updateMember(member);
-				
-		// 2. 처리결과에 따라 화면 분기 처리하기
+
+		System.out.println("나옵니까 이미지11? :" + userPhoto);
+		System.out.println("전부 다 뽑아주세요 : " + member);
+
+		String saveDir = session.getServletContext().getRealPath("resources/member/profile");
+
+		File dir = new File(saveDir);
+		if (dir.exists() == false)
+			dir.mkdirs();
+
+		String originName = userPhoto.getOriginalFilename();
+		String ext = originName.substring(originName.lastIndexOf(".") + 1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+		int rndNum = (int) (Math.random() * 1000); // 이름바꾸기 수행. 랜덤번호..
+
+		// 서버에서 저장 후 관리할 파일 명
+		String renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+		System.out.println("renamedName : " + renamedName);
+		// 실제 파일을 지정한 파일명으로 변환하며 데이터를 저장한다.
+		try {
+			userPhoto.transferTo(new File(saveDir + "/" + renamedName));
+			// transferTo는 우리가 원래 받은 원본 파일 이름을 변경된 파일 이름으로 바꾸어서 해당 경로에 저장해달라는 것.
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+
+		member.setPhoto(renamedName);
+//	      member.setUserPwd(encryptPassword);
+
+		int result;
+		try {
+			result = memberService.updateMember(member);
+
+		} catch (Exception e) {
+			throw new MemberException("게시글 등록 오류" + e.getMessage());
+		}
+
 		String loc = "/";
 		String msg = "";
 
 		if (result > 0) {
-			msg = "회원 정보 수정 성공!";
-			
+			msg = "프로필 수정 성공함";
+			System.out.println("프로필 수정 성공");
 		} else {
-			msg = "회원 정보 수정 실패!";
+			msg = "프로필 수정 실패함";
+			System.out.println("프로필 수정 실패");
 		}
 
-		model.addAttribute("loc", loc);
-		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
 
 		return "common/msg";
+
 	}
 
 	// 회원 탈퇴 기능 메소드
@@ -296,128 +339,113 @@ public class MemberController {
 		return map;
 	}
 
-	// mailSending 코드
-	@RequestMapping(value = "/member/auth.do", method = {RequestMethod.GET , RequestMethod.POST})
-	public ModelAndView mailSending(HttpServletRequest request, String e_mail, HttpServletResponse response_email)
-			throws IOException {
-		
-		int result;
-		Random r = new Random();
-		int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
+	@RequestMapping("member/findId.do")
+	@ResponseBody
+	public Map<String, Object> searchId(Member m) {
 
-		String setfrom = "model_so@naver.com";
-		String tomail = request.getParameter("email"); // 받는 사람 이메일
-		String title = "회원가입 인증 이메일 입니다."; // 제목
-		String content =
+		String userId = "";
 
-				System.getProperty("line.separator") + // 한줄씩 줄간격을 두기위해 작성
+		Map<String, Object> map = new HashMap<>();
 
-						System.getProperty("line.separator") +
+		Member member = memberService.findId(m);
 
-						"안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다"
-
-						+ System.getProperty("line.separator") +
-
-						System.getProperty("line.separator") +
-
-						" 인증번호는 " + dice + " 입니다. "
-
-						+ System.getProperty("line.separator") +
-
-						System.getProperty("line.separator") +
-
-						"받으신 인증번호를 홈페이지에 입력해 주세요"; // 내용
-
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-
-			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
-			messageHelper.setTo(tomail); // 받는사람 이메일
-			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-			messageHelper.setText(content); // 메일 내용
-
-			mailSender.send(message);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-		ModelAndView mv = new ModelAndView(); // ModelAndView로 보낼 페이지를 지정하고, 보낼 값을 지정한다.
-		mv.setViewName("redirect:memberEnrollEnd.do"); // 뷰의이름
-		mv.addObject("dice", dice);
-
-		System.out.println("mv : " + mv);
-
-		response_email.setContentType("text/html; charset=UTF-8");
-		PrintWriter out_email = response_email.getWriter();
-		out_email.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
-		out_email.flush();
-
-		return mv;
-
-	}
-
-//이메일 인증 페이지 맵핑 메소드
-	@RequestMapping("/member/email.do")
-	public String email() {
-		return "member/login";
-	}
-
-//이메일로 받은 인증번호를 입력하고 전송 버튼을 누르면 맵핑되는 메소드.
-//내가 입력한 인증번호와 메일로 입력한 인증번호가 맞는지 확인해서 맞으면 회원가입 페이지로 넘어가고,
-//틀리면 다시 원래 페이지로 돌아오는 메소드
-	@RequestMapping(value = "/member/join_injeung.do{dice}", method = RequestMethod.POST)
-	public ModelAndView join_injeung(String email_injeung, @PathVariable String dice,
-			HttpServletResponse response_equals) throws IOException {
-
-		System.out.println("마지막 : email_injeung : " + email_injeung);
-
-		System.out.println("마지막 : dice : " + dice);
-
-		// 페이지이동과 자료를 동시에 하기위해 ModelAndView를 사용해서 이동할 페이지와 자료를 담음
-
-		ModelAndView mv = new ModelAndView();
-
-		mv.setViewName("memberEnrollEnd.do");
-
-		mv.addObject("e_mail", email_injeung);
-
-		if (email_injeung.equals(dice)) {
-
-			// 인증번호가 일치할 경우 인증번호가 맞다는 창을 출력하고 회원가입창으로 이동함
-
-			mv.setViewName("redirect:memberEnrollEnd.do");
-
-			mv.addObject("email", email_injeung);
-
-			// 만약 인증번호가 같다면 이메일을 회원가입 페이지로 같이 넘겨서 이메일을
-			// 한번더 입력할 필요가 없게 한다.
-
-			response_equals.setContentType("text/html; charset=UTF-8");
-			PrintWriter out_equals = response_equals.getWriter();
-			out_equals.println("<script>alert('인증번호가 일치하였습니다. 회원가입창으로 이동합니다.');</script>");
-			out_equals.flush();
-
-			return mv;
-
-		} else if (email_injeung != dice) {
-
-			ModelAndView mv2 = new ModelAndView();
-
-			mv2.setViewName("redirect:memberEnrollEnd.do");
-
-			response_equals.setContentType("text/html; charset=UTF-8");
-			PrintWriter out_equals = response_equals.getWriter();
-			out_equals.println("<script>alert('인증번호가 일치하지않습니다. 인증번호를 다시 입력해주세요.'); history.go(-1);</script>");
-			out_equals.flush();
-
-			return mv2;
-
+		if (member != null) {
+			userId = member.getUserId();
+		} else {
+			userId = "입력하신 정보에 해당하는 회원이 없습니다.";
 		}
 
-		return mv;
+		map.put("userId", userId);
 
+		return map;
 	}
+
+	// 비밀번호찾기 후 수정
+	@RequestMapping("member/pwdUpdate.do")
+	@ResponseBody
+	public Map<String, Object> resetPwd(Member m) {
+
+		String msg = "";
+
+		String plainPassword = m.getUserPwd();
+		System.out.println("비밀번호 암호화 전 : " + plainPassword);
+
+		/************* 암호화 Start ! ***************/
+
+		String encryptPassword = bcryptPasswordEncoder.encode(plainPassword);
+		// $2a$10$ju.7JAGrQR9RUmYVuWtNQO6S/RUoGEWhtu8ryznONhwCheROJkSm.
+		// $2a$ : 암호 알고리즘 (모드)
+		// 10$ : 4-31 회 중 10번 반복 횟수를 거침
+		// ju.7JAGrQR9RUmYVuWtNQO : 랜덤 Salt (임의의 문자열 22글자)
+		// 6S/RUoGEWhtu8ryznONhwCheROJkSm. : 실제 암호화된 결과 (31글자)
+
+		/*************** 암호화 End ! ***************/
+
+		System.out.println("비밀번호 암호화 후 : " + encryptPassword);
+
+		m.setUserPwd(encryptPassword);
+
+		Map<String, Object> map = new HashMap<>();
+
+		int result = memberService.pwdUpdate(m);
+
+		if (result > 0) {
+			msg = "비밀번호가 변경되었습니다.";
+		} else {
+			msg = "비밀번호 변경에 실패했습니다.";
+		}
+
+		map.put("msg", msg);
+
+		return map;
+	}
+	
+	// 아이디 중복 체크
+	@RequestMapping(value="/member/idDupCheck.do")
+	@ResponseBody
+	public Map<String,Object> idDupCheck(@RequestParam String userId){
+		
+		 Map<String,Object> map = new HashMap<>();
+		 boolean isUsable = memberService.idDupCheck(userId)== 0? true:false;
+	     map.put("isUsable", isUsable);
+	    
+		return map;
+	}
+	
+	// 닉네임 중복 체크
+	@RequestMapping(value="/member/nickDupCheck.do")
+	@ResponseBody
+	public Map<String,Object> nickDupCheck(@RequestParam String nickName){
+			
+		 Map<String,Object> map = new HashMap<>();
+		 boolean isUsable = memberService.nickDupCheck(nickName)== 0 ? true:false;
+	     map.put("isUsable", isUsable);
+	    
+		return map;
+	}
+	
+	// 이메일 중복 체크
+	@RequestMapping(value="/member/emailDupCheck.do")
+	@ResponseBody
+	public Map<String,Object> emailDupCheck(@RequestParam String email){
+	Map<String,Object> map = new HashMap<>();
+	boolean isUsable = memberService.emailDupCheck(email)== 0 ? true:false;
+	map.put("isUsable",isUsable);
+	
+	return map;
+	}
+	
+	// 휴대폰 중복 체크
+	@RequestMapping(value="/member/phoneDupCheck.do")
+	@ResponseBody
+	public Map<String,Object> phoneDupCheck(@RequestParam String phone){
+	Map<String,Object> map = new HashMap<>();
+	boolean isUsable = memberService.phoneDupCheck(phone)== 0 ? true:false;
+	map.put("isUsable",isUsable);
+	
+	return map;
+	}
+	
 	
 	
 

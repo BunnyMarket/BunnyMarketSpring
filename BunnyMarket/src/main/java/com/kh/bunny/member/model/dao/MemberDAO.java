@@ -17,7 +17,20 @@ public interface MemberDAO {
 	
 	int checkIdDuplicate(HashMap<String, Object> hmap);
 	
-	public boolean email_check(String email) throws Exception;    //이메일 중복 확인
+	  
+
+	Member findId(Member m);
+
+	int pwdUpdate(Member m);
+
+	int idDupCheck(String userId);
+
+	int nickDupCheck(String nickName);
+
+	int emailDupCheck(String email);
+
+	int phoneDupCheck(String phone);
+
 
 	
 
