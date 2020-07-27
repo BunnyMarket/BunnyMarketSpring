@@ -1,5 +1,6 @@
 package com.kh.bunny.product.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.bunny.product.model.vo.PComment;
 import com.kh.bunny.product.model.vo.Product;
 
 @Repository("productDAO")
@@ -34,20 +36,37 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int insertProduct(Product product) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert("productMapper.insertProduct", product);
 	}
 
 	@Override
 	public int updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("productMapper.updateProduct", product);
 	}
 
 	@Override
 	public int deleteProduct(int pno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete("productMapper.deleteProduct", pno);
+	}
+
+	@Override
+	public List<Object> selectPCommentList(int pno) {
+		return sqlSession.selectList("productMapper.selectPCommentList", pno);
+	}
+
+	@Override
+	public int insertPComment(PComment pcomment) {
+		return sqlSession.insert("productMapper.", pcomment);
+	}
+
+	@Override
+	public int updatePComemnt(PComment pcomment) {
+		return sqlSession.update("productMapper.", pcomment);
+	}
+
+	@Override
+	public int deletePComment(int pcmno) {
+		return sqlSession.delete("productMapper.", pcmno);
 	}
 
 }

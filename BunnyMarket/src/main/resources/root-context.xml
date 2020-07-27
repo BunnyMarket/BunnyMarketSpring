@@ -34,6 +34,7 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
+<<<<<<< HEAD
 		<!-- Gmail -->
   <bean id="javaMailSesnder" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.naver.com" />
@@ -76,6 +77,7 @@
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="servicePc"/>
 	</aop:config>
 	
+
 
 	
 </beans>
