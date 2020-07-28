@@ -24,7 +24,7 @@
 
 <!-- Favicon -->
 <link rel="icon"
-	href="${ pageContext.request.contextPath }/resources/img/core-img/favicon-bunny2.ico">
+	href="${ pageContext.request.contextPath }/resources/img/core-img/favicon-bunny4.ico">
 
 <!-- 섬머노트 -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -193,7 +193,7 @@
 
 						<!-- Nav Brand -->
 						<a href="${ pageContext.request.contextPath }/index.jsp" class="nav-brand"> <img
-							src="${ pageContext.request.contextPath }/resources/img/core-img/bunnyLogo3.png"
+							src="${ pageContext.request.contextPath }/resources/img/core-img/bunnyLogo2.png"
 							alt=""></a>
 
 						<!-- Navbar Toggler -->

@@ -43,7 +43,7 @@
 		<set>
 			PCCONTENT = #{pcContent}
 		</set>
-		WHERE PNO = #{pno} AND PCMNO = #{pcmno} <!-- pno는 굳이 넣을 필요 없을거같지만.. -->
+		WHERE PCMNO = #{pcmno} <!-- pno는 굳이 넣을 필요 없을거같지만.. -->
 	</update>
 	
 	<!-- 댓글 삭제 -->	
@@ -84,8 +84,14 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
-	<select id="selectOneReplyPno" resultType="_int">
-		SELECT PNO
+	<select id="selectOneReplyPcmno" resultType="_int">
+		SELECT COUNT(*)
+		  FROM PCOMMENT
+		 WHERE REF_PCMNO = #{pcmno}
+	</select>
+	
+	<select id="selectOneReplyPcWriter" resultType="String">
+		SELECT PCWRITER
 		  FROM PCOMMENT
 		 WHERE PCMNO = #{pcmno}
 	</select>

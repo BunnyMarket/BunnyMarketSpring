@@ -58,8 +58,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int updatePComemnt(PComment pcomment) {
-		return productDAO.updatePComemnt(pcomment);
+	public int updatePComment(PComment pcomment) {
+		return productDAO.updatePComment(pcomment);
 	}
 
 	@Override
@@ -68,8 +68,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int selectOneReplyPno(int pcmno) {
-		return productDAO.selectOneReplyPno(pcmno);
+	public int selectOneReplyPcmno(int pcmno) {
+		return productDAO.selectOneReplyPcmno(pcmno);
+	}
+
+	@Override
+	public String selectOneReplyPcWriter(int pcmno) {
+		return productDAO.selectOneReplyPcWriter(pcmno);
 	}
 
 

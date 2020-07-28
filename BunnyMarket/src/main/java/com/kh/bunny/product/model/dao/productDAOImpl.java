@@ -60,8 +60,8 @@ public class productDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public int updatePComemnt(PComment pcomment) {
-		return sqlSession.update("productMapper.", pcomment);
+	public int updatePComment(PComment pcomment) {
+		return sqlSession.update("productMapper.updatePComment", pcomment);
 	}
 
 	@Override
@@ -75,8 +75,13 @@ public class productDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public int selectOneReplyPno(int pcmno) {
-		return sqlSession.selectOne("productMapper.selectOneReplyPno", pcmno);
+	public int selectOneReplyPcmno(int pcmno) {
+		return sqlSession.selectOne("productMapper.selectOneReplyPcmno", pcmno);
+	}
+
+	@Override
+	public String selectOneReplyPcWriter(int pcmno) {
+		return sqlSession.selectOne("productMapper.selectOneReplyPcWriter", pcmno);
 	}
 
 

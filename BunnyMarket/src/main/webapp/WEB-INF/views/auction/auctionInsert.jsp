@@ -95,7 +95,7 @@
 							<br />
 
 							<label for="pAddress">주소 입력 </label>
-							<input type="text" id="address" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							<input type="text" id="pAddress" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
 							<input type="hidden" name="pWriter" value="TEST1">
 						</div>
 					</div>
@@ -214,7 +214,7 @@
 	   });
 	
 
-	   /* 주소 검색을 위한 스크립트 */ 
+		/* 주소 검색을 위한 스크립트 */ 
 		var showfullAddr; // 화면단에서 보여주기 위한 주소를 입력받는 변수 선언
 		var fullAddr;
 		
@@ -298,12 +298,19 @@
 
 			                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			                map.setCenter(coords);
+			                
+			                
+			                
+			                
+			                
 			            } 
 			        });    
 			        
 			        document.getElementById('map').style.border = "4px solid #bcbcbc";
+				 
 	            }
 	        }).open();
+	        
 	    };
 	</script>
 

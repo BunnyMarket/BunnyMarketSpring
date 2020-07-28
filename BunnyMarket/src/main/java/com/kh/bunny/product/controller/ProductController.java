@@ -307,9 +307,20 @@ public class ProductController {
 	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
-	public String pcommentUpdate(PComment pcomment, Model model) {
+	@ResponseBody
+	public HashMap<String, Object> pcommentUpdate(PComment pcomment) {
 		
-		return "";
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		boolean updateCheck = false;
+		try {
+			updateCheck = productService.updatePComment(pcomment) > 0 ? true : false;
+		} catch (Exception e) {
+			throw new ProductException();
+		}
+		
+		hmap.put("updateCheck", updateCheck);
+		
+		return hmap;
 	}
 	
 	// 댓글 삭제하기 
@@ -320,12 +331,19 @@ public class ProductController {
 		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 		
 		try	{
-			int result = productService.deletePComment(pcomment.getPcmno());
 			
-			if(result > 0) {
-				msg = "댓글 삭제 성공!";
+			boolean hasReply = productService.selectOneReplyPcmno(pcomment.getPcmno()) > 0 ? true : false;
+			if(hasReply == true) {
+				msg = "대댓글이 있어서 삭제가 불가능합니다.";
 			} else {
-				msg = "댓글 삭제 실패ㅠ";
+				
+				int result = productService.deletePComment(pcomment.getPcmno());
+			
+				if(result > 0 && hasReply == false) {
+					msg = "댓글 삭제 성공!";				
+				} else {
+					msg = "에러 발생!(댓글 삭제 실패)";
+				}
 			}
 		} catch (Exception e) {
 			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
