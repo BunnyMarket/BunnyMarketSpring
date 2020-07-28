@@ -49,6 +49,8 @@ public interface ProductService {
 
 	String selectOneReplyPcWriter(int pcmno);
 
+	PComment selectOnePComment(int pno);
+
 	
 	
 	

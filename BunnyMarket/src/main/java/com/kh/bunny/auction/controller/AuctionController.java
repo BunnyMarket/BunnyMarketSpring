@@ -29,13 +29,18 @@ import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
-import com.kh.bunny.product.model.vo.Product;
+import com.kh.bunny.product.model.exception.ProductException;
+import com.kh.bunny.product.model.service.ProductService;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Controller
 public class AuctionController {
 	
 	@Autowired
 	AuctionService auctionService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
@@ -82,11 +87,16 @@ public class AuctionController {
 		
 		int bidderCount = auctionService.selectOneBidderCount(pno);
 		
+		List<Object> PComments = productService.selectPCommentList(pno);
+		System.out.println("pcomments : " + PComments);
+		System.out.println("pcomments : " + PComments.size());
 		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
 		
 		model.addAttribute("auction", a)
 			 .addAttribute("bCount", bidderCount)
-			 .addAttribute("bList" , bList);
+			 .addAttribute("bList" , bList)
+			 .addAttribute("pcomments", PComments)
+			 .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		return "auction/auctionDetail";
 	}
@@ -231,6 +241,87 @@ public class AuctionController {
 			 .addAttribute("msg", msg);
 		
 		return "common/msg";
+	}
+	
+	// 댓글 생성하기 
+	@RequestMapping("/auction/pcommentInsert.do")
+	public String pcommentInsert(PComment pcomment, Model model, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
+		
+		pcomment.setPcWriter(userId);
+		System.out.println("댓글 들어옴 ? " + pcomment);
+		String msg = "";
+		String loc = "/auction/auctionDetail.do?pno=" + pcomment.getPno();
+		
+		try	{
+			int result = productService.insertPComment(pcomment);
+			
+			if(result > 0) {
+				msg = "댓글 달기 성공!";
+			} else {
+				msg = "댓글 달기 실패ㅠ";
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
+	// 댓글 수정하기 
+	@RequestMapping("/auction/pcommentUpdate.do")
+	@ResponseBody
+	public HashMap<String, Object> pcommentUpdate(PComment pcomment) {
+		
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		boolean updateCheck = false;
+		try {
+			updateCheck = productService.updatePComment(pcomment) > 0 ? true : false;
+		} catch (Exception e) {
+			throw new ProductException();
+		}
+		
+		hmap.put("updateCheck", updateCheck);
+		
+		return hmap;
+	}
+	
+	// 댓글 삭제하기 
+	@RequestMapping("/auction/pcommentDelete.do")
+	public String pcommentDelete(PComment pcomment, Model model) {
+		
+		String msg = "";
+		String loc = "/auction/auctionDetail.do?pno=" + pcomment.getPno();
+		
+		try	{
+			
+			boolean hasReply = productService.selectOneReplyPcmno(pcomment.getPcmno()) > 0 ? true : false;
+			if(hasReply == true) {
+				msg = "대댓글이 있어서 삭제가 불가능합니다.";
+			} else {
+				
+				int result = productService.deletePComment(pcomment.getPcmno());
+			
+				if(result > 0 && hasReply == false) {
+					msg = "댓글 삭제 성공!";				
+				} else {
+					msg = "에러 발생!(댓글 삭제 실패)";
+				}
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+		
 	}
 	
 	

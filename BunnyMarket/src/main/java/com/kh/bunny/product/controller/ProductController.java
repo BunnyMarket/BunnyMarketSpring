@@ -287,20 +287,24 @@ public class ProductController {
 //		
 //		pcomment.setPcWriter(userId);
 //		System.out.println("댓글 들어옴 ? " + pcomment);
-//		String msg = "";
-//		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
-//		
-//		int result = productService.insertPComment(pcomment);
-//		PComment pcm = productService.selectOnePComment(pcomment.getPno()); 
-//		System.out.println();
-//		boolean isInsert = result > 0 ? true : false;
 //		Map<String, Object> hmap = new HashMap<String, Object>();
+//		boolean isInsert = false;
+//		PComment pcm = null;
+//		try {
+//			
+//			isInsert = productService.insertPComment(pcomment) > 0 ? true : false;
+//			if(isInsert) {
+//				pcm = productService.selectOnePComment(pcomment.getPno()); 				
+//			}
+//			
+//		} catch (Exception e) {
+//			throw new ProductException();
+//		}
+//		
+//		System.out.println("pcm : " + pcm);
 //		hmap.put("isInsert", isInsert);
 //		hmap.put("pcomment", pcm);
 //		 
-////		model.addAttribute("loc", loc)
-////			 .addAttribute("msg", msg);
-//		
 //		return hmap;
 //	}
 	

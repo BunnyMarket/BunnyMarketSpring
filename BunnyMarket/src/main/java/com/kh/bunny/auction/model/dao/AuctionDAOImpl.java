@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Repository("auctionDAO")
 public class AuctionDAOImpl implements AuctionDAO {

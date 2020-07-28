@@ -77,6 +77,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.selectOneReplyPcWriter(pcmno);
 	}
 
+	@Override
+	public PComment selectOnePComment(int pno) {
+		return productDAO.selectOnePComment(pno);
+	}
+
 
 
 }

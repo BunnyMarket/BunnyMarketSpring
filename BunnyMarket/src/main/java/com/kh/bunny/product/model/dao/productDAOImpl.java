@@ -84,6 +84,11 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.selectOneReplyPcWriter", pcmno);
 	}
 
+	@Override
+	public PComment selectOnePComment(int pno) {
+		return sqlSession.selectOne("productMapper.selectOnePComment", pno);
+	}
+
 
 
 }

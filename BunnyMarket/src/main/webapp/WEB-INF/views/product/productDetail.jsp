@@ -76,7 +76,7 @@
 							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
 						<br />
 
-						<h4 class="price">${ product.PPrice } won</h4>
+						<h4 class="price"><span style="color:orange; font: bold;">${product.PPrice}</span>당근</h4>
 						<br />
 
 						<h5>글 작성날짜</h5>
@@ -132,7 +132,7 @@
 									<div class="col-12 col-md-6">
 										<br /> <br />
 										<h4>판매자 정보</h4>
-										<h4>${a.PWriter}</h4>
+										<h4>${product.PWriter}</h4>
 										<h5><a href="#" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
@@ -150,11 +150,13 @@
 										<h5>첫번째 댓글의 주인공이 되어보세요!</h5>
 									</c:if>
 
+									<input type="hidden"  id="pcommentSize" value="${ pcommentSize }"/>
 									<ol>
 										<!-- Single Comment Area -->
 										<c:forEach items="${ pcomments }" var="pcomment" varStatus="st">
 											<li class="single_comment_area">
 												<c:if test = "${ pcomment.pcLevel eq 0}">
+													<div id="olPlz-${ pcommentSize }"></div>
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
@@ -245,7 +247,6 @@
 																			<div class="contact-form-area" id="upReReplyDiv-${st.index }" style="display: none;">
 																				<!-- Comment Form -->
 																				<input type="hidden" id="reContent-${st.index }" value="${ reComment.pcContent }"/>
-																				<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="${pcomment.pcmno }">
 																				<div class="col-12">
 																					<div class="form-group">
 																						<textarea class="form-control" name="pcContent"
@@ -291,8 +292,8 @@
 													</div>
 												</div>
 												<div class="col-12">
+													<!-- <button type="submit" class="btn alazea-btn"> -->
 													<button type="submit" class="btn alazea-btn">
-													<!-- <button type="button" class="btn alazea-btn" onclick="replyComment();"> -->
 														Post Comment
 													</button>
 												</div>
@@ -478,12 +479,14 @@
 	
 </script>
 <script>
-	/* function replyComment(){
-		console.log("댓글달기 버튼 클릭");
-		var pno = $("#commentpno").val();
-		var ref = $("#ref_pcmno").val();
-		var pcLevel = $("#pcLevel").val();
+	/* function replyComment1(){
+		var pno = $("#Icommentpno").val();
+		var ref = $("#Iref_pcmno").val();
+		var pcLevel = $("#IpcLevel").val();
 		var content = $("#message").val();
+		var pCount = $("#pcommentSize").val();
+		
+		console.log("댓글달기 버튼 클릭");
 		console.log(pno);
 		$.ajax({
 			  data : {
@@ -493,39 +496,46 @@
 				 	  , pcContent : content
 				 	}
 			, url : '${pageContext.request.contextPath }/product/pcommentInserta.do'
+			, dataType : 'json'
 			, success : function(data){
 				if(data.isInsert == true){
-					alert("성공" + data);
+					// 인서트 성공하고 level 이 0이면 / 1이면 두가지로 나누어야 함.
+					alert("성공" + data.isInsert);
+					alert("성공 데이터" + data.pcomment.pcmno);
 					$('#commentHead').html('이걸 이렇게?');
-					$('.comment_area ol').html("나오냐구");
-					$('.comment_area ol').html("<li class='single_comment_area'>"
-												+ "<div class='comment-wrapper d-flex'>"
-												+ "<div class='comment-author'>"
-												+ "<img src='${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg'></div>"
-												+ "<div class='comment-content'>"
-												+ "<div class='d-flex align-items-center justify-content-between'>"
-												+ "<h5>" + data.pcomment.pcWriter + "</h5>"
-												+ "<span class='comment-date'>" + data.pcomment.pcDate + "</span></div>"
-												+ "<p>" + content + "</p>"
-												+ "<a class='active' href='#' onclick = 'replyComment();'>Reply</a>&nbsp;&nbsp;"
-												+ "<a class='active' href='#' onclick = 'updateComment();'>Update</a>&nbsp;&nbsp;"
-												+ "<a class='active' href='#' onclick = 'deleteComment();'>Delete</a>"
-												+ "</div></div></li>"
-											);
+					$('#olPlz-${ pcommentSize }').html('<li class="single_comment_area">'
+									 	 + '<div class="comment-wrapper d-flex">'
+									 	 + '<div class="comment-author">'
+									 	 + '<img src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg"></div>'
+									 	 + '<div class="comment-content">'
+									 	 + '<div class="d-flex align-items-center justify-content-between">'
+									 	 + '<h5>' + data.pcomment.pcWriter + '</h5>'
+									 	 + '<span class="comment-date">' + data.pcomment.pcDate + '</span></div>'
+									 	 + '<p id="rpcContent-${st.index }">' + content + '</p>'
+									 	 + '<a class="active" href="#">Reply</a>'
+									 	 + '</div></div></li>'
+										 + '<p id="rpcContent2-${st.index }"></p>'
+										 + '<form id="replyForm-${pcomment.pcmno}" method="post">'
+										 + '<input type="hidden" name="pno" value="${product.pno }"/>'
+										 + '<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>'
+										 + '<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>'
+										 + '<c:if test="${pcomment.pcWriter eq member.userId }">'
+										 + '&nbsp;&nbsp;<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>'
+										 + '&nbsp;&nbsp;<a class="active" onclick="deleteComment(${pcomment.pcmno});">Delete</a>'
+										 + '</c:if></form></div></div></li>');
+				} else {
+					alert("댓글 등록에 실패하였습니다.");
 				}
+			}, fail : function(data) {
+				alert("ajax로 댓글 실패");
 			}
 		});
-		$('#commentHead').html('이걸 이렇게?');
 	} */
 	
 	function replyComment(st){
 		
-		// $("#reReplyDiv").css("display","block");
 		$("#reReplyDiv-"+st).toggle();
-		
-		//$(this).siblings().eq(5).toggle();
 		$("#updateComment-"+st).focus();
-		// location.href="${pageContext.request.contextPath}/product/rpcommentInsert?ref_pcmno="+pcmno;
 	}
 	
 	function updateViewComment(pcmno, st){

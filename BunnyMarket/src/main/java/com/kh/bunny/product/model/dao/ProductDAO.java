@@ -44,5 +44,7 @@ public interface ProductDAO {
 
 	String selectOneReplyPcWriter(int pcmno);
 
+	PComment selectOnePComment(int pno);
+
 
 }
