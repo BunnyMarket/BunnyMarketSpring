@@ -18,5 +18,5 @@ public class QNA implements Serializable{
 	private String qTitle;
 	private String qContent;
 	private Date qDate;
-	
+	private int qcCheck;
 }

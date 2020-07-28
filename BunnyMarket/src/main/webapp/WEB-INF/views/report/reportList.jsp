@@ -48,13 +48,13 @@
 						</thead>
 						<tbody>
 						<c:forEach items="${list }" var="r">
-							<tr id="${r.rno }">
-							
-							<input type="hidden" value="${r.rno }" />
-							<td>${r.rno }</td>
-							<td colspan="2"> ${r.rTitle}</td>
-							<td>${r.rWriter }</td>
-							<td>${r.rDate }</td>
+						<input type="hidden" value="${r.RNo}" />
+					        <tr id="${r.RNo}">
+					        
+							<td>${r.RNo }</td>
+							<td colspan="2"> ${r.RTitle}</td>
+							<td>${r.RWriter }</td>
+							<td>${r.RDate }</td>
 							<td>O</td>
 							<td></td>
 							<!--  img 태그 없을 경우에 첨부파일 x , 있으면 o 표시 -->
@@ -84,5 +84,20 @@
 		</div>
 	</div>
 </div>
+<script>
+$(function(){
+	$("#tableArea td").click(function(){
+		var rNo = $(this).parent().attr("id");
+		
+		if(${member.userId eq 'admin'}){
+			location.href = "${pageContext.request.contextPath}/report/reportSelectOneAdmin.do?rno=" + rNo;
+		}else{
+			location.href = "${pageContext.request.contextPath}/report/reportPassword.do?rno=" + rNo;
+		}
+
+	});
+});
+	
+</script>
 
 	<c:import url="../../views/common/footer.jsp" />

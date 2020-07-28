@@ -26,6 +26,7 @@
 <!-- ##### Blog Content Area Start ##### -->
 <section class="blog-content-area section-padding-0-100">
 	<div class="container">
+	<form  id="formArea" method="post" action="${pageContext.request.contextPath }/report/reportUpdate.do">
 		<div class="row justify-content-center">
 			<!-- Blog Posts Area -->
 			<div class="col-12 col-md-8">
@@ -34,15 +35,14 @@
 					<!-- Post Details Area -->
 					<div class="single-post-details-area">
 						<div class="post-content">
-							<h4 class="post-title">공기팟 사기꾼 신고합니다!</h4>
+						<input type="hidden"   value="${report.RNo }"/>
+							<h4 class="post-title">${report.RTitle }</h4>
 							<div class="post-meta mb-30">
-								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>등록일</a> 
-								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>작성자</a>
+							<a href="${pageContext.request.contextPath}/report/reportDetail.do"><i class="fa fa-clock-o" aria-hidden="true"></i>${report.RDate}</a> 
+								<a href="${pageContext.request.contextPath}/report/reportDetail.do""><i class="fa fa-user" aria-hidden="true"></i>${report.RWriter}</a>
 							</div>
-							<div class="post-thumbnail mb-30">
-								<img src="img/bg-img/35.jpg" alt="">
-							</div>
-							<p>공기팟 사기꾼 잡아주세요. ˃̣̣̣̣̣̣︿˂̣̣̣̣̣̣  &nbsp; 제 돈 갖고 튄 바니 잡아서 꼭 혼쭐내주세요.  •̀.̫•́✧  </p>
+							
+							<p>${report.RContent}</p>
 							<br /> <br /> <br />
 							<blockquote>
 								<div class="blockquote-text">
@@ -58,12 +58,13 @@
 
 				</div>
 			</div>
-			<div class="checkout_btn_inner float-right">
-				<a class="btn alazea-btn mr-30" href="${pageContext.request.contextPath}/views/report/reportDetail.jsp">취소하기</a>
-				<a class="btn alazea-btn mr-30" href="${pageContext.request.contextPath}/views/report/reportUpdate.jsp">수정하기</a> 
-				<a class="btn alazea-btn mr-30" href="${pageContext.request.contextPath}/views/report/reportList.jsp">삭제하기</a>
-			</div>
+		<div align="center">
+		<button type="button" class="btn alazea-btn mt-15"
+										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${r.Rno}'">수정하기</button>
+		<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${r.Rno}'"/>
+				</div>
 		</div>
+		</form>
 	</div>
 </section>
 <c:import url="../common/footer.jsp" />

@@ -16,10 +16,18 @@
    
    <insert id="insertReport">
    INSERT INTO REPORT
-   VALUES (SEQ_QNO.NEXTVAL, #{rWriter}, #{rTitle}, #{rcNo}, #{reported}, #{rContent}, DEFAULT)
+   VALUES(SEQ_RNO.NEXTVAL, #{rcNo}, #{rWriter}, #{reported}, #{pno}, #{rTitle}, #{rContent}, DEFAULT)
    </insert>
+   
+   <select id="selectCurrentRno" parameterType="_int" resultType="_int">
+  SELECT MAX(RNO) FROM REPORT
+</select>
+   
+   <select  id="selectOneReport" parameterType="_int" resultType="Report">
+   SELECT * FROM REPORT
+   WHERE RNO =#{rNo}
+   </select>
 </mapper>
-
 
 
 

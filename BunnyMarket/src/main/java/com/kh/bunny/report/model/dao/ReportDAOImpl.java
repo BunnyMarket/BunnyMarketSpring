@@ -30,14 +30,20 @@ public class ReportDAOImpl implements ReportDAO {
 
 	@Override
 	public int insertReport(Report r) {
-		
+		System.out.println("dao : " + r.getRNo());
 		return sqlSession.insert("reportMapper.insertReport", r);
 	}
 
 	@Override
 	public int selectCurrentRno() {
 		
-		return sqlSession.selectOne("reportMapper.selectCurrenRno");
+		return sqlSession.selectOne("reportMapper.selectCurrentRno");
+	}
+
+	@Override
+	public Report selectOneReport(int rNo) {
+		
+		return sqlSession.selectOne("reportMapper.selectOneReport", rNo);
 	}
 
 }

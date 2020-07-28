@@ -50,25 +50,22 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${list}" var="q">
-								<%-- <c:set var="qc"  value="${QComment}"/> --%>
+								<input type="hidden" value="${q.qno}" />
 								<tr id="${q.qno}">
 
-									<input type="hidden" value="${q.qno}" />
 									<td>${q.qno}</td>
-									<td colspan="2">${q.QTitle}</td>
-									<td>${q.QWriter}</td>
-									<td>${q.QDate}</td>
-									<td>완료</td>
-									<td></td>
-									<%-- <c:if test="${qc.qWriter eq 'admin'}">
-											<td onclick="selectOne(${q.qNo});"
-												style="color: red;">완료</td>
-										</c:if> --%>
+									<td colspan="2" align="center">${q.QTitle}</td>
+									<td align="left">${q.QWriter}</td>
+									<td align="center">${q.QDate}</td>
+							
+									 <c:if test="${q.qcCheck ne 0}">
+											<td style="color: red;" align="center">완료</td>
+										</c:if>
 
-									<%-- <c:if test="${qc.qWriter ne 'admin'}">
-											<td onclick="selectOne(${q.qNo});"
-												style="color: black;">대기중</td>
-										</c:if> --%>
+									 <c:if test="${q.qcCheck eq 0}">
+											<td style="color: black;" align="center">대기중</td>
+										</c:if>
+										<td></td> 
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -104,16 +101,17 @@
 	)
 }; */
 
-	$(function(){
-		$("#tableArea td").click(function(){
-			var qnaNo = $(this).parent().attr("id");
-			if(${member.userId eq 'admin'}){
-				location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?qno=' + qnaNo;
-			} else {
-				location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?qno=' + qnaNo;
-			}
-				});
-		}); 
+$(function(){
+	$("#tableArea td").click(function(){
+		var qnaNo = $(this).parent().attr("id");
+		if(${member.userId eq 'admin'}){
+			location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?qno=' + qnaNo;
+		} else {
+			location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?qno=' + qnaNo;
+		}
+			});
+	}); 
+
 
 </script>
 

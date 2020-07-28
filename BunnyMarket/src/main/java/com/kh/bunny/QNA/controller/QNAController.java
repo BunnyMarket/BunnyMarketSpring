@@ -51,10 +51,11 @@ public class QNAController {
 		int totalContents = qnaService.selectQNATotalContents();
 
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QNAList.do");
-
+		
 		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
 				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
-
+		
+		System.out.println("model : " + model);
 		return "QNA/QNA_List";
 
 	}
@@ -104,6 +105,9 @@ public class QNAController {
 
 		return "QNA/QNA_Detail";
 
+		
+		
+		
 	}
 
 	@RequestMapping("/QNA/QNAUpdateView.do")

@@ -17,6 +17,8 @@ public interface ReportService {
 	int insertReport(Report r);
 
 	int selectCurrentRno();
+
+	Report selectOneReport(int rNo);
 	
 
 }

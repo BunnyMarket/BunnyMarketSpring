@@ -32,7 +32,7 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public int insertReport(Report r) {
 		int result =0;
-		
+		System.out.println("service : " + r.getRNo());
 		result = reportDAO.insertReport(r);
 		
 		if(result == REPORT_SERVICE_ERROR) throw new ReportException();
@@ -44,6 +44,12 @@ public class ReportServiceImpl implements ReportService {
 	public int selectCurrentRno() {
 	
 		return reportDAO.selectCurrentRno();
+	}
+
+	@Override
+	public Report selectOneReport(int rNo) {
+		
+		return reportDAO.selectOneReport(rNo);
 	}
 
 }

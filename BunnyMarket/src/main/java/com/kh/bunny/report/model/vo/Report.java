@@ -20,7 +20,7 @@ public class Report implements Serializable{
 	private int rcNo;
 	private String rWriter;    // 신고자
 	private String reported;  // 신고 당한 사람
-	private int pNo;
+	private int pno;
 	private String rTitle;
 	private String rContent;
 	private Date rDate;

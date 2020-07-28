@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.report.model.exception.ReportException;
 import com.kh.bunny.report.model.service.ReportService;
 import com.kh.bunny.report.model.vo.Report;
@@ -31,6 +34,12 @@ public class ReportController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ProductService productService;
+	
+	@Autowired
+	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("/report/reportList.do")
 	public String selectReportList(@RequestParam(value ="cPage", required = false, defaultValue = "1") int cPage,
@@ -54,12 +63,14 @@ public class ReportController {
 	
 	@RequestMapping("/report/reportInsertView.do")
 	public String detailReport() {
+		
 		return "report/reportInsert";
 	}
 	
 	@RequestMapping("/report/reportInsert.do")
 	public String insertReport(Report r, Model model, HttpSession session) {
 		int result;
+		
 		System.out.println("컨트롤러에서 r객체 확인 : " + r);
 		
 		int rno =0;
@@ -76,7 +87,9 @@ public class ReportController {
 		
 		if(result >0) {
 			msg = "Report 등록 성공!";
+			
 			loc = "/report/reportDetail.do?rno=" + rno;
+			
 		}else {
 			msg = "Report 등록 실패!";
 		}
@@ -86,9 +99,27 @@ public class ReportController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/report/reportDetail.do")
+	public String selectOne(@RequestParam int rno, Model model) {
+		Report r = reportService.selectOneReport(rno);
+		
+		System.out.println("report객체 확인 : " + r);
+		
+		model.addAttribute("report", r);
+		
+		return "report/reportDetail";
+		
+		
+		
+		
+	}
+	
+	
+	
+	
 	@RequestMapping("/report/reportImgInsert.do")
 	@ResponseBody
-	public String auctionImgInsert(@RequestParam(value = "file", required = false) MultipartFile[] file, Model model,
+	public String reportImgInsert(@RequestParam(value = "file", required = false) MultipartFile[] file, Model model,
 			HttpSession session) {
 
 		String saveDir = session.getServletContext().getRealPath("resources/upload/report/desc");
@@ -123,10 +154,54 @@ public class ReportController {
 		return "http://localhost:8088/bunny/resources/upload/report/desc/" + renamedName;
 	}
 	
+	@RequestMapping("/report/reportPassword.do")
+	public String pwdReport(@RequestParam int rno, Model model) {
+		model.addAttribute("rno",rno);
+		
+		return "report/reportPassword";
+	}
 	
+	@RequestMapping("/report/reportSelectOnePassword.do")
+	public String selectOneReportPwd(@RequestParam int rno, @RequestParam String checkPwd, Model model,
+			HttpSession session) {
+		
+		String msg ="";
+		String loc ="";
+		
+		Report r = reportService.selectOneReport(rno);
+		
+		System.out.println(session.getAttribute("member"));
+		Member m = (Member)session.getAttribute("member");
+		
+		if(r.getRWriter().equals(m.getUserId())&& bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
+			System.out.println("비번 : " + m.getUserPwd());
+			
+			msg = "입력 성공!";
+			loc = "/report/reportDetail.do?rno=" + r.getRNo();
+			
+			System.out.println(m);
+		}else if(checkPwd.trim().length() != 0) {
+			msg = "비밀번호가 틀렸습니다.";
+			loc = "/report/reportList.do";
+		}else {
+			msg = "입력 실패!";
+			loc = "/report/reportList.do";
+		}
+		
+		model.addAttribute("msg", msg).addAttribute("loc",loc).addAttribute("report",r);
+		
+		return "common/msg";
+				
+	}
 	
-	
-	
+	@RequestMapping("/report/reportSelectOneAdmin.do")
+	public String selectOneAdmin(@RequestParam int rno, Model model) {
+		Report r = reportService.selectOneReport(rno);
+		
+		model.addAttribute("report",r);
+		
+		return "report/reportDetail";
+	}
 	
 	
 	

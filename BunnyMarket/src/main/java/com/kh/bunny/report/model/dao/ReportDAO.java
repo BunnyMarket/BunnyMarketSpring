@@ -14,4 +14,6 @@ public interface ReportDAO {
 	int insertReport(Report r);
 
 	int selectCurrentRno();
+
+	Report selectOneReport(int rNo);
 }
