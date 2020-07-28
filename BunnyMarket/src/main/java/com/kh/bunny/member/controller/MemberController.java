@@ -432,17 +432,24 @@ public class MemberController {
 	@ResponseBody
 	public Map<String, Object> memberCountUp(@RequestParam String userId) {
 		System.out.println("controller : " + userId);
-//		int result = memberService.selectOneCountUp(userId);
-//		String msg ="";
-//		if(result > 0) {
-//			msg = "바뀜";
-//		} else {
-//			msg = "열받게하지마";
-//		}
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean memberKill =memberService.selectOneCountUp(userId) > 0 ? true : false;
 		
 		map.put("kill", memberKill);
+		
+		return map; 
+	}
+	
+	@RequestMapping("/admin/member/memberCountDown.do")
+	@ResponseBody
+	public Map<String, Object> memberCountDown(@RequestParam String userId) {
+		System.out.println("controllercd : " + userId);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean memberSave =memberService.selectOneCountDown(userId) > 0 ? true : false;
+		
+		map.put("save", memberSave);
 		
 		return map; 
 	}

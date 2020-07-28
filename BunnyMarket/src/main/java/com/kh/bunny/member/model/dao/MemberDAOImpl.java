@@ -77,7 +77,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	
-	
+	@Override
+	public int selectOneCountDown(String userId) {
+		System.out.println("dao : " + userId);
+		return sqlSession.update("memberMapper.selectOneCountDown", userId); 
+	}
 	
 	
 	

@@ -29,6 +29,7 @@ public interface MemberDAO {
 
 	int selectOneCountUp(String userId);
 	
+	int selectOneCountDown(String userId);
 	
 	
 }

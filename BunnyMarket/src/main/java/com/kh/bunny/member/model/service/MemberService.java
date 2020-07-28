@@ -28,6 +28,8 @@ public interface MemberService {
 		int selectMemberTotalContents();
 
 		int selectOneCountUp(String userId);
+		
+		int selectOneCountDown(String userId);
 	 
 	
 }

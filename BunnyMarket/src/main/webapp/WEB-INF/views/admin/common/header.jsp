@@ -36,13 +36,19 @@
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-background-color="white" data-image="../../resources/img/sidebar-1.jpg">
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo">
          	관리자
-        </a></div>
+      </div>
       <div class="sidebar-wrapper" id="menu">
         <ul class="nav">
-          <li class="nav-item active ">
-            <a class="nav-link" href="${ pageContext.request.contextPath }/views/admin/transactions.jsp">
+           <li class="nav-item ">
+            <a class="nav-link" href=" ${ pageContext.request.contextPath }/admin/dashboard.do">
+              <i class="material-icons">notifications</i>
+              <p>관리자 홈</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href=" ${ pageContext.request.contextPath }/views/admin/reportList.jsp">
               <i class="material-icons">content_paste</i>
               <p>거래 현황</p>
             </a>
@@ -65,10 +71,22 @@
               <p>공지사항</p>
             </a>
           </li>
+           <li class="nav-item ">
+            <a class="nav-link" href="${ pageContext.request.contextPath }/">
+              <i class="material-icons">library_books</i>
+              <p>Q&A</p>
+            </a>
+          </li>
           <li class="nav-item ">
             <a class="nav-link" href="${ pageContext.request.contextPath }/views/admin/message.jsp">
               <i class="material-icons">library_books</i>
               <p>메세지</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="${ pageContext.request.contextPath }/admin/adminMember/adminList.do">
+              <i class="material-icons">person</i>
+              <p>관리자 멤버관리</p>
             </a>
           </li>
            <li class="nav-item ">
@@ -109,7 +127,7 @@
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Table List</a>
+            <a class="navbar-brand" href="javascript:;">관리자</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -179,4 +197,8 @@
   			$(this).parent().parent().removeClass('navbarTest');
   		});
   	});
+  	
+  	function goHome(){
+  		location.href="${pageContext.request.contextPath}/admin/adminHome.do";
+  	}
       </script>

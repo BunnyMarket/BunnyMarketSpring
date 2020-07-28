@@ -72,6 +72,14 @@
 		WHERE USERID = #{userId}		
 	</update>
 	
+	<update id="selectOneCountDown" parameterType="_int">
+		UPDATE MEMBER 
+		 <set>
+			MSTATUS = 1 	  
+		 </set> 
+		WHERE USERID = #{userId}	
+	</update>
+	
 </mapper>
 
 

@@ -73,6 +73,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.selectOneCountUp(userId);
 	}
 	
+	@Override
+	public int selectOneCountDown(String userId) {
+
+		System.out.println("service : " + userId);
+		return memberDAO.selectOneCountDown(userId);
+	}
 	
 	
 }
