@@ -1,5 +1,6 @@
 package com.kh.bunny.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,6 +83,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.phoneDupCheck(phone);
 	}
 
+	@Override
+	public ArrayList<Member> findSeller(String nickName) {
+		
+		return memberDAO.findSeller(nickName);
+	}
+
+	@Override
+	public Member findSeller2(String nickName) {
+		
+		return memberDAO.findSeller2(nickName);
+	}
 	
 
 	

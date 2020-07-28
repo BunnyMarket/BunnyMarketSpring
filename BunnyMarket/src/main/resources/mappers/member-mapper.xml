@@ -70,6 +70,10 @@
 	<select id="phoneDupCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER WHERE PHONE = #{phone}
 	</select>
+	
+	<select id="findSeller"  resultType="Member">
+		SELECT * FROM MEMBER WHERE NICKNAME = #{nickName}
+	</select>
     
     
 	

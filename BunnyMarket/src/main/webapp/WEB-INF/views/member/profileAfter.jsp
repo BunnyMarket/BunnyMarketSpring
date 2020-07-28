@@ -43,7 +43,7 @@
         <form action="#">
         <div style="height:150px;">
         <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" style="width:15%;"class="userimg" alt="userimg" /> <br /> 
-        <h6 style="font-weight:bold;">{member.userId}</h6> 
+        <h6 style="font-weight:bold;">${member.nickName}</h6> 
         <p style="color:#a3a3a3; font-size:15px">${member.introduce}</p>
 
         </div>

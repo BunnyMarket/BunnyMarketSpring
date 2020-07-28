@@ -1,5 +1,6 @@
 package com.kh.bunny.member.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.bunny.member.model.vo.Member;
@@ -31,6 +32,9 @@ public interface MemberService {
 
 	int phoneDupCheck(String phone);
 
+	ArrayList<Member> findSeller(String nickName);
+	
+	Member findSeller2(String nickName);
 
 	
 	 

@@ -1,5 +1,6 @@
 package com.kh.bunny.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.bunny.member.model.vo.Member;
@@ -31,6 +32,9 @@ public interface MemberDAO {
 
 	int phoneDupCheck(String phone);
 
+	ArrayList<Member> findSeller(String nickName);
+
+	Member findSeller2(String nickName);
 
 	
 

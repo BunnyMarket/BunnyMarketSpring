@@ -133,7 +133,9 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
-										<h5><a href="#" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
+										<h5><a href="${ pageContext.request.contextPath }/member/profileAfter.do?userId=${a.PWriter}" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
+										
+										
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>

@@ -177,12 +177,15 @@
 											class="cart-quantity">(1)</span></span>
 									</a>
 								</div>
+								
+								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 
 		<!-- ***** Navbar Area ***** -->
 		<div class="alazea-main-menu">
@@ -283,3 +286,42 @@
 		
 	</header>
 	<!-- ##### Header Area End ##### -->
+
+	<!-- the modal -->
+<div style="text-align:center;" class="modal fade" id="handleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h4 class="col-12 modal-title text-center" id="exampleModalLabel">Profile</h4>
+      </div>
+      <div class="modal-body">
+      
+        <div style="height:150px;">
+        <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" id="sellerPhoto"style="width:15%;"class="userimg" alt="userimg" /> <br /> 
+        <h6 style="font-weight:bold;" id="sellerName"></h6> 
+        <p style="color:#a3a3a3; font-size:15px" id="sellerIntroduce"></p>
+
+        </div>
+		<div>
+		<span>총 거래 (10회)</span>&nbsp;&nbsp;&nbsp;
+		<span style="color:red;">신고(2회)</span>
+		
+		</div>
+		<div line-height="1.5em">
+		<span>판매중인 상품 : </span>&nbsp;<span><a href="#">목록보기</a></span> <br />
+		<span>최근 리뷰  :</span>&nbsp;&nbsp;<span><a href="#">목록보기</a></span>
+		</div>
+
+		
+        </div>
+        <br />
+
+              <div class="modal-footer" style="align:center;">
+        <button type="button" class="btn btn-success">쪽지</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
+        
+
+</div>
+</div>
+</div>

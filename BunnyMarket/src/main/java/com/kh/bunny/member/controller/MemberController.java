@@ -2,27 +2,21 @@ package com.kh.bunny.member.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -174,6 +168,14 @@ public class MemberController {
 		model.addAttribute("member", memberService.selectOne(userId));
 
 		return "member/myPage";
+	}
+	
+	// 프로필 보여주기(상대방)
+	@RequestMapping("/member/profileAfter.do")
+	public String profileAfter(@RequestParam String userId, Model model) {
+		model.addAttribute("member", memberService.selectOne(userId));
+		
+		return "member/profileAfter";
 	}
 
 	// 회원정보 정보 페이지 이동
@@ -339,6 +341,7 @@ public class MemberController {
 		return map;
 	}
 
+	// 아이디 찾기
 	@RequestMapping("member/findId.do")
 	@ResponseBody
 	public Map<String, Object> searchId(Member m) {
@@ -444,6 +447,31 @@ public class MemberController {
 	map.put("isUsable",isUsable);
 	
 	return map;
+	}
+	
+	// 프로필 이미지 띄우기.!!!!@@@#!!@#$@!$#!@#@!#!@#$
+	@RequestMapping("/member/sellerProfile.do")
+	@ResponseBody
+	public Map<String, Object> sellerProfile(@RequestParam String nickName) {
+
+		
+		
+		
+		Map<String, Object> map = new HashMap<>();
+
+		ArrayList<Member> seList = memberService.findSeller(nickName);
+		
+		Member m = memberService.findSeller2(nickName);
+		System.out.println("멤버는 나오니? + " + m);
+		
+		System.out.println("seList : "+seList);
+		// 신고횟수 자기소개, 닉네임, 이미지, 판매중인 상품 개수
+		// map.put("seList",seList);
+		
+		map.put("member", m);
+		
+
+		return map;
 	}
 	
 	

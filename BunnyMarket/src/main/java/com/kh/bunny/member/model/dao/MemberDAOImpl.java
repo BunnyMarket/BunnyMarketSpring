@@ -1,5 +1,6 @@
 package com.kh.bunny.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -78,6 +79,19 @@ public class MemberDAOImpl implements MemberDAO {
 	
 		return sqlSession.selectOne("memberMapper.phoneDupCheck",phone);
 	}
+
+	@Override
+	public ArrayList<Member> findSeller(String nickName) {
+
+		return new ArrayList<Member>(sqlSession.selectList("memberMapper.findSeller",nickName));
+	}
+
+	@Override
+	public Member findSeller2(String nickName) {
+		return sqlSession.selectOne("memberMapper.findSeller",nickName);
+	}
+
+	
 
 	
 

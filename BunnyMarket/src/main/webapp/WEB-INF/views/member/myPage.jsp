@@ -61,8 +61,8 @@
                                     <td class="cart_product_img" style="display: inline-block;">
                                         <div class="product-info mt-15 text-center">
                                            <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
-                                           <p>${product.pTitle}</p>
-                                           <h6>10,000원</h6>
+                                           <p>${p.pTitle}</p>
+                                           <h6>$</h6>
                                        </div>
                                     </td>
                                     <td class="cart_product_img" style="display: inline-block;">

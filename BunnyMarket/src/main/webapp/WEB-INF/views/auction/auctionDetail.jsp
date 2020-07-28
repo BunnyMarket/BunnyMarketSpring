@@ -130,7 +130,8 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
-										<h5><a href="#" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
+										
+										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -338,6 +339,7 @@
 </div>
 <!-- ##### Single Product Details Area End ##### -->
 
+
 <script>
 		
 	//지도 넣기 
@@ -458,6 +460,33 @@
 			$('.modal').modal('hide');
 		});
 	});
+	
+	$('#sellerInfo').click(function(){
+		/* $('#sellerName').text('${a.PWriter}'); */
+		$.ajax({
+			  data : {nickName : '${a.PWriter}'}
+			, url : "${ pageContext.request.contextPath }/member/sellerProfile.do"
+			, dataType : "Json"
+			, success : function(data){
+				
+				
+				/* $.each(result , function(idx, val) {
+					console.log(idx + " " + val.introduce);
+				}); */
+				var photo = data.member.photo;
+				$('#sellerName').text(data.member.nickName);
+				$('#sellerIntroduce').text(data.member.introduce);
+				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
+				console.log(data.member.nickName);
+				console.log(data.member.introduce);
+				console.log(photo);
+			}, fail : {
+				
+			}
+		});
+		
+	});
+	
 	
 
 </script>
