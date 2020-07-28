@@ -92,38 +92,13 @@
 		console.log(mapJson); 
 		
 		
-		
-		
-		
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-	    mapOption = { 
-	        center: new kakao.maps.LatLng(37.519117706115296, 126.98912931531106), // 지도의 중심좌표 
-	        level: 9 // 지도의 확대 레벨 
-	    }; 
-	
-		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-		
-		
-		
-		
-
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-		    mapOption = { 
-		        center: new kakao.maps.LatLng(37.519117706115296, 126.98912931531106), // 지도의 중심좌표 
-		        level: 9 // 지도의 확대 레벨 
-		    }; 
-		
-		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-		
-		
 		var coffeePositions = [];
 		var storePositions = [];
 		var carparkPositions = [];
 		
-		
-		
+
 		// 커피숍 마커가 표시될 좌표 배열입니다
-		coffeePositions = [ 
+		/* coffeePositions = [ 
 		    new kakao.maps.LatLng(37.499590490909185, 127.0263723554437),
 		    new kakao.maps.LatLng(37.499427948430814, 127.02794423197847),
 		    new kakao.maps.LatLng(37.498553760499505, 127.02882598822454),
@@ -131,7 +106,7 @@
 		    new kakao.maps.LatLng(37.49646391248451, 127.02675574250912),
 		    new kakao.maps.LatLng(37.49629291770947, 127.02587362608637),
 		    new kakao.maps.LatLng(37.49754540521486, 127.02546694890695)                
-		];
+		]; */
 		
 		// 편의점 마커가 표시될 좌표 배열입니다
 		storePositions = [
@@ -143,6 +118,7 @@
 		    new kakao.maps.LatLng(37.49932849491523, 127.02935780247945),
 		    new kakao.maps.LatLng(37.49996818951873, 127.02943721562295)
 		];
+		
 		
 		// 주차장 마커가 표시될 좌표 배열입니다
 		carparkPositions = [
@@ -162,11 +138,57 @@
 		    carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
 		
 		    
-		createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
-		createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
-		createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
 		
-		changeMarker('coffee'); // 지도에 커피숍 마커가 보이도록 설정합니다    
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		var idx = 0;
+		mapJson.forEach(function(item){
+			console.log(item.paddress);
+			geocoder.addressSearch(item.paddress, function(result, status) {
+			    // 정상적으로 검색이 완료됐으면 
+			    if (status === kakao.maps.services.Status.OK) {
+			    	/* var coords = new kakao.maps.LatLng(result[0].y, result[0].x); */
+					console.log("위경도 확인 : " + new kakao.maps.LatLng(result[0].y, result[0].x))
+			    	coffeePositions.push(new kakao.maps.LatLng(result[0].y, result[0].x));
+					console.log("1배열 확인 : " + coffeePositions);
+					if(idx == mapJson.length - 1){
+						// 배열에 모두 넣으면 실행! 
+						console.log("2배열 확인 : " + coffeePositions);
+						
+						
+
+						
+					    
+						createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
+						createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
+						createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
+						
+						changeMarker('coffee'); // 지도에 커피숍 마커가 보이도록 설정합니다    
+						
+						
+						
+					}
+					idx++;
+			    }
+			    
+			}); 
+		});
+		
+		
+		
+		 
+		
+		mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표 
+	        level: 3 // 지도의 확대 레벨 
+	    }; 
+	
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		
+		
+		
 		
 		
 		// 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
