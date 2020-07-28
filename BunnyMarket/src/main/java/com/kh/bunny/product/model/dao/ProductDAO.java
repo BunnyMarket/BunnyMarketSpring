@@ -37,4 +37,7 @@ public interface ProductDAO {
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
+
+	// 상품 리스트 지도에 불러오기 
+	List<Object> selectProductListMap();
 }

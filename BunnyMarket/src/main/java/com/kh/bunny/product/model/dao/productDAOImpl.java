@@ -69,4 +69,9 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.delete("productMapper.", pcmno);
 	}
 
+	@Override
+	public List<Object> selectProductListMap() {
+		return sqlSession.selectList("productMapper.selectProductListMap");
+	}
+
 }

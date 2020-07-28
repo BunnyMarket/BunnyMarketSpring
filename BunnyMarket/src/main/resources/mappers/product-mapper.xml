@@ -11,6 +11,13 @@
 		FROM PRODUCT WHERE PTYPE = 1 
 		ORDER BY PDATE DESC, PNO DESC
 	</select>
+	
+	<!-- 상품 목록을 지도에 출력하기 위한 쿼리 -->
+	<select id="selectProductListMap" resultType = "Product">
+		SELECT *
+		FROM PRODUCT 
+		ORDER BY PDATE DESC, PNO DESC
+	</select>
 
 	<!-- 총 상품의 개수를 출력하는 쿼리 -->
 	<select id="selectProductTotalContent" resultType = "_int">

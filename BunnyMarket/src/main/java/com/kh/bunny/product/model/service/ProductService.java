@@ -44,6 +44,9 @@ public interface ProductService {
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
+
+	// 지도에 상품 리스트 객체 가져오기 
+	List<Object> selectProductListMap();
 	
 	
 	

@@ -3,7 +3,6 @@ package com.kh.bunny.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.product.model.vo.PComment;
 
@@ -53,6 +54,37 @@ public class ProductController {
 		
 		return "product/productList";
 		
+		
+	}
+	
+	
+	// 맵에 상품 리스트 불러오기 
+	@RequestMapping("/product/productListMap.do")
+	public String selectBoardListMap(Model model) {
+		
+		List<Object> products = productService.selectProductListMap();
+		
+		System.out.println("productController에서 지도를 위한 list를 가져오나 확인 : " + products);
+		System.out.println("가져온 상품의 개수 : " + products.size());
+		
+		// product 객체를 받은 리스트 products를 JSON으로 변환해주기 
+		ObjectMapper mapper = new ObjectMapper();
+		String mapJson = null;
+		
+		try {
+			mapJson = mapper.writeValueAsString(products);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("mapJson으로 잘 만들었니? : " + mapJson);
+		
+		
+		model.addAttribute("products", products)
+			 .addAttribute("mapJson", mapJson);
+		
+		
+		return "product/productMap";
 		
 	}
 	

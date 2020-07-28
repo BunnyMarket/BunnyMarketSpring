@@ -233,7 +233,7 @@
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
 											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
-											<li><a href="#">상품 지도로 보기</a></li>
+											<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">상품 지도로 보기</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/member/review.jsp">후기 작성하기</a></li>
 										</ul>
 									</li>

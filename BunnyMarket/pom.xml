@@ -241,6 +241,8 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
+		
+		
 	<!-- 메일 전송 -->
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 <dependency>

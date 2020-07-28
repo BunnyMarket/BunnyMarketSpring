@@ -67,4 +67,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.deletePComment(pcmno);
 	}
 
+	@Override
+	public List<Object> selectProductListMap() {
+		return productDAO.selectProductListMap();
+	}
+
 }
