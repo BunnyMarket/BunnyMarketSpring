@@ -67,6 +67,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.deletePComment(pcmno);
 	}
 
+	@Override
+	public int selectOneReplyPno(int pcmno) {
+		return productDAO.selectOneReplyPno(pcmno);
+	}
+
 
 
 }

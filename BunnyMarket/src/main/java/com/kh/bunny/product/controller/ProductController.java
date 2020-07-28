@@ -304,21 +304,38 @@ public class ProductController {
 //		return hmap;
 //	}
 	
+	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
 	public String pcommentUpdate(PComment pcomment, Model model) {
-		
 		
 		return "";
 	}
 	
 	// 댓글 삭제하기 
 	@RequestMapping("/product/pcommentDelete.do")
-	public String pcommentDelete(@RequestParam int pcmno) {
+	public String pcommentDelete(PComment pcomment, Model model) {
 		
+		String msg = "";
+		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 		
+		try	{
+			int result = productService.deletePComment(pcomment.getPcmno());
+			
+			if(result > 0) {
+				msg = "댓글 삭제 성공!";
+			} else {
+				msg = "댓글 삭제 실패ㅠ";
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
 		
-		return "";
+		return "common/msg";
+		
 	}
 	
 	@RequestMapping("/product/pImgInsert.do")

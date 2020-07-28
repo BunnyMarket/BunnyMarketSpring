@@ -35,6 +35,7 @@
 		INSERT INTO PCOMMENT 
 		VALUES(SEQ_PCMNO.NEXTVAL, #{pno}, #{pcWriter}, #{pcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), #{ref_pcmno}, #{pcLevel})
 	</insert>
+
 	
 	<!-- 댓글 수정 -->
 	<update id = "updatePComment" parameterType = "PComment">
@@ -48,7 +49,7 @@
 	<!-- 댓글 삭제 -->	
 	<delete id = "deletePComment" parameterType = "_int">
 		DELETE FROM PCOMMENT
-		WHERE PNO = #{pno} AND PCMNO = #{pcmno}
+		WHERE PCMNO = #{pcmno}
 	</delete>
 	
 	<!-- 상품 게시글 생성하는 쿼리 -->
@@ -59,6 +60,7 @@
 		1과 마지막의 '진구','도라에몽'은 #{pWriter}, #{pBuyer}인데 로그인 기능이 완성되면 넣는 것으로.
 	 -->
 	</insert>
+
 	
 	<!-- 상품 게시글 삭제하는 쿼리 -->
 	<delete id = "deleteProduct" parameterType = "_int">
@@ -82,5 +84,10 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
+	<select id="selectOneReplyPno" resultType="_int">
+		SELECT PNO
+		  FROM PCOMMENT
+		 WHERE PCMNO = #{pcmno}
+	</select>
 	
 </mapper>

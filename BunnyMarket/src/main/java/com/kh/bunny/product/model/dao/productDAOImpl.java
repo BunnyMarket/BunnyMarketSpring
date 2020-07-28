@@ -66,7 +66,17 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int deletePComment(int pcmno) {
-		return sqlSession.delete("productMapper.", pcmno);
+		return sqlSession.delete("productMapper.deletePComment", pcmno);
+	}
+
+	@Override
+	public int insertRePComment(PComment pcomment) {
+		return sqlSession.insert("productMapper.insertRePComment", pcomment);
+	}
+
+	@Override
+	public int selectOneReplyPno(int pcmno) {
+		return sqlSession.selectOne("productMapper.selectOneReplyPno", pcmno);
 	}
 
 

@@ -152,7 +152,7 @@
 
 									<ol>
 										<!-- Single Comment Area -->
-										<c:forEach items="${ pcomments }" var="pcomment">
+										<c:forEach items="${ pcomments }" var="pcomment" varStatus="st">
 											<li class="single_comment_area">
 												<c:if test = "${ pcomment.pcLevel eq 0}">
 													<div class="comment-wrapper d-flex">
@@ -168,9 +168,34 @@
 																<span class="comment-date">${ pcomment.pcDate }</span>
 															</div>
 															<p>${ pcomment.pcContent }</p>
-															<a class="active" href="#" onclick = "replyComment();">Reply</a>&nbsp;&nbsp;
-															<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
-															<a class="active" href="#" onclick = "deleteComment();">Delete</a>
+															<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>
+															<c:if test="${pcomment.pcWriter eq member.userId }">
+																<form id="replyForm" method="post">
+																	&nbsp;&nbsp;
+																	<a class="active" href="#" onclick = "updateComment(${st.index});">Update</a>
+																	&nbsp;&nbsp;
+																	<a class="active" href="#" onclick = "deleteComment(${pcomment.pcmno});">Delete</a>
+																</form>
+															</c:if>
+															<div class="contact-form-area" id="reReplyDiv-${st.index }" style="display: none;">
+																<!-- Comment Form -->
+																<form action="${pageContext.request.contextPath }/product/pcommentInsert.do" method="post">
+																	<input type="hidden" id="commentpno" name="pno" value="${product.pno }"/>
+																	<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="${pcomment.pcmno }">
+																	<input type="hidden" id="pcLevel" name="pcLevel" value="1">
+																	<div class="col-12">
+																		<div class="form-group">
+																			<textarea class="form-control" name="pcContent"
+																				id="rmessage" cols="30" rows="10" placeholder="Comment"></textarea>
+																		</div>
+																	</div>
+																	<div class="col-12">
+																		<button type="submit" class="btn alazea-btn">
+																			Post Comment
+																		</button>
+																	</div>
+																</form>
+															</div>
 														</div>
 													</div>
 													<c:forEach items="${ pcomments }" var="reComment"> <!-- 리댓들 달아주기 -->
@@ -190,15 +215,21 @@
 																				<span class="comment-date">${ reComment.pcDate }</span>
 																			</div>
 																			<p>${ reComment.pcContent }</p>
-																			<a class="active" href="#" onclick = "replyComment();">Reply</a>&nbsp;&nbsp;
-																			<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
-																			<a class="active" href="#" onclick = "deleteComment();">Delete</a>
+																			<c:if test="${pcomment.pcWriter eq member.userId }">
+																				<form id="reReplyForm" method="post">
+																					<input type="hidden" name="pcmno" value="${reComment.pcmno}">
+																					<input type="hidden" name="pno" value="${product.pno }"/>
+																					<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
+																					<a class="active" href="#" onclick = "deleteComment();">Delete</a>
+																				</form>
+																			</c:if>
 																		</div>
 																	</div>
 																</li>
 															</ol>
 														</c:if>
 													</c:forEach>
+													
 												</c:if>
 											</li>
 										</c:forEach>
@@ -217,6 +248,7 @@
 												<input type="hidden" id="commentpno" name="pno" value="${product.pno }"/>
 												<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="0">
 												<input type="hidden" id="pcLevel" name="pcLevel" value="0">
+												<div class="col-12"><div class="form-group" id="forMessage"></div></div>
 												<div class="col-12">
 													<div class="form-group">
 														<textarea class="form-control" name="pcContent"
@@ -450,7 +482,16 @@
 		});
 		$('#commentHead').html('이걸 이렇게?');
 	} */
-
+	
+	function replyComment(st){
+		
+		// $("#reReplyDiv").css("display","block");
+		$("#reReplyDiv-"+st).toggle();
+		
+		//$(this).siblings().eq(5).toggle();
+		$("#rmessage").focus();
+		// location.href="${pageContext.request.contextPath}/product/rpcommentInsert?ref_pcmno="+pcmno;
+	}
 	
 	function updateComment(){
 		console.log("댓글 수정 클릭!");
@@ -459,10 +500,14 @@
 	
 	function deleteComment(){
 		console.log('삭제 버튼 클릭!');
+		if(confirm("정말 삭제하시겠습니까?") == true){
+			$("#reReplyForm").attr("action", "${pageContext.request.contextPath}/product/pcommentDelete.do").submit();
+		} else {
+			return;
+		}
 	}
 	
 
 </script>
-
 
 <%@ include file="../common/footer.jsp"%>

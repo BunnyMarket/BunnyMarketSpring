@@ -45,6 +45,7 @@ public interface ProductService {
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
 
+	int selectOneReplyPno(int pcmno);
 
 	
 	
