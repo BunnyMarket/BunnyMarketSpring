@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.bunny.adminMember.model.dao.AdminDAO;
+import com.kh.bunny.adminMember.model.DAO.AdminDAO;
 import com.kh.bunny.adminMember.model.vo.adminMember;
 
 

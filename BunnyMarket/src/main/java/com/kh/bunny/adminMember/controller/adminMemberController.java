@@ -26,9 +26,9 @@ public class adminMemberController {
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	@RequestMapping("/admin/dashboard.do")
+	@RequestMapping("/admin/main/home.do")
 	public String goHome() {
-		return "/admin/dashboard";
+		return "admin/dashboard";
 	}
 	
 	// 리스트

@@ -42,7 +42,7 @@
       <div class="sidebar-wrapper" id="menu">
         <ul class="nav">
            <li class="nav-item ">
-            <a class="nav-link" href=" ${ pageContext.request.contextPath }/admin/dashboard.do">
+            <a class="nav-link" href=" ${ pageContext.request.contextPath }/admin/main/home.do">
               <i class="material-icons">notifications</i>
               <p>관리자 홈</p>
             </a>

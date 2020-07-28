@@ -1,4 +1,4 @@
-package com.kh.bunny.adminMember.model.dao;
+package com.kh.bunny.adminMember.model.DAO;
 
 import java.util.List;
 import java.util.Map;
