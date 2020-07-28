@@ -26,115 +26,127 @@
 		</div>
 	</div>
 </div>
+<section class="single_product_details_area mb-50">
+	<div class="produts-details--content mb-50">
+		<div class="container">
 
-<h2 align="center">회원 정보 수정</h2>
-
-<form id="updateForm" name="memberUpdateFrm"
+			<form id="updateForm" name="memberUpdateFrm"
 	action="${pageContext.request.contextPath}/member/memberUpdate.do"
 	method="post" enctype="multipart/form-data">
+				<div class="row justify-content-between">
+					<div class="col-12 col-md-6 col-lg-5">
+					
+						<div class="single_product_thumb">
+							<div>
+								<div id="pImgArea">
+								<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+								<c:if test="${member.photo == null }">
+									<img src="/bunny/resources/img/usericon.png" id="userImg" name="userPhoto"class = "d-block w-100" width="344.8px" height="357.56px"
+									alt="userImg" />
+								</c:if>
+								<c:if test="${member.photo != null }">
+									<img src="/bunny/resources/member/profile/${member.photo}" name="userPhoto" id="userImg" class = "d-block w-100" width="344.8px" height="357.56px"
+									alt="userImg"/>
+								</c:if>
+								</div>
+								
+								<div id="pImgFileArea">
+									<input type="file" id="userPhoto" name="userPhoto"
+										onchange="loadImg(this, 1);" />
+										
+								</div>
+							</div>
+						</div>
+					</div>
 
-	<table align="center">
-		<tr>
-			<td rowspan="8" width="200px">
-			<c:if test="${member.photo == null }">
-				<img src="/bunny/resources/img/usericon.png" id="userImg" width="100px"
-				alt="userImg" />
-			</c:if>
-			<c:if test="${member.photo != null }">
-				<img src="/bunny/resources/member/profile/${member.photo}" id="userImg" width="100px"
-				alt="userImg"/>
-			</c:if>
-				<br />
-				<button type="button" id="imgBtn">사진 첨부</button>
-				<input type="file" name="userPhoto" id="profileImgBtn"
-				style="display: none;" onchange="loadImg(this);"/></td>
-			<td width="150px">아이디 :</td>
-			<td><input type="text" name="userId" value="${member.userId}"
-				readonly></td>
-			<td width="200px"></td>
-		</tr>
-		<tr>
-			<td>비밀번호 :</td>
-			<td><input type="password" id="userPwd" name="userPwd" required /></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>비밀번호 확인 :</td>
-			<td><input type="password" id="userPwd2" name="userPwd2"
-				required></td>
-			<td><label id="pwdResult"></label></td>
-		</tr>
-		<tr>
-			<td>닉네임 :</td>
-			<td><input type="text" id="nickName" value="${member.introduce}" name="nickName" required></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>생년월일 :</td>
-			<td><input type="text" name="birth" value="${member.birth}"
-				readonly></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>이메일 :</td>
-			<td><input type="text" name="email" value="${member.email}"
-				style="width: 140px;" readonly></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>전화번호 :</td>
-			<td>
-				<!--  <select name="phone" id="phone">
-               			 <option value="010" selected>010</option>
-               			 <option value="011">011</option>
-              			 <option value="016">016</option>
-               			 <option value="019">019</option>
-           			 </select>-
-						<input type="text" maxlength="4" id="phone2" name="phone2" size="2" numberonly required>-
-						<input type="text" maxlength="4" id="phone3" name="phone3" size="2" numberonly required> -->
-				<input type="text" id="phone" name="phone" value="${member.phone}">
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>소개글 :</td>
-			<td><textarea name="introduce" id="introduce" cols="30" rows="10">${member.introduce}</textarea></td>
-			<td></td>
-		</tr>
-	</table>
-	<br>
-	<div class="btns" align="center">
-		<button id="cancel" onclick="history.go(-1)">취소하기</button>
-		&nbsp;
-		<button id="updateBtn" type="submit">수정하기</button>
-		&nbsp;
+					<div class="col-12 col-md-6">
+						<h2 align="center">회원 정보 수정</h2>
+						<div class="single_product_desc">
+							<!-- <h4 class="title">상품 제목</h4> -->
+							<label for="userId">아이디</label>
+							<input type="text"  class = "form-control" name="userId" value="${member.userId}" readonly>
+							
+							<label for="userPwd">비밀번호</label>
+							<input type="password" id="userPwd" name="userPwd" class = "form-control" required  />
+							
 
+
+							<label for="dupPwd">비밀번호 확인</label>
+							<input type="password" id="userPwd2" name="userPwd2" class = "form-control" required  />
+							
+							<label for="nickName">닉네임</label>
+							<input type="text" id="nickName" value="${member.nickName}" class = "form-control" name="nickName" required>
+							
+							<label for="birth">생년월일</label>
+							<input type="text" name="birth" value="${member.birth}" class = "form-control" readonly>
+							
+							<label for="email">이메일</label>
+							<input type="text" name="email" value="${member.email}" class = "form-control" readonly>
+							
+							<label for="phone">휴대폰 번호</label>
+							<input type="text" id="phone" name="phone" value="${member.phone}" class = "form-control">
+							
+							<label for="introduce">자기소개</label>
+							<textarea name="introduce" id="introduce" cols="30" rows="10" class = "form-control">${member.introduce} </textarea>
+							
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				<div align="right">
+					<button type="button" class="btn alazea-btn mt-15" onclick="showConfirm();"> 회원 탈퇴</button>
+					<button type="submit" class="btn alazea-btn mt-15">수정완료</button>
+					<button id="cancel" class="btn alazea-btn mt-15"onclick="history.go(-1)">취소하기</button>
+				</div>
+			</form>
+		</div>
 	</div>
-</form>
+
+	
+</section>
+
+
+
 
 
 <script>
-	/* 		$("input:text[numberOnly]").on("keyup", function() {
-	 $(this).val($(this).val().replace(/[^0-9]/g,""));
-	 });
 	
-	 function update() {
-	 var confirm = window.confirm("수정하시겠습니까?");
-	 console.log("닉네임 : " + $("#nickName").val());
-	 console.log("이미지: " + $("#userImg").val());
-	 console.log("소개: " + $("#introduce").val());
-	 if($('#userPwd, #userPwd2, #nickName, #phone').val() = ""){
-	 $('#nickName').addClass('fail').removeClass('success');
-	 }
-	 if($('.fail').length == 0 && confirm){
-	 $("#updateForm").submit();
-	 } else {
-	 alert('입력 양식이 올바르지 않습니다.');
-	 event.preventDefault();
+	function showConfirm(){
+		if(confirm("정말 회원 탈퇴 하시겠습니까?"))
+			{
+				location.href = "${pageContext.request.contextPath}/member/memberDelete.do";
+			}else{
+				alert("취소 하셨습니다.");
+			}
+	}
+	 
+	 $(function(){
+			$('#pImgFileArea').hide();
+			
+			$('#pImgArea').click(() => {
+				$('#userPhoto').click();
+			});
+			
+		}); 
 	
-	 }
-
-	 }; */
+		function loadImg(value, num){
+			
+			if(value.files && value.files[0])  {
+				
+				var reader = new FileReader();
+				
+				reader.onload = function(e){
+					
+					switch(num) {
+					case 1 : $('#titleImg').attr('src', e.target.result);
+						break;
+					}
+				}
+				reader.readAsDataURL(value.files[0]);
+			}
+		}
 
 	$('#userPwd2').change(
 			function() {

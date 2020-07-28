@@ -33,14 +33,14 @@
                <div class="col-12" align="center">
                     <div class="cart-table clearfix">
                   <c:if test="${member.photo == null }">
-				<img src="/bunny/resources/img/usericon.png" id="userImg" width="100px"
+				<img src="/bunny/resources/img/usericon.png" id="userImg" width="344.8px" height="357.56px"
 				alt="userImg" />
 			</c:if>
 			<c:if test="${member.photo != null }">
-				<img src="/bunny/resources/member/profile/${member.photo}" id="userImg" width="100px"
+				<img src="/bunny/resources/member/profile/${member.photo}" id="userImg" width="344.8px" height="357.56px"
 				alt="userImg"/>
 			</c:if> <br />
-                  <h3>아이디</h3>
+                  <h3>${member.nickName}님의 상점</h3>
                </div>
                <div>
                   <p><a href="memberView.do?userId=${member.userId}" style="font-size: 20px;">회원정보 상세보기</a></p>
@@ -61,7 +61,7 @@
                                     <td class="cart_product_img" style="display: inline-block;">
                                         <div class="product-info mt-15 text-center">
                                            <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
-                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <p>${product.pTitle}</p>
                                            <h6>10,000원</h6>
                                        </div>
                                     </td>

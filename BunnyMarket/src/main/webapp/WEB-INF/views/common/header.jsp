@@ -101,7 +101,7 @@
 							        <div class="login">
 							        <%-- <button class="login" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button> --%>
 							        <a href="${pageContext.request.contextPath}/member/memberLogout.do"><i class="fa fa-user" aria-hidden="true"></i><span>Logout</span></a>
-							        <a href="${pageContext.request.contextPath}/member/memberDelete.do"><i class="fa fa-user" aria-hidden="true"></i><span>회원탈퇴</span></a>
+							        
 							        
 							        &nbsp;
 							        
