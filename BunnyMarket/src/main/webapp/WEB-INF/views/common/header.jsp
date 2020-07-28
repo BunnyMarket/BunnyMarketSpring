@@ -32,8 +32,67 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <!-- Core Stylesheet -->
-<link rel="stylesheet"
-	href="${ pageContext.request.contextPath }/resources/style.css">
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/style.css">
+<style type="text/css">
+	/*.modal{
+		text-align : center;
+		position :relative;
+		width : 300px;
+		heigth:150px;
+		z-index:1;
+	}
+	.moal-content{
+		width : 300px;
+		text-align : center;
+		background: white;
+		margin :100px auto;
+
+	}
+    .modal-layout{
+	    posiotion:fixed;
+	    top:0;
+	    left:0;
+	    width:100%;
+	    height:100%;
+	    background:rgba(0, 0, 0,0.5);
+	    z-index:-1;
+    }
+ #ex1 {
+  display:none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+#ex1 h2 {
+  margin:0;   
+}
+
+#ex1 button {
+  display:inline-block;
+  width:100px;
+  margin-left:calc(100% - 100px - 10px);
+}
+
+#ex1 .modal-content {
+  width:300px;
+  margin:100px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+
+#ex1 .modal-layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}    */
+</style>
 </head>
 <body>
 	<!-- Preloader -->
@@ -89,7 +148,7 @@
 								<c:if test="${empty member}">
 								<!-- Login -->
 								<div class="login">
-									<a href="login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
+									<a href="${pageContext.request.contextPath}/login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
 								</div>
 								</c:if>
 								<c:if test="${!empty member}">
@@ -160,7 +219,7 @@
 											<li><a href="${ pageContext.request.contextPath }/views/admin/customerList.jsp">관리자-고객리스트</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/message.jsp">관리자-메세지</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/tansactions.jsp">관리자-트랜잭션</a></li>
+											<li><a href="${ pageContext.request.contextPath }/views/admin/transactions.jsp">관리자-트랜잭션</a></li>
 										</ul></li>
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
@@ -173,7 +232,7 @@
 									<li><a href="#">상품</a>
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/auction/auctionList.jsp">경매 상품</a></li>
+											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
 											<li><a href="#">상품 지도로 보기</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/member/review.jsp">후기 작성하기</a></li>
 										</ul>

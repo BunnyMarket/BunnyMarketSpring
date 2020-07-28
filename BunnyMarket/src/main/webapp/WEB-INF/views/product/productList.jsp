@@ -18,7 +18,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i>홈화면</a></li>
+                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }"><i class="fa fa-home"></i>홈화면</a></li>
                             <li class="breadcrumb-item active" aria-current="page">상품</li>
                         </ol>
                     </nav>
@@ -110,8 +110,10 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img">
-	                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/41.png" alt=""></a>
+	                                    <div class="product-img" style="height: 300px; width: 255px;" >
+	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
+	                                        	<img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" style="height: 300px; width: 255px;">
+	                                        </a>
 	                                        <div class="product-meta d-flex">
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
@@ -132,16 +134,12 @@
                         </div>
 						<nav aria-label="Page navigation">
                             <button type="submit" class="btn alazea-btn mt-15" 
-									onclick="location.href='${ pageContext.request.contextPath }/views/product/productInsert.jsp'">등록하기</button>
+									onclick="location.href='${ pageContext.request.contextPath }/product/productInsert.do'">등록하기</button>
                         </nav>
                         <!-- Pagination -->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>
-                        </nav>
+                        <div>
+                            <c:out value = "${ pageBar }" escapeXml = "false" />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -100,12 +100,7 @@
             }
             
               var key ;
-              
-              
-            
-            
-          
-       
+
          
            // 인증번호 확인 함수
              $("#emailVerifyBtn").on("click",function(){
@@ -327,5 +322,6 @@
 </script>
 
 
-      </body>
+
+</body>
 </html>

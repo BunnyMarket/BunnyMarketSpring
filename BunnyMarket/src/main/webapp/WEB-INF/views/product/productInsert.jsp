@@ -33,7 +33,7 @@
 	<div class="produts-details--content mb-50">
 		<div class="container">
 
-			<form action="">
+			<form id = "productInsert" method = "post" action="${pageContext.request.contextPath}/product/productInsertEnd.do" enctype="multipart/form-data">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
@@ -41,29 +41,23 @@
 								<div id="pImgArea">
 									<img id="titleImg" class = "d-block w-100" width="344.8px" height="357.56px">
 								</div>
-								
-								<!--  
-									이거 script에서 .hide해줬는데 왜 안없어질꼬...
-									아 제이쿼리 파일 안넣어서인듯.
-									아직 원격저장소 새로 안만들어졌으니 이걸 확인하면 그때 제이쿼리 파일 넣어주세요~!
-								 -->
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name="ptitleImg"
-										onchange="loadImg(this, 1);" />
+									<input type="file" id="titleImgArea" name = "pTitleImg"
+										onchange="loadImg(this, 1);" required="required"/>
 								</div>
 							</div>
 						</div>
 					</div>
-
+					
 					<div class="col-12 col-md-6">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type = "text" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
+							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type = "text" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
+							<input type = "text" name = "pPrice" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
 							<br />
 
 							<!-- <label for="pEndDate">경매 종료일 *</label>
@@ -84,21 +78,60 @@
 								max : 입력 가능한 가장 늦은 시간
 							
 							<br /> -->
-
-							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "address" class = "form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							
+							
+							<label for="pcno" style="float: none;">카테고리 설정 *</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
+                                  <option value="" hidden>물품의 종류를 선택해주세요.</option>
+                                  <option value="1">컴퓨터</option>
+                                  <option value="2">옷</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
+                                  <!-- <option value="3">컴퓨터1</option>
+                                  <option value="4">3</option>
+                                  <option value="5">ㅎㅎ</option>
+                                  <option value="6">ㄴㄴ</option>
+                                  <option value="7">33</option> -->
+                                </select>
+	                        </div>
+	                        
+	                        <br /><br /><br /><br /><br />
+								<label for="pAddress">주소 입력 </label>
+								<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+								<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
+						</div>
+					</div>
+					
+					
+					<div class="col-12 col-md-12">
+						<div class="single_product_thumb">
+							<div id="mapwrap"> 
+								<br />
+							    <!-- 지도가 표시될 div -->
+							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;">
+							    	<p style = "text-align : center;">주소를 입력하면 지도가 표시됩니다.⏎</p>
+							    </div>
+							</div>
 						</div>
 					</div>
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name = "pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name = "pContent" class="summernote" placeholder = "내용 입력" required></textarea>
 					</div>
+					
+					<!-- 주의사항 -->
+					<div class = "col-12 col-md-12">
+						<br />
+						<label for="Precautions"><a href="#">주의 사항 *</a></label>
+						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
+					</div>
+					
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/product/productList.jsp'">수정완료</button>
+					<button type="submit" class="btn alazea-btn mt-15">작성 완료</button>
 				</div>
 			</form>
 		</div>
@@ -118,7 +151,9 @@
 			});
 			
 		}); 
+	</script>
 	
+	<script>
 		function loadImg(value, num){
 			
 			if(value.files && value.files[0])  {
@@ -135,8 +170,9 @@
 				reader.readAsDataURL(value.files[0]);
 			}
 		}
-		
-		
+	</script>
+	
+	<script>	
 	// 서머노트 실행 
 	   var check = $('.summernote').summernote({
 	        height : 600 // 에디터 높이
@@ -167,7 +203,7 @@
 	            $.ajax({
 	               data : data,
 	               type : "post",
-	               url : '/dream/pImgInsert.pl', // servlet url
+	               url : '${pageContext.request.contextPath}/product/pImgInsert.do', // servlet url
 	               cache : false,
 	               contentType : false,
 	               processData : false,
@@ -186,16 +222,39 @@
 	      }
 	   });
 	
+	</script>
+	
+	<script>
 
+	
+	
+	
 		/* 주소 검색을 위한 스크립트 */ 
+		var showfullAddr; // 화면단에서 보여주기 위한 주소를 입력받는 변수 선언
+		var fullAddr;
+		
 		function addrSearch() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {
+	            	
+					/* 지도 생성 */
+				    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				    mapOption = { 
+				        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				        level: 3 // 지도의 확대 레벨
+				    };
+				
+					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+					
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new kakao.maps.services.Geocoder();
+					
+	
 	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
 	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
 	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var fullAddr = ''; // 최종 주소 변수
+	                fullAddr = ''; // 최종 주소 변수
 	                var extraAddr = ''; // 조합형 주소 변수
 
 	                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
@@ -217,17 +276,63 @@
 	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 	                    }
 	                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    showshowfullAddr = fullAddr + (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    // fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                    	// 이건 주석처리한다. 주소 뒤에 괄호가 추가되면 지도에서 길찾기 url로 넘어갈때 도착지에 주소지를 입력받지 못하기 때문...
 	                }
 
 	                // 주소 정보를 해당 필드에 넣는다.
-	                $('#address').val(fullAddr);
+	                $('#showpAddress').val(showshowfullAddr);
+	                $('#pAddress').val(fullAddr);
+	                
+	               
+			        console.log("입력받은 주소 : " + fullAddr);
+			        console.log("보여주기 위해 입력받은 주소 : " + showshowfullAddr); // 사용자에게 보여주기 위한 괄호까지 들어간 주소 
 
+			        
+			        
+			     	// 주소로 좌표를 검색합니다
+			        geocoder.addressSearch(fullAddr, function(result, status) {
+
+			            // 정상적으로 검색이 완료됐으면 
+			             if (status === kakao.maps.services.Status.OK) {
+
+			                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+			                // 결과값으로 받은 위치를 마커로 표시합니다
+			                var marker = new kakao.maps.Marker({
+			                    map: map,
+			                    position: coords
+			                });
+
+			                // 인포윈도우로 장소에 대한 설명을 표시합니다
+			                var infowindow = new kakao.maps.InfoWindow({
+			                    content: '<div style="width:150px;text-align:center;padding:6px 0;">지정한 위치</div>'
+			                });
+			                infowindow.open(map, marker);
+
+			                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			                map.setCenter(coords);
+			                
+			                
+			                
+			                
+			                
+			            } 
+			        });    
+			        
+			        document.getElementById('map').style.border = "4px solid #bcbcbc";
+				 
 	            }
 	        }).open();
+	        
 	    };
 	    
 	    
+	    
+		
+		
+		    
 	
 	</script>
 
