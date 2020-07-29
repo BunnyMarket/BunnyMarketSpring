@@ -25,10 +25,7 @@ import com.kh.bunny.product.model.vo.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.common.util.Utils;
-<<<<<<< HEAD
-=======
 import com.kh.bunny.member.model.vo.Member;
->>>>>>> refs/remotes/origin/dev_auction_ming
 import com.kh.bunny.product.model.vo.PComment;
 
 @Controller
@@ -286,14 +283,6 @@ public class ProductController {
 	
 	// 댓글 생성하기 
 	@RequestMapping("/product/pcommentInsert.do")
-<<<<<<< HEAD
-	public String pcommentInsert(PComment pcomment, Model model) {
-		
-		
-		
-		return "";
-	}
-=======
 	public String pcommentInsert(PComment pcomment, Model model, HttpSession session) {
 		
 		Member m = (Member)session.getAttribute("member");
@@ -351,28 +340,7 @@ public class ProductController {
 //		 
 //		return hmap;
 //	}
->>>>>>> refs/remotes/origin/dev_auction_ming
 	
-	// 댓글 수정하기 
-	@RequestMapping("/product/pcommentUpdate.do")
-	public String pcommentUpdate(PComment pcomment, Model model) {
-		
-		
-		return "";
-	}
-	
-<<<<<<< HEAD
-	// 댓글 삭제하기 
-	@RequestMapping("/product/pcommentDelete.do")
-	public String pcommentDelete(@RequestParam int pcmno) {
-		
-		
-		
-		return "";
-	}
-	
-	
-=======
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
 	@ResponseBody
@@ -461,39 +429,9 @@ public class ProductController {
 		// 192.168.20.214 - 민정
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
->>>>>>> refs/remotes/origin/dev_auction_ming
+	
 	
 
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/dev_auction_ming

@@ -56,25 +56,6 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int insertPComment(PComment pcomment) {
-<<<<<<< HEAD
-		return sqlSession.insert("productMapper.", pcomment);
-	}
-
-	@Override
-	public int updatePComemnt(PComment pcomment) {
-		return sqlSession.update("productMapper.", pcomment);
-	}
-
-	@Override
-	public int deletePComment(int pcmno) {
-		return sqlSession.delete("productMapper.", pcmno);
-	}
-
-	@Override
-	public List<Object> selectProductListMap() {
-		return sqlSession.selectList("productMapper.selectProductListMap");
-	}
-=======
 		return sqlSession.insert("productMapper.insertPComment", pcomment);
 	}
 
@@ -108,7 +89,11 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.selectOnePComment", pno);
 	}
 
+	@Override
+	public List<Object> selectProductListMap() {
+		return sqlSession.selectList("productMapper.selectProductListMap");
+	}
 
->>>>>>> refs/remotes/origin/dev_auction_ming
+
 
 }

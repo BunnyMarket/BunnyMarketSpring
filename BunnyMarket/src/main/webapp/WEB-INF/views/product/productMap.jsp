@@ -6,13 +6,17 @@
 <style>
 	#mapwrap{position:relative;overflow:hidden;}
 	.category, .category *{margin:0;padding:0;color:#000;}   
-	.category {position:absolute;overflow:hidden;top:10px;left:10px;width:202px;height:30px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
+	.category {position:absolute;overflow:hidden;top:10px;left:10px;width:355px;height:30px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
 	.category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
 	.category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
 	/* .category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;}  */ 
-	.category .ico_coffee {background-position:-10px 0;}  
-	.category .ico_store {background-position:-10px -36px;}   
-	.category .ico_carpark {background-position:-10px -72px;} 
+	.category .ico_elec {background-position:-10px 0;}  
+	.category .ico_furniture {background-position:-10px -36px;}   
+	.category .ico_accessory {background-position:-10px -144px;}
+	.category .ico_clothing {background-position:-10px -288px;} 
+	.category .ico_toy {background-position:-10px -1152px;} 
+	.category .ico_book {background-position:-10px -2304px;} 
+	.category .ico_etc {background-position:-10px -4608px;}  
 	
 	.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
@@ -66,7 +70,6 @@
 		<div class="container">
 		<div class="col-12">
 			<br /> <br />
-			<input type="hidden" id = "mapJson" value = "${ mapJson }" />
 			
 			<div id="mapwrap"> 
 			    <!-- 지도가 표시될 div -->
@@ -74,22 +77,35 @@
 			    	<!-- 지도 위에 표시될 마커 카테고리 -->
 				    <div class="category">
 				        <ul>
-				            <li id="coffeeMenu" onclick="changeMarker('coffee')">
-				                <span class="ico_comm ico_coffee"></span>
-				                컴퓨터
+				            <li id="elecMenu" onclick="changeMarker('elec')">
+				                <span class="ico_comm ico_elec"></span>
+				                전자기기
 				            </li>
-				            <li id="storeMenu" onclick="changeMarker('store')">
-				                <span class="ico_comm ico_store"></span>
-				                옷
-				            </li>
-				            <li id="carparkMenu" onclick="changeMarker('carpark')">
-				                <span class="ico_comm ico_carpark"></span>
-				                책
-				            </li>
-				            <li id="anyMenu" onclick="changeMarker('any')">
-				                <span class="ico_comm ico_carpark"></span>
+				            <li id="furnitureMenu" onclick="changeMarker('furniture')">
+				                <span class="ico_comm ico_furniture"></span>
 				                가구
 				            </li>
+				            <li id="accessoryMenu" onclick="changeMarker('accessory')">
+				                <span class="ico_comm ico_accessory"></span>
+				                악세서리
+				            </li>
+				            <li id="clothingMenu" onclick="changeMarker('clothing')">
+				                <span class="ico_comm ico_clothing"></span>
+				                의류
+				            </li>
+				            <li id="toyMenu" onclick="changeMarker('toy')">
+				                <span class="ico_comm ico_toy"></span>
+				                장난감
+				            </li>
+				            <li id="bookMenu" onclick="changeMarker('book')">
+				                <span class="ico_comm ico_book"></span>
+				                책
+				            </li>
+				            <li id="etcMenu" onclick="changeMarker('etc')">
+				                <span class="ico_comm ico_etc"></span>
+				                기타
+				            </li> 
+				            
 				        </ul>
 				    </div>
 			</div>
@@ -103,24 +119,32 @@
 <!-- ##### Single Product Details Area End ##### -->
 
 	<script>
-		
+	
+
 		console.log('hello');
 		var mapJson = JSON.parse('${ mapJson }'); // json 잘 가져오는거 확인 완료 
 		console.log(mapJson); 
 		
 		
-		var coffeePositions = [];
-		var storePositions = [];
-		var carparkPositions = [];
+		var elecPositions = [];
+		var furniturePositions = [];
+		var accessoryPositions = [];
+		var clothingPositions = [];
+		var toyPositions = [];
+		var bookPositions = [];
+		var etcPositions = [];
 		
 
 		
 		// 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 		var markerImageSrc = 'https://www.pngrepo.com/png/302636/79/map-marker.png';  
-		    coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
-		    storeMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
-		    carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
-		
+		    elecMarkers = [], //  마커 객체를 가지고 있을 배열입니다
+		    furnitureMarkers = [], 
+		    accessoryMarkers = [], 
+		    clothingMarkers = [],
+		    toyMarkers = [],
+		    bookMarkers = [],
+		    etcMarkers = []; 
 		    
 		
 		// 주소-좌표 변환 객체를 생성합니다
@@ -135,7 +159,9 @@
 					var product = {
 							'latlng' : new kakao.maps.LatLng(result[0].y, result[0].x),
 							'pno' : item.pno,
-							'title' : item.ptitle
+							'title' : item.ptitle,
+							'img' : item.pimg,
+							'text' : item.pcontent
 					};
 			    	
 		    		console.log('-----------------');
@@ -146,35 +172,59 @@
 			    	
 		    		
 					if(item.pcno == 1){
-						
-				    	coffeePositions.push(product);
+						console.log('1들어옴');
+				    	elecPositions.push(product);
 					
 					} else if (item.pcno == 2){
-						
-						storePositions.push(product);
+						console.log('2들어옴');
+						furniturePositions.push(product);
 					
 					} else if (item.pcno == 3){
-						
-						carparkPositions.push(product);
+						console.log('3들어옴');
+						accessoryPositions.push(product);
 					
-					} 
+					}  else if (item.pcno == 4){
+						console.log('4들어옴');
+						clothingPositions.push(product);
+					
+					} else if (item.pcno == 5){
+						console.log('5들어옴');
+						toyPositions.push(product);
+					
+					} else if (item.pcno == 6){
+						console.log('6들어옴');
+						bookPositions.push(product);
+					
+					} else if (item.pcno == 7){
+						console.log('7들어옴');
+						etcPositions.push(product);
+					
+					}
 					
 					
+
 					
 					
 					if(idx == mapJson.length - 1){
 						// 배열에 모두 넣으면 실행! 
-						console.log("coffee확인 : " + coffeePositions);
-						console.log("store확인 : " + storePositions);
-						console.log("carpark확인 : " + carparkPositions);
+						console.log("elec확인 : " + elecPositions);
+						console.log("furniture확인 : " + furniturePositions);
+						console.log("accessory확인 : " + accessoryPositions);
+						console.log("clothing확인 : " + clothingPositions);
+						console.log("toy확인 : " + toyPositions);
+						console.log("book확인 : " + bookPositions);
+						console.log("etc확인 : " + etcPositions.to);
 						
-						createCoffeeMarkers(); // 커피숍 마커를 생성하고 커피숍 마커 배열에 추가합니다
-						createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
-						createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
+						createElecMarkers(); // 마커를 생성하고 마커 배열에 추가합니다
+						createFurnitureMarkers(); 
+						createAccessoryMarkers(); 
+						createClothingMarkers();
+						createToyMarkers();
+						createBookMarkers();
+						createEtcMarkers(); 
 						
-						changeMarker('coffee'); // 지도에 커피숍 마커가 보이도록 설정합니다    
+						changeMarker('elec'); // 지도에 elec 마커가 보이도록 설정합니다    
 						
-					
 						
 					}
 					
@@ -195,6 +245,17 @@
 	    }; 
 	
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+
+		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		
 		
 		
@@ -220,36 +281,41 @@
 		}
 		
 		
-
-		// 커피숍 마커를 생성하고 커피숍 마커 배열에 추가하는 함수입니다
-		function createCoffeeMarkers() {
+		// 카테고리1(전자기기_elec) ------------------------------------------------------------------------------------------------
+		var overlayArray_elec = [];
+		// 마커를 생성하고 마커 배열에 추가하는 함수입니다
+		function createElecMarkers() {
 		    
-		    for (var i = 0; i < coffeePositions.length; i++) {  
+		    for (var i = 0; i < elecPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
 	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-		            marker = createMarker(coffeePositions[i]['latlng'], markerImage);  
+		            marker = createMarker(elecPositions[i]['latlng'], markerImage);  
 		        
-		        // 생성된 마커를 커피숍 마커 배열에 추가합니다
-		        coffeeMarkers.push(marker);
+		        
+		        
+		        // 생성된 마커를 마커 배열에 추가합니다
+		        elecMarkers.push(marker);
 		        
 		      
 		         var iwContent ='<div class="wrap">' + 
 					            '    <div class="info">' + 
 					            '        <div class="title">' + 
-					            			 coffeePositions[i]['title'] + 
-					        	'            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+					            			 elecPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_elec(' + i + ')" title="닫기"></div>' + 
 					        	'        </div>' + 
 						        '        <div class="body">' + 
 						        '            <div class="img">' +
-						        '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + elecPositions[i]['img'] +
+						        '"width="73" height="70">' +
 						        '           </div>' + 
 						        '            <div class="desc">' + 
-						        '                <div><a href="productDetail.do?pno=' +  coffeePositions[i]['pno'] +
-						        '"target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '                <div>' + elecPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  elecPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
 						        '    </div>' +    
@@ -258,7 +324,7 @@
 						        
 		      // 마커 위에 커스텀오버레이를 표시합니다
 		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-		      var overlay = new kakao.maps.CustomOverlay({
+		      overlayArray_elec[i] = new kakao.maps.CustomOverlay({
 		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
 		          content: iwContent,
 		          position: marker.getPosition(),
@@ -267,11 +333,11 @@
 		          zIndex: 3
 		      });
 		         
-				    
+				  var overlay = overlayArray_elec[i];  
 		       (function(marker, overlay) {
 		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 		        	kakao.maps.event.addListener(marker, 'click', function() {
-		        	    overlay.setMap(map);
+		        		overlay.setMap(map);
 		        	});
 		        	
 		        })(marker, overlay); 
@@ -282,205 +348,638 @@
 		
 		
 		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-		function closeOverlay() {
-		    console.log('웨 안닫히냐...');
-		    overlay.setMap(null);  
+		function closeOverlay_elec(idx) {
+			
+		    console.log(idx);
+		    overlayArray_elec[idx].setMap(null);  
 	    } 
 		
-	    
-		// 커피숍 마커들의 지도 표시 여부를 설정하는 함수입니다
-		function setCoffeeMarkers(map) {        
-		    for (var i = 0; i < coffeeMarkers.length; i++) {  
-		        coffeeMarkers[i].setMap(map);
+		
+		// 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setElecMarkers(map) {        
+		    for (var i = 0; i < elecMarkers.length; i++) {  
+		        elecMarkers[i].setMap(map);
 		    }        
 		}
 		
-		// 편의점 마커를 생성하고 편의점 마커 배열에 추가하는 함수입니다
-		function createStoreMarkers() {
-		    for (var i = 0; i < storePositions.length; i++) {
-		        
-		        var imageSize = new kakao.maps.Size(35, 35),
-		            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
-		     
-		        // 마커이미지와 마커를 생성합니다
-		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-		            marker = createMarker(storePositions[i]['latlng'], markerImage);  
 		
-		        // 생성된 마커를 편의점 마커 배열에 추가합니다
-		        storeMarkers.push(marker);  
-		        
-		     	// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-				// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-				var iwContent = '<div class="wrap">' + 
-					            '    <div class="info">' + 
-					            '        <div class="title">' + 
-					        				storePositions[i]['title'] + 
-					        	'            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-					        	'        </div>' + 
-						        '        <div class="body">' + 
-						        '            <div class="img">' +
-						        '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-						        '           </div>' + 
-						        '            <div class="desc">' + 
-						        '                <div><a href="productDetail.do?pno=' +  storePositions[i]['pno'] +
-						        '"target="_blank" class="link">홈페이지</a></div>' + 
-						        '            </div>' + 
-						        '        </div>' + 
-						        '    </div>' +    
-						        '</div>', 
-				    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		// 카테고리2(가구_furniture)  ------------------------------------------------------------------------------------------------
+		var overlayArray_furniture = [];
 
-				// 인포윈도우를 생성합니다
-				var infowindow = new kakao.maps.InfoWindow({
-				    content : iwContent,
-				    removable : iwRemoveable
-				});
-				    
-		        (function(marker, infowindow) {
-		        	// 마커에 클릭이벤트를 등록합니다
-					kakao.maps.event.addListener(marker, 'click', function() {
-					      // 마커 위에 인포윈도우를 표시합니다
-					      infowindow.open(map, marker);  
-					      console.log('클릭!');
-					});
-		        	
-		        })(marker, infowindow);
-		        
-		    }        
-		}
-		
-		// 편의점 마커들의 지도 표시 여부를 설정하는 함수입니다
-		function setStoreMarkers(map) {        
-		    for (var i = 0; i < storeMarkers.length; i++) {  
-		        storeMarkers[i].setMap(map);
-		    }        
-		}
-		
-		// 주차장 마커를 생성하고 주차장 마커 배열에 추가하는 함수입니다
-		function createCarparkMarkers() {
-		    for (var i = 0; i < carparkPositions.length; i++) {
+		function createFurnitureMarkers() {
+		    
+		    for (var i = 0; i < furniturePositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};           
-		     
-		        // 마커이미지와 마커를 생성합니다
-		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-		            marker = createMarker(carparkPositions[i]['latlng'], markerImage);  
-		
-		        // 생성된 마커를 주차장 마커 배열에 추가합니다
-		        carparkMarkers.push(marker);  
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
 		        
-		     	// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-				// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-				var iwContent = '<div class="wrap">' + 
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(furniturePositions[i]['latlng'], markerImage);  
+		        
+		        
+		        
+		        furnitureMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
 					            '    <div class="info">' + 
 					            '        <div class="title">' + 
-					            carparkPositions[i]['title'] + 
-					        	'            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+					            			 furniturePositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_furniture(' + i + ')" title="닫기"></div>' + 
 					        	'        </div>' + 
 						        '        <div class="body">' + 
 						        '            <div class="img">' +
-						        '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + furniturePositions[i]['img'] +
+						        '"width="73" height="70">' +
 						        '           </div>' + 
 						        '            <div class="desc">' + 
-						        '                <div><a href="productDetail.do?pno=' +  carparkPositions[i]['pno'] +
-						        '"target="_blank" class="link">홈페이지</a></div>' + 
+						        '                <div>' + furniturePositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  furniturePositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
 						        '    </div>' +    
-						        '</div>', 
-				    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-				// 인포윈도우를 생성합니다
-				var infowindow = new kakao.maps.InfoWindow({
-				    content : iwContent,
-				    removable : iwRemoveable
-				});
-				    
-		        (function(marker, infowindow) {
-		        	// 마커에 클릭이벤트를 등록합니다
-					kakao.maps.event.addListener(marker, 'click', function() {
-					      // 마커 위에 인포윈도우를 표시합니다
-					      infowindow.open(map, marker);  
-					      console.log('클릭!');
-					});
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_furniture[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_furniture[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
 		        	
-		        })(marker, infowindow);
-		    }                
+		        })(marker, overlay); 
+		        
+		        
+		    }     
 		}
 		
-		// 주차장 마커들의 지도 표시 여부를 설정하는 함수입니다
-		function setCarparkMarkers(map) {        
-		    for (var i = 0; i < carparkMarkers.length; i++) {  
-		        carparkMarkers[i].setMap(map);
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_furniture(idx) {
+			
+		    console.log(idx);
+		    overlayArray_furniture[idx].setMap(null);  
+	    } 
+		
+		
+		// 커피숍 마커들의 지도 표시 여부를 설정하는 함수입니다
+		function setFurnitureMarkers(map) {        
+		    for (var i = 0; i < furnitureMarkers.length; i++) {  
+		        furnitureMarkers[i].setMap(map);
 		    }        
 		}
 		
+		// 카테고리3(accessory) ------------------------------------------------------------------------------------------------
+		var overlayArray_accessory = [];
+
+		function createAccessoryMarkers() {
+		    
+		    for (var i = 0; i < accessoryPositions.length; i++) {  
+		        
+		    	var imageSize = new kakao.maps.Size(35, 35),
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+		        
+		        // 마커이미지와 마커를 생성합니다
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(accessoryPositions[i]['latlng'], markerImage);  
+		        
+		        
+		        console.log('이미지? : ' +  accessoryPositions[i]['img']);
+		        accessoryMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + 
+					            			 accessoryPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_accessory(' + i + ')" title="닫기"></div>' + 
+					        	'        </div>' + 
+						        '        <div class="body">' + 
+						        '            <div class="img">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + accessoryPositions[i]['img'] +
+						        '"width="73" height="70">' +
+						        '           </div>' + 
+						        '            <div class="desc">' + 
+						        '                <div>' + accessoryPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  accessoryPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '            </div>' + 
+						        '        </div>' + 
+						        '    </div>' +    
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_accessory[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_accessory[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
+		        	
+		        })(marker, overlay); 
+		        
+		        
+		    }     
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_accessory(idx) {
+			
+		    console.log(idx);
+		    overlayArray_accessory[idx].setMap(null);  
+	    } 
+		
+		
+		function setAccessoryMarkers(map) {        
+		    for (var i = 0; i < accessoryMarkers.length; i++) {  
+		        accessoryMarkers[i].setMap(map);
+		    }        
+		}
+		
+		// 카테고리4(의류_clothing) ------------------------------------------------------------------------------------------------
+		
+		var overlayArray_clothing = [];
+		function createClothingMarkers() {
+		    
+		    for (var i = 0; i < clothingPositions.length; i++) {  
+		        
+		    	var imageSize = new kakao.maps.Size(35, 35),
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+		        
+		        // 마커이미지와 마커를 생성합니다
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(clothingPositions[i]['latlng'], markerImage);  
+		        
+		        
+		        
+		        // 생성된 마커를 마커 배열에 추가합니다
+		        clothingMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + 
+					            			 clothingPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_clothing(' + i + ')" title="닫기"></div>' + 
+					        	'        </div>' + 
+						        '        <div class="body">' + 
+						        '            <div class="img">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + clothingPositions[i]['img'] +
+						        '"width="73" height="70">' +
+						        '           </div>' + 
+						        '            <div class="desc">' + 
+						        '                <div>' + clothingPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  clothingPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '            </div>' + 
+						        '        </div>' + 
+						        '    </div>' +    
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_clothing[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_clothing[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
+		        	
+		        })(marker, overlay); 
+		        
+		        
+		    }     
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_clothing(idx) {
+			
+		    console.log(idx);
+		    overlayArray_clothing[idx].setMap(null);  
+	    } 
+		
+		
+		function setClothingMarkers(map) {        
+		    for (var i = 0; i < clothingMarkers.length; i++) {  
+		        clothingMarkers[i].setMap(map);
+		    }        
+		}
+
+
+		// 카테고리5(장난감_toy) ------------------------------------------------------------------------------------------------
+		
+		var overlayArray_toy = [];
+		function createToyMarkers() {
+		    
+		    for (var i = 0; i < toyPositions.length; i++) {  
+		        
+		    	var imageSize = new kakao.maps.Size(35, 35),
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+		        
+		        // 마커이미지와 마커를 생성합니다
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(toyPositions[i]['latlng'], markerImage);  
+		        
+		        
+		        toyMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + 
+					            			 toyPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_toy(' + i + ')" title="닫기"></div>' + 
+					        	'        </div>' + 
+						        '        <div class="body">' + 
+						        '            <div class="img">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + toyPositions[i]['img'] +
+						        '"width="73" height="70">' +
+						        '           </div>' + 
+						        '            <div class="desc">' + 
+						        '                <div>' + toyPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  toyPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '            </div>' + 
+						        '        </div>' + 
+						        '    </div>' +    
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_toy[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_toy[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
+		        	
+		        })(marker, overlay); 
+		        
+		        
+		    }     
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_toy(idx) {
+			
+		    console.log(idx);
+		    overlayArray_toy[idx].setMap(null);  
+	    } 
+		
+		
+		function setToyMarkers(map) {        
+		    for (var i = 0; i < toyMarkers.length; i++) {  
+		        toyMarkers[i].setMap(map);
+		    }        
+		}
+
+
+		// 카테고리6(책_book) ------------------------------------------------------------------------------------------------
+		
+		var overlayArray_book = [];
+		function createBookMarkers() {
+		    
+		    for (var i = 0; i < bookPositions.length; i++) {  
+		        
+		    	var imageSize = new kakao.maps.Size(35, 35),
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+		        
+		        // 마커이미지와 마커를 생성합니다
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(bookPositions[i]['latlng'], markerImage);  
+		        
+		        
+		        
+		        bookMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + 
+					            			 bookPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_book(' + i + ')" title="닫기"></div>' + 
+					        	'        </div>' + 
+						        '        <div class="body">' + 
+						        '            <div class="img">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + bookPositions[i]['img'] +
+						        '"width="73" height="70">' +
+						        '           </div>' + 
+						        '            <div class="desc">' + 
+						        '                <div>' + bookPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  bookPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '            </div>' + 
+						        '        </div>' + 
+						        '    </div>' +    
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_book[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_book[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
+		        	
+		        })(marker, overlay); 
+		        
+		        
+		    }     
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_book(idx) {
+			
+		    console.log(idx);
+		    overlayArray_book[idx].setMap(null);  
+	    } 
+		
+		
+		function setBookMarkers(map) {        
+		    for (var i = 0; i < bookMarkers.length; i++) {  
+		        bookMarkers[i].setMap(map);
+		    }        
+		}
+
+
+		// 카테고리7(기타_etc) ------------------------------------------------------------------------------------------------
+		
+		var overlayArray_etc = [];
+
+		function createEtcMarkers() {
+		    
+		    for (var i = 0; i < etcPositions.length; i++) {  
+		        
+		    	var imageSize = new kakao.maps.Size(35, 35),
+	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+		        
+		        // 마커이미지와 마커를 생성합니다
+		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+		            marker = createMarker(etcPositions[i]['latlng'], markerImage);  
+		        
+		        etcMarkers.push(marker);
+		        
+		      
+		         var iwContent ='<div class="wrap">' + 
+					            '    <div class="info">' + 
+					            '        <div class="title">' + 
+					            			 etcPositions[i]['title'] + 
+					        	'            <div class="close" onclick="closeOverlay_etc(' + i + ')" title="닫기"></div>' + 
+					        	'        </div>' + 
+						        '        <div class="body">' + 
+						        '            <div class="img">' +
+						        '                <img src="${ pageContext.request.contextPath }/resources/upload/product/' + etcPositions[i]['img'] +
+						        '"width="73" height="70">' +
+						        '           </div>' + 
+						        '            <div class="desc">' + 
+						        '                <div>' + etcPositions[i]['text'].substr(0, 25) + '...<br/>' +  
+						        '					<a href="productDetail.do?pno=' +  etcPositions[i]['pno'] +
+						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
+						        '            </div>' + 
+						        '        </div>' + 
+						        '    </div>' +    
+						        '</div>';
+			        
+						        
+		      // 마커 위에 커스텀오버레이를 표시합니다
+		      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+		      overlayArray_etc[i] = new kakao.maps.CustomOverlay({
+		    	  clickable : true, // true이면 컨텐츠 영역을 클릭했을 경우 지도 이벤트를 막아준다. 
+		          content: iwContent,
+		          position: marker.getPosition(),
+		          xAnchor: 0.5,
+		          yAnchor: 1,
+		          zIndex: 3
+		      });
+		         
+				  var overlay = overlayArray_etc[i];  
+		       (function(marker, overlay) {
+		        	// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		        	kakao.maps.event.addListener(marker, 'click', function() {
+		        		overlay.setMap(map);
+		        	});
+		        	
+		        })(marker, overlay); 
+		        
+		        
+		    }     
+		}
+		
+		
+		// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		function closeOverlay_etc(idx) {
+			
+		    console.log(idx);
+		    overlayArray_etc[idx].setMap(null);  
+	    } 
+		
+		
+		function setEtcMarkers(map) {        
+		    for (var i = 0; i < etcMarkers.length; i++) {  
+		        etcMarkers[i].setMap(map);
+		    }        
+		}
+
+ 
+		
+		
+		// ----------------------------------------------------------------------------------------------------------------
 		// 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
 		function changeMarker(type){
 		    
-		    var coffeeMenu = document.getElementById('coffeeMenu');
-		    var storeMenu = document.getElementById('storeMenu');
-		    var carparkMenu = document.getElementById('carparkMenu');
-		    var anyMenu = document.getElementById('anyMenu');
+		    var elecMenu = document.getElementById('elecMenu');
+		    var furnitureMenu = document.getElementById('furnitureMenu');
+		    var accessoryMenu = document.getElementById('accessoryMenu');
+		    var clothingMenu = document.getElementById('clothingMenu');
+		    var toyMenu = document.getElementById('toyMenu');
+		    var bookMenu = document.getElementById('bookMenu');
+		    var etcMenu = document.getElementById('etcMenu');  
 		    
-		    // 커피숍 카테고리가 클릭됐을 때
-		    if (type === 'coffee') {
+		    if (type === 'elec') {
 		    
-		        // 커피숍 카테고리를 선택된 스타일로 변경하고
-		        coffeeMenu.className = 'menu_selected';
+		        elecMenu.className = 'menu_selected';
 		        
-		        // 편의점과 주차장 카테고리는 선택되지 않은 스타일로 바꿉니다
-		        storeMenu.className = '';
-		        carparkMenu.className = '';
-		        anyMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = '';
+		        toyMenu.className = '';
+		        etcMenu.className = ''; 
 		        
-		        // 커피숍 마커들만 지도에 표시하도록 설정합니다
-		        setCoffeeMarkers(map);
-		        setStoreMarkers(null);
-		        setCarparkMarkers(null);
-		        setAnyMarkers(null);
+		        setElecMarkers(map);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(null);
+		        setToyMarkers(null);
+		        setBookMarkers(null);
+		        setEtcMarkers(null); 
 		        
-		    } else if (type === 'store') { // 편의점 카테고리가 클릭됐을 때
+		    } else if (type === 'furniture') { 
 		    
-		        // 편의점 카테고리를 선택된 스타일로 변경하고
-		        coffeeMenu.className = '';
-		        storeMenu.className = 'menu_selected';
-		        carparkMenu.className = '';
-		        anyMenu.className = '';
+		        elecMenu.className = '';
+		        furnitureMenu.className = 'menu_selected';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = '';
+		        toyMenu.className = ''; 
+		        bookMenu.className = ''; 
+		        etcMenu.className = '';  
 		        
-		        // 편의점 마커들만 지도에 표시하도록 설정합니다
-		        setCoffeeMarkers(null);
-		        setStoreMarkers(map);
-		        setCarparkMarkers(null);
+		        setElecMarkers(null);
+		        setFurnitureMarkers(map);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(null);
+		        setToyMarkers(null);
+		        setBookMarkers(null);
+		        setEtcMarkers(null); 
 		        
 		        
-		    } else if (type === 'carpark') { // 주차장 카테고리가 클릭됐을 때
+		    } else if (type === 'accessory') { 
 		     
-		        // 주차장 카테고리를 선택된 스타일로 변경하고
-		        coffeeMenu.className = '';
-		        storeMenu.className = '';
-		        carparkMenu.className = 'menu_selected';
-		        anyMenu.className = '';
+		        elecMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = 'menu_selected';
+		        clothingMenu.className = '';
+		        toyMenu.className = ''; 
+		        bookMenu.className = ''; 
+		        etcMenu.className = '';  
 		        
-		        // 주차장 마커들만 지도에 표시하도록 설정합니다
-		        setCoffeeMarkers(null);
-		        setStoreMarkers(null);
-		        setCarparkMarkers(map);  
+		        setElecMarkers(null);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(map);
+		        setClothingMarkers(null);
+		        setToyMarkers(null);
+		        setBookMarkers(null);
+		        setEtcMarkers(null); 
 		        
-		    }   else if (type === 'any') { // 주차장 카테고리가 클릭됐을 때
+		    }   else if (type === 'clothing') { 
+		    	
+		        elecMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = 'menu_selected';
+		        toyMenu.className = ''; 
+		        bookMenu.className = ''; 
+		        etcMenu.className = ''; 
+		        
+		        setElecMarkers(null);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(map);
+		        setToyMarkers(null);
+		        setBookMarkers(null);
+		        setEtcMarkers(null);
 		     
-		        // 주차장 카테고리를 선택된 스타일로 변경하고
-		        coffeeMenu.className = '';
-		        storeMenu.className = '';
-		        carparkMenu.className = '';
-		        anyMenu.className = 'menu_selected';
+		    }   else if (type === 'toy') { 
+		    	
+		        elecMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = '';
+		        toyMenu.className = 'menu_selected'; 
+		        bookMenu.className = ''; 
+		        etcMenu.className = ''; 
 		        
-		        // 주차장 마커들만 지도에 표시하도록 설정합니다
-		        setCoffeeMarkers(null);
-		        setStoreMarkers(null);
-		        setCarparkMarkers(map);  
-		    }   
+		        setElecMarkers(null);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(null);
+		        setToyMarkers(map);
+		        setBookMarkers(null);
+		        setEtcMarkers(null);
+		     
+		    }   else if (type === 'book') { 
+		        elecMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = '';
+		        toyMenu.className = ''; 
+		        bookMenu.className = 'menu_selected'; 
+		        etcMenu.className = ''; 
+		        
+		        setElecMarkers(null);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(null);
+		        setToyMarkers(null);
+		        setBookMarkers(map);
+		        setEtcMarkers(null);
+		     
+		    }   else if (type === 'etc') { 
+		        elecMenu.className = '';
+		        furnitureMenu.className = '';
+		        accessoryMenu.className = '';
+		        clothingMenu.className = '';
+		        toyMenu.className = ''; 
+		        bookMenu.className = ''; 
+		        etcMenu.className = 'menu_selected'; 
+		        
+		        setElecMarkers(null);
+		        setFurnitureMarkers(null);
+		        setAccessoryMarkers(null);
+		        setClothingMarkers(null);
+		        setToyMarkers(null);
+		        setBookMarkers(null);
+		        setEtcMarkers(map);
+		     
+		    }  
 		} 
 		
 	</script>

@@ -58,21 +58,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public int updatePComemnt(PComment pcomment) {
-		return productDAO.updatePComemnt(pcomment);
-	}
-
-	@Override
-	public int deletePComment(int pcmno) {
-		return productDAO.deletePComment(pcmno);
-	}
-
-	@Override
-	public List<Object> selectProductListMap() {
-		return productDAO.selectProductListMap();
-	}
-=======
 	public int updatePComment(PComment pcomment) {
 		return productDAO.updatePComment(pcomment);
 	}
@@ -97,7 +82,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.selectOnePComment(pno);
 	}
 
+	@Override
+	public List<Object> selectProductListMap() {
+		return productDAO.selectProductListMap();
+	}
 
->>>>>>> refs/remotes/origin/dev_auction_ming
+
 
 }

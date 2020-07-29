@@ -84,15 +84,13 @@
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
                                   <option value="" hidden>물품의 종류를 선택해주세요.</option>
-                                  <option value="1">컴퓨터</option>
-                                  <option value="2">옷</option>
-                                  <option value="3">책</option>
-                                  <option value="4">가구</option>
-                                  <!-- <option value="3">컴퓨터1</option>
-                                  <option value="4">3</option>
-                                  <option value="5">ㅎㅎ</option>
-                                  <option value="6">ㄴㄴ</option>
-                                  <option value="7">33</option> -->
+                                  <option value="1">전자기기</option>
+                                  <option value="2">가구</option>
+                                  <option value="3">악세서리</option>
+                                  <option value="4">의류</option>
+                                  <option value="5">장난감</option>
+                                  <option value="6">책</option>
+                                  <option value="7">기타</option>
                                 </select>
 	                        </div>
 	                        
@@ -116,20 +114,6 @@
 						</div>
 					</div>
 					
-					
-					<div class="col-12 col-md-12">
-						<div class="single_product_thumb">
-							<div id="mapwrap"> 
-								<br />
-							    <!-- 지도가 표시될 div -->
-							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;">
-							    	<p style = "text-align : center;">주소를 입력하면 지도가 표시됩니다.⏎</p>
-							    </div>
-							</div>
-						</div>
-					</div>
-					
-
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
