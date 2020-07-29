@@ -35,7 +35,7 @@
                
                 <form id="register" action="memberEnrollEnd.do"method="post" onsubmit="return validate();" class="input-group">
                 
-                    <input type="text" class="input-field" placeholder="User ID(4자리이상)" name="userId2" id="userId2" style="width:150px; display: inline-block;" >
+                    <input type="text" class="input-field" placeholder="User ID(4자리이상)" name="userId" id="userId2" style="width:150px; display: inline-block;" >
                     <label id="userIdAvailableLabel" style="color:green; font-size:10px; display:none; margin-left:1px;">사용 가능한 아이디입니다.</label>
                         <label id="userIdDupLabel" style="color:red; font-size:10px; display:none; margin-left:1px;">사용중인 아이디입니다.</label>
                         <label id="userIdLabel" style="color:red; font-size:10px; display:none; margin-left:1px;">아이디를 입력해주세요.</label>
@@ -53,9 +53,9 @@
                     <input type="button"  value="인증번호 확인" id="emailVerifyBtn"class="btn btn-sm btn btn-outline-info" style="width:120px;height:30px;text-align:center;padding:10px;background: linear-gradient(to right, #ff105f, #ffad06);border: 0;
                 cursor: pointer; outline: none;border-radius: 30px;" />
                 </div>                
-                    <input type="password" class="input-field" id="userPwd2" name="userPwd2" placeholder="Enter Password"  >
+                    <input type="password" class="input-field" id="userPwd" name="userPwd" placeholder="Enter Password"  >
                     
-                    <input type="password" class="input-field" id="userPwd3" placeholder="dup Password"  >
+                    <input type="password" class="input-field" id="userPwd2" placeholder="dup Password"  >
                     
                     <input type="text" class="input-field" id="userName" name="userName" placeholder="Your Name"  >
                     <input type="text" class="input-field" id="nickName" name="nickName" placeholder="Your NickName"  >
@@ -129,9 +129,6 @@
                 }else if(window.userIdValidNum == 0){
                    alert("이미 사용중인 아이디이거나 유효하지 않은 형식입니다.");   
                    return false;
-                }else if(window.pwdValidNum == 0){
-                   alert("유효하지 않은 비밀번호입니다.");
-                   return false;
                 }else if(window.nickValidNum == 0){
                    alert("이미 사용중인 닉네임이거나 유효하지 않은 형식입니다.");
                    return false;
@@ -163,13 +160,13 @@
                               $('#userIdDupLabel').hide();
                               $('#userIdLabel').hide();
                               
-                              window.nickValidNum = 1;
+                              window.userIdValidNum = 1;
                            }else{
                            
                               $('#userIdAvailableLabel').hide();
                               $('#userIdDupLabel').show();
                               $('#userIdLabel').hide();
-                              window.nickValidNum = 0;
+                              
                            }
                         },
                         error : function(req,status,error){
@@ -318,6 +315,8 @@
                       }); // ajax끝
              
                 });
+            
+          
 
 </script>
 

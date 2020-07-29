@@ -376,6 +376,17 @@ public class ProductController {
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
 	
+	@RequestMapping("/product/sellCount.do")
+	@ResponseBody
+	public int sellCount(@RequestParam String pWriter) {
+		
+		int sellCount = productService.sellCount(pWriter);
+		System.out.println("sellCount : " + sellCount);
+		
+		return sellCount;
+		
+		
+	}
 
 
 }

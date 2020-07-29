@@ -68,23 +68,29 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">판매중인 상품 <span class="text-muted">(72)</span></label>
+                                    <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${member.nickName}');" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">경매중인 상품$ <span class="text-muted"></span></label>
+                                    
                                 </div>
-                                <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck2">
-                                    <label class="custom-control-label" for="customCheck2">찜한 목록 <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck2">판매중인 상품$ <span class="text-muted">(72)</span></label>
+                                    
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3">
-                                    <label class="custom-control-label" for="customCheck3">거래중인 상품 목록 <span class="text-muted">(15)</span></label>
+                                    <label class="custom-control-label" for="customCheck3">찜한 목록 <span class="text-muted">(20)</span></label>
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck4">
-                                    <label class="custom-control-label" for="customCheck4">구매완료 상품 <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck4">거래중인 상품 목록 <span class="text-muted">(15)</span></label>
+                                </div>
+                                <!-- Single Checkbox -->
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck5">
+                                    <label class="custom-control-label" for="customCheck5">구매완료 상품 <span class="text-muted">(20)</span></label>
                                 </div>
                                 
                             </div>
@@ -93,233 +99,110 @@
                 </div>
 
                 <!-- All Products Area -->
-                <div class="col-12 col-md-8 col-lg-9">
+                <div id="auctionTrade" style="width: 80% height : 80%"></div>
+               <%-- <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop-products-area">
                         <div class="row">
-
+							<c:forEach items="${list}" var="p" varStatus="st">
                             <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/40.png" alt=""></a>
-                                        <!-- Product Tag -->
-                                        <div class="product-tag">
-                                            <a href="#">Hot</a>
-                                        </div>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/41.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/42.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/43.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/44.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/45.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/46.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/47.png" alt=""></a>
-                                        <!-- Product Tag -->
-                                        <div class="product-tag sale-tag">
-                                            <a href="#">Sale</a>
-                                        </div>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Product Area -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-area mb-50">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/48.png" alt=""></a>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Info -->
-                                    <div class="product-info mt-15 text-center">
-                                        <a href="${ pageContext.request.contextPath }/views/product/productDetail.jsp">
-                                            <p>모나미 볼펜 100개</p>
-                                        </a>
-                                        <h6>10,000원</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-						<nav aria-label="Page navigation">
-                            <button type="submit" class="btn alazea-btn mt-15" 
-									onclick="location.href='${ pageContext.request.contextPath }/views/product/productInsert.jsp'">등록하기</button>
-                        </nav>
-                        <!-- Pagination -->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>
-                        </nav>
-                    </div> 
-                </div>
+	                            <div class="col-12 col-sm-6 col-lg-4">
+	                                <div class="single-product-area mb-50">
+	                                    <!-- Product Image -->
+	                                    <div class="product-img" style="height: 300px; width: 255px;" >
+	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
+	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/${p.PImg}" alt=""></a>
+	                                        <div class="product-meta d-flex">
+	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
+	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+	                                        </div>
+	                                    </div>
+	                                    <!-- Product Info -->
+	                                    <div class="product-info mt-15 text-center">
+	                                        <p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
+	                                            ${p.PTitle}
+	                                        </a></p>
+	                                        <p id="bidderCount-${st.index}"></p>
+											
+											<c:if test="${p.PPrice gt p.BPrice }">
+		                                        <h6>${p.PPrice} 당근</h6>
+											</c:if>
+											<c:if test="${p.PPrice lt p.BPrice }">
+		                                        <h6>${p.BPrice} 당근</h6>
+											</c:if>
+                                            
+	                                    </div>
+	                                </div>
+	                            </div>
+							</c:forEach>
+						</div>
+						
+                        <div>
+	                        <c:out value="${pageBar}" escapeXml="false"/>
+                        </div> 
+                     </div>
+                </div>--%>
             </div>
         </div>
     </section>
     <!-- ##### Shop Area End ##### -->
+      <script>
+     
+      
+    
+    function goAuctionProduct(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/auction/auctionTradeList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(list){
+    			//$("#auctionTrade").html(
+    			
+    			var printHTML = '<div class="col-12 col-md-8 col-lg-9">';
+    				printHTML+= '<div class="shop-products-area">';
+    				printHTML+= '<div class="row">';
+    					//printHTML+= '<c:forEach items="${list}" var="p" varStatus="st">';
+    				printHTML+= ' <div class="col-12 col-sm-6 col-lg-4">';
+    				printHTML+= '<div class="single-product-area mb-50">';
+    				printHTML+= '<div class="product-img" style="height: 300px; width: 255px;" >';
+    					//printHTML+= '<input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">';
+    					//printHTML+= '<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/${p.PImg}" alt=""></a>';
+    				printHTML+= '<div class="product-meta d-flex">';
+    				printHTML+= '<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>';
+    				printHTML+= '<a href="#" class="add-to-cart-btn">Add to cart</a>';
+    				printHTML+= '<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>';
+    				printHTML+= '</div> </div>';
+    				printHTML+= '<div class="product-info mt-15 text-center">';
+    					//printHTML+= '<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">';
+    					//printHTML+= '${p.PTitle}';
+    					//printHTML+= '</a></p>';
+    					//printHTML+= '<p id="bidderCount-${st.index}"></p>';
+    					//printHTML+= '<c:if test="${p.PPrice gt p.BPrice }">';
+    					//printHTML+= '<h6>${p.PPrice} 당근</h6>';
+    					//printHTML+= '</c:if>';
+    					//printHTML+= '<c:if test="${p.PPrice lt p.BPrice }">';
+    					//printHTML+= '<h6>${p.BPrice} 당근</h6>';
+    					//printHTML+= '</c:if>';
+    				printHTML+= '</div>';
+    				printHTML+= '</div> </div>';
+    					//printHTML+= '</c:forEach>';
+    				printHTML+= '</div>';
+    				printHTML+= '<div>';
+    					//printHTML+= '<c:out value="${pageBar}" escapeXml="false"/>';
+    				printHTML+= '</div>';
+    					
+    					
+    					
+    					
+    					//);
+    				$("#auctionTrade").append(printHTML);
+    				$("#auctionTrade").html("외않돼?");
+        			$("#auctionTrade").append("외않돼?sd");
+    		}
+    		
+    	});
+    };
+  </script>
 
 <c:import url="../../views/common/footer.jsp"/>

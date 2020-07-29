@@ -47,6 +47,8 @@ public interface ProductService {
 
 	int selectOneReplyPno(int pcmno);
 
+	int sellCount(String pWriter);
+
 	
 	
 	

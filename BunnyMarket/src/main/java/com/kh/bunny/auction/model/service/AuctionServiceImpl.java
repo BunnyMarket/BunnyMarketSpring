@@ -83,5 +83,18 @@ public class AuctionServiceImpl implements AuctionService {
 		return auctionDAO.selectAllBidder(pno);
 	}
 
+	@Override
+	public List<Map<String, String>> selectTradeList(int aPage, int numPerPage, String nickName) {
+		
+		
+		
+		return auctionDAO.selectTradeList(aPage, numPerPage, nickName);
+	}
+
+	@Override
+	public int selectTradeTotalContents() {
+		return auctionDAO.selectTradeTotalContents();
+	}
+
 	
 }

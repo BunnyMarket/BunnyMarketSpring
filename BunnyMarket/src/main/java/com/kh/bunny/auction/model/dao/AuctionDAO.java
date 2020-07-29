@@ -32,4 +32,8 @@ public interface AuctionDAO {
 
 	ArrayList<Bidder> selectAllBidder(int pno);
 
+	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
+
+	int selectTradeTotalContents();
+
 }

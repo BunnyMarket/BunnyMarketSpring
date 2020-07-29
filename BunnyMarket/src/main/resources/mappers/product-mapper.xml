@@ -90,4 +90,9 @@
 		 WHERE PCMNO = #{pcmno}
 	</select>
 	
+	<select id="sellCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+		WHERE PWRITER = #{pWriter}
+	</select>
+	
 </mapper>

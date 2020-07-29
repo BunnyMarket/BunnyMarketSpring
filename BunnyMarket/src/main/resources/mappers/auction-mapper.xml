@@ -18,7 +18,21 @@
         ORDER BY P.PDATE DESC, 1 DESC
 	</select>
 	
+	<select id="selectTradeList" parameterType="string" resultType = "Auction">
+		<!-- sql 태그의 쿼리를 가져다 쓸 때는 include 태그를 사용한다. -->
+		<include refid="selectSQL"/>
+		WHERE P.PTYPE = 2 AND PWRITER = #{nickName}
+        ORDER BY P.PDATE DESC, 1 DESC
+	</select>
+	
 	<select id="selectAuctionTotalContent" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		 WHERE PTYPE = 2
+	</select>
+	
+	
+	<select id="selectTradeTotalContent" resultType = "_int">
 		SELECT COUNT(*) 
 		  FROM PRODUCT
 		 WHERE PTYPE = 2

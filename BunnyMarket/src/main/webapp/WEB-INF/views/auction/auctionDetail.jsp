@@ -460,26 +460,41 @@
 			$('.modal').modal('hide');
 		});
 	});
-	
+	var sellCount = 0;
 	$('#sellerInfo').click(function(){
 		/* $('#sellerName').text('${a.PWriter}'); */
+		
 		$.ajax({
 			  data : {nickName : '${a.PWriter}'}
 			, url : "${ pageContext.request.contextPath }/member/sellerProfile.do"
 			, dataType : "Json"
+			,  async:false
 			, success : function(data){
-				
+			
+				var pWriter = data.member.nickName;
+				$.ajax({
+					data : {pWriter : pWriter},
+					url : "${pageContext.request.contextPath}/product/sellCount.do",
+					async:false,
+					dataType : "Json",
+					success : function(data){
+						sellCount = data;
+						
+						
+					}
+				});
 				
 				/* $.each(result , function(idx, val) {
 					console.log(idx + " " + val.introduce);
 				}); */
 				var photo = data.member.photo;
-				$('#sellerName').text(data.member.nickName);
-				$('#sellerIntroduce').text(data.member.introduce);
+				$('#sellerName').text("아이디 : " + data.member.nickName);
+				$('#sellerIntroduce').text("자기소개 : " + data.member.introduce);
 				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
-				console.log(data.member.nickName);
-				console.log(data.member.introduce);
-				console.log(photo);
+				$('#sellerReport').text("신고 당한 횟수 : " + data.member.count + "회");
+				$('#sellCount').text("총거래 : " + sellCount + "회");
+				
+				
 			}, fail : {
 				
 			}

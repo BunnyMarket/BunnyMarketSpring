@@ -41,11 +41,11 @@
 								<div id="pImgArea">
 								<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 								<c:if test="${member.photo == null }">
-									<img src="/bunny/resources/img/usericon.png" id="userImg" name="userPhoto"class = "d-block w-100" width="344.8px" height="357.56px"
+									<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" name="userPhoto"class = "d-block w-100" width="344.8px" height="357.56px"
 									alt="userImg" />
 								</c:if>
 								<c:if test="${member.photo != null }">
-									<img src="/bunny/resources/member/profile/${member.photo}" name="userPhoto" id="userImg" class = "d-block w-100" width="344.8px" height="357.56px"
+									<img src="/bunny/resources/member/profile/${member.photo}" name="userPhoto" class="circleImg" id="userImg" class = "d-block w-100" width="344.8px" height="357.56px"
 									alt="userImg"/>
 								</c:if>
 								</div>

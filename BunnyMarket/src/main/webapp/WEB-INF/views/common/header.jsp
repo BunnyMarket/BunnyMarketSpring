@@ -297,14 +297,14 @@
       <div class="modal-body">
       
         <div style="height:150px;">
-        <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" id="sellerPhoto"style="width:15%;"class="userimg" alt="userimg" /> <br /> 
+        <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" class="circleImg" id="sellerPhoto"style="width:25%;"class="userimg" alt="userimg" /> <br /> 
         <h6 style="font-weight:bold;" id="sellerName"></h6> 
         <p style="color:#a3a3a3; font-size:15px" id="sellerIntroduce"></p>
 
         </div>
 		<div>
-		<span>총 거래 (10회)</span>&nbsp;&nbsp;&nbsp;
-		<span style="color:red;">신고(2회)</span>
+		<span id="sellCount"></span>&nbsp;&nbsp;&nbsp;
+		<span style="color:red;" id="sellerReport"></span>
 		
 		</div>
 		<div line-height="1.5em">
@@ -317,9 +317,12 @@
         <br />
 
               <div class="modal-footer" style="align:center;">
+              
+        <button type="button" class="btn btn-secondary" style="background : red;">신고하기</button>
         <button type="button" class="btn btn-success">쪽지</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
       </div>
+      
         
 
 </div>

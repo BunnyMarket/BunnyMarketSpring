@@ -42,5 +42,7 @@ public interface ProductDAO {
 
 	int selectOneReplyPno(int pcmno);
 
+	int sellCount(String pWriter);
+
 
 }

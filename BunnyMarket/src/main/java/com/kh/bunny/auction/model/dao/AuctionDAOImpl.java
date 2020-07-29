@@ -82,6 +82,19 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return new ArrayList<Bidder>(sqlSession.selectList("auctionMapper.selectAllBidder", pno));
 	}
 
+	@Override
+	public List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName) {
+
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("auctionMapper.selectTradeList", nickName, rows);
+	}
+
+	@Override
+	public int selectTradeTotalContents() {
+		return sqlSession.selectOne("auctionMapper.selectTradeTotalContent");
+	}
+
 
 	
 

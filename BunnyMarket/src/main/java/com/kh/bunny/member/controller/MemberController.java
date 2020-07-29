@@ -50,6 +50,11 @@ public class MemberController {
 
 		return "login";
 	}
+	
+	@RequestMapping("/member/tradeView.do")
+	public String tradeView() {
+		return "/member/trade";
+	}
 
 	// 아이디 찾기 비밀번호 찾기 이동하기.
 	@RequestMapping("findIdView.do")

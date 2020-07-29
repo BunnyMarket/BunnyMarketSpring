@@ -72,6 +72,12 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.selectOneReplyPno(pcmno);
 	}
 
+	@Override
+	public int sellCount(String pWriter) {
+		
+		return productDAO.sellCount(pWriter);
+	}
+
 
 
 }
