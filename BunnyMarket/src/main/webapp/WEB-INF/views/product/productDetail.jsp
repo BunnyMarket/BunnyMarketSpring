@@ -560,7 +560,6 @@
 				, url : '${pageContext.request.contextPath}/product/pcommentUpdate.do'
 				, success : function(data){
 					if(data.updateCheck == true){
-						alert("뭐냐니" + data.updateCheck);
 						$("#upReplyDiv-"+st).css("display", "none");
 						$("#rpcContent-"+st).remove();
 						$("#rpcContent2-"+st).text(upPcContent);
@@ -578,7 +577,6 @@
 	
 	function updateReViewComment(pcmno, st){
 		var pcContent = $("#reContent-"+st).val();
-		alert(pcContent);
 		$("#upReReplyDiv-"+st).toggle();
 		$("#updateReComment-"+st).text(pcContent);
 	}
@@ -598,7 +596,6 @@
 				, url : '${pageContext.request.contextPath}/product/pcommentUpdate.do'
 				, success : function(data){
 					if(data.updateCheck == true){
-						alert("뭐냐니" + data.updateCheck);
 						$("#upReReplyDiv-"+st).css("display", "none");
 						$("#repcContent-"+st).remove();
 						$("#repcContent2-"+st).text(upPcContent);
