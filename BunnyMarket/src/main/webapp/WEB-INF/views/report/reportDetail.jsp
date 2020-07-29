@@ -38,12 +38,24 @@
 						<input type="hidden"   value="${report.RNo }"/>
 							<h4 class="post-title">${report.RTitle }</h4>
 							<div class="post-meta mb-30">
-							<a href="${pageContext.request.contextPath}/report/reportDetail.do"><i class="fa fa-clock-o" aria-hidden="true"></i>${report.RDate}</a> 
-								<a href="${pageContext.request.contextPath}/report/reportDetail.do""><i class="fa fa-user" aria-hidden="true"></i>${report.RWriter}</a>
+								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>${report.RDate}</a> 
+								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>${report.RWriter}</a> <br><br>
+								<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>${report.rcContent}</a><br><br>
+								<a href="#"><i class="fa fa-user" aria-hidden="true">신고 접수 아이디: </i>${report.reported}</a> 
+								<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true">신고글 제목:</i>${pTitle}</a>
 							</div>
 							
 							<p>${report.RContent}</p>
-							<br /> <br /> <br />
+							<br /><br /><br /><br /><br />
+							<br /><br /><br />
+							
+							<div align="right">
+		                         <button type="button" class="btn alazea-btn mt-15"
+										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${report.RNo}'">수정하기</button>
+	                      	<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>
+				            </div>
+						<br /><br /><br />
+						
 							<blockquote>
 								<div class="blockquote-text">
 									<h5>“신고된 게시물/댓글은 담당자 확인 후 기준에 맞게 조치하고 있습니다.
@@ -58,11 +70,7 @@
 
 				</div>
 			</div>
-		<div align="center">
-		<button type="button" class="btn alazea-btn mt-15"
-										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${r.Rno}'">수정하기</button>
-		<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${r.Rno}'"/>
-				</div>
+		
 		</div>
 		</form>
 	</div>

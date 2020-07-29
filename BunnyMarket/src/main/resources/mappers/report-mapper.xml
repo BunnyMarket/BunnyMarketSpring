@@ -20,13 +20,30 @@
    </insert>
    
    <select id="selectCurrentRno" parameterType="_int" resultType="_int">
-  SELECT MAX(RNO) FROM REPORT
-</select>
+  		SELECT MAX(RNO) FROM REPORT
+	</select>
    
-   <select  id="selectOneReport" parameterType="_int" resultType="Report">
-   SELECT * FROM REPORT
-   WHERE RNO =#{rNo}
+   <select  id="selectOneReport"  resultType="Report">
+	SELECT R.*, RC.RCCONTENT
+	  FROM REPORT R
+	  JOIN RCATEGORY RC ON(RC.RCNO = R.RCNO)
+	 WHERE RNO = #{rNo}
    </select>
+   
+   <update id="updateReport" parameterType="Report">
+	   UPDATE REPORT SET
+	   RTITLE =#{rTitle},
+	   RCNO =#{rcNo},
+	   REPORTED =#{reported},
+	   PNO =#{pno},
+	   RCONTENT =#{rContent}
+	   WHERE RNO =#{rNo}
+   </update>
+   
+   <delete id="deleteReport" parameterType="_int">
+   DELETE FROM REPORT
+   WHERE RNO =#{rNo}
+   </delete>
 </mapper>
 
 

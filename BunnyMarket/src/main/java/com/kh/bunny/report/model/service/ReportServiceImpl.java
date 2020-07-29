@@ -52,4 +52,37 @@ public class ReportServiceImpl implements ReportService {
 		return reportDAO.selectOneReport(rNo);
 	}
 
+	@Override
+	public int updateReport(Report r) {
+		int result = 0;
+		
+		try {
+		result = reportDAO.updateReport(r);
+		
+		if(result == REPORT_SERVICE_ERROR)throw new ReportException();
+	}catch(Exception e) {
+		throw new ReportException("신고글 수정 오류 발생!" + e.getMessage());
+	}
+    
+		return result;
+}
+
+	@Override
+	public int deleteReport(int rno) {
+		int result = reportDAO.deleteReport(rno);
+		
+		if(result == REPORT_SERVICE_ERROR)throw new ReportException();
+		else if(result > REPORT_SERVICE_ERROR)result = REPORT_SERVICE_COMPLETE;
+		else throw new ReportException("신고글 삭제 실패!");
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

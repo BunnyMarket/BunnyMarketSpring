@@ -46,4 +46,16 @@ public class ReportDAOImpl implements ReportDAO {
 		return sqlSession.selectOne("reportMapper.selectOneReport", rNo);
 	}
 
+	@Override
+	public int updateReport(Report r) {
+	
+		return sqlSession.update("reportMapper.updateReport", r);
+	}
+
+	@Override
+	public int deleteReport(int rno) {
+	
+		return sqlSession.delete("reportMapper.deleteReport", rno);
+	}
+
 }

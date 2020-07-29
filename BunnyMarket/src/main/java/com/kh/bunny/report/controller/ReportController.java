@@ -22,6 +22,7 @@ import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.service.ProductService;
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.exception.ReportException;
 import com.kh.bunny.report.model.service.ReportService;
 import com.kh.bunny.report.model.vo.Report;
@@ -105,11 +106,13 @@ public class ReportController {
 		
 		System.out.println("report객체 확인 : " + r);
 		
-		model.addAttribute("report", r);
+		Product p = productService.selectOneProduct(r.getPno());
+		
+		String pTitle = p.getPTitle();
+		
+		model.addAttribute("report", r).addAttribute("pTitle", pTitle);
 		
 		return "report/reportDetail";
-		
-		
 		
 		
 	}
@@ -201,6 +204,51 @@ public class ReportController {
 		model.addAttribute("report",r);
 		
 		return "report/reportDetail";
+	}
+	
+	@RequestMapping("/report/reportUpdateView.do")
+	public String reportUpdateView(@RequestParam int rno, Model model) {
+		model.addAttribute("report", reportService.selectOneReport(rno));
+		
+		return "report/reportUpdate";
+	}
+	
+	@RequestMapping("/report/reportUpdate.do")
+	public String reportUpdate(Report r, HttpSession session, Model model) {
+		System.out.println("지금 잘 들어왔니? : " + r);
+		
+		int result = reportService.updateReport(r);
+		
+		String loc = "/report/reportDetail.do?rno=" + r.getRNo();
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "신고글 수정 성공!";
+		}else {
+			msg ="신고글 수정 실패!";
+		}
+		model.addAttribute("loc",loc).addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/report/reportDelete.do")
+	public String reportDelete(@RequestParam int rno, HttpSession session, Model model) {
+		int result = reportService.deleteReport(rno);
+		
+		String loc = "/report/reportList.do";
+		String msg = "";
+		
+		if(result >0) {
+			msg = "신고글 삭제 성공!";
+		}else {
+			msg = "신고글 삭제 실패!";
+		}
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		System.out.println("Model :" + model);
+		
+		return "common/msg";
 	}
 	
 	

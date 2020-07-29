@@ -40,15 +40,18 @@
 							<br />
 							<div class="post-meta mb-30">
 								<a href="${pageContext.request.contextPath}/QNA/QNADetail.do"><i class="fa fa-clock-o" aria-hidden="true"></i>${qna.QDate}</a> 
-								<a href="${pageContext.request.contextPath}/QNA/QNADetail.do""><i class="fa fa-user" aria-hidden="true"></i>${qna.QWriter}</a>
+								<a href="${pageContext.request.contextPath}/QNA/QNADetail.do"><i class="fa fa-user" aria-hidden="true"></i>${qna.QWriter}</a>
 							</div>
-							<div class="post-meta mb-30">
+							
+							
+							<p>${qna.QContent}</p>
+							<br /> <br /> <br /><br /><br />
+							<br /><br /><br />
+							<div class="post-meta mb-30" align="right">
 								<button type="button" class="btn alazea-btn mt-15"
 										onclick="location.href='${ pageContext.request.contextPath }/QNA/QNAUpdateView.do?qno=${qna.qno}'">수정하기</button>
 							</div>
-							
-							<p>${qna.QContent}</p>
-							<br /> <br /> <br />
+							<br/><br/>
 							<blockquote>
 								<div class="blockquote-text">
 									<h5>“바로 당신의 니즈, 저희 바니마켓이 충족시켜드리겠습니다.”</h5>

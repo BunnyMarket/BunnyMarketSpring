@@ -24,4 +24,5 @@ public class Report implements Serializable{
 	private String rTitle;
 	private String rContent;
 	private Date rDate;
+	private String rcContent;
 }

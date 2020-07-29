@@ -16,4 +16,8 @@ public interface ReportDAO {
 	int selectCurrentRno();
 
 	Report selectOneReport(int rNo);
+
+	int updateReport(Report r);
+
+	int deleteReport(int rno);
 }
