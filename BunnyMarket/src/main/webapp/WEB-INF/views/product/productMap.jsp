@@ -289,7 +289,7 @@
 		    for (var i = 0; i < elecPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -371,7 +371,7 @@
 		    for (var i = 0; i < furniturePositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
 		            marker = createMarker(furniturePositions[i]['latlng'], markerImage);  
@@ -450,7 +450,7 @@
 		    for (var i = 0; i < accessoryPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -529,7 +529,7 @@
 		    for (var i = 0; i < clothingPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -610,7 +610,7 @@
 		    for (var i = 0; i < toyPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -689,7 +689,7 @@
 		    for (var i = 0; i < bookPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -770,7 +770,7 @@
 		    for (var i = 0; i < etcPositions.length; i++) {  
 		        
 		    	var imageSize = new kakao.maps.Size(35, 35),
-	            imageOptions = {offset: new kakao.maps.Point(27, 69)};       
+	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
