@@ -29,13 +29,18 @@ import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
-import com.kh.bunny.product.model.vo.Product;
+import com.kh.bunny.product.model.exception.ProductException;
+import com.kh.bunny.product.model.service.ProductService;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Controller
 public class AuctionController {
 	
 	@Autowired
 	AuctionService auctionService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
@@ -82,11 +87,16 @@ public class AuctionController {
 		
 		int bidderCount = auctionService.selectOneBidderCount(pno);
 		
+		List<Object> PComments = productService.selectPCommentList(pno);
+		System.out.println("pcomments : " + PComments);
+		System.out.println("pcomments : " + PComments.size());
 		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
 		
 		model.addAttribute("auction", a)
 			 .addAttribute("bCount", bidderCount)
-			 .addAttribute("bList" , bList);
+			 .addAttribute("bList" , bList)
+			 .addAttribute("pcomments", PComments)
+			 .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		return "auction/auctionDetail";
 	}
@@ -163,7 +173,7 @@ public class AuctionController {
 	@RequestMapping("/auction/aImgInsert.do")
 	@ResponseBody
 	public String auctionImgInsert(
-				  @RequestParam(value="file", required = false) MultipartFile file
+				  @RequestParam(value="file", required = false) MultipartFile[] file
 				, Model model, HttpSession session
 			) {
 		
@@ -172,22 +182,30 @@ public class AuctionController {
 		File dir = new File(saveDir);
 		if(dir.exists() == false) dir.mkdirs();
 		
-		String originName = file.getOriginalFilename();
-		String ext = originName.substring(originName.lastIndexOf(".") + 1);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		String renamedName = "";
 		
-		int rndNum = (int)(Math.random() * 1000);
-		
-		String renamedName = sdf.format(new Date() + "_" + rndNum + "." + ext);
-		
-		try {
-			file.transferTo(new File(saveDir + "/" + renamedName)); 
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+		for(MultipartFile f : file) {
+			
+			if(!f.isEmpty()) {
+				String originName = f.getOriginalFilename();
+				String ext = originName.substring(originName.lastIndexOf(".") + 1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+				
+				int rndNum = (int)(Math.random() * 1000);
+				
+				renamedName = sdf.format(new Date()) + "_" + rndNum + "." + ext;
+				
+				try {
+					f.transferTo(new File(saveDir + "/" + renamedName)); 
+					System.out.println("바뀐이름 : " + renamedName);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
-		String msg = saveDir + "/" + renamedName;
-		
-		return msg;
+		// 192.168.20.214 - 민정
+		return "http://localhost:8088/bunny/resources/upload/auction/desc/" + renamedName;
 	}
 	
 	
@@ -205,7 +223,7 @@ public class AuctionController {
 			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
 		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice) && bPrice % 10 != 0) {
 			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
-		} else if(a.getPBuyer().equals(userId)) { 
+		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice)  && a.getPBuyer().equals(userId)) { 
 			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
 		} else {
 			Bidder b = new Bidder(pno, userId, bPrice);
@@ -223,6 +241,87 @@ public class AuctionController {
 			 .addAttribute("msg", msg);
 		
 		return "common/msg";
+	}
+	
+	// 댓글 생성하기 
+	@RequestMapping("/auction/pcommentInsert.do")
+	public String pcommentInsert(PComment pcomment, Model model, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
+		
+		pcomment.setPcWriter(userId);
+		System.out.println("댓글 들어옴 ? " + pcomment);
+		String msg = "";
+		String loc = "/auction/auctionDetail.do?pno=" + pcomment.getPno();
+		
+		try	{
+			int result = productService.insertPComment(pcomment);
+			
+			if(result > 0) {
+				msg = "댓글 달기 성공!";
+			} else {
+				msg = "댓글 달기 실패ㅠ";
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
+	// 댓글 수정하기 
+	@RequestMapping("/auction/pcommentUpdate.do")
+	@ResponseBody
+	public HashMap<String, Object> pcommentUpdate(PComment pcomment) {
+		
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		boolean updateCheck = false;
+		try {
+			updateCheck = productService.updatePComment(pcomment) > 0 ? true : false;
+		} catch (Exception e) {
+			throw new ProductException();
+		}
+		
+		hmap.put("updateCheck", updateCheck);
+		
+		return hmap;
+	}
+	
+	// 댓글 삭제하기 
+	@RequestMapping("/auction/pcommentDelete.do")
+	public String pcommentDelete(PComment pcomment, Model model) {
+		
+		String msg = "";
+		String loc = "/auction/auctionDetail.do?pno=" + pcomment.getPno();
+		
+		try	{
+			
+			boolean hasReply = productService.selectOneReplyPcmno(pcomment.getPcmno()) > 0 ? true : false;
+			if(hasReply == true) {
+				msg = "대댓글이 있어서 삭제가 불가능합니다.";
+			} else {
+				
+				int result = productService.deletePComment(pcomment.getPcmno());
+			
+				if(result > 0 && hasReply == false) {
+					msg = "댓글 삭제 성공!";				
+				} else {
+					msg = "에러 발생!(댓글 삭제 실패)";
+				}
+			}
+		} catch (Exception e) {
+			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
+		}
+		 
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+		
 	}
 	
 	

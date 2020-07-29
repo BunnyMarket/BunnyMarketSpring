@@ -4,30 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productMapper">
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-	<select id="selectProductList" resultType = "Product"> 
-		SELECT *
-		FROM PRODUCT ORDER BY PDATE DESC, PNO DESC
-	</select>
 
-	<select id="selectProductTotalContent" resultType = "_int">
-		SELECT COUNT(*) FROM PRODUCT
-	</select>
-	
-
-</mapper>
-
-
-
-
-
-
-
-
-
-
-=======
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
@@ -77,29 +54,6 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
-	
 </mapper>
->>>>>>> refs/heads/develop
-=======
-	<select id="selectProductList" resultType = "Product"> 
-		SELECT *
-		FROM PRODUCT ORDER BY PDATE DESC, PNO DESC
-	</select>
-
-	<select id="selectProductTotalContent" resultType = "_int">
-		SELECT COUNT(*) FROM PRODUCT
-	</select>
 	
 
-</mapper>
-
-
-
-
-
-
-
-
-
-
->>>>>>> refs/remotes/origin/dev_member_bch

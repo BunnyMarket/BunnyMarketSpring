@@ -43,7 +43,7 @@
 								</div>
 								<div id="pImgFileArea">
 									<input type="file" id="titleImgArea" name = "pTitleImg"
-										onchange="loadImg(this, 1);" />
+										onchange="loadImg(this, 1);" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -82,10 +82,12 @@
 							
 							<label for="pcno" style="float: none;">카테고리 설정 *</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="pcno" style="width: 100%">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
                                   <option value="" hidden>물품의 종류를 선택해주세요.</option>
                                   <option value="1">컴퓨터</option>
                                   <option value="2">옷</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
                                   <!-- <option value="3">컴퓨터1</option>
                                   <option value="4">3</option>
                                   <option value="5">ㅎㅎ</option>
@@ -114,13 +116,34 @@
 						</div>
 					</div>
 					
+					
+					<div class="col-12 col-md-12">
+						<div class="single_product_thumb">
+							<div id="mapwrap"> 
+								<br />
+							    <!-- 지도가 표시될 div -->
+							    <div id="map" style="width:100%; height:400px; border : 4px dashed #bcbcbc;">
+							    	<p style = "text-align : center;">주소를 입력하면 지도가 표시됩니다.⏎</p>
+							    </div>
+							</div>
+						</div>
+					</div>
+					
 
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name = "pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name = "pContent" class="summernote" placeholder = "내용 입력" required></textarea>
 					</div>
+					
+					<!-- 주의사항 -->
+					<div class = "col-12 col-md-12">
+						<br />
+						<label for="Precautions"><a href="#">주의 사항 *</a></label>
+						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
+					</div>
+					
 				</div>
 				<div align="center">
 					<button type="submit" class="btn alazea-btn mt-15">작성 완료</button>
@@ -195,7 +218,7 @@
 	            $.ajax({
 	               data : data,
 	               type : "post",
-	               url : '/dream/pImgInsert.pl', // servlet url
+	               url : '${pageContext.request.contextPath}/product/pImgInsert.do', // servlet url
 	               cache : false,
 	               contentType : false,
 	               processData : false,
