@@ -241,7 +241,7 @@
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pBuyer.jsp">구매자</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pSeller.jsp">판매자</a></li>
-											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/payment/pView.jsp', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
+											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointCharge.do', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
 										</ul>
 									</li>
 									<li><a href="${pageContext.request.contextPath}/views/member/myPage.jsp">MyPage</a></li>
