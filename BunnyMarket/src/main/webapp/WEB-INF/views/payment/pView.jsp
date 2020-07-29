@@ -68,7 +68,7 @@
                                 	<td>
                                 	<h5 style="padding-top: 10px">충전 금액</h5>
                                 	<div class="price" style="padding-top: 20px">
-                                		<input type="hidden" id="help" value="0"/>
+                                		<input type="hidden" id="bPoint" value="0"/>
                                 		<p style="font-size: 23px;">
                                 			<span id="giveMeCarrot" style="color:orange">0</span>당근 <br />
                                 			(<span id="giveMeMoney" style="color:orange">0</span>원)
@@ -91,10 +91,10 @@
 	                                	<h5 style="padding-top: 10px">결제 수단</h5>
                                 	</td>
 									<td style="text-align: right;">
-										<button class="btn alazea-btn mt-15">카카오페이</button>
-										<button class="btn alazea-btn mt-15">네이버페이</button>
-										<button class="btn alazea-btn mt-15">신용카드</button>
-										<button class="btn alazea-btn mt-15">휴대폰 결제</button>
+										<button class="btn alazea-btn mt-15" id="kakaoPay">카카오페이</button>
+										<button class="btn alazea-btn mt-15" id="naverPay">네이버페이</button>
+										<button class="btn alazea-btn mt-15" id="creditCard">신용카드</button>
+										<button class="btn alazea-btn mt-15" id="phonePay">휴대폰 결제</button>
 									</td>
 								</tr>
 								<tr>
@@ -121,7 +121,7 @@
         </div>
     </div>
     <!-- ##### Mail Area End ##### -->
-
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	 <script>
 	 
 		$("#one").on("click", function(){
@@ -159,19 +159,79 @@
 			if(check){
 				$("#giveMeMoney").text(0);
 				$("#giveMeCarrot").text(0);
-				$("#help").val(0);
+				$("#bPoint").val(0);
 			}
 		});
 		
 		/* var reg = /\B(?=(\d{3})+(?!\d))/g; */
 		
 		function updatePrice(price){
-			var origin = $("#help").val();
+			var origin = $("#bPoint").val();
 			$("#giveMeMoney").text((parseInt(origin) + parseInt(price)).toLocaleString());
 			$("#giveMeCarrot").text(((parseInt(origin) + parseInt(price))/100).toLocaleString());
-			$("#help").val(parseInt(origin) + parseInt(price));
+			$("#bPoint").val(parseInt(origin) + parseInt(price));
 		}
+		
+		var IMP = window.IMP; // 생략가능
+
+		$(function() {
+			IMP.init('imp88766985');
+		});
+		$('#kakaoPay').on('click', function(){
+				IMP.request_pay({
+					pg : 'kakao',
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+					name : 'BunnyMarket 당근 결제',
+					amount : parseInt($('#bPoint').val()),
+					buyer_email : '구매자 이메일',
+					buyer_name : '구매자 이름',
+					buyer_tel : '구매자 전화번호',
+					buyer_addr : '구매자 주소',
+					buyer_postcode : '구매자 지역번호'
+				}, function(rsp) {
+					if (rsp.success) {
+						//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+						<%-- $.ajax({
+							url : "/test/orderconfirm.do", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+							type : 'POST',
+							dataType : 'json',
+							data : {
+								item : 'toy',
+								code : 'P0001',
+								quan : '<%=hmap.get("sum") %>',
+								imp_uid : rsp.imp_uid,
+								pay_method : rsp.pay_method,
+								price : rsp.paid_amount,
+								status : rsp.status,
+								title : rsp.name,
+								pg_tid : rsp.pg_tid,
+								buyer_name : rsp.buyer_name,
+								paid_at : rsp.paid_at,
+								receipt_url : rsp.receipt_url
+							//기타 필요한 데이터가 있으면 추가 전달
+							}
+						}); --%>
+						
+						var msg = '결제가 완료되었습니다.';
+				        msg += '고유ID : ' + rsp.imp_uid;
+				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+				        msg += '결제 금액 : ' + rsp.paid_amount;
+				        msg += '카드 승인번호 : ' + rsp.apply_num;
+						
+					} else {
+						var msg = '결제에 실패하였습니다.';
+						msg += '\n에러내용 : ' + rsp.error_msg;
+						alert(msg);
+					}
+				});
+			 
+		});
 	</script>
+	
+	
+		
+	
 
 	<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-2.2.4.min.js"></script>
 	<!-- Popper js -->
