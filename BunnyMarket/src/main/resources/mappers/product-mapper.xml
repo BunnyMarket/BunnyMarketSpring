@@ -4,10 +4,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productMapper">
 	
+	
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
-		FROM PRODUCT WHERE PTYPE = 1 ORDER BY PDATE DESC, PNO DESC
+		FROM PRODUCT WHERE PTYPE = 1 
+		ORDER BY PDATE DESC, PNO DESC
 	</select>
 
 	<!-- 총 상품의 개수를 출력하는 쿼리 -->
@@ -21,16 +23,44 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</select>
 	
+	<!-- 상품 게시글을 상세보기하면서 댓글 목록 불러오기 -->
+	<select id="selectPCommentList" resultType = "PComment">
+		SELECT * FROM PCOMMENT 
+		WHERE PNO = #{pno}
+		ORDER BY PCDATE DESC
+	</select>
+	
+	<!-- 댓글 생성 -->
+	<insert id = "insertPComment" parameterType = "PComment">
+		INSERT INTO PCOMMENT 
+		VALUES(SEQ_PCMNO.NEXTVAL, #{pno}, #{pcWriter}, #{pcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), #{ref_pcmno}, #{pcLevel})
+	</insert>
+
+	
+	<!-- 댓글 수정 -->
+	<update id = "updatePComment" parameterType = "PComment">
+		UPDATE PCOMMENT
+		<set>
+			PCCONTENT = #{pcContent}
+		</set>
+		WHERE PCMNO = #{pcmno} <!-- pno는 굳이 넣을 필요 없을거같지만.. -->
+	</update>
+	
+	<!-- 댓글 삭제 -->	
+	<delete id = "deletePComment" parameterType = "_int">
+		DELETE FROM PCOMMENT
+		WHERE PCMNO = #{pcmno}
+	</delete>
+	
 	<!-- 상품 게시글 생성하는 쿼리 -->
 	<insert id = "insertProduct" parameterType = "Product">
 		INSERT INTO PRODUCT
-		VALUES(SEQ_PNO.NEXTVAL, '진구', 1, #{pImg}, #{pTitle}, #{pContent}, #{pPrice}, DEFAULT, DEFAULT, 1, #{pAddress}, DEFAULT, '도라에몽')
+		VALUES(SEQ_PNO.NEXTVAL, #{pWriter}, #{pcno}, #{pImg}, #{pTitle}, #{pContent}, #{pPrice}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), DEFAULT, 1, #{pAddress}, DEFAULT, NULL, 0)
 	<!-- 
-		3번째 1은 productCategoryNo입니다. 카테고리를 jsp에서 만들어주면 다시 #{pcno}를 넣으면 됩니다.
 		1과 마지막의 '진구','도라에몽'은 #{pWriter}, #{pBuyer}인데 로그인 기능이 완성되면 넣는 것으로.
 	 -->
 	</insert>
-	
+
 	
 	<!-- 상품 게시글 삭제하는 쿼리 -->
 	<delete id = "deleteProduct" parameterType = "_int">
@@ -46,6 +76,7 @@
 			PPRICE = #{pPrice},
 			PADDRESS = #{pAddress},
 			PCONTENT = #{pContent},
+			PCNO = #{pcno}
 			<if test = "pImg != null">
 				PIMG = #{pImg}
 			</if>
@@ -53,5 +84,23 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
+	<select id="selectOneReplyPcmno" resultType="_int">
+		SELECT COUNT(*)
+		  FROM PCOMMENT
+		 WHERE REF_PCMNO = #{pcmno}
+	</select>
+	
+	<select id="selectOneReplyPcWriter" resultType="String">
+		SELECT PCWRITER
+		  FROM PCOMMENT
+		 WHERE PCMNO = #{pcmno}
+	</select>
+	
+	<select id="selectOnePComment" resultType="Pcomment">
+		SELECT *
+		  FROM PCOMMENT
+		 WHERE PNO = #{pno}
+		   AND PCMNO = (SELECT MAX(PCMNO) FROM PCOMMENT WHERE PNO = #{pno})
+	</select>
 	
 </mapper>

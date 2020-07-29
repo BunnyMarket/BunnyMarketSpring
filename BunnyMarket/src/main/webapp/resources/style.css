@@ -2210,6 +2210,16 @@ img {
           letter-spacing: 1px; }
           .comment_area .single_comment_area .comment-wrapper .comment-content a:hover {
             color: #70c745; }
+        .comment_area .single_comment_area .comment-wrapper .comment-content .btn {
+          border: 0;
+          outline: 0;
+          font-size: 14px;
+          color: #303030;
+          display: inline-block;
+          text-transform: uppercase;
+          letter-spacing: 1px; }
+          .comment_area .single_comment_area .comment-wrapper .comment-content btn:hover {
+            color: #70c745; }
 
 .single_comment_area ol li.single_comment_area {
   margin-left: 130px; }
