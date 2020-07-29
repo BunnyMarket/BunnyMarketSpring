@@ -56,7 +56,7 @@
     
     <!-- admin -->
 	<select  id="selectMemberList" resultType="member">
-		SELECT * FROM MEMBER ORDER BY USERID DESC
+		SELECT * FROM MEMBER ORDER BY COUNT DESC
 	</select>
 	
 	

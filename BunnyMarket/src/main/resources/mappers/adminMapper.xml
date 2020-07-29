@@ -34,6 +34,9 @@
 		INSERT INTO ADMIN VALUES (#{adminId}, #{adminPw}, 1)
 	</insert>
 
+	<select id="LoginMember" parameterType="String" resultType="AdminMember">
+		SELECT * FROM ADMIN WHERE ADMINID = #{adminId}
+	</select>
 </mapper>
 
 

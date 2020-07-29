@@ -175,6 +175,44 @@ input:checked + .slider:before {
 table{
 	text-align:center;
 }	
+
+.group { 
+  position:relative; 
+  margin-bottom:45px; 
+
+}
+.group input {
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:300px;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+.group input:focus { outline:none; }
+
+
+.label-m {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ .label-m, input:valid ~ .label-m{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+
   	
   </style>
 
@@ -292,16 +330,36 @@ table{
 			</div>
 			<form action="${pageContext.request.contextPath}/admin/adminMember/adminInsert.do" method="post">
 
-				<div class="modal-body row">
-					<div class="col-12">
+				<div class="modal-body row" >
+				 
+					<!-- <div class="col-6">
 						<label>아이디</label>
+					</div>
+					<div class="col-6">
 						<input type="text" name="adminId"/>
 					</div>
-					<div class="col-12">
+					<div class="col-6">
 						<label>비밀번호</label>
+					</div> 
+					<div class="col-6">
 						<input type="password" name="adminPw"/>
-					</div>
+					</div>  --> 
 					
+					<div class="group">      
+				      <input type="text" name="adminId" required>
+				      <span class="highlight"></span>
+				      <span class="bar"></span>
+				      <label class="label-m">ID</label>
+				    </div>
+				      
+				    <div class="group">      
+				      <input type="password" name="adminPw" required>
+				      <span class="highlight"></span>
+				      <span class="bar"></span>
+				      <label class="label-m">Password</label>
+				    </div>
+					
+			
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn alazea-btn mt-15" style="float: right">등록</button>

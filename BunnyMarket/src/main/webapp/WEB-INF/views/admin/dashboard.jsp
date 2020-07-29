@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="zc-html">
 
 <head>
   <meta charset="utf-8" />
@@ -14,6 +14,7 @@
   <title>
  
   </title>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -23,578 +24,474 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../../resources/demo/demo.css" rel="stylesheet" />
   <style>
-  .btn {
-	box-shadow:inset 0px 0px 0px 0px #97c4fe;
-	background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
-	background-color:#3d94f6;
-	border-radius:9px;
-	border:1px solid #337fed;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #1570cd;}
-	
-	.btn:hover {
-	background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
-	background-color:#1e62d0;}
-	
-	.btn:active {
-	position:relative;
-	top:1px;}
-	
-	#btn {
-	box-shadow: 3px 4px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-	background-color:#ededed;
-	border-radius:5px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#777777;
-	font-family:Arial;
-	font-size:17px;
-	font-weight:bold;
-	padding:12px 44px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;}
-	
-   #btn:hover {
-	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-	background-color:#dfdfdf;}
+ 
+.zc-body { background:#ecf2f6; }
 
-	.pagingArea{
-	width: 100%;
- 	text-align: center;}
-	
-	.paging {
-	box-shadow: 3px 4px 0px 0px #dcecfb;
-	background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
-	background-color:#bddbfa;
-	border-radius:5px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:17px;
-	font-weight:bold;
-	padding:12px 11px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #528ecc;
-	}
-	.searchArea{
-	 width: 100%;
-	 text-align: center;
-	 border-radius:5px;
-	 }
-  	.btnw{
-  	box-shadow: 3px 4px 0px 0px #8a2a21;
-	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
-	background-color:#c62d1f;
-	border-radius:18px;
-	border:1px solid #d02718;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:17px;
-	padding:7px 25px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #810e05;
-  	}
-  	table{
-  	text-align : center;}
-  	
-  	/*
-  	/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+.chart--container {
+  height: 100%;
+  width: 100%;
+  min-height: 530px;
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.zc-ref {
+  display: none;
 }
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-  	
-  	
   </style>
 
 </head>
-	<c:import  url="common/header.jsp" />
-       <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
-                  </div>
-                  <p class="card-category">Used Space</p>
-                  <h3 class="card-title">49/50
-                    <small>GB</small>
-                  </h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons text-danger">warning</i>
-                    <a href="javascript:;">Get More Space...</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">store</i>
-                  </div>
-                  <p class="card-category">Revenue</p>
-                  <h3 class="card-title">$34,245</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                  </div>
-                  <p class="card-category">Fixed Issues</p>
-                  <h3 class="card-title">75</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                  <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                  </div>
-                  <p class="card-category">Followers</p>
-                  <h3 class="card-title">+245</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card card-chart">
-                <div class="card-header card-header-success">
-                  <div class="ct-chart" id="dailySalesChart"></div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">Daily Sales</h4>
-                  <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> updated 4 minutes ago
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-chart">
-                <div class="card-header card-header-warning">
-                  <div class="ct-chart" id="websiteViewsChart"></div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">Email Subscriptions</h4>
-                  <p class="card-category">Last Campaign Performance</p>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-chart">
-                <div class="card-header card-header-danger">
-                  <div class="ct-chart" id="completedTasksChart"></div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">Completed Tasks</h4>
-                  <p class="card-category">Last Campaign Performance</p>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 col-md-12">
-              <div class="card">
-                <div class="card-header card-header-tabs card-header-primary">
-                  <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                      <span class="nav-tabs-title">Tasks:</span>
-                      <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#profile" data-toggle="tab">
-                            <i class="material-icons">bug_report</i> Bugs
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">code</i> Website
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">cloud</i> Server
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="profile">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                            </td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="tab-pane" id="messages">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                            </td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="tab-pane" id="settings">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                            </td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-              <div class="card">
-                <div class="card-header card-header-warning">
-                  <h4 class="card-title">Employees Stats</h4>
-                  <p class="card-category">New employees on 15th September, 2016</p>
-                </div>
-                <div class="card-body table-responsive">
-                  <table class="table table-hover">
-                    <thead class="text-warning">
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Salary</th>
-                      <th>Country</th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>$36,738</td>
-                        <td>Niger</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Minerva Hooper</td>
-                        <td>$23,789</td>
-                        <td>Curaçao</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Sage Rodriguez</td>
-                        <td>$56,142</td>
-                        <td>Netherlands</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>Philip Chaney</td>
-                        <td>$38,735</td>
-                        <td>Korea, South</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
+  <body class="zc-body">
+<c:import  url="common/header.jsp" />
+
+
+
+  <br />
+​
+  ​
+    <div id="myChart" class="chart--container">
+      <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+    </div>
+   </body> 
+
+<script>
+let chartConfig = {
+		  backgroundColor: '#ecf2f6',
+		  graphset: [
+		    {
+		      type: 'bar',
+		      backgroundColor: '#fff',
+		      borderWidth: '1px',
+		      borderColor: '#dae5ec',
+		      width: '96%',
+		      height: '30%',
+		      x: '2%',
+		      y: '3%',
+		      title: {
+		        text: '카테고리별',
+		        marginTop: '7px',
+		        marginLeft: '9px',
+		        backgroundColor: 'none',
+		        fontColor: '#707d94',
+		        fontFamily: 'Arial',
+		        fontSize: '11px',
+		        fontWeight: 'bold',
+		        shadow: false,
+		        textAlign: 'left'
+		      },
+		      plot: {
+		        tooltip: {
+		          padding: '5px 10px',
+		          backgroundColor: '#707e94',
+		          borderRadius: '6px',
+		          fontColor: '#fff',
+		          fontFamily: 'Arial',
+		          fontSize: '11px',
+		          shadow: false
+		        },
+		        animation: {
+		          delay: 500,
+		          effect: 'ANIMATION_SLIDE_BOTTOM'
+		        },
+		        barWidth: '33px',
+		        hoverState: {
+		          visible: false
+		        }
+		      },
+		      plotarea: {
+		        margin: '45px 20px 38px 45px'
+		      },
+		      scaleX: { //카테고리 목록
+		        values: ['Apparel', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
+		        guide: {
+		          visible: false
+		        },
+		        item: {
+		          paddingTop: '2px',
+		          fontColor: '#8391a5',
+		          fontFamily: 'Arial',
+		          fontSize: '11px'
+		        },
+		        itemsOverlap: true,
+		        lineColor: '#d2dae2',
+		        maxItems: 9999,
+		        offsetY: '1px',
+		        tick: {
+		          lineColor: '#d2dae2',
+		          visible: false
+		        }
+		      },
+		      scaleY: {
+		        values: '0:300:100',
+		        guide: {
+		          rules: [
+		            {
+		              lineWidth: '0px',
+		              rule: '%i == 0'
+		            },
+		            {
+		              alpha: 0.4,
+		              lineColor: '#d2dae2',
+		              lineStyle: 'solid',
+		              lineWidth: '1px',
+		              rule: '%i > 0'
+		            }
+		          ]
+		        },
+		        item: {
+		          paddingRight: '5px',
+		          fontColor: '#8391a5',
+		          fontFamily: 'Arial',
+		          fontSize: '10px'
+		        },
+		        lineColor: 'none',
+		        maxItems: 4,
+		        maxTicks: 4,
+		        tick: {
+		          visible: false
+		        }
+		      },
+		      series: [
+		        { // 카테고리 목록별 값
+		          values: [100, 100, 100, 200, 100, 100, 100, 100],
+		          styles: [
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#25a6f7'
+		            },
+		            {
+		              backgroundColor: '#ad6bae'
+		            },
+		            {
+		              backgroundColor: '#707d94'
+		            },
+		            {
+		              backgroundColor: '#f3950d'
+		            },
+		            {
+		              backgroundColor: '#e62163'
+		            },
+		            {
+		              backgroundColor: '#4e74c0'
+		            },
+		            {
+		              backgroundColor: '#9dc012'
+		            }
+		          ]
+		        }
+		      ]
+		    },
+		    {
+		      type: 'hbar',
+		      backgroundColor: '#fff',
+		      borderColor: '#dae5ec',
+		      borderWidth: '1px',
+		      width: '30%',
+		      height: '63%',
+		      x: '2%',
+		      y: '35.2%',
+		      title: {
+		        text: '연령대별',
+		        marginTop: '7px',
+		        marginLeft: '9px',
+		        backgroundColor: 'none',
+		        fontColor: '#707d94',
+		        fontFamily: 'Arial',
+		        fontSize: '11px',
+		        shadow: false,
+		        textAlign: 'left'
+		      },
+		      scaleY: {
+		        guide: {
+		          visible: false
+		        },
+		        item: {
+		          visible: false
+		        },
+		        lineColor: 'none',
+		        tick: {
+		          visible: false
+		        }
+		      },
+		      scaleX: { // 연령 목록
+		        values: ['Kenmore', 'Craftsman', 'DieHard', 'Land\'s End', 'Laclyn Smith', 'Joe Boxer'],
+		        guide: {
+		          visible: false
+		        },
+		        item: {
+		          paddingBottom: '8px',
+		          fontColor: '#8391a5',
+		          fontFamily: 'Arial',
+		          fontSize: '11px',
+		          offsetX: '206px',
+		          offsetY: '-12px',
+		          textAlign: 'left',
+		          width: '200px'
+		        },
+		        lineColor: 'none',
+		        tick: {
+		          visible: false
+		        }
+		      },
+		      plot: {
+		        tooltip: {
+		          padding: '5px 10px',
+		          backgroundColor: '#707e94',
+		          borderRadius: '6px',
+		          fontColor: '#ffffff',
+		          fontFamily: 'Arial',
+		          fontSize: '11px',
+		          shadow: false
+		        },
+		        animation: {
+		          delay: 500,
+		          effect: 'ANIMATION_EXPAND_LEFT'
+		        },
+		        barsOverlap: '100%',
+		        barWidth: '12px',
+		        hoverState: {
+		          backgroundColor: '#707e94'
+		        },
+		        thousandsSeparator: ','
+		      },
+		      plotarea: {
+		        margin: '50px 15px 10px 15px'
+		      },
+		      series: [
+		        {	// 연령대별 값
+		          values: [103902, 112352, 121823, 154092, 182023, 263523],
+		          styles: [
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#4dbac0'
+		            },
+		            {
+		              backgroundColor: '#4dbac0'
+		            }
+		          ],
+		          tooltipText: '$%node-value',
+		          zIndex: 2
+		        },
+		        {
+		          values: [300000, 300000, 300000, 300000, 300000, 300000],
+		          valueBox: {
+		            text: '$%data-rvalues',
+		            paddingBottom: '8px',
+		            fontColor: '#8391a5',
+		            fontFamily: 'Arial',
+		            fontSize: '11px',
+		            offsetX: '-54px',
+		            offsetY: '-12px',
+		            textAlign: 'right',
+		            visible: true
+		          },
+		          backgroundColor: '#d9e4eb',
+		          dataRvalues: [103902, 112352, 121823, 154092, 182023, 263523],
+		          maxTrackers: 0,
+		          zIndex: 1
+		        }
+		      ]
+		    },
+		    {
+		      type: 'line',
+		      backgroundColor: '#fff',
+		      borderColor: '#dae5ec',
+		      borderWidth: '1px',
+		      width: '64%',
+		      height: '63%',
+		      x: '34%',
+		      y: '35.2%',
+		      title: { 
+		        text: '날짜별 거래',
+		        marginTop: '7px',
+		        marginLeft: '12px',
+		        backgroundColor: 'none',
+		        fontColor: '#707d94',
+		        fontFamily: 'Arial',
+		        fontSize: '11px',
+		        shadow: false,
+		        textAlign: 'left'
+		      },
+		      plot: {
+		        animation: {
+		          delay: 500,
+		          effect: 'ANIMATION_SLIDE_LEFT'
+		        }
+		      },
+		      plotarea: {
+		        margin: '50px 25px 70px 46px'
+		      },
+		      scaleY: {
+		        values: '0:100:25',
+		        guide: {
+		          alpha: 0.5,
+		          lineColor: '#d2dae2',
+		          lineStyle: 'solid',
+		          lineWidth: '1px'
+		        },
+		        item: {
+		          paddingRight: '5px',
+		          fontColor: '#8391a5',
+		          fontFamily: 'Arial',
+		          fontSize: '10px'
+		        },
+		        lineColor: 'none',
+		        tick: {
+		          visible: false
+		        }
+		      },
+		      scaleX: { 
+		        values: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+		        guide: {
+		          visible: false
+		        },
+		        item: {
+		          paddingTop: '5px',
+		          fontColor: '#8391a5',
+		          fontFamily: 'Arial',
+		          fontSize: '10px'
+		        },
+		        lineColor: '#d2dae2',
+		        lineWidth: '2px',
+		        tick: {
+		          lineColor: '#d2dae2',
+		          lineWidth: '1px'
+		        }
+		      },
+		      legend: {
+		        margin: 'auto auto 15 auto',
+		        backgroundColor: 'none',
+		        borderWidth: '0px',
+		        item: {
+		          margin: '0px',
+		          padding: '0px',
+		          fontColor: '#707d94',
+		          fontFamily: 'Arial',
+		          fontSize: '9px'
+		        },
+		        layout: 'x4',
+		        marker: {
+		          type: 'match',
+		          padding: '3px',
+		          fontFamily: 'Arial',
+		          fontSize: '10px',
+		          lineWidth: '2px',
+		          showLine: 'true',
+		          size: 4
+		        },
+		        shadow: false
+		      },
+		      scaleLabel: {
+		        padding: '5px 10px',
+		        backgroundColor: '#707d94',
+		        borderRadius: '5px',
+		        fontColor: '#ffffff',
+		        fontFamily: 'Arial',
+		        fontSize: '10px'
+		      },
+		      crosshairX: {
+		        lineColor: '#707d94',
+		        lineWidth: '1px',
+		        plotLabel: {
+		          padding: '5px 10px',
+		          alpha: 1,
+		          borderRadius: '5px',
+		          fontColor: '#000',
+		          fontFamily: 'Arial',
+		          fontSize: '10px',
+		          shadow: false
+		        }
+		      },
+		      tooltip: {
+		        visible: false
+		      },
+		      series: [
+		        { 
+		          text: 'Kenmore',
+		          values: [69, 68, 54, 48, 70, 74, 98, 70, 72, 68, 49, 69],
+		          lineColor: '#4dbac0',
+		          lineWidth: '2px',
+		          marker: {
+		            backgroundColor: '#fff',
+		            borderColor: '#36a2a8',
+		            borderWidth: '1px',
+		            shadow: false,
+		            size: 3
+		          },
+		          palette: 0,
+		          shadow: false
+		        },
+		        {
+		          text: 'Craftsman',
+		          values: [51, 53, 47, 60, 48, 52, 75, 52, 55, 47, 60, 48],
+		          lineColor: '#25a6f7',
+		          lineWidth: '2px',
+		          marker: {
+		            backgroundColor: '#fff',
+		            borderColor: '#1993e0',
+		            borderWidth: '1px',
+		            shadow: false,
+		            size: 3
+		          },
+		          palette: 1,
+		          shadow: false,
+		          visible: true
+		        },
+		        {
+		          text: 'DieHard',
+		          values: [42, 43, 30, 50, 31, 48, 55, 46, 48, 32, 50, 38],
+		          lineColor: '#ad6bae',
+		          lineWidth: '2px',
+		          marker: {
+		            backgroundColor: '#fff',
+		            borderColor: '#975098',
+		            borderWidth: '1px',
+		            shadow: false,
+		            size: 3
+		          },
+		          palette: 2,
+		          shadow: false,
+		          visible: true
+		        },
+		        {
+		          text: 'Land\'s End',
+		          values: [25, 15, 26, 21, 24, 26, 33, 25, 15, 25, 22, 24],
+		          lineColor: '#f3950d',
+		          lineWidth: '2px',
+		          marker: {
+		            backgroundColor: '#fff',
+		            borderColor: '#d37e04',
+		            borderWidth: '1px',
+		            shadow: false,
+		            size: 3
+		          },
+		          palette: 3,
+		          shadow: false
+		        }
+		      ]
+		    }
+		  ]
+		};
+		 
+		zingchart.render({
+		  id: 'myChart',
+		  data: chartConfig,
+		  height: '100%',
+		  width: '100%'
+		});
+</script>
 
     <c:import url="common/footer.jsp" />
 

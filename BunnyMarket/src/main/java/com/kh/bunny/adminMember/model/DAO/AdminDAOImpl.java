@@ -33,15 +33,21 @@ public class AdminDAOImpl implements AdminDAO {
 		System.out.println("dao"+userId);
 		return sqlSession.update("adminMapper.selectOneStatusOn",userId);
 	}
-
+	@Override
 	public int selectOneStatusOff(String userId) {
 		System.out.println("dao"+userId);
 		return sqlSession.update("adminMapper.selectOneStatusOff",userId);
 	}
-	
+	@Override
 	public int insertadminMember(adminMember am) {
 		System.out.println("insert DAO" + am);
 		return sqlSession.insert("adminMapper.insertadminMember", am);
+	}
+	
+	@Override
+	public adminMember selectOne(String adminId) {
+		System.out.println("selectOne DAO" + adminId);
+		return sqlSession.selectOne("adminMapper.LoginMember", adminId);
 	}
 }
 

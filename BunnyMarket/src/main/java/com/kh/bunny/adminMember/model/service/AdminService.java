@@ -15,4 +15,7 @@ public interface AdminService {
 	int selectOneStatusOff(String userId);
 
 	int insertadminMember(adminMember am);
+	
+	adminMember selectOne(String adminId);
+	
 }

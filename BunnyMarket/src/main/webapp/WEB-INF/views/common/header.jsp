@@ -152,11 +152,11 @@
 								<ul>
 									<li><a href="#">관리자</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/admin/member/memberList.do">관리자-고객리스트</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/message.jsp">관리자-메세지</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
+											<%-- <li><a href="${ pageContext.request.contextPath }/admin/member/memberList.do">관리자-고객리스트</a></li> --%>
+											<li><a href="${ pageContext.request.contextPath }/admin/adminLogin.do">관리자-메세지</a></li>
+											<%-- <li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/tansactions.jsp">관리자-트랜잭션</a></li>
-											<li><a href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">관리자-공지사항</a></li>
+											<li><a href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">관리자-공지사항</a></li> --%>
 										</ul></li>
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>

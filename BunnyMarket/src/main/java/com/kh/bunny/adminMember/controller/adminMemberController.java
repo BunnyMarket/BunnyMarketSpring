@@ -9,14 +9,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.bunny.adminMember.model.service.AdminService;
 import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
+import com.kh.bunny.member.model.vo.Member;
 
+@SessionAttributes(value = { "admin" })
 @Controller
 public class adminMemberController {
 
@@ -87,7 +93,7 @@ public class adminMemberController {
 		return map; 
 	}
 	
-	//회원가입 기능
+	// 회원가입 기능
 	@RequestMapping("/admin/adminMember/adminInsert.do")
 	public String adminInsert(adminMember adminMember, Model model) {
 		
@@ -106,9 +112,9 @@ public class adminMemberController {
 			int result = adminService.insertadminMember(adminMember);			
 			
 			if (result > 0) {
-				msg = "회원가입 성공"; 
+				msg = "관리자 등록 성공"; 
 			} else {
-				msg = "회원가입 실패";
+				msg = "관리자 등록 실패";
 			}
 			
 		} catch (Exception e) {
@@ -117,5 +123,56 @@ public class adminMemberController {
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 	
 		return "common/msg";
+	}
+
+	// 로그인 뷰
+	@RequestMapping("/admin/adminLogin.do")
+	public String adminLog() {
+		return "admin/adminLogin";
+	}
+	
+	// 로그인
+	@RequestMapping(value="/admin/adminLoginForm.do", method = RequestMethod.POST)
+	public ModelAndView adminLogin(@RequestParam("adminId") String adminId , @RequestParam("adminPw") String adminPw ) {
+	
+	ModelAndView mav = new ModelAndView();
+
+	try { 
+		adminMember am = adminService.selectOne(adminId);
+		
+		String msg = "";
+		String loc = "";
+
+		
+
+			if (am != null && bcryptPasswordEncoder.matches(adminPw, am.getAdminPw())) {
+				msg = "로그인 성공!";
+				loc="/admin/main/home.do";
+				mav.addObject("admin", am); 
+			} else {
+				msg = "비밀번호가 틀렸습니다!";
+				loc ="/admin/adminLogin.do";
+			}
+	
+		mav.addObject("loc", loc);
+		mav.addObject("msg", msg);
+
+		mav.setViewName("common/msg");
+		} catch (Exception e) {
+			throw new MemberException(e.getMessage());
+		}
+	
+		return mav;
+
+		}
+
+	// 로그아웃
+	@RequestMapping("/admin/adminLogout.do")
+	public String adminLogout(SessionStatus status) {
+	
+		if (!status.isComplete())
+			status.setComplete();
+
+		return "redirect:/admin/adminLogin.do";
 	}
 }

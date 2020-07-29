@@ -44,4 +44,10 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("memberService" +am);
 		return adminDAO.insertadminMember(am);
 	}
+	
+	@Override
+	public adminMember selectOne(String adminId) {
+		System.out.println("memberService" +adminId);
+		return adminDAO.selectOne(adminId);
+	}
 }
