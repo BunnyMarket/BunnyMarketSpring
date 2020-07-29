@@ -84,7 +84,5 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 
 
-	
-
 
 }

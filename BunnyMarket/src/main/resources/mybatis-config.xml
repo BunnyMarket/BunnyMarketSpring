@@ -25,7 +25,6 @@
 
 	</typeAliases>
 	
-	
 	<typeHandlers>
 	<!-- 특정 타입을 변경해주는 typeHandler 등록 태그 -->
 		<!-- 패키지를 지정해줘서 그 안의 타입핸들러를 찾아오는 방법 -->

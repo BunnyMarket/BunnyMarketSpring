@@ -192,7 +192,7 @@
 																	<div class="col-12">
 																		<div class="form-group">
 																			<textarea class="form-control" name="pcContent"
-																					  id="umessage" cols="30" rows="10" placeholder="Comment"></textarea>
+																					  id="replyComment-${st.index }" cols="30" rows="10" placeholder="Comment"></textarea>
 																		</div>
 																	</div>
 																	<div class="col-12">
@@ -535,7 +535,7 @@
 	function replyComment(st){
 		
 		$("#reReplyDiv-"+st).toggle();
-		$("#updateComment-"+st).focus();
+		$("#replyComment--"+st).focus();
 	}
 	
 	function updateViewComment(pcmno, st){
@@ -573,7 +573,6 @@
 		} else {
 			alert("수정이 취소되었습니다.");
 			$("#upReplyDiv-"+st).css("display", "none");
-			$("#pcContent-"+st).clear();
 		}
 	}
 	
@@ -612,7 +611,6 @@
 		} else {
 			alert("수정이 취소되었습니다.");
 			$("#upReReplyDiv-"+st).css("display", "none");
-			$("#repcContent-"+st).clear();
 		}
 	}
 	
