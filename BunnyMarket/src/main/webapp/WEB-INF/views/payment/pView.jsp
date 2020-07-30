@@ -69,6 +69,7 @@
                                 	<h5 style="padding-top: 10px">충전 금액</h5>
                                 	<div class="price" style="padding-top: 20px">
                                 		<input type="hidden" id="bPoint" value="0"/>
+
                                 		<p style="font-size: 23px;">
                                 			<span id="giveMeCarrot" style="color:orange">0</span>당근 <br />
                                 			(<span id="giveMeMoney" style="color:orange">0</span>원)
@@ -226,7 +227,6 @@
 					}
 				});
 			 
-		});
 	</script>
 	
 	

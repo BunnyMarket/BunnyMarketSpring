@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productMapper">
 	
+
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
@@ -53,5 +54,6 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
-	
 </mapper>
+	
+
