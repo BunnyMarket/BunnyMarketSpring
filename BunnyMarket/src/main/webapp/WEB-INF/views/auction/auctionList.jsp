@@ -122,43 +122,11 @@
 	                                        <p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
 	                                            ${p.PTitle}
 	                                        </a></p>
-	                                        <p id="bidderCount-${st.index}"></p>
-											
-											<c:if test="${p.PPrice gt p.BPrice }">
-		                                        <h6>${p.PPrice} 당근</h6>
-											</c:if>
-											<c:if test="${p.PPrice lt p.BPrice }">
-		                                        <h6>${p.BPrice} 당근</h6>
-											</c:if>
-                                            <script type="text/javascript">
-																						
-												var list = ${list.size()};
-												
-											   	var pno = $("#pno-${st.index}").val();
-											   	console.log(pno);
-											   	$(function(){
-											    	$.ajax({
-											    		  data : {pno : pno}
-											    		, dataType : "json"
-											    		, url : "${pageContext.request.contextPath}/auction/bidderCount.do"
-											    		, success : function(data){
-											    			console.log("data : " + data);
-											    			$("#bidderCount-${st.index}").html("경매 참가자 : " + data + "명");
-											    		}, error : function(jqxhr, textStatus, errorThrown){
-											    			alert("ajax 실패!");
-											
-											    			console.log("ajax 처리 실패함");
-											    			console.log(jqxhr);
-											    			console.log(textStatus);
-											    			console.log(errorThrown);
-											    			
-											    		}
-											    		
-											    	});
-											   		
-											   	});
-											   		
-										    </script>
+	                                        <p id="bidderCount-${st.index}">경매 참가자 : ${p.BCount}명</p>
+	                                    	<input type="hidden" id="originPPrice-${st.index }" value="${p.PPrice}"/>
+	                                    	<input type="hidden" id="originBPrice-${st.index }" value="${p.BPrice}"/>
+											<h6><span id="pCarrot-${st.index }"></span>당근</h6>
+                                            
 	                                    </div>
 	                                </div>
 	                            </div>
@@ -178,5 +146,28 @@
     </section>
     <!-- ##### Shop Area End ##### -->
 
-
+<script type="text/javascript">
+																						
+	var list = ${list.size()};
+	
+   	$(function(){
+		for(var i = 0; i < list; i++){
+		   	var pno = $("#pno-"+i).val();
+			
+			var originP = $("#originPPrice-"+i).val();
+			var originB = $("#originBPrice-"+i).val();
+			
+			console.log("pno : " + pno + " / p.pPrice" + originP+ " / p.bPrice" +originB);
+	   		
+			if(originP > originB){
+	    		$("#pCarrot-"+i).text(parseInt(originP).toLocaleString());
+			} else {
+				$("#pCarrot-"+i).text(parseInt(originB).toLocaleString());
+			}
+	   		
+		}
+   		
+   	});
+   		
+</script>
 <c:import url="../../views/common/footer.jsp"/>

@@ -106,7 +106,7 @@
                     <div class="shop-products-area">
                         <div class="row">
                             <!-- Single Product Area -->
-                            <c:forEach items="${list}" var="p">
+                            <c:forEach items="${list}" var="p" varStatus="st">
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
@@ -125,10 +125,18 @@
 	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
 	                                            <p>${p.PTitle}</p>
 	                                        </a>
-	                                        <h6>${p.PPrice}원</h6>
+	                                        <input type="hidden" id="originPrice-${st.index }" value="${p.PPrice}"/>
+	                                        <h6><span id="pCarrot-${st.index }"></span>당근</h6>
 	                                    </div>
 	                                </div>
-	                            </div>	
+	                            </div>
+	                            <script>
+							    	$(function(){
+							    		var origin = $("#originPrice-${st.index }").val();
+							    		$("#pCarrot-${st.index }").text(parseInt(origin).toLocaleString());
+							    	});
+							    
+							    </script>
                             </c:forEach>
 
                         </div>
@@ -147,10 +155,6 @@
     </section>
     <!-- ##### Shop Area End ##### -->
     
-    <script>
-    	console.log("확인확인");
-    	console.log("확인 : " + ${list});
     
-    </script>
 
 <c:import url="../../views/common/footer.jsp"/>

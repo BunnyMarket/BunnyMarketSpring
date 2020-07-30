@@ -63,8 +63,10 @@
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type="text" class="form-control" id="pPrice" name="pPrice" placeholder="상품 하한가 설정" required />
+							<input type="hidden" name="pPrice" id="pPriceOrigin" value="0"/>
+							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 하한가 설정" required />
 							<br />
+							
 							
 							<label for="aeDate">경매 기간 설정</label><label style="float: right;" id="pEndDate" for="pEndDate">경매 종료날짜 :</label>
 	                        <div class="search_by_terms">
@@ -136,8 +138,14 @@
 	
 </section>
 <!-- ##### Single Product Details Area End ##### -->
-
-	<script>
+<script>
+	
+	$("#pPriceComma").focusout(function(){
+		$("#pPriceOrigin").val($("#pPriceComma").val());
+		var origin = $("#pPriceOrigin").val();
+		$("#pPriceComma").val(parseInt(origin).toLocaleString());
+	});
+	
 	// 사진 게시판 미리보기 기능 지원 스크립트
 		$(function(){
 			$('#pImgFileArea').hide();
