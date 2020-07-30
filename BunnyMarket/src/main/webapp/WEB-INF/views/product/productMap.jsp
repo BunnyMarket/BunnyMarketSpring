@@ -125,6 +125,13 @@
 		var mapJson = JSON.parse('${ mapJson }'); // json 잘 가져오는거 확인 완료 
 		console.log(mapJson); 
 		
+		// 마커 클러스터러를 생성합니다 
+	    /* var clusterer = new kakao.maps.MarkerClusterer({
+	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	        minLevel: 10 // 클러스터 할 최소 지도 레벨 
+	    }); */
+		
 		
 		var elecPositions = [];
 		var furniturePositions = [];
@@ -137,7 +144,7 @@
 
 		
 		// 마커이미지의 주소입니다. 스프라이트 이미지 입니다
-		var markerImageSrc = 'https://www.pngrepo.com/png/302636/79/map-marker.png';  
+		var markerImageSrc = 'https://www.pngrepo.com/png/264372/79/easter-bunny-rabbit.png';  
 		    elecMarkers = [], //  마커 객체를 가지고 있을 배열입니다
 		    furnitureMarkers = [], 
 		    accessoryMarkers = [], 
@@ -163,11 +170,20 @@
 							'img' : item.pimg,
 							'text' : item.pcontent
 					};
+					
+					/* 일반상품과 경매상품 구분 */
+					if(item.ptype == 1){
+						product.ptype = 'product';
+					} else {
+						product.ptype = 'auction';
+					}
+					
 			    	
 		    		console.log('-----------------');
 		    		console.log("latlng : " + product.latlng);
 		    		console.log("pno : " + product.pno);
 		    		console.log("title : " + product.title);
+		    		console.log("ptype : " + product.ptype);
 		    		console.log('-----------------');
 			    	
 		    		
@@ -288,7 +304,7 @@
 		    
 		    for (var i = 0; i < elecPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -300,6 +316,8 @@
 		        // 생성된 마커를 마커 배열에 추가합니다
 		        elecMarkers.push(marker);
 		        
+		     	// 클러스터러에 마커들을 추가합니다
+		        /* clusterer.addMarkers(markers); */
 		      
 		         var iwContent ='<div class="wrap">' + 
 					            '    <div class="info">' + 
@@ -314,7 +332,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + elecPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  elecPositions[i]['pno'] +
+						        '					<a href="/bunny/' + elecPositions[i]['ptype'] + '/' + elecPositions[i]['ptype'] + 'Detail.do?pno=' + elecPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -370,7 +388,7 @@
 		    
 		    for (var i = 0; i < furniturePositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
@@ -394,7 +412,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + furniturePositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  furniturePositions[i]['pno'] +
+						        '					<a href="/bunny/' + furniturePositions[i]['ptype'] + '/' + furniturePositions[i]['ptype'] + 'Detail.do?pno=' +  furniturePositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -449,7 +467,7 @@
 		    
 		    for (var i = 0; i < accessoryPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -474,7 +492,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + accessoryPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  accessoryPositions[i]['pno'] +
+						        '					<a href="/bunny/' + accessoryPositions[i]['ptype'] + '/' + accessoryPositions[i]['ptype'] + 'Detail.do?pno=' + accessoryPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -528,7 +546,7 @@
 		    
 		    for (var i = 0; i < clothingPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -554,7 +572,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + clothingPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  clothingPositions[i]['pno'] +
+						        '					<a href="/bunny/' + clothingPositions[i]['ptype'] + '/' + clothingPositions[i]['ptype'] + 'Detail.do?pno=' +  clothingPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -609,7 +627,7 @@
 		    
 		    for (var i = 0; i < toyPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -633,7 +651,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + toyPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  toyPositions[i]['pno'] +
+						        '					<a href="/bunny/' + toyPositions[i]['ptype'] + '/' + toyPositions[i]['ptype'] + 'Detail.do?pno=' + toyPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -688,7 +706,7 @@
 		    
 		    for (var i = 0; i < bookPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -713,7 +731,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + bookPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  bookPositions[i]['pno'] +
+						        '					<a href="/bunny/' + bookPositions[i]['ptype'] + '/' + bookPositions[i]['ptype'] + 'Detail.do?pno=' + bookPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
@@ -769,7 +787,7 @@
 		    
 		    for (var i = 0; i < etcPositions.length; i++) {  
 		        
-		    	var imageSize = new kakao.maps.Size(35, 35),
+		    	var imageSize = new kakao.maps.Size(40, 40),
 	            imageOptions = {offset: new kakao.maps.Point(20, 40)};       
 		        
 		        // 마커이미지와 마커를 생성합니다
@@ -792,7 +810,7 @@
 						        '           </div>' + 
 						        '            <div class="desc">' + 
 						        '                <div>' + etcPositions[i]['text'].substr(0, 25) + '...<br/>' +  
-						        '					<a href="productDetail.do?pno=' +  etcPositions[i]['pno'] +
+						        '					<a href="/bunny/' + etcPositions[i]['ptype'] + '/' + etcPositions[i]['ptype'] + 'Detail.do?pno=' + etcPositions[i]['pno'] +
 						        '					  "target="_blank" class="link">상품 보러 가기</a></div>' + 
 						        '            </div>' + 
 						        '        </div>' + 
