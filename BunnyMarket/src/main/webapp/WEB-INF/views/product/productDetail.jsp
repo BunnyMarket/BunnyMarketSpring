@@ -176,7 +176,7 @@
 																<input type="hidden" name="pno" value="${product.pno }"/>
 																<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>
 																<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>
-																<c:if test="${pcomment.pcWriter eq member.userId }">
+																<c:if test="${pcomment.pcWriter eq member.nickName }">
 																		&nbsp;&nbsp;
 																		<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>
 																		&nbsp;&nbsp;

@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.QNA.model.exception.QNAException;
 import com.kh.bunny.QNA.model.service.QNAService;
+import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
@@ -38,8 +41,8 @@ public class QNAController {
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@RequestMapping("/QNA/QNAList.do")
-	public String selectQNAList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage,
-			Model model) {
+	public String selectQNAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
+			Model model, HttpServletRequest request) {
 
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10;
@@ -100,8 +103,12 @@ public class QNAController {
 	@RequestMapping("/QNA/QNADetail.do")
 	public String selectOne(@RequestParam int qno, Model model) {
 		QNA q = qnaService.selectOneQNA(qno);
-
-		model.addAttribute("qna", q);
+        
+		List<Object> QComments = qnaService.selectQCommentList(qno);
+		System.out.println("qcomments: " + QComments);
+		System.out.println("qcomments : " + QComments.size());
+		
+		model.addAttribute("qna", q).addAttribute("qcomments", QComments).addAttribute("qcommentSize", QComments.size());
 
 		return "QNA/QNA_Detail";
 
@@ -266,4 +273,96 @@ public class QNAController {
 		return "http://localhost:8088/bunny/resources/upload/qna/desc/" + renamedName;
 	}
 
+	// 댓글 생성
+	
+	@RequestMapping("/QNA/qcommentInsert.do")
+	public String qcommentInsert(@RequestParam int qno,
+										QComment qcomment, Model model, HttpSession session) {
+		
+		
+		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getNickName();
+		
+		qcomment.setQWriter(userId);
+		
+		
+		System.out.println("댓글아 달아졌니" + qcomment);
+		String msg = "";
+		String loc ="/QNA/QNADetail.do?qno=" + qcomment.getQno();
+		
+		 try {
+		int result = qnaService.insertQComment(qcomment);
+		
+		if(result > 0) {
+			msg ="댓글 달기 성공!";
+		}else {
+			msg = "댓글 달기 실패,,,";
+		}
+		
+	  }catch(Exception e) {
+		  throw new QNAException("QNA 댓글에서 에러 발생!" + e.getMessage());
+	  }
+	  
+	  model.addAttribute("loc", loc)
+	  		     .addAttribute("msg", msg);
+	  
+	  return "common/msg";
+	  		
+		
+	}
+	
+	// 댓글 수정하기
+	@RequestMapping("/QNA/qcommentUpdate.do")
+	@ResponseBody
+	public HashMap<String, Object> qcommentUpdate(QComment qcomment) {
+		
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		boolean updateCheck = false;
+		
+		try {
+			updateCheck = qnaService.updateQComment(qcomment) > 0 ? true:false;
+		}catch(Exception e) {
+			throw new QNAException();
+		}
+		
+		hmap.put("updateCheck", updateCheck);
+		
+		return hmap;
+	}
+	
+	// 댓글 삭제하기
+	@RequestMapping("/QNA/qcommentDelete.do")
+	public String qcommentDelete(QComment qcomment, Model model) {
+		
+		String msg ="";
+		String loc ="/QNA/QNADetail.do?qno=" + qcomment.getQno();
+		
+		try {
+			
+			boolean hasReply = qnaService.selectOneReplyQcno(qcomment.getQcno()) > 0 ? true:false;
+			if(hasReply ==true) {
+				msg = "대댓글이 있어서 삭제가 불가능합니다.";
+			}else {
+				
+				int result = qnaService.deleteQComment(qcomment.getQcno());
+				
+				if(result > 0 && hasReply == false) {
+					msg = "댓글 삭제 성공!";
+				}else {
+					msg = "에러 발생!(댓글 삭제 실패)";
+				}
+			}
+		}catch(Exception e) {
+			throw new QNAException("QNA 댓글에서 에러 발생!" + e.getMessage());
+		}
+		
+		model.addAttribute("loc", loc)
+		           .addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
+
+	
 }

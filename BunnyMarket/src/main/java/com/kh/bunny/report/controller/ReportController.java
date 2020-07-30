@@ -43,7 +43,7 @@ public class ReportController {
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("/report/reportList.do")
-	public String selectReportList(@RequestParam(value ="cPage", required = false, defaultValue = "1") int cPage,
+	public String selectReportList(@RequestParam(value ="pPage", required = false, defaultValue = "1") int cPage,
 			Model model) {
 		
 		int numPerPage = 10;

@@ -44,7 +44,7 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
-				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
 				, Model model, HttpServletRequest request
 			) {
 		

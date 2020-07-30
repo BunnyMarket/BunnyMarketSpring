@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 @Repository("qnaDAO")
@@ -54,6 +55,31 @@ public class QNADAOImpl implements QNADAO {
 	@Override
 	public int selectCurrentQno() {
 		return sqlSession.selectOne("qnaMapper.selectCurrentQno");
+	}
+
+	@Override
+	public int insertQCcomment(QComment qcomment) {
+		return sqlSession.insert("qnaMapper.insertQComment", qcomment);
+	}
+
+	@Override
+	public List<Object> selectQCommentList(int qno) {
+		return sqlSession.selectList("qnaMapper.selectQCommentList", qno);
+	}
+
+	@Override
+	public int updateQComment(QComment qcomment) {
+		return sqlSession.update("qnaMapper.updateQComment", qcomment);
+	}
+
+	@Override
+	public int selectOneReplyQcno(int qcno) {
+		return sqlSession.selectOne("qnaMapper.selectOneReplyQcno", qcno);
+	}
+
+	@Override
+	public int deleteQComment(int qcno) {
+		return sqlSession.delete("qnaMapper.deleteQComment", qcno);
 	}
 	
 }

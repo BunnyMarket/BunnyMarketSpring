@@ -41,7 +41,37 @@
    		SELECT MAX(QNO) FROM QNA
    </select>
    
+   <select  id="selectQCommentList" resultType= "QComment">
+    SELECT * FROM QCOMMENT
+    WHERE QNO =#{qno}
+    ORDER BY QCDATE DESC
+   </select>
+   
+   <insert id="insertQComment" parameterType="QComment">
+     INSERT INTO QCOMMENT
+     VALUES(SEQ_QCNO.NEXTVAL, #{qno}, #{qWriter}, #{qcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'),  #{ref_qcno}, #{qcLevel})
+   </insert>
+   
+   <update id="updateQComment" parameterType="QComment">
+     UPDATE QCOMMENT
+      <set>
+       QCCONTENT =#{qcContent}
+      </set>
+      WHERE QCNO =#{qcno}
+   </update>
+   
+   <delete id="deleteQComment" parameterType="_int">
+     DELETE FROM QCOMMENT
+     WHERE QCNO =#{qcno}
+   </delete>
 </mapper>
+
+<!-- <select  id="selectOneReplyQcno" resultType="_int">
+	 SELECT COUNT(*)
+	 FROM QCOMMENT
+	 WHERE REF_QCNO =#{qcno}
+</select> -->
+
 
 
 

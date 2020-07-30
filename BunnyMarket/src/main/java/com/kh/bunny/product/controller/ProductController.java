@@ -49,7 +49,7 @@ public class ProductController {
 		int totalContents = productService.selectProductTotalContents();
 		
 		// 페이지 HTML 생성 
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "productList.do");
+		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "/bunny/product/productList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)

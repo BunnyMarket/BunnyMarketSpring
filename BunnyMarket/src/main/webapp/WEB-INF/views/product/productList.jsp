@@ -138,7 +138,7 @@
                         </nav>
                         <!-- Pagination -->
                         <div>
-                            <c:out value = "${ pageBar }" escapeXml = "false" />
+                            <c:out value="${pageBar}" escapeXml="false"/>
                         </div>
                     </div>
                 </div>
@@ -147,10 +147,5 @@
     </section>
     <!-- ##### Shop Area End ##### -->
     
-    <script>
-    	console.log("확인확인");
-    	console.log("확인 : " + ${list});
-    
-    </script>
 
 <c:import url="../../views/common/footer.jsp"/>

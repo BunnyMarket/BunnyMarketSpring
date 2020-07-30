@@ -49,7 +49,7 @@
 	<delete id = "deletePComment" parameterType = "_int">
 		DELETE FROM PCOMMENT
 		WHERE PCMNO = #{pcmno}
->>>>>>> refs/heads/develop
+
 	</delete>
 	
 	<!-- 상품 게시글 생성하는 쿼리 -->
