@@ -212,8 +212,12 @@ input:focus ~ .label-m, input:valid ~ .label-m{
   color:#5264AE;
 }
 
-
-  	
+.modal-content{
+	text-align: center;
+}
+ .page-item disabled{
+ 	color : blue;
+ }  	
   </style>
 
 </head>
@@ -330,22 +334,9 @@ input:focus ~ .label-m, input:valid ~ .label-m{
 			</div>
 			<form action="${pageContext.request.contextPath}/admin/adminMember/adminInsert.do" method="post">
 
-				<div class="modal-body row" >
-				 
-					<!-- <div class="col-6">
-						<label>아이디</label>
-					</div>
-					<div class="col-6">
-						<input type="text" name="adminId"/>
-					</div>
-					<div class="col-6">
-						<label>비밀번호</label>
-					</div> 
-					<div class="col-6">
-						<input type="password" name="adminPw"/>
-					</div>  --> 
-					
-					<div class="group">      
+				<div class="modal-body row" style="margin:auto" >
+
+					<div class="group" >      
 				      <input type="text" name="adminId" required>
 				      <span class="highlight"></span>
 				      <span class="bar"></span>
