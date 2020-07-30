@@ -62,7 +62,7 @@
 						<div>
 							<div id="pImgArea">
 								<img id="titleImg" class="d-block w-100" width="344.8px"
-									src="${pageContext.request.contextPath}/resources/upload/auction/${a.PImg}"
+									src="${pageContext.request.contextPath}/resources/upload/product/${a.PImg}"
 									height="357.56px">
 							</div>
 						</div>
