@@ -33,8 +33,18 @@ public interface ProductDAO {
 	int insertPComment(PComment pcomment);
 	
 	// 댓글 수정 
-	int updatePComemnt(PComment pcomment);
+	int updatePComment(PComment pcomment);
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
+
+	int insertRePComment(PComment pcomment);
+
+	int selectOneReplyPcmno(int pcmno);
+
+	String selectOneReplyPcWriter(int pcmno);
+
+	PComment selectOnePComment(int pno);
+
+
 }

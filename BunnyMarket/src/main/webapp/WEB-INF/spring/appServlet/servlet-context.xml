@@ -3,11 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -16,17 +14,20 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
 	
-	<!-- jsonView 객체와 json 전용 viewResolver 등록하기 -->
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="1"/>
 	</beans:bean>
-	
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
-	<!-- @ResponseBody 사용을 위한 객체 등록 -->
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-		<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<beans:property name="messageConverters">
 			<beans:list>
 				<beans:ref bean="jacksonMessageConverter"/>
@@ -34,25 +35,12 @@
 		</beans:property>
 	</beans:bean>
 	
-	
-	
-	
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/>
+		
+		<!--  10MB  -->
 	</beans:bean>
 	
-			<!-- 파일 업로드 시에 사용할 MultipartResolver 등록하기 -->
-		<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-			<!-- 파일을 일반 스트링으로 받을 순 없으니 multipartResolver를 쓴 것.  -->
-			<beans:property name="maxUploadSize" value="10485760" />
-			<!-- 최대 10MB까지 받겠다. -->
-		</beans:bean>
-	<!-- DispatcherServlet에서 컨트롤러로 가기 전에 동작할 객체인
-	     인터셉터 구현하기 -->
 	<interceptors>
 		<interceptor>
 			 <!-- 인터셉터가 동작할 주소 -->
@@ -64,6 +52,11 @@
 			 <!-- 모든 경로 차단 중 특정 경로를 제외할 수도 있다. -->
 			 <!-- <exclude-mapping path="/member/memberEnroll.do" /> -->
 			 
+			 <mapping path="/auction/insertBidder.do" />
+			 <mapping path="/auction/auctionInsertForm.do"/>
+			 <mapping path="/auction/auctionInsertEnd.do"/>
+			 <mapping path="/auction/auctionDetail.do"/>
+			 
 			 <!-- 게시글 전용 URL 등록하기 -->
 			 <mapping path="/board/**/*.do"/>
 			 <exclude-mapping path="/board/boardList.do"/>
@@ -71,7 +64,7 @@
 			<beans:bean id="loginCheckInterceptor"
 			            class="com.kh.bunny.common.interceptor.LoginCheckInterceptor" />
 		</interceptor>
-	</interceptors>
+		</interceptors>
 	
 	<context:component-scan base-package="com.kh.bunny" />
 	

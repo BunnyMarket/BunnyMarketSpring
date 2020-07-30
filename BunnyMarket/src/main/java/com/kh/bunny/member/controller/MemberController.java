@@ -182,16 +182,35 @@ public class MemberController {
 	@RequestMapping("/member/memberUpdate.do")
 	public String memberUpdate(Member member, Model model) {
 		logger.debug("회원 정보 수정 발생!");
+		
+		String plainPassword = member.getUserPwd();
+		System.out.println("비밀번호 암호화 전 : " + plainPassword);
 
+		/************* 암호화 Start ! ***************/
+
+		String encryptPassword = bcryptPasswordEncoder.encode(plainPassword);
+		// $2a$10$ju.7JAGrQR9RUmYVuWtNQO6S/RUoGEWhtu8ryznONhwCheROJkSm.
+		// $2a$ : 암호 알고리즘 (모드)
+		// 10$ : 4-31 회 중 10번 반복 횟수를 거침
+		// ju.7JAGrQR9RUmYVuWtNQO : 랜덤 Salt (임의의 문자열 22글자)
+		// 6S/RUoGEWhtu8ryznONhwCheROJkSm. : 실제 암호화된 결과 (31글자)
+
+		/*************** 암호화 End ! ***************/
+
+		System.out.println("비밀번호 암호화 후 : " + encryptPassword);
+
+		member.setUserPwd(encryptPassword);
+		
 		// 1. 서비스 로직 수행! (비즈니스 로직)
 		int result = memberService.updateMember(member);
-
+				
 		// 2. 처리결과에 따라 화면 분기 처리하기
 		String loc = "/";
 		String msg = "";
 
 		if (result > 0) {
 			msg = "회원 정보 수정 성공!";
+			
 		} else {
 			msg = "회원 정보 수정 실패!";
 		}

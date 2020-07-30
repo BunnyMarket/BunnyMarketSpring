@@ -110,10 +110,11 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div>
+	                                    <div class="product-img" style="height: 300px; width: 255px;" >
 	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
-	                                        <img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" style = "width:300px; height:250px;" alt=""></a>
-	                                        <!-- <div class="product-meta d-flex">
+	                                        	<img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" style="height: 300px; width: 255px;">
+	                                        </a>
+	                                        <div class="product-meta d-flex">
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
 	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>

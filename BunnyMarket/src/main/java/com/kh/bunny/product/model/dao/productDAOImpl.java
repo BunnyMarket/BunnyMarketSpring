@@ -56,17 +56,39 @@ public class productDAOImpl implements ProductDAO {
 
 	@Override
 	public int insertPComment(PComment pcomment) {
-		return sqlSession.insert("productMapper.", pcomment);
+		return sqlSession.insert("productMapper.insertPComment", pcomment);
 	}
 
 	@Override
-	public int updatePComemnt(PComment pcomment) {
-		return sqlSession.update("productMapper.", pcomment);
+	public int updatePComment(PComment pcomment) {
+		return sqlSession.update("productMapper.updatePComment", pcomment);
 	}
 
 	@Override
 	public int deletePComment(int pcmno) {
-		return sqlSession.delete("productMapper.", pcmno);
+		return sqlSession.delete("productMapper.deletePComment", pcmno);
 	}
+
+	@Override
+	public int insertRePComment(PComment pcomment) {
+		return sqlSession.insert("productMapper.insertRePComment", pcomment);
+	}
+
+	@Override
+	public int selectOneReplyPcmno(int pcmno) {
+		return sqlSession.selectOne("productMapper.selectOneReplyPcmno", pcmno);
+	}
+
+	@Override
+	public String selectOneReplyPcWriter(int pcmno) {
+		return sqlSession.selectOne("productMapper.selectOneReplyPcWriter", pcmno);
+	}
+
+	@Override
+	public PComment selectOnePComment(int pno) {
+		return sqlSession.selectOne("productMapper.selectOnePComment", pno);
+	}
+
+
 
 }

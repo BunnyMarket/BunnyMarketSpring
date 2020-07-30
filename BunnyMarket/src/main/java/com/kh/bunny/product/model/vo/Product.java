@@ -29,6 +29,7 @@ public class Product implements Serializable {
 	private int pType;    
 	private String pAddress; 
 	private int pTotal;   
-	private String pBuyer;  
+	private String pBuyer;
+	private int bPrice;
 
 }
