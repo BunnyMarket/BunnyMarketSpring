@@ -75,4 +75,5 @@
 		</form>
 	</div>
 </section>
+
 <c:import url="../common/footer.jsp" />

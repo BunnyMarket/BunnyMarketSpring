@@ -55,9 +55,14 @@
 							<td colspan="2"> ${r.RTitle}</td>
 							<td>${r.RWriter }</td>
 							<td>${r.RDate }</td>
-							<td>O</td>
+							
+							<c:if test="${fn:contains(r.RContent, '<img') == 'true' }">
+							 <td style="color:green;" align="center">첨부</td>
+							</c:if>
+							<c:if test="${fn:contains(r.RContent, '<img') == 'false' }">
+							<td style="color: black;" align="center">첨부없음</td>
+							</c:if>
 							<td></td>
-							<!--  img 태그 없을 경우에 첨부파일 x , 있으면 o 표시 -->
 							</tr>
 							</c:forEach>
 						</tbody>
