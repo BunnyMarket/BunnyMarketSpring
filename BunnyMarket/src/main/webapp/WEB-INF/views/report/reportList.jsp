@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<c:import url="/views/common/header.jsp" />
+<c:import url="../../views/common/header.jsp" />
 <div class="breadcrumb-area">
 	<!-- Top Breadcrumb Area -->
 	<div
@@ -16,8 +16,9 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a
+							href="${ pageContext.request.contextPath }/index.jsp"><i
+								class="fa fa-home"></i>홈화면</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Report</li>
 					</ol>
 				</nav>
@@ -31,45 +32,47 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="cart-table clearfix">
-					<table class="table table-responsive">
+					<br />
+					<p>총 ${totalContents}건의 게시물이 있습니다.</p>
+					<br />
+					<table class="table table-responsive" id="tableArea">
 						<thead class="col-12">
 							<tr>
-								<th style="text-align: center; width: 5%;">번호</th>
-								<th style="text-align: center; width: 50%;">제목</th>
-								<th style="text-align: center; width: 15%;">작성자</th>
-								<th style="text-align: center; width: 15%;">등록일시</th>
-								<th style="text-align: center; width: 10%;">조회수</th>
-								<th style="text-align: center; width: 5%;">첨부</th>
+									<th style="width: 10%">번호</th>
+								<th colspan="2" style="width: 40%; text-align: center;">제목</th>
+								<th style="padding-right: 80px; width: 15%; text-align: center;">작성자</th>
+								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
+								<th style="padding-left: 8px; width: 20%; text-align: center;">첨부파일</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<%
-								for (int i = 1; i < 11; i++) {
-							%>
-							<tr onclick="goQnAdetail();">
-								<td style="text-align: center;">
-									<h5><%=i%></h5>
-								</td>
-								<td style="text-align: center;">
-									<a href="<%=request.getContextPath()%>/views/report/reportDetail.jsp"><h5>제목</h5></a>
-								</td>
-								<td style="text-align: center;"><h5>바니</h5></td>
-								<td style="text-align: center;"><h5>2020-07-12</h5></td>
-								<td style="text-align: center;"><h5>0</h5></td>
-								<td style="text-align: center;"><h5>X</h5></td>
+						<c:forEach items="${list }" var="r">
+						<input type="hidden" value="${r.RNo}" />
+					        <tr id="${r.RNo}">
+					        
+							<td>${r.RNo }</td>
+							<td colspan="2"> ${r.RTitle}</td>
+							<td>${r.RWriter }</td>
+							<td>${r.RDate }</td>
+							
+							<c:if test="${fn:contains(r.RContent, '<img') == 'true' }">
+							 <td style="color:green;" align="center">첨부</td>
+							</c:if>
+							<c:if test="${fn:contains(r.RContent, '<img') == 'false' }">
+							<td style="color: black;" align="center">첨부없음</td>
+							</c:if>
+							<td></td>
 							</tr>
-							<%
-								}
-							%>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="checkout_btn_inner" align="right">
 						<br /> <br /> 
 						<a class="btn alazea-btn mr-30"
-						   href="<%=request.getContextPath()%>/views/report/reportInsert.jsp">등록하기</a>
+						  	href="${pageContext.request.contextPath}/report/reportInsertView.do">등록하기</a>
 						<a class="btn alazea-btn mr-30"
-						   href="<%=request.getContextPath()%>/index.jsp">메인으로</a> 
+						  	href="${pageContext.request.contextPath}">메인으로</a> 
 						<br /><br />
 					</div>
 					<!-- Pagination -->
@@ -86,5 +89,20 @@
 		</div>
 	</div>
 </div>
+<script>
+$(function(){
+	$("#tableArea td").click(function(){
+		var rNo = $(this).parent().attr("id");
+		
+		if(${member.userId eq 'admin'}){
+			location.href = "${pageContext.request.contextPath}/report/reportSelectOneAdmin.do?rno=" + rNo;
+		}else{
+			location.href = "${pageContext.request.contextPath}/report/reportPassword.do?rno=" + rNo;
+		}
 
-	<c:import url="/views/common/footer.jsp" />
+	});
+});
+	
+</script>
+
+	<c:import url="../../views/common/footer.jsp" />
