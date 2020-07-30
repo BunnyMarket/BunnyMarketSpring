@@ -125,12 +125,7 @@
 		var mapJson = JSON.parse('${ mapJson }'); // json 잘 가져오는거 확인 완료 
 		console.log(mapJson); 
 		
-		// 마커 클러스터러를 생성합니다 
-	    /* var clusterer = new kakao.maps.MarkerClusterer({
-	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-	        minLevel: 10 // 클러스터 할 최소 지도 레벨 
-	    }); */
+		
 		
 		
 		var elecPositions = [];
@@ -272,8 +267,6 @@
 		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-		
-		
 		
 		
 		// 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
