@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="auctionMapper">
+	
+	<sql id="selectSQL">
+		SELECT P.*, A.AEDATE 
+		 FROM PRODUCT P
+		 JOIN AUCTION A ON(A.PNO = P.PNO)
+	</sql>
+	
+
+	<select id="selectAuctionList" resultType = "Auction">
+		<!-- sql 태그의 쿼리를 가져다 쓸 때는 include 태그를 사용한다. -->
+		<include refid="selectSQL"/>
+		WHERE P.PTYPE = 2
+        ORDER BY P.PDATE DESC, 1 DESC
+	</select>
+	
+	<select id="selectAuctionTotalContent" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		 WHERE PTYPE = 2
+	</select>
+	
+	<select id="selectBidderCount" statementType="CALLABLE" parameterType="hashmap">
+		{ CALL BIDDER_COUNT(
+							  #{pno, mode=IN, jdbcType=NUMERIC}
+							, #{result, mode=OUT, jdbcType=NUMERIC, javaType=integer}
+							)
+		}
+	</select>
+
+	<select id="selectOneAuction" resultType="Auction">
+		<include refid="selectSQL"/>
+		WHERE P.PNO = #{pno}
+	</select>
+	
+	
+	<select id="bidderCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+	</select>
+	
+	<insert id="insertProduct" parameterType="Auction">
+		INSERT INTO PRODUCT
+		VALUES (SEQ_PNO.NEXTVAL
+			  , #{pWriter}
+			  , #{pcno}
+			  , #{pImg}
+			  , #{pTitle}
+			  , #{pContent}
+			  , #{pPrice}
+			  , TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2')
+			  , 1
+			  , 2
+			  , #{pAddress}
+			  , DEFAULT
+			  , NULL
+			  , 0)
+	</insert>
+	
+	<insert id="insertAuction" parameterType="Auction">
+		<selectKey keyProperty="pno" resultType="_int" order="BEFORE">
+			SELECT SEQ_PNO.CURRVAL FROM DUAL
+		</selectKey>
+		INSERT INTO AUCTION(PNO, AEDATE)
+		<if test="aeTime gte 24">
+		VALUES (#{pno}, TO_CHAR(SYSTIMESTAMP + INTERVAL '${aeTime/24} 00:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
+		</if>
+		<if test="aeTime lt 24">
+		VALUES (#{pno}, TO_CHAR(SYSTIMESTAMP + INTERVAL '0 ${aeTime}:00:00.0000' DAY TO SECOND, 'YYYY/mm/dd hh24:mi:ss.ff2'))
+		</if>
+	</insert>
+	
+	<select id="selectImageOne" resultType="string">
+		SELECT PIMG
+		  FROM PRODUCT
+		 WHERE PNO = #{pno}
+	</select>
+	
+
+	<insert id="insertBidder" parameterType="Bidder">
+		INSERT INTO BIDDER
+		VALUES(SEQ_BNO.NEXTVAL, #{pno}, #{userId}, #{bPrice}, DEFAULT)
+	</insert>
+	
+	<select id="selectOneBidderCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+	</select>
+	
+	<select id="selectAllBidder" resultType="Bidder">
+		SELECT *
+		  FROM BIDDER
+		 WHERE PNO = #{pno}
+		 ORDER BY BNO DESC
+	</select>
+	
+	
+</mapper>
+
+<!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->
+
+
+
+
+
+
+
+
