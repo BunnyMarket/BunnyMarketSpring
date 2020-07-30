@@ -17,14 +17,14 @@
 <!-- 주소 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <!-- 지도 부르기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=037f9ae8baf28354df2203507cf3111a&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=037f9ae8baf28354df2203507cf3111a&libraries=services, clusterer, drawing"></script>
 
 <!-- Title -->
 <title>Bunny Market</title>
 
 <!-- Favicon -->
 <link rel="icon"
-	href="${ pageContext.request.contextPath }/resources/img/core-img/favicon-bunny2.ico">
+	href="${ pageContext.request.contextPath }/resources/img/core-img/favicon-bunny4.ico">
 
 <!-- 섬머노트 -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -32,8 +32,67 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <!-- Core Stylesheet -->
-<link rel="stylesheet"
-	href="${ pageContext.request.contextPath }/resources/style.css">
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/style.css">
+<style type="text/css">
+	/*.modal{
+		text-align : center;
+		position :relative;
+		width : 300px;
+		heigth:150px;
+		z-index:1;
+	}
+	.moal-content{
+		width : 300px;
+		text-align : center;
+		background: white;
+		margin :100px auto;
+
+	}
+    .modal-layout{
+	    posiotion:fixed;
+	    top:0;
+	    left:0;
+	    width:100%;
+	    height:100%;
+	    background:rgba(0, 0, 0,0.5);
+	    z-index:-1;
+    }
+ #ex1 {
+  display:none;
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+
+#ex1 h2 {
+  margin:0;   
+}
+
+#ex1 button {
+  display:inline-block;
+  width:100px;
+  margin-left:calc(100% - 100px - 10px);
+}
+
+#ex1 .modal-content {
+  width:300px;
+  margin:100px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+
+#ex1 .modal-layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}    */
+</style>
 </head>
 <body>
 	<!-- Preloader -->
@@ -89,24 +148,29 @@
 								<c:if test="${empty member}">
 								<!-- Login -->
 								<div class="login">
-									<a href="login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
+									<a href="${pageContext.request.contextPath}/login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
 								</div>
 								</c:if>
 								<c:if test="${!empty member}">
 
 									<span><a
-										href="${pageContext.request.contextPath}/member/memberView.do?userId=${member.userId}"
+										href="${pageContext.request.contextPath}/member/memberMyPage.do?userId=${member.userId}"
 										title="내정보보기">${member.userName}님,&nbsp;안녕하세요</a></span>
-							        &nbsp;
+							        &nbsp; 
 							        <div class="login">
 							        <%-- <button class="login" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button> --%>
 							        <a href="${pageContext.request.contextPath}/member/memberLogout.do"><i class="fa fa-user" aria-hidden="true"></i><span>Logout</span></a>
+							        <a href="${pageContext.request.contextPath}/member/memberDelete.do"><i class="fa fa-user" aria-hidden="true"></i><span>회원탈퇴</span></a>
+							        
+							        &nbsp;
+							        
 							        </div>
 							        </c:if>
 
-
+								 
 
 								<!-- Cart -->
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<div class="cart">
 									<a href="#"> <i class="fa fa-shopping-cart"
 										aria-hidden="true"></i> <span>Cart <span
@@ -129,7 +193,7 @@
 
 						<!-- Nav Brand -->
 						<a href="${ pageContext.request.contextPath }/index.jsp" class="nav-brand"> <img
-							src="${ pageContext.request.contextPath }/resources/img/core-img/bunnyLogo3.png"
+							src="${ pageContext.request.contextPath }/resources/img/core-img/bunnyLogo2.png"
 							alt=""></a>
 
 						<!-- Navbar Toggler -->
@@ -152,11 +216,13 @@
 								<ul>
 									<li><a href="#">관리자</a>
 										<ul class="dropdown">
+
 											<%-- <li><a href="${ pageContext.request.contextPath }/admin/member/memberList.do">관리자-고객리스트</a></li> --%>
 											<li><a href="${ pageContext.request.contextPath }/admin/adminLogin.do">관리자-메세지</a></li>
 											<%-- <li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/admin/tansactions.jsp">관리자-트랜잭션</a></li>
 											<li><a href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">관리자-공지사항</a></li> --%>
+
 										</ul></li>
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
@@ -170,8 +236,8 @@
 									<li><a href="#">상품</a>
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/auction/auctionList.jsp">경매 상품</a></li>
-											<li><a href="#">상품 지도로 보기</a></li>
+											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
+											<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">상품 지도로 보기</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/member/review.jsp">후기 작성하기</a></li>
 										</ul>
 									</li>
@@ -179,7 +245,7 @@
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pBuyer.jsp">구매자</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pSeller.jsp">판매자</a></li>
-											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/payment/pView.jsp', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
+											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointCharge.do', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
 										</ul>
 									</li>
 									<li><a href="${pageContext.request.contextPath}/views/member/myPage.jsp">MyPage</a></li>

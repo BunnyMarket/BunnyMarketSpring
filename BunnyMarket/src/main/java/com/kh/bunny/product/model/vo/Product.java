@@ -1,7 +1,6 @@
 package com.kh.bunny.product.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +20,12 @@ public class Product implements Serializable {
 	private String pTitle;   
 	private String pContent;
 	private int pPrice;   
-	private Date pDate;   
+	private String pDate;   
 	private int pStatus;  
 	private int pType;    
 	private String pAddress; 
 	private int pTotal;   
-	private String pBuyer;  
+	private String pBuyer;
+	private int bPrice;
 
 }
