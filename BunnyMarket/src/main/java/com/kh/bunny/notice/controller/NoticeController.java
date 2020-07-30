@@ -116,6 +116,7 @@ public class NoticeController {
 		
 		return "notice/mNoticeDetail";
 	}	
+	
 	//updateView
 	@RequestMapping("/admin/notice/noticeUpdateForm.do")
 	public String noticeUpdateView(@RequestParam int no, Model model) {

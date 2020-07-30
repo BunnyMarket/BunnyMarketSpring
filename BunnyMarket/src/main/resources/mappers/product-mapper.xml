@@ -29,6 +29,10 @@
 		SELECT * FROM PRODUCT
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</select>
+	<!-- 상품 게시글 조회수 -->
+	<update id="updateTotalCount">
+		UPDATE PRODUCT SET PTOTAL = PTOTAL+1 WHERE PNO = #{pno}	
+	</update>
 	
 	<!-- 상품 게시글을 상세보기하면서 댓글 목록 불러오기 -->
 	<select id="selectPCommentList" resultType = "PComment">
