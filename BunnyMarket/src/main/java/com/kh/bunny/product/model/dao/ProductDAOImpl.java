@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.bunny.product.model.vo.PComment;
 import com.kh.bunny.product.model.vo.Product;
 
-@Repository("productDAO")
-public class productDAOImpl implements ProductDAO {
+@Repository("ProductDAO")
+public class ProductDAOImpl implements ProductDAO {
 
 	@Autowired
 	SqlSessionTemplate sqlSession;
