@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,6 @@ import com.kh.bunny.adminMember.model.service.AdminService;
 import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
-import com.kh.bunny.member.model.vo.Member;
 
 @SessionAttributes(value = { "admin" })
 @Controller
@@ -41,7 +42,7 @@ public class adminMemberController {
 	@RequestMapping("/admin/adminMember/adminList.do")
 	public String selectAdminList(
 			 @RequestParam(
-					 value="cPage",
+					 value="pPage",
 					 required=false, 
 					 defaultValue="1")
 				int cPage, Model model
@@ -126,9 +127,30 @@ public class adminMemberController {
 	}
 
 	// 로그인 뷰
+	@RequestMapping("/admin/adminLoginCheck.do")
+	public String adminLog(HttpSession session, Model model) {
+		String loc ="";
+		String msg = "";
+		
+		if((adminMember)session.getAttribute("admin") == null) {
+			loc ="/admin/adminLogin.do";
+			msg="로그인 해주세요.";
+		}else {
+			loc="/admin/main/home.do";
+			msg="로그인이 되어있습니다.";
+		}
+		
+		model.addAttribute("loc",loc).addAttribute("msg", msg);
+
+		return "common/msg";
+
+	}
+	
 	@RequestMapping("/admin/adminLogin.do")
 	public String adminLog() {
-		return "admin/adminLogin";
+
+		return "/admin/adminLogin";
+
 	}
 	
 	// 로그인
@@ -142,8 +164,6 @@ public class adminMemberController {
 		
 		String msg = "";
 		String loc = "";
-
-		
 
 			if (am != null && bcryptPasswordEncoder.matches(adminPw, am.getAdminPw())) {
 				msg = "로그인 성공!";
@@ -167,12 +187,19 @@ public class adminMemberController {
 		}
 
 	// 로그아웃
-	@RequestMapping("/admin/adminLogout.do")
-	public String adminLogout(SessionStatus status) {
+	@RequestMapping(value="/admin/adminLogout.do", method=RequestMethod.POST)
+	public String adminLogout(SessionStatus status,Model model,HttpSession session) {
+		/*
+		 * String loc=""; String msg="노우";
+		 */
 	
-		if (!status.isComplete())
+		if (!status.isComplete()) {
 			status.setComplete();
-
+			session.invalidate();
+			
+		}
+		
+		/* model.addAttribute("loc", loc).addAttribute("msg",msg); */
 		return "redirect:/admin/adminLogin.do";
 	}
 }

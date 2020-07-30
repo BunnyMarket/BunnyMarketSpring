@@ -103,8 +103,9 @@
 
 $(function(){
 	$("#tableArea td").click(function(){
+		var admin = '${admin.adminId}';
 		var qnaNo = $(this).parent().attr("id");
-		if(${member.userId eq 'admin'}){
+		if(admin.match(/bunny.*/)){
 			location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?qno=' + qnaNo;
 		} else {
 			location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?qno=' + qnaNo;

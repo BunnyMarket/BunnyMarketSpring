@@ -25,7 +25,7 @@ public class NoticeController {
 	@RequestMapping("/admin/notice/noticeList.do")
 	public String selectNoticeList(
 			 @RequestParam(
-					 value="cPage",
+					 value="pPage",
 					 required=false, 
 					 defaultValue="1")
 				int cPage, Model model

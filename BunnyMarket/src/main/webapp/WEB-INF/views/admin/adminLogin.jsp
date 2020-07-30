@@ -53,7 +53,15 @@
 									<button type="submit" class="btn btn-primary btn-block">
 										Login
 									</button>
+								<br/>
 								</div>
+								
+								<div class="form-group m-0">
+									<button  class="btn btn-primary btn-block" onclick="goHome();">
+										gohome
+									</button>
+								</div>
+								
 								<div class="mt-4 text-center">
 									 <a href="#"></a>
 								</div>
@@ -71,7 +79,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script>
-		
+		function goHome(){
+			location.href="${pageContext.request.contextPath}/";
+		}
 	</script>
 </body>
 </html>

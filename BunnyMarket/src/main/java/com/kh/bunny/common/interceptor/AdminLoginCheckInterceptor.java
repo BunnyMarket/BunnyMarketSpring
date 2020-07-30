@@ -1,0 +1,63 @@
+package com.kh.bunny.common.interceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.kh.bunny.adminMember.model.vo.adminMember;
+
+/**
+ * interceptor 클래스는 HandlerInterceptorAdaptor 가 가진
+ * 메소드 3개를 재정의(Override)하여 구현할 수 있다.
+ * 
+ * 1. preHandle : 특정 컨트롤러의 메소드가 수행 되기 이전에 동작할 내용
+ * 2. postHandle : 특정 컨트롤러의 메소드가 수행된 후에 동작할 내용
+ *    (동작 기반:해당 코드가 이어 붙음)
+ * 3. afterCompletion : 특정 컨트롤러의 메소드가 완료된 이후에 동작할 내용
+ *    (결과 기반:return한 결과를 바탕으로 동작함)
+ * 
+ * @author user1
+ *
+ */
+public class AdminLoginCheckInterceptor extends HandlerInterceptorAdapter {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		
+		HttpSession session = request.getSession();
+		
+		adminMember am = (adminMember)session.getAttribute("admin");
+		
+		if(am == null) {
+			logger.info("비로그인 상태에서 ["+ request.getRequestURI() + "] 경로에 접근 시도함!");
+			
+			request.setAttribute("loc", "/");
+			request.setAttribute("msg", "로그인 후 이용해주세요 ^_^");
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp")
+			.forward(request, response);
+			
+			return false;
+		}	
+
+		return super.preHandle(request, response, handler);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

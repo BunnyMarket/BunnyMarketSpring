@@ -83,8 +83,7 @@
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						<%-- href="${ pageContext.request.contextPath }/ "--%>
-						onclick="openQA();"> <i
-							class="material-icons">library_books</i>
+						onclick="openQA();"> <i	class="material-icons">library_books</i>
 							<p>Q&A</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
@@ -100,8 +99,7 @@
 						</a></li>
 					</c:if>
 					<li class="nav-item "><a class="nav-link"
-						href="${ pageContext.request.contextPath }/"> <i
-							class="material-icons">library_books</i>
+						onclick="openHome();"> <i class="material-icons">library_books</i>
 							<p>홈</p>
 					</a></li>
 					<!-- <li class="nav-item ">
@@ -189,8 +187,10 @@
 									aria-labelledby="navbarDropdownProfile">
 
 									<!-- <div class="dropdown-divider"></div> -->
-									<a class="dropdown-item" id="logoutcss" onclick="logout();">Log
-										out</a>
+									<form id="logOutForm" action="${pageContext.request.contextPath}/admin/adminLogout.do" method="post">
+										<a class="dropdown-item" id="logoutcss" onclick="logout();">Log
+											out</a>
+									</form>
 								</div></li>
 						</ul>
 					</div>
@@ -210,9 +210,18 @@
 					location.href = "${pageContext.request.contextPath}/admin/adminHome.do";
 				}
 				function logout() {
-					location.href = "${pageContext.request.contextPath}/admin/adminLogout.do"
+					var check = confirm("로그아웃 하쉴? 정말?");
+					if(check){
+						$("#logOutForm").submit();
+					} else {
+						return;
+					}
+					
 				}
 				function openQA(){
-					window.open("${pageContext.request.contextPath}/")
+					window.open("${pageContext.request.contextPath}/QNA/QNAList.do");
+				}
+				function openHome(){
+					window.open("${pageContext.request.contextPath}/");
 				}
 			</script>

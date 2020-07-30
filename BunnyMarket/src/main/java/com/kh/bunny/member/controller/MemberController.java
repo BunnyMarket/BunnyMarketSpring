@@ -420,11 +420,11 @@ public class MemberController {
 		return mv;
 
 	}
-	//admin
+	//admin 회원 리스트
 	@RequestMapping("/admin/member/memberList.do")
 	public String memberList(
 			 @RequestParam(
-					 value="cPage",
+					 value="pPage",
 					 required=false, 
 					 defaultValue="1")
 				int cPage, Model model
@@ -447,6 +447,7 @@ public class MemberController {
 		return "admin/customerList";
 	}
 
+	// 회원 비활성화
 	@RequestMapping("/admin/member/memberCountUp.do")
 	@ResponseBody
 	public Map<String, Object> memberCountUp(@RequestParam String userId) {
@@ -460,6 +461,7 @@ public class MemberController {
 		return map; 
 	}
 	
+	// 회원 활성화
 	@RequestMapping("/admin/member/memberCountDown.do")
 	@ResponseBody
 	public Map<String, Object> memberCountDown(@RequestParam String userId) {
