@@ -17,7 +17,6 @@
 		<property name="username" value="BUNNY"/>
 		<property name="password" value="BUNNY"/>
 	</bean>
-	
 	<!--  Mybatis 연동 설정  -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
@@ -62,7 +61,7 @@
 		<tx:method name="insert*" rollback-for="Exception"/><!-- Exception이 발생하면 rollback하게 지정. insert/update/delete로 시작하는 메소드들만. -->
 		<tx:method name="update*" rollback-for="Exception"/>
 		<tx:method name="delete*" rollback-for="Exception"/>
-	</tx:attributes>
+		</tx:attributes>
 	
 	</tx:advice>
 	
@@ -71,6 +70,3 @@
 		<aop:advisor id="transactionAdvisor" advice-ref="txAdvice" pointcut-ref="servicePc"/>
 	</aop:config>
 </beans>
-
-
-
