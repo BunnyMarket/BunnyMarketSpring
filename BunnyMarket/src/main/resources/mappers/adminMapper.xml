@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+	
+	<!-- 최신글 기준으로 정렬 -->
+	<select  id="selectAdminList" resultType="AdminMember">
+		SELECT * FROM ADMIN ORDER BY ADMINID DESC
+	</select>
+	
+	<!-- 총 게시글 수  -->
+	<select  id="selectAdminTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM ADMIN
+	</select>
+	
+	<update id="selectOneStatusOn" parameterType="_int" >
+		UPDATE ADMIN 
+		 <set>
+			ASTATUS = 0 	  
+		 </set> 
+		WHERE ADMINID = #{userId}		
+	</update>
+	
+	<update id="selectOneStatusOff" parameterType="_int">
+		UPDATE ADMIN 
+		 <set>
+			ASTATUS = 1 	  
+		 </set> 
+		WHERE ADMINID = #{userId}	
+	</update>
+
+	<insert id="insertadminMember" parameterType="AdminMember">
+		INSERT INTO ADMIN VALUES (#{adminId}, #{adminPw}, 1)
+	</insert>
+
+	<select id="LoginMember" parameterType="String" resultType="AdminMember">
+		SELECT * FROM ADMIN WHERE ADMINID = #{adminId}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

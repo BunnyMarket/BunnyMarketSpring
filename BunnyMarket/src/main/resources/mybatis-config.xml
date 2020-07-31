@@ -26,6 +26,9 @@
 		 <typeAlias type="com.kh.bunny.review.model.vo.Review" alias="review"/>
 		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QComment"  alias = "QComment"/> 
 		  <typeAlias type = "com.kh.bunny.report.model.vo.Report"  alias = "Report"/> 
+		  <typeAlias type = "com.kh.bunny.notice.model.vo.Notice"  alias = "Notice"/> 
+		 <typeAlias type = "com.kh.bunny.adminMember.model.vo.adminMember"  alias = "AdminMember"/> 
+		  
 
 	</typeAliases>
 	

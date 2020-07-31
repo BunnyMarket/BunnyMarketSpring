@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -107,9 +107,7 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #810e05;
   	}
-  	table{
-  	text-align : center;}
-  	
+
   	/*
   	/* The switch - the box around the slider */
 .switch {
@@ -173,13 +171,59 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-  	
-  	
+
+table{
+	text-align:center;
+}	
+
+.group { 
+  position:relative; 
+  margin-bottom:45px; 
+
+}
+.group input {
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:300px;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+.group input:focus { outline:none; }
+
+
+.label-m {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ .label-m, input:valid ~ .label-m{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+.modal-content{
+	text-align: center;
+}
+ .page-item disabled{
+ 	color : blue;
+ }  	
   </style>
 
 </head>
-	<%@ include  file="common/header.jsp"  %>
-      <div class="content">
+	<%@ include  file="../common/header.jsp"  %>
+
+	<div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -192,35 +236,23 @@ input:checked + .slider:before {
                   <div class="table-responsive" >
                     <table class="table" >
                       <thead class=" text-primary">
-                      	<tr>
-                      		
-	                        <th>아이디</th>
-	                        <th>이름</th>
-	                        <th>닉네임 </th>
-	                        <th>포인트 </th>
-	                        <th>경고 횟수 </th>
-	                        <th>제재중</th>
-                      	</tr>
-                      </thead>
-                      <tbody>
-                      <c:forEach items="${user}" var="c" varStatus="st">
-                        <tr id="${c.userId}" >
-                        <%-- <td  id="${st.count}" style="display:none;">${st.count}</td>  --%>
-                          <td>${c.userId}</td>
-                          <td>${c.userName}</td>
-                          <td>${c.nickName}</td>
-                          <td>${c.nowPoint}</td>
-                          <td>${c.count}</td>
-                          <td>
-							 <c:if test="${c.mStatus eq 1}">
-							<div _ngcontent-dqh-c114="" class="togglebutton">
-								<label _ngcontent-dqh-c114="">
+                      	<th>아이디</th>
+                      	<th>사용가능 여부</th>
+					  </thead>
+					  <tbody>
+					  <c:forEach items="${list}" var="a" varStatus="st">
+					   <tr id="${a.adminId}">
+					  	<td>${a.adminId}</td>
+					  	<td>
+					  		 <c:if test="${a.AStatus eq 1}">
+								<div _ngcontent-dqh-c114="" class="togglebutton">
+								 <label _ngcontent-dqh-c114="">
 									<input _ngcontent-dqh-c114="" type="checkbox" >
 									<span _ngcontent-dqh-c114="" class="toggle" id="toggle-${st.index}" ></span>
 								 </label>
-							</div>
+								</div>
 							</c:if>
-							 <c:if test="${c.mStatus ne 1}">
+							<c:if test="${a.AStatus ne 1}">
 							<div _ngcontent-dqh-c114="" class="togglebutton">
 								<label _ngcontent-dqh-c114="">
 									<input _ngcontent-dqh-c114="" type="checkbox" checked="checked" >
@@ -228,22 +260,20 @@ input:checked + .slider:before {
 								 </label>
 							</div>
 							</c:if> 
-							
-                          </td>
-                        </tr>
-                 	<script>
-                    $(function(){
-                    	
+					  	</td>
+					  	</tr>
+				  	<script>
+				  	 $(function(){
                    		$('#toggle-${st.index}').on('click',function(){
                    			var id = $(this).closest('tr').children().eq(0).text();  
                    				console.log(id);
                    				console.log('#toggle-${st.index}');
                    			var ts = $(this).closest('label').children(0).is(":checked")==true;
                    				console.log(ts);
-                   			if(ts==true){ // 비활성화 시킬때
+                   			 if(ts==true){ // 비활성화 시킬때
                    				$.ajax({
                  	   				type : 'POST',
-                 	   				url : '${pageContext.request.contextPath}/admin/member/memberCountDown.do',
+                 	   				url : '${pageContext.request.contextPath}/admin/adminMember/adminStatusOff.do',
                  	   				data : {"userId" : id},
                  					dataType : "json",
                  					success: function(data){
@@ -262,7 +292,7 @@ input:checked + .slider:before {
                    			}else{ // 활성화시킬때 
                    				$.ajax({
                  	   				type : 'POST',
-                 	   				url : '${pageContext.request.contextPath}/admin/member/memberCountUp.do',
+                 	   				url : '${pageContext.request.contextPath}/admin/adminMember/adminStatusOn.do',
                  	   				data : {"userId" : id},
                  					dataType : "json",
                  					success: function(data){
@@ -277,42 +307,77 @@ input:checked + .slider:before {
                  						alert("킬실패");
                  						console.log(data);
                  					}
-                 				});
+                 				}); 
          	   				}
                    		});  //onclick
-                   	 }); 
-                 	</script>
-                       </c:forEach>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-            </div>
-            </div>
-	<br/>
+                   	 });
+                   	
+                 	</script> 
+					  </c:forEach>
+					  </tbody>	
+					  </table>
+					  <br/>
+					  <button class="btn paging" style="float: right;" onclick="Insert();">등록</button>
 <div class="pagingArea" >
 	<div class="pa">
 	<c:out value="${pageBar}"  escapeXml="false"/>
 	</div>
 </div>
 <br/>
-<br/>
-<br/>
-<div class="searchArea">
-	<select id="searchCondition" name="searchCondition" >
-		<option value="id">회원아이디</option>
-		<option value="report">경고수</option>
-	</select>&nbsp;&nbsp;
-	<input type="search" id="keyword"> &nbsp;
-	<button class="paging" >검색</button>
 
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">관리자 등록</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form action="${pageContext.request.contextPath}/admin/adminMember/adminInsert.do" method="post">
+
+				<div class="modal-body row" style="margin:auto" >
+
+					<div class="group" >      
+				      <input type="text" name="adminId" required>
+				      <span class="highlight"></span>
+				      <span class="bar"></span>
+				      <label class="label-m">ID</label>
+				    </div>
+				      
+				    <div class="group">      
+				      <input type="password" name="adminPw" required>
+				      <span class="highlight"></span>
+				      <span class="bar"></span>
+				      <label class="label-m">Password</label>
+				    </div>
+					
+			
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn alazea-btn mt-15" style="float: right">등록</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
+
+<script>
+	function Insert(){
+		$('#myModal1').modal();
+	}
+	
+	function goBack(){
+		window.history.go();
+	}
+	$(function(){
+		$(".modal-layout").click(function(){
+			$('.modal').modal('hide');
+		});
+	});
+
+</script>
+<br/>
+<br/>
 <br>
 <br>
-
-    <%@ include file="common/footer.jsp" %>
-
-
+	<%@ include file="../common/footer.jsp" %>
