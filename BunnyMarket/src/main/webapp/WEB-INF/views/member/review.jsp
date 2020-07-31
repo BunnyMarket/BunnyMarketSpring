@@ -73,7 +73,7 @@
                                             </div>
                                             <div class="single_user_review mb-30">
                                                 <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true" ></i>
                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -103,21 +103,21 @@
 
                                 <div class="submit_a_review_area mt-50">
                                     <h3>후기 작성하기</h3>
-                                    <form action="#" method="post">
+                                    <form method="post">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group d-flex align-items-center">
                                                     <span class="mr-15" style="font-size:20px;">평가하기 : </span>
                                                     <div class="stars">
-                                                        <input type="radio" name="star" class="star-1" id="star-1">
+                                                        <input type="radio" name="star" class="star-1" value="1" id="star-1">
                                                         <label class="star-1" for="star-1">1</label>
-                                                        <input type="radio" name="star" class="star-2" id="star-2">
+                                                        <input type="radio" name="star" class="star-2" value="2" id="star-2">
                                                         <label class="star-2" for="star-2">2</label>
-                                                        <input type="radio" name="star" class="star-3" id="star-3">
+                                                        <input type="radio" name="star" class="star-3" value="3" id="star-3">
                                                         <label class="star-3" for="star-3">3</label>
-                                                        <input type="radio" name="star" class="star-4" id="star-4">
+                                                        <input type="radio" name="star" class="star-4" value="4" id="star-4">
                                                         <label class="star-4" for="star-4">4</label>
-                                                        <input type="radio" name="star" class="star-5" id="star-5">
+                                                        <input type="radio" name="star" class="star-5" value="5" id="star-5">
                                                         <label class="star-5" for="star-5">5</label>
                                                         <span></span>
                                                     </div>
@@ -136,7 +136,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button type="submit" class="btn alazea-btn">후기 작성 완료</button>
+                                                <button id="reviewInsertBtn" onclick="/review/reviewInsert.do?" class="btn alazea-btn">후기 작성 완료</button>
                                             </div>
                                         </div>
                                     </form>
@@ -150,6 +150,41 @@
         </div>
     </section>
     <!-- ##### Single Product Details Area End ##### -->
+    
 
 
 <c:import url="../../views/common/footer.jsp"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

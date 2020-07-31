@@ -57,8 +57,7 @@
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type="hidden" name="pPrice" id="pPriceOrigin" value="0"/>
-							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 가격 설정" required />
+							<input type = "text" name = "pPrice" class = "form-control" id = "pPrice" placeholder="상품 하한가 설정" required />
 							<br />
 
 							<!-- <label for="pEndDate">경매 종료일 *</label>
@@ -85,13 +84,15 @@
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
                                   <option value="" hidden>물품의 종류를 선택해주세요.</option>
-                                  <option value="1">전자기기</option>
-                                  <option value="2">가구</option>
-                                  <option value="3">악세서리</option>
-                                  <option value="4">의류</option>
-                                  <option value="5">장난감</option>
-                                  <option value="6">책</option>
-                                  <option value="7">기타</option>
+                                  <option value="1">컴퓨터</option>
+                                  <option value="2">옷</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
+                                  <!-- <option value="3">컴퓨터1</option>
+                                  <option value="4">3</option>
+                                  <option value="5">ㅎㅎ</option>
+                                  <option value="6">ㄴㄴ</option>
+                                  <option value="7">33</option> -->
                                 </select>
 	                        </div>
 	                        
@@ -114,7 +115,6 @@
 							</div>
 						</div>
 					</div>
-					
 					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
@@ -142,12 +142,6 @@
 <!-- ##### Single Product Details Area End ##### -->
 
 	<script>
-	$("#pPriceComma").focusout(function(){
-		$("#pPriceOrigin").val($("#pPriceComma").val());
-		var origin = $("#pPriceOrigin").val();
-		$("#pPriceComma").val(parseInt(origin).toLocaleString());
-	});
-	
 	// 사진 게시판 미리보기 기능 지원 스크립트
 		$(function(){
 			$('#pImgFileArea').hide();
