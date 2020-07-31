@@ -40,14 +40,18 @@ public interface ProductService {
 	int insertPComment(PComment pcomment);
 	
 	// 댓글 수정 
-	int updatePComemnt(PComment pcomment);
+	int updatePComment(PComment pcomment);
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
 
-	int selectOneReplyPno(int pcmno);
+	int selectOneReplyPcmno(int pcmno);
 
-	int sellCount(String pWriter);
+	String selectOneReplyPcWriter(int pcmno);
+
+	PComment selectOnePComment(int pno);
+
+	List<Object> selectProductListMap();
 
 	
 	

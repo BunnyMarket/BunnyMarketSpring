@@ -54,10 +54,7 @@ a:focus {
   font-size: 14px; }
   
   .userimg { height : 20px important; }  
-	.circleImg{
-		border-radius : 60%;
-  	overflow : hidden;
-	}
+
 ul,
 ol {
   margin: 0; }
@@ -1166,9 +1163,7 @@ img {
 /* :: 9.0 Cart Area CSS */
 .cart-table {
   position: relative;
-  z-index: 1; 
-  
-  }
+  z-index: 1; }
   .cart-table thead tr,
   .cart-table thead th {
     width: 20%; }

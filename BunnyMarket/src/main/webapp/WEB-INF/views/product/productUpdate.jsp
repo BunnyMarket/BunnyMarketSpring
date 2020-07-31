@@ -86,13 +86,13 @@
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%" required>
                                   <option value="" hidden>물품의 종류를 선택해주세요.</option>
-                                  <option value="1">컴퓨터</option>
-                                  <option value="2">옷</option>
-                                  <!-- <option value="3">컴퓨터1</option>
-                                  <option value="4">3</option>
-                                  <option value="5">ㅎㅎ</option>
-                                  <option value="6">ㄴㄴ</option>
-                                  <option value="7">33</option> -->
+                                  <option value="1">전자기기</option>
+                                  <option value="2">가구</option>
+                                  <option value="3">악세서리</option>
+                                  <option value="4">의류</option>
+                                  <option value="5">장난감</option>
+                                  <option value="6">책</option>
+                                  <option value="7">기타</option>
                                 </select>
 	                        </div>
 	                        
@@ -230,7 +230,7 @@
 					/* 지도 생성 */
 				    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				    mapOption = { 
-				        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				        center: new kakao.maps.LatLng(37.519117706115296, 126.98912931531106), // 지도의 중심좌표
 				        level: 3 // 지도의 확대 레벨
 				    };
 				

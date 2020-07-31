@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.vo.PComment;
@@ -57,6 +59,37 @@ public class ProductController {
 		
 		return "product/productList";
 		
+		
+	}
+	
+	
+	// 맵에 상품 리스트 불러오기 
+	@RequestMapping("/product/productListMap.do")
+	public String selectBoardListMap(Model model) {
+		
+		List<Object> products = productService.selectProductListMap();
+		
+		System.out.println("productController에서 지도를 위한 list를 가져오나 확인 : " + products);
+		System.out.println("가져온 상품의 개수 : " + products.size());
+		
+		// product 객체를 받은 리스트 products를 JSON으로 변환해주기 
+		ObjectMapper mapper = new ObjectMapper();
+		String mapJson = null;
+		
+		try {
+			mapJson = mapper.writeValueAsString(products);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("mapJson으로 잘 만들었니? : " + mapJson);
+		
+		
+		model.addAttribute("products", products)
+			 .addAttribute("mapJson", mapJson);
+		
+		
+		return "product/productMap";
 		
 	}
 	
@@ -287,29 +320,43 @@ public class ProductController {
 //		
 //		pcomment.setPcWriter(userId);
 //		System.out.println("댓글 들어옴 ? " + pcomment);
-//		String msg = "";
-//		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
-//		
-//		int result = productService.insertPComment(pcomment);
-//		PComment pcm = productService.selectOnePComment(pcomment.getPno()); 
-//		System.out.println();
-//		boolean isInsert = result > 0 ? true : false;
 //		Map<String, Object> hmap = new HashMap<String, Object>();
+//		boolean isInsert = false;
+//		PComment pcm = null;
+//		try {
+//			
+//			isInsert = productService.insertPComment(pcomment) > 0 ? true : false;
+//			if(isInsert) {
+//				pcm = productService.selectOnePComment(pcomment.getPno()); 				
+//			}
+//			
+//		} catch (Exception e) {
+//			throw new ProductException();
+//		}
+//		
+//		System.out.println("pcm : " + pcm);
 //		hmap.put("isInsert", isInsert);
 //		hmap.put("pcomment", pcm);
 //		 
-////		model.addAttribute("loc", loc)
-////			 .addAttribute("msg", msg);
-//		
 //		return hmap;
 //	}
 	
-	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
-	public String pcommentUpdate(PComment pcomment, Model model) {
+	@ResponseBody
+	public HashMap<String, Object> pcommentUpdate(PComment pcomment) {
 		
-		return "";
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		boolean updateCheck = false;
+		try {
+			updateCheck = productService.updatePComment(pcomment) > 0 ? true : false;
+		} catch (Exception e) {
+			throw new ProductException();
+		}
+		
+		hmap.put("updateCheck", updateCheck);
+		
+		return hmap;
 	}
 	
 	// 댓글 삭제하기 
@@ -320,12 +367,19 @@ public class ProductController {
 		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 		
 		try	{
-			int result = productService.deletePComment(pcomment.getPcmno());
 			
-			if(result > 0) {
-				msg = "댓글 삭제 성공!";
+			boolean hasReply = productService.selectOneReplyPcmno(pcomment.getPcmno()) > 0 ? true : false;
+			if(hasReply == true) {
+				msg = "대댓글이 있어서 삭제가 불가능합니다.";
 			} else {
-				msg = "댓글 삭제 실패ㅠ";
+				
+				int result = productService.deletePComment(pcomment.getPcmno());
+			
+				if(result > 0 && hasReply == false) {
+					msg = "댓글 삭제 성공!";				
+				} else {
+					msg = "에러 발생!(댓글 삭제 실패)";
+				}
 			}
 		} catch (Exception e) {
 			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
@@ -376,45 +430,8 @@ public class ProductController {
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
 	
-	@RequestMapping("/product/sellCount.do")
-	@ResponseBody
-	public int sellCount(@RequestParam String pWriter) {
-		
-		int sellCount = productService.sellCount(pWriter);
-		System.out.println("sellCount : " + sellCount);
-		
-		return sellCount;
-		
-		
-	}
+	
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

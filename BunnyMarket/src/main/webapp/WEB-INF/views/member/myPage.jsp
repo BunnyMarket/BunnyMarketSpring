@@ -32,87 +32,221 @@
             <div class="row">
                <div class="col-12" align="center">
                     <div class="cart-table clearfix">
-                  <c:if test="${member.photo == null }">
-				<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="344.8px" height="357.56px"
-				alt="userImg" />
-			</c:if>
-			<c:if test="${member.photo != null }">
-				<img src="/bunny/resources/member/profile/${member.photo}" id="userImg" class="circleImg" width="344.8px" height="357.56px"
-				alt="userImg"/>
-			</c:if> <br />
-                  <h3>${member.nickName}님의 상점</h3>
+                  <img src="/bunny/resources/img/usericon.png" height="70px" alt="userimg" /> <br />
+                  <h3>아이디</h3>
                </div>
                <div>
                   <p><a href="memberView.do?userId=${member.userId}" style="font-size: 20px;">회원정보 상세보기</a></p>
                   <p><a href="#" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
-                  <p><a href="tradeView.do?userId=${member.userId}">판매중인 상품 보기</a> </p>
                   <br /><br />
                </div>
             </div>
-                
-               
-             
-    
-	<!-- ##### Single Product Details Area Start ##### -->
-    <section class="single_product_details_area mb-50">
-        
-
-        <div class="container"> 
-            <div class="row">
                 <div class="col-12">
-                    <div class="product_details_tab clearfix">
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
-                            <li class="nav-item">
-                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${member.userId}님의 Reviews <span class="text-muted"></span></a>
-                            </li>
-                        </ul>
-                        <!-- Tab Content -->
-                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade show active" id="reviews">
-                                <div class="reviews_area">
-                                    <ul>
-                                        <li>
-                                           
-                                           <c:forEach items="${memberReviewList }" var="mr" >
-                                            <div class="single_user_review mb-30">
-                                                <div class="review-rating">
-                                                	
-                                                   <c:forEach begin="1" end="${mr.rating}">
-                                                   		<i class="fa fa-star" aria-hidden="true"></i>
-                                                   </c:forEach>
-                                                 
-                                                   
-                                                    <br>
-                                                    <span style="font-size:17px;">${mr.recontent}</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p style="font-size:15px;">by <a href="#">${mr.rewriter}</a><span></span></p>
-                                                </div>
-                                            </div>
-                                            
-                                            </c:forEach>
-                                            <c:if test="${memberReviewList.size() == 0}">
-                                            	<p>등록된 리뷰가 없습니다.</p>
-                                            </c:if>
-                                            
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                
-                            </div>
-
-                        </div>
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">판매 중인 상품 목록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                           <td style="padding:90px 90px 103px 90px;  display: inline-block;">
+                              <div class="product-info mt-15 text-center">
+                                 <a href="#"><span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>더보기</a>
+                                       </div>
+                           </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>  
-                  
-                  
-                           
-                    
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">거래 중인 상품 목록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                           <td style="padding:90px 90px 103px 90px;  display: inline-block;">
+                              <div class="product-info mt-15 text-center">
+                                 <a href="#"><span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>더보기</a>
+                                       </div>
+                           </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">찜한 상품 목록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                           <td style="padding:90px 90px 103px 90px;  display: inline-block;">
+                              <div class="product-info mt-15 text-center">
+                                 <a href="#"><span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>더보기</a>
+                                       </div>
+                           </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">구매 완료된 상품 목록</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                           <td style="padding:90px 90px 103px 90px;  display: inline-block;">
+                              <div class="product-info mt-15 text-center">
+                                 <a href="#"><span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>더보기</a>
+                                       </div>
+                           </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">리뷰</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                                    <td class="cart_product_img" style="display: inline-block;">
+                                        <div class="product-info mt-15 text-center">
+                                           <a href="#"><img src="/bunny/resources/img/bg-img/34.jpg" alt="Product" align="middle"></a><br />
+                                           <p>GTQ 포토샵 1급 책 팝니다(시나공)</p>
+                                           <h6>10,000원</h6>
+                                       </div>
+                                    </td>
+                           <td style="padding:90px 90px 103px 90px;  display: inline-block;">
+                              <div class="product-info mt-15 text-center">
+                                 <a href="#"><span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>더보기</a>
+                                       </div>
+                           </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

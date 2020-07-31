@@ -118,7 +118,7 @@
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
 	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                                        </div>
+	                                        </div> 
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">

@@ -1,6 +1,5 @@
 package com.kh.bunny.member.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,56 +44,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-
-
 	@Override
-	public Member findId(Member m) {
-		
-		return memberDAO.findId(m);
+	public boolean email_check(String email) throws Exception {
+		 boolean result = memberDAO.email_check(email);
+	        
+	        return result;
 	}
-
-	@Override
-	public int pwdUpdate(Member m) {
-		
-		return memberDAO.pwdUpdate(m);
-	}
-
-	@Override
-	public int idDupCheck(String userId) {
-		
-		return memberDAO.idDupCheck(userId);
-	}
-
-	@Override
-	public int nickDupCheck(String nickName) {
-		
-		return memberDAO.nickDupCheck(nickName);
-	}
-
-	@Override
-	public int emailDupCheck(String email) {
-
-		return memberDAO.emailDupCheck(email);
-	}
-
-	@Override
-	public int phoneDupCheck(String phone) {
-
-		return memberDAO.phoneDupCheck(phone);
-	}
-
-	@Override
-	public ArrayList<Member> findSeller(String nickName) {
-		
-		return memberDAO.findSeller(nickName);
-	}
-
-	@Override
-	public Member findSeller2(String nickName) {
-		
-		return memberDAO.findSeller2(nickName);
-	}
-	
 
 	
 
