@@ -250,7 +250,7 @@ public class AuctionController {
 		int totalContents = auctionService.selectTradeTotalContents();
 		
 		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "tradeList.do");
-		result.put("tlist", tlist);
+		result.put("list", tlist);
 		result.put("totalContents", totalContents);
 		result.put("numPerPage", numPerPage);
 		result.put("pageBar", pageBar);

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.review.model.service.ReviewService;
 
 @SessionAttributes(value = { "member" })
 @Controller
@@ -38,7 +40,10 @@ public class MemberController {
 
 	@Autowired
 	MemberService memberService;
+	@Autowired
 	JavaMailSender mailSender; // 메일 서비스를 사용하기 위해 의존성을 주입함.
+	@Autowired
+	ReviewService reviewService;	
 
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -170,8 +175,10 @@ public class MemberController {
 	// 마이페이지 이동
 	@RequestMapping("/member/memberMyPage.do")
 	public String memberMyPage(@RequestParam String userId, Model model) {
+		List<Map<String, String>> slist = reviewService.selectSellerReview(userId);
+		model.addAttribute("memberReviewList", slist);
 		model.addAttribute("member", memberService.selectOne(userId));
-
+		System.out.println("member slist"+slist);
 		return "member/myPage";
 	}
 	
@@ -457,7 +464,7 @@ public class MemberController {
 	// 프로필 이미지 띄우기.!!!!@@@#!!@#$@!$#!@#@!#!@#$
 	@RequestMapping("/member/sellerProfile.do")
 	@ResponseBody
-	public Map<String, Object> sellerProfile(@RequestParam String nickName) {
+	public Map<String, Object> sellerProfile(@RequestParam String nickName, Model model) {
 
 		
 		
@@ -472,8 +479,9 @@ public class MemberController {
 		System.out.println("seList : "+seList);
 		// 신고횟수 자기소개, 닉네임, 이미지, 판매중인 상품 개수
 		// map.put("seList",seList);
+		model.addAttribute("seller", m);
 		
-		map.put("member", m);
+		map.put("seller", m);
 		
 
 		return map;

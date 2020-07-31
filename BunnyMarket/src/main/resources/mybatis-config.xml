@@ -22,6 +22,7 @@
 		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/>
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Auction" alias = "Auction" /> 
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Bidder" alias = "Bidder" />
+		 <typeAlias type="com.kh.bunny.review.model.vo.Review" alias="review"/>
 		   
 
 	</typeAliases>

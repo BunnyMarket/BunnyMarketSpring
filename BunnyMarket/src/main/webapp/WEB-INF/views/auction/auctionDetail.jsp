@@ -130,8 +130,8 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
-										
 										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
+											<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -471,7 +471,7 @@
 			,  async:false
 			, success : function(data){
 			
-				var pWriter = data.member.nickName;
+				var pWriter = data.seller.nickName;
 				$.ajax({
 					data : {pWriter : pWriter},
 					url : "${pageContext.request.contextPath}/product/sellCount.do",
@@ -487,11 +487,11 @@
 				/* $.each(result , function(idx, val) {
 					console.log(idx + " " + val.introduce);
 				}); */
-				var photo = data.member.photo;
-				$('#sellerName').text("아이디 : " + data.member.nickName);
-				$('#sellerIntroduce').text("자기소개 : " + data.member.introduce);
+				var photo = data.seller.photo;
+				$('#sellerName').text("아이디 : " + data.seller.nickName);
+				$('#sellerIntroduce').text("자기소개 : " + data.seller.introduce);
 				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
-				$('#sellerReport').text("신고 당한 횟수 : " + data.member.count + "회");
+				$('#sellerReport').text("신고 당한 횟수 : " + data.seller.count + "회");
 				$('#sellCount').text("총거래 : " + sellCount + "회");
 				
 				

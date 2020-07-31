@@ -68,6 +68,7 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                
                                     <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${member.nickName}');" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">경매중인 상품$ <span class="text-muted"></span></label>
                                     
@@ -99,8 +100,14 @@
                 </div>
 
                 <!-- All Products Area -->
-                <div id="auctionTrade" style="width: 80% height : 80%"></div>
-               <%-- <div class="col-12 col-md-8 col-lg-9">
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="shop-products-area">
+                        <div class="row" id="auctionTrade">
+                        </div>
+                        </div>
+                        </div>
+               <%--  <c:forEach begin="1" end="10" var="i"></c:forEach>
+               <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop-products-area">
                         <div class="row">
 							<c:forEach items="${list}" var="p" varStatus="st">
@@ -141,64 +148,67 @@
 	                        <c:out value="${pageBar}" escapeXml="false"/>
                         </div> 
                      </div>
-                </div>--%>
+                </div> --%>
             </div>
         </div>
     </section>
     <!-- ##### Shop Area End ##### -->
       <script>
      
+  
       
-    
+      
+      
+  
     function goAuctionProduct(nickName){
     	$.ajax({
     		url : "${pageContext.request.contextPath}/auction/auctionTradeList.do",
     		data :{
     			nickName : nickName
     		}, dataType : "json",
-    		success : function(list){
-    			//$("#auctionTrade").html(
-    			
-    			var printHTML = '<div class="col-12 col-md-8 col-lg-9">';
-    				printHTML+= '<div class="shop-products-area">';
-    				printHTML+= '<div class="row">';
-    					//printHTML+= '<c:forEach items="${list}" var="p" varStatus="st">';
-    				printHTML+= ' <div class="col-12 col-sm-6 col-lg-4">';
-    				printHTML+= '<div class="single-product-area mb-50">';
-    				printHTML+= '<div class="product-img" style="height: 300px; width: 255px;" >';
-    					//printHTML+= '<input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">';
-    					//printHTML+= '<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/${p.PImg}" alt=""></a>';
-    				printHTML+= '<div class="product-meta d-flex">';
-    				printHTML+= '<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>';
-    				printHTML+= '<a href="#" class="add-to-cart-btn">Add to cart</a>';
-    				printHTML+= '<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>';
-    				printHTML+= '</div> </div>';
-    				printHTML+= '<div class="product-info mt-15 text-center">';
-    					//printHTML+= '<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">';
-    					//printHTML+= '${p.PTitle}';
-    					//printHTML+= '</a></p>';
-    					//printHTML+= '<p id="bidderCount-${st.index}"></p>';
-    					//printHTML+= '<c:if test="${p.PPrice gt p.BPrice }">';
-    					//printHTML+= '<h6>${p.PPrice} 당근</h6>';
-    					//printHTML+= '</c:if>';
-    					//printHTML+= '<c:if test="${p.PPrice lt p.BPrice }">';
-    					//printHTML+= '<h6>${p.BPrice} 당근</h6>';
-    					//printHTML+= '</c:if>';
-    				printHTML+= '</div>';
-    				printHTML+= '</div> </div>';
-    					//printHTML+= '</c:forEach>';
-    				printHTML+= '</div>';
-    				printHTML+= '<div>';
-    					//printHTML+= '<c:out value="${pageBar}" escapeXml="false"/>';
-    				printHTML+= '</div>';
+    		success : function(result){
+    			 console.log(result.list);
+    			 console.log(result.totalContents);
+    			 console.log(result.numPerPage);
+    			 console.log(result.pageBar);
+    			var tlist = list;
+    			var list = list;
+    	
+    
+    	    	  
+    	    	  
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	   +'	<p id="bidderCount-'+i + '"></p>'
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
     					
-    					
-    					
-    					
-    					//);
-    				$("#auctionTrade").append(printHTML);
-    				$("#auctionTrade").html("외않돼?");
-        			$("#auctionTrade").append("외않돼?sd");
+    	    	   }
+    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
     		}
     		
     	});
