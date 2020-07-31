@@ -12,10 +12,13 @@ import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 @Service("QNAService")
+
 public class QNAServiceImpl implements QNAService {
 
-@Autowired
-QNADAO qnaDAO;
+
+	@Autowired
+	QNADAO qnaDAO;
+
 	
 	@Override
 	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage, String userId) {
@@ -101,6 +104,7 @@ QNADAO qnaDAO;
 	@Override
 	public int deleteQComment(int qcno) {
 		return qnaDAO.deleteQComment(qcno);
+
 	}
 
 }

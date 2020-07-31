@@ -25,6 +25,7 @@ import com.kh.bunny.QNA.model.exception.QNAException;
 import com.kh.bunny.QNA.model.service.QNAService;
 import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
+import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -42,6 +43,7 @@ public class QNAController {
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@RequestMapping("/QNA/QNAList.do")
+
 	public String selectQNAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
 			Model model, HttpServletRequest request, HttpSession session) {
 		
@@ -105,14 +107,21 @@ public class QNAController {
 	}
 
 	@RequestMapping("/QNA/QNADetail.do")
-	public String selectOne(@RequestParam int qno, Model model) {
+	public String selectOne(@RequestParam int qno, Model model,HttpSession session) {
+		
 		QNA q = qnaService.selectOneQNA(qno);
+
+		model.addAttribute("qna", q);
+
         
 		List<Object> QComments = qnaService.selectQCommentList(qno);
 		System.out.println("qcomments: " + QComments);
 		System.out.println("qcomments : " + QComments.size());
 		
 		model.addAttribute("qna", q).addAttribute("qcomments", QComments).addAttribute("qcommentSize", QComments.size());
+
+
+		
 
 		return "QNA/QNA_Detail";
 
@@ -227,9 +236,9 @@ public class QNAController {
 	}
 
 	@RequestMapping("/QNA/QNASelectOneAdmin.do")
-	public String selectOneAdmin(@RequestParam int qno, Model model) {
+	public String selectOneAdmin(@RequestParam int qno, Model model,HttpSession session) {
+		
 		QNA q = qnaService.selectOneQNA(qno);
-
 		model.addAttribute("qna", q);
 
 		return "QNA/QNA_Detail";

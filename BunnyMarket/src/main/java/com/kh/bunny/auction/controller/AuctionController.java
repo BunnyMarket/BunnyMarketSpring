@@ -44,19 +44,19 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
-				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
+				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage
 				, Model model, HttpServletRequest request
 			) {
 		
 		int numPerPage = 9;
-		List<Map<String, String>> list = auctionService.selectAuctionList(aPage, numPerPage);
+		List<Map<String, String>> list = auctionService.selectAuctionList(pPage, numPerPage);
 		
 		System.out.println("무엇이 들어있느냐? : " + list);
 		System.out.println("무엇이 들어있느냐? : " + list.size());
 		
 		int totalContents = auctionService.selectAuctionTotalContents();
 		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionList.do");
+		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "auctionList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
@@ -114,7 +114,7 @@ public class AuctionController {
 		
 		System.out.println("옥션이 잘 들어왓느냐~ : " +auction );
 		
-		String saveDir = session.getServletContext().getRealPath("resources/upload/auction");
+		String saveDir = session.getServletContext().getRealPath("resources/upload/product");
 		
 		File dir = new File(saveDir);
 		if(dir.exists() == false) dir.mkdirs();
@@ -158,10 +158,10 @@ public class AuctionController {
 		if (result >0) {
 			msg = "Success Insert Auction";
 			loc = "/auction/auctionDetail.do?pno="+auction.getPno();
-			System.out.println("Success Insert Auction");
+			System.out.println("경매상품 등록 성공");
 		} else {
 			msg = "Fail Insert Auction";
-			System.out.println("Fail Insert Auction");
+			System.out.println("경매상품 등록 실패");
 		}
 		
 		model.addAttribute("loc", loc)

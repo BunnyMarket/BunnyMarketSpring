@@ -51,6 +51,9 @@ public interface ProductService {
 
 	PComment selectOnePComment(int pno);
 
+
+	List<Object> selectProductListMap();
+
 	
 	
 	
