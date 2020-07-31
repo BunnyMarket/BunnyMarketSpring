@@ -8,6 +8,12 @@
 		INSERT INTO BUNNYPOINT
 		VALUES(SEQ_BPNO.NEXTVAL, #{userId}, SYSDATE, #{bPoint}, 1)
 	</insert>
+	
+	<select id="selectOneNowPoint" parameterType="_int">
+		SELECT NOWPOINT
+		  FROM MEMBER
+		 WHERE NICKNAME = #{userId}
+	</select>
 </mapper>
 
 <!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->

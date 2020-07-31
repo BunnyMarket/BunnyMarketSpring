@@ -18,4 +18,9 @@ public class PointDAOImpl implements PointDAO {
 		return sqlSession.insert("pointMapper.pointChargeInsert", bunnyPoint);
 	}
 
+	@Override
+	public int selectOneNowPoint(String userId) {
+		return sqlSession.selectOne("pointMapper.selectOneNowPoint", userId);
+	}
+
 }

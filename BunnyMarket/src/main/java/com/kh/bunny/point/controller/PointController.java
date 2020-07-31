@@ -35,20 +35,23 @@ public class PointController {
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getNickName();
 		
-		bunnyPoint.setUserid(userId);
+		bunnyPoint.setUserId(userId);
 		HashMap<String , Object> hmap = new HashMap<String, Object>();
 		boolean fineCharge = false;
-		
+		System.out.println("포인트로 들어왔어요? : " + bunnyPoint);
+		int nowPoint = 0;
 		try {
 			
 			fineCharge = pointService.pointChargeInsert(bunnyPoint) > 0 ? true : false;
 			
-			hmap.put("fineCharge", fineCharge);
-			
+			nowPoint = pointService.selectOneNowPoint(userId);
+			System.out.println("웨?? fineCharge : " + fineCharge);
 			
 		} catch (Exception e) {
 			throw new PointException("[포인트 결제 중 문제 발생] : " + e.getMessage());
 		}
+		hmap.put("fineCharge", fineCharge);
+		hmap.put("nowPoint", nowPoint);
 		
 		
 		return hmap;

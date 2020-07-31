@@ -51,7 +51,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="cart-table clearfix">
+                	<div class="cart-table clearfix" id="confirmDiv" style="display: none;"></div>
+                    <div class="cart-table clearfix" id="chargeDiv">
                         <table class="table table-responsive" id="table">
                             <thead>
                                 <tr>
@@ -92,7 +93,7 @@
                                 </tr>
 								<tr>
 									<td colspan="2" align="center">
-										<input type="checkbox" required="required"/>&nbsp;&nbsp;
+										<input type="checkbox" id="termsCheck" required="required"/>&nbsp;&nbsp;
 										<label style="font-size: 20px; text-align : left;">
 											<a id="terms" style=" font-weight: bold; font-size: 23px;" href="#" title="유료서비스 이용약관보러가기">유료서비스 이용약관</a>에 동의합니다.
 										</label>
@@ -176,97 +177,44 @@
 		});
 		
 		function payByKakao(){
-			IMP.request_pay({
-				pg : 'kakao',
-			    pay_method : 'card',
-			    merchant_uid : 'merchant_' + new Date().getTime(),
-				name : 'BunnyMarket 당근 결제',
-				amount : parseInt($('#bPoint').val()),
-				status : $("#bpstatus").val()
-				/* buyer_email : '구매자 이메일',
-				buyer_name : '구매자 이름',
-				buyer_tel : '구매자 전화번호',
-				buyer_addr : '구매자 주소',
-				buyer_postcode : '구매자 지역번호' */
-			}, function(rsp) {
-				if (rsp.success) {
-					//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-					$.ajax({
-						url : "/point/pointCharge.do", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-						type : 'POST',
-						dataType : 'json',
-						data : {
-							point : rsp.amount,
-							//userId : rsp.imp_uid,
-							price : rsp.paid_amount,
-							status : rsp.status
-							/* title : rsp.name,
-							pg_tid : rsp.pg_tid,
-							buyer_name : rsp.buyer_name,
-							paid_at : rsp.paid_at,
-							receipt_url : rsp.receipt_url */
-						//기타 필요한 데이터가 있으면 추가 전달
-						}, success : function(data){
-							if(data.fineCharge == true){
-								alert("잘 들어왔습지요");
-							} else {
-								alert("땡땡 틀림~");
-							}
-							
-						}
-					});
-					
-					var msg = '결제가 완료되었습니다.';
-			        msg += '고유ID : ' + rsp.imp_uid;
-			        msg += '상점 거래ID : ' + rsp.merchant_uid;
-			        msg += '결제 금액 : ' + rsp.paid_amount;
-			        msg += '카드 승인번호 : ' + rsp.apply_num;
-					
-				} else {
-					var msg = '결제에 실패하였습니다.';
-					msg += '\n에러내용 : ' + rsp.error_msg;
-					alert(msg);
-				}
-			});
-		}
-		
-		
-		<%-- $('#kakaoPay').on('click', function(){
+			
+			if($("input:checkbox[id='termsCheck']").is(":checked")){
+				
 				IMP.request_pay({
 					pg : 'kakao',
 				    pay_method : 'card',
 				    merchant_uid : 'merchant_' + new Date().getTime(),
 					name : 'BunnyMarket 당근 결제',
 					amount : parseInt($('#bPoint').val()),
+					status : $("#bpstatus").val(),
 					buyer_email : '구매자 이메일',
 					buyer_name : '구매자 이름',
 					buyer_tel : '구매자 전화번호',
 					buyer_addr : '구매자 주소',
 					buyer_postcode : '구매자 지역번호'
 				}, function(rsp) {
+					
 					if (rsp.success) {
 						//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 						$.ajax({
-							url : "/test/orderconfirm.do", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+							url : "${pageContext.request.contextPath}/point/pointCharge.do", 
 							type : 'POST',
 							dataType : 'json',
 							data : {
-								item : 'toy',
-								code : 'P0001',
-								quan : '<%=hmap.get("sum") %>',
-								imp_uid : rsp.imp_uid,
-								pay_method : rsp.pay_method,
-								price : rsp.paid_amount,
-								status : rsp.status,
-								title : rsp.name,
-								pg_tid : rsp.pg_tid,
-								buyer_name : rsp.buyer_name,
-								paid_at : rsp.paid_at,
-								receipt_url : rsp.receipt_url
+								bPoint : $('#bPoint').val(),
+								bpStatus : $("#bpstatus").val()
 							//기타 필요한 데이터가 있으면 추가 전달
+							}, success : function(data){
+								if(data.fineCharge == true){
+									console.log("성공쓰~");
+									$("#chargeDiv").css("display", "none");
+									successCharge(data.nowPoint);
+								}
 							}
 						});
-						
+						alert("잘 들어왔습지요");
+						console.log(parseInt($('#bPoint').val()));
+						console.log( $("#bpstatus").val());
 						var msg = '결제가 완료되었습니다.';
 				        msg += '고유ID : ' + rsp.imp_uid;
 				        msg += '상점 거래ID : ' + rsp.merchant_uid;
@@ -279,7 +227,46 @@
 						alert(msg);
 					}
 				});
-		}); --%>
+			} else {
+				alert("이용약관에 동의해주세요");
+			}
+		}
+		
+		function successCharge(bPoint){
+			var html = '<table class="table table-responsive">'
+					 + '	<thead>'
+					 + '		<tr>'
+					 + '			<th colspan="4" style="padding-top: 30px">결제 완료</th>'
+					 + '		</tr>'
+					 + '	</thead>'
+					 + '	<tbody>'
+					 + '		<tr>'
+					 + '			<td>'
+					 + '				<h5 style="padding-top: 10px">충전 금액</h5>'
+					 + '			</td>'
+					 + '			<td>'
+					 + '				<div class="price" style="padding-top: 20px">'
+					 + '					<p style="font-size: 23px;">'
+					 + '						<span style="color:orange">' +  + '</span>당근' 
+					 + '						(<span style="color:orange">' +  + '</span>원)'
+	                 + '					</p>'
+	                 + '				</div>'
+	                 + '			</td>'
+	                 + '		</tr>'
+	                 + '		<tr>'
+	                 + '			<td>'
+	                 + '				<p style="padding-top: 10px"><a href="">상품 구매하러 가기</a></p><br />'
+	                 + '			</td>'
+	                 + '			<td>'
+	                 + '				<p style="padding-top: 10px"><a href="">포인트 확인하러 가기</a></p><br />'
+	                 + '			</td>'
+	                 + '		</tr>'
+	                 + '	</tbody>'
+	                 + '</table>';
+	                 
+			$("#confirmDiv").css("display", "inline-block");
+			$("#confirmDiv").append(html);
+		}
 	</script>
 	
 	

@@ -16,5 +16,10 @@ public class PointServiceImpl implements PointService{
 	public int pointChargeInsert(BunnyPoint bunnyPoint) {
 		return pointDAO.pointChargeInsert(bunnyPoint);
 	}
+
+	@Override
+	public int selectOneNowPoint(String userId) {
+		return pointDAO.selectOneNowPoint(userId);
+	}
 	
 }

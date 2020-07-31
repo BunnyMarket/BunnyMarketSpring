@@ -6,4 +6,6 @@ public interface PointDAO {
 
 	int pointChargeInsert(BunnyPoint bunnyPoint);
 
+	int selectOneNowPoint(String userId);
+
 }
