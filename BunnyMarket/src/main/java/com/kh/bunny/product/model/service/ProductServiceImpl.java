@@ -29,7 +29,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product selectOneProduct(int pno) {
-		return productDAO.selectOneProduct(pno);
+		Product p = productDAO.selectOneProduct(pno);
+		
+		if(p != null){
+			int result = productDAO.updateCount(pno);
+		}
+		return p;
 	}
 
 	@Override

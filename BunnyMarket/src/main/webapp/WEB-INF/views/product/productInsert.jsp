@@ -114,7 +114,6 @@
 						</div>
 					</div>
 					
-					
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />

@@ -28,7 +28,7 @@
 <section class="single_product_details_area mb-50">
 	<div class="produts-details--content mb-50">
 		<div class="container">
-			<form action="">
+			<form id="formArea"  method="post" action="${ pageContext.request.contextPath }/QNA/QNAUpdate.do">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-2">
 						<div class="single_product_desc" style="text-align: center; padding-top: 7px;">
@@ -40,7 +40,8 @@
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
-							<input type="text" class="form-control" id="" placeholder="게시글 제목을 입력" required />
+						<input type="hidden"    name="qno" value="${qna.qno }"/>
+						<input type="text" class="form-control" id="qTitle"  name="qTitle"  value="${qna.QTitle}" placeholder="게시글 제목을 입력" required />
 							<br />
 						</div>
 					</div>
@@ -48,18 +49,16 @@
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea class="summernote"  name="qContent" >${qna.QContent}</textarea>
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_Detail.jsp'">취소하기</button>
+					<input type="button" class="btn alazea-btn mt-15" value="취소하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADetail.do?qno=${qna.qno}'"/>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_Detail.jsp'">수정하기</button>
+					<button type="submit" class="btn alazea-btn mt-15" >수정하기</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="submit" class="btn alazea-btn mt-15" 
-							onclick="location.href='${ pageContext.request.contextPath }/views/QNA/QNA_List.jsp'">삭제하기</button>
+					
+					<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADelete.do?qno=${qna.qno}'"/>
 				</div>
 			</form>
 		</div>
@@ -67,7 +66,7 @@
 </section>
 <script>
 	//여기 아래 부분
-	$('.summernote').summernote({
+	var check = $('.summernote').summernote({
 		  height : 600 // 에디터 높이
 		, minHeight : null // 최소 높이
 		, maxHeight : null // 최대 높이
@@ -86,15 +85,42 @@
             ['height', ['height']],
             ['insert', ['link', 'picture', 'video']],
             ['view', ['fullscreen', 'codeview', 'help']]
-         ]
-		
-	});
+            ], callbacks : {
+   	         onImageUpload : function(files, editor,
+   	               welEditorble) {
+   	            data = new FormData();
+   	            data.append("file", files[0]);
+   	            
+   	            $.ajax({
+   	               data : data,
+   	               type : "post",
+   	               url : '${pageContext.request.contextPath}/QNA/QNAImgInsert.do', // servlet url
+   	               cache : false,
+   	               contentType : false,
+   	               processData : false,
+   	               success : function(fileUrl) {
+   	                  check.summernote('insertImage', fileUrl);
+   	                  alert("이미지 등록 성공!" + fileUrl);
+   	               },
+   	               error : function(request, status, error) {
+   	                  alert("code:" + request.status + "\n"
+   	                        + "message:"
+   	                        + request.responseText + "\n"
+   	                        + "error:" + error);
+   	               }
+   	            });
+   	         }
+   	      }
+   	   });
 	$("div.note-editable").on('drop',function(e){
         for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
         	uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$(".summernote")[0]);
         }
        e.preventDefault();
 	});
+
+	
+
 	
 </script>
 <c:import url="../common/footer.jsp" />
