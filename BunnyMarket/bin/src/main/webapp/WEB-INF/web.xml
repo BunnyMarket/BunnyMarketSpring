@@ -12,6 +12,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:root-context.xml
+			classpath:security-context.xml
+		
 		</param-value>
 	</context-param>
 	
@@ -51,9 +53,9 @@
 	</filter-mapping>
 	
 	<!-- 공용 에러페이지 등록 -->
-	<!-- <error-page>
+	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/views/common/error.jsp</location>
-	</error-page> -->
+	</error-page>
 
 </web-app>

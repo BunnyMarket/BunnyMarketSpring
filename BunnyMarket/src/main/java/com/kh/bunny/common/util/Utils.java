@@ -6,17 +6,17 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class Utils {
 	
-	public static String getPageBar(int totalContents, int aPage, int numPerPage, String url ){
+	public static String getPageBar(int totalContents, int pPage, int numPerPage, String url ){
 		String pageBar = "";
 		int pageBarSize = 6; // 5개씩 페이지 목록을 보여주세요 
-		aPage = aPage==0?1:aPage;
+		pPage = pPage==0?1:pPage;
 		
 		//총페이지수 구하기
 		int totalPage = (int)Math.ceil((double)totalContents/numPerPage); 
 		
 		//1.pageBar작성
 		//pageBar순회용변수 
-		int pageNo = ((aPage - 1)/pageBarSize) * pageBarSize +1;
+		int pageNo = ((pPage - 1)/pageBarSize) * pageBarSize +1;
 		//종료페이지 번호 세팅
 		int pageEnd = pageNo+pageBarSize-1;
 		System.out.println("totalPage : "+totalPage);
@@ -37,7 +37,7 @@ public class Utils {
 		
 		// pageNo section
 		while(!(pageNo>pageEnd || pageNo > totalPage)){
-			if(aPage == pageNo ){
+			if(pPage == pageNo ){
 				pageBar += "<li class='page-item active'>";
 				pageBar += "<a class='page-link'>"+pageNo+"</a>";
 				pageBar += "</li>";
@@ -67,12 +67,12 @@ public class Utils {
 		//2.스크립트 태그 작성
 		//fn_paging함수
 		pageBar += "<script>";
-		pageBar += "function fn_paging(aPage,numPerPage){";
-		pageBar += "location.href='"+url+"?aPage='+aPage;";
+		pageBar += "function fn_paging(pPage,numPerPage){";
+		pageBar += "location.href='"+url+"?pPage='+pPage;";
 		pageBar += "}";
 		pageBar += "</script>";
 		
-		return pageBar; //boardList.jsp에 가서 <c:out value = >에 값을 준다. 
+		return pageBar;  
 	}
 
 }
