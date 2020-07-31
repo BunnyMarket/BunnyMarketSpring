@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:import url="../common/header.jsp" />
+<c:import url="../../views/common/header.jsp" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,8 +96,9 @@
 				<div class="col-12">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item">
-							<a href="#"><i class="fa fa-home"></i> Home</a></li>
+							<li class="breadcrumb-item"><a
+							href="${ pageContext.request.contextPath }/index.jsp"><i
+								class="fa fa-home"></i>홈화면</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 						</ol>
 					</nav>
@@ -130,6 +131,6 @@
 <!--  여기까지 -->
 	<br />
 	<br />
-<c:import url="../common/footer.jsp" />
+<c:import url="../../views/common/footer.jsp" />
 </body>
 </html>
