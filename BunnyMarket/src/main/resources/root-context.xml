@@ -16,8 +16,7 @@
 											<!-- 윈도우는 1572인가..1571인가.. -->
 		<property name="username" value="BUNNY"/>
 		<property name="password" value="BUNNY"/>
-	</bean>
-	
+
 	<!--  Mybatis 연동 설정  -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
