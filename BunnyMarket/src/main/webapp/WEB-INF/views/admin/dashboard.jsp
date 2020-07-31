@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
@@ -101,7 +101,7 @@ let chartConfig = {
 		        margin: '45px 20px 38px 45px'
 		      },
 		      scaleX: { //카테고리 목록
-		        values: ['Apparel', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
+		        values: ['${}', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
 		        guide: {
 		          visible: false
 		        },

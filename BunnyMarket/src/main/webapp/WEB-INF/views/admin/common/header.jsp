@@ -59,7 +59,7 @@
 					<li class="nav-item "><a class="nav-link"
 						href=" ${ pageContext.request.contextPath }/admin/main/home.do">
 							<i class="material-icons">notifications</i>
-							<p>관리자 홈</p>
+							<p>관리자 홈 O</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						href=" ${ pageContext.request.contextPath }/views/admin/reportList.jsp">
@@ -74,17 +74,17 @@
 					<li class="nav-item "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/admin/member/memberList.do">
 							<i class="material-icons">person</i>
-							<p>회원 리스트</p>
+							<p>회원 리스트 O</p>
 					</a></li>
 					<li class="nav-item  "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">
 							<i class="material-icons">dashboard</i>
-							<p>공지사항</p>
+							<p>공지사항 O</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						<%-- href="${ pageContext.request.contextPath }/ "--%>
 						onclick="openQA();"> <i	class="material-icons">library_books</i>
-							<p>Q&A</p>
+							<p>Q&A O</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/views/admin/message.jsp">
@@ -95,7 +95,7 @@
 						<li class="nav-item "><a class="nav-link"
 							href="${ pageContext.request.contextPath }/admin/adminMember/adminList.do">
 								<i class="material-icons">person</i>
-								<p>관리자 멤버관리</p>
+								<p>관리자 멤버관리 O</p>
 						</a></li>
 					</c:if>
 					<li class="nav-item "><a class="nav-link"
