@@ -71,12 +71,15 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
+						<input type="hidden" name="pTitle" value="${ product.PTitle }" />
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
 							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
-						<br />
-
-						<h4 class="price">${ product.PPrice } won</h4>
+						<br /><br /><br />
+                         <button type="button" class="btn alazea-btn mt-15"
+							style="float: right"
+							onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+						<h4 class="price"><span style="color:orange; font: bold;">${product.PPrice}</span>당근</h4>
 						<br />
 
 						<h5>글 작성날짜</h5>
