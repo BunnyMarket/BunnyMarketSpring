@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -14,20 +16,36 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
 	
+	<!-- jsonView 객체와 json 전용 viewResolver 등록하기 -->
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="1"/>
 	</beans:bean>
+	
+			 <!-- mail bean -->
+<beans:bean id="javaMailSender" 
+    class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <beans:property name="host" value="smtp.naver.com"/>
+    <beans:property name="port" value="465"/>        
+    <beans:property name="username" value="model_so@naver.com"/>
+    <beans:property name="password" value="zxc2754"/>
+    <beans:property name="protocol" value="smtps"/>        
+    <beans:property name="defaultEncoding" value="utf-8"/>
+    <beans:property name="javaMailProperties">
+        <beans:props>
+            <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+            <beans:prop key="mail.smtp.auth">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.checkserveridentity">true</beans:prop>
+            <beans:prop key="mail.smtp.ssl.trust">*</beans:prop>
+        </beans:props>
+    </beans:property>        
+</beans:bean>
+	
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
+	<!-- @ResponseBody 사용을 위한 객체 등록 -->
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<beans:property name="messageConverters">
 			<beans:list>
 				<beans:ref bean="jacksonMessageConverter"/>
@@ -35,27 +53,31 @@
 		</beans:property>
 	</beans:bean>
 	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="10485760"/>
-		
-		<!--  10MB  -->
-	</beans:bean>
 	
+	
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	<!-- DispatcherServlet에서 컨트롤러로 가기 전에 동작할 객체인
+	     인터셉터 구현하기 -->
 	<interceptors>
 		<interceptor>
 			 <!-- 인터셉터가 동작할 주소 -->
 			 <!-- 특정 URL 경로를 로그인 여부로 차단하기 -->
 			 <mapping path="/member/memberView.do" />
 			 <mapping path="/member/memberUpdate.do" />
-			 <!-- /member 로 시작하는 모든 URL경로 차단하기 -->
-			 <!-- <mapping path="/member/**/*.do" /> --> 
-			 <!-- 모든 경로 차단 중 특정 경로를 제외할 수도 있다. -->
-			 <!-- <exclude-mapping path="/member/memberEnroll.do" /> -->
-			 
 			 <mapping path="/auction/insertBidder.do" />
 			 <mapping path="/auction/auctionInsertForm.do"/>
 			 <mapping path="/auction/auctionInsertEnd.do"/>
 			 <mapping path="/auction/auctionDetail.do"/>
+			 <!-- /member 로 시작하는 모든 URL경로 차단하기 -->
+			 <!-- <mapping path="/member/**/*.do" /> --> 
+			 <!-- 모든 경로 차단 중 특정 경로를 제외할 수도 있다. -->
+			 <!-- <exclude-mapping path="/member/memberEnroll.do" /> -->
 			 
 			 <!-- 게시글 전용 URL 등록하기 -->
 			 <mapping path="/board/**/*.do"/>
@@ -65,6 +87,15 @@
 			            class="com.kh.bunny.common.interceptor.LoginCheckInterceptor" />
 		</interceptor>
 		</interceptors>
+	
+	
+	<!--  파일 업로드 시에 사용할 MultipartResolver 등록하기  -->
+	<beans:bean id="multipartResolver" 
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/>
+		<!--  10MB = 1024 byte => 1kb, 1024kb => 1mb * 10 = 10485760  -->
+	</beans:bean>
+	
 	
 	<context:component-scan base-package="com.kh.bunny" />
 	

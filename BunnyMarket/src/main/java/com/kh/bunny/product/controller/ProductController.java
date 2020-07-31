@@ -287,44 +287,29 @@ public class ProductController {
 //		
 //		pcomment.setPcWriter(userId);
 //		System.out.println("댓글 들어옴 ? " + pcomment);
-//		Map<String, Object> hmap = new HashMap<String, Object>();
-//		boolean isInsert = false;
-//		PComment pcm = null;
-//		try {
-//			
-//			isInsert = productService.insertPComment(pcomment) > 0 ? true : false;
-//			if(isInsert) {
-//				pcm = productService.selectOnePComment(pcomment.getPno()); 				
-//			}
-//			
-//		} catch (Exception e) {
-//			throw new ProductException();
-//		}
+//		String msg = "";
+//		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 //		
-//		System.out.println("pcm : " + pcm);
+//		int result = productService.insertPComment(pcomment);
+//		PComment pcm = productService.selectOnePComment(pcomment.getPno()); 
+//		System.out.println();
+//		boolean isInsert = result > 0 ? true : false;
+//		Map<String, Object> hmap = new HashMap<String, Object>();
 //		hmap.put("isInsert", isInsert);
 //		hmap.put("pcomment", pcm);
 //		 
+////		model.addAttribute("loc", loc)
+////			 .addAttribute("msg", msg);
+//		
 //		return hmap;
 //	}
 	
 	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
-	@ResponseBody
-	public HashMap<String, Object> pcommentUpdate(PComment pcomment) {
+	public String pcommentUpdate(PComment pcomment, Model model) {
 		
-		HashMap<String, Object> hmap = new HashMap<String, Object>();
-		boolean updateCheck = false;
-		try {
-			updateCheck = productService.updatePComment(pcomment) > 0 ? true : false;
-		} catch (Exception e) {
-			throw new ProductException();
-		}
-		
-		hmap.put("updateCheck", updateCheck);
-		
-		return hmap;
+		return "";
 	}
 	
 	// 댓글 삭제하기 
@@ -335,19 +320,12 @@ public class ProductController {
 		String loc = "/product/productDetail.do?pno=" + pcomment.getPno();
 		
 		try	{
+			int result = productService.deletePComment(pcomment.getPcmno());
 			
-			boolean hasReply = productService.selectOneReplyPcmno(pcomment.getPcmno()) > 0 ? true : false;
-			if(hasReply == true) {
-				msg = "대댓글이 있어서 삭제가 불가능합니다.";
+			if(result > 0) {
+				msg = "댓글 삭제 성공!";
 			} else {
-				
-				int result = productService.deletePComment(pcomment.getPcmno());
-			
-				if(result > 0 && hasReply == false) {
-					msg = "댓글 삭제 성공!";				
-				} else {
-					msg = "에러 발생!(댓글 삭제 실패)";
-				}
+				msg = "댓글 삭제 실패ㅠ";
 			}
 		} catch (Exception e) {
 			throw new ProductException("상품 댓글에서 에러 발생! " + e.getMessage());
@@ -398,6 +376,17 @@ public class ProductController {
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
 	
+	@RequestMapping("/product/sellCount.do")
+	@ResponseBody
+	public int sellCount(@RequestParam String pWriter) {
+		
+		int sellCount = productService.sellCount(pWriter);
+		System.out.println("sellCount : " + sellCount);
+		
+		return sellCount;
+		
+		
+	}
 
 
 }

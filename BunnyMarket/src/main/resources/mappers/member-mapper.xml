@@ -40,19 +40,40 @@
 		WHERE USERID = #{userId}
 	</delete>
 	
-	<select id="checkIdDuplicate" parameterType="hashmap" statementType="CALLABLE">
-		{ CALL ID_DUP_CHK(
-                       #{userId, mode=IN, jdbcType=VARCHAR}, 
-		               #{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} ) 
-		 }
+	
+	
+	
+	
+    
+    <select id = "findId" parameterType="Member" resultType="Member">
+    	SELECT USERID FROM MEMBER
+    	WHERE EMAIL = #{email} AND USERNAME=#{userName}
+    </select>
+    
+    <!-- 비밀번호 변경 -->
+    <update id="pwdUpdate" parameterType="Member">
+			UPDATE MEMBER SET USERPWD = #{userPwd} WHERE USERID = #{userId}
+		</update>
+		
+	<select id="idDupCheck" parameterType="string" resultType="_int">
+			SELECT COUNT(*) FROM MEMBER WHERE USERID= #{userId}
+		</select>
+		
+	<select id="nickDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME = #{nickName}
 	</select>
 	
+	<select id="emailDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+	</select>
 	
-	 <!-- 이메일 중복확인 관련 mapper-->
-    <select id = "email_check" resultType="String">
-        SELECT EMAIL FROM MEMBER
-        WHERE EMAIL = #{email}
-    </select>
+	<select id="phoneDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE PHONE = #{phone}
+	</select>
+	
+	<select id="findSeller"  resultType="Member">
+		SELECT * FROM MEMBER WHERE NICKNAME = #{nickName}
+	</select>
     
     
 	

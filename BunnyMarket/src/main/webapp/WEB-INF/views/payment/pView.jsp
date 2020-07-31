@@ -13,7 +13,7 @@
 <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 <!-- Title -->
-<title>Bunny Market</title>
+<title>Alazea - Gardening &amp; Landscaping HTML Template</title>
 
 <!-- Favicon -->
 <link rel="icon" href="${ pageContext.request.contextPath }/resources/img/core-img/favicon.ico">
@@ -21,7 +21,6 @@
 <!-- Core Stylesheet -->
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/style.css">
 <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-<script src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.5.1.min.js"></script>
 <style>
 	body {
 		font-family: 'Hanna', sans-serif;
@@ -66,7 +65,7 @@
                                     </td>
                                     <td style="text-align: right;">
                                         <!-- 경매창에서 구입하기눌렀을때 당근 충전이 필요하면 더 충전해야하는 당근을 보여주기 -->
-                                        <!-- <div class = "price" style="padding-top: 20px">100 당근이 필요해요!</div> -->
+                                        <div class = "price" style="padding-top: 20px">100 당근이 필요해요!</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -81,16 +80,16 @@
 	                                		</p>
 	                                	</div>
                                 	</td>
-                                    <td style = "text-align : right;" id="carrotAdd">
-                                    	<button class="btn alazea-btn mt-15" id="one" value="1000">+1,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="two" value="5000">+5,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="three" value="10000">+10,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="four" value="50000">+50,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="five" value="100000">+100,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="six" value="500000">+500,000</button>
-                                    	<button class="btn alazea-btn mt-15" id="resetPlz">Reset</button>
+                                    <td style = "text-align : right;">
+	                                    	<button class = "btn alazea-btn mt-15">+1,000</button>
+	                                    	<button class = "btn alazea-btn mt-15">+5,000</button>
+	                                    	<button class = "btn alazea-btn mt-15">+10,000</button>
+	                                    	<button class = "btn alazea-btn mt-15">+50,000</button>
+	                                    	<button class = "btn alazea-btn mt-15">+100,000</button>
+	                                    	<button class = "btn alazea-btn mt-15">+500,000</button>
                                     </td>
                                 </tr>
+
 								<tr>
 									<td colspan="2" align="center">
 										<input type="checkbox" id="termsCheck" required="required"/>&nbsp;&nbsp;
@@ -119,6 +118,7 @@
         </div>
     </div>
     <!-- ##### Mail Area End ##### -->
+
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	 
 	<script>
@@ -267,6 +267,7 @@
 			$("#confirmDiv").css("display", "inline-block");
 			$("#confirmDiv").append(html);
 		}
+
 	</script>
 	
 	

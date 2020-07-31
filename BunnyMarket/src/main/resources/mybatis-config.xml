@@ -23,8 +23,10 @@
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Auction" alias = "Auction" /> 
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Bidder" alias = "Bidder" />
 		 <typeAlias type = "com.kh.bunny.point.model.vo.BunnyPoint" alias = "BunnyPoint" />  
+		 <typeAlias type="com.kh.bunny.review.model.vo.Review" alias="review"/>
 
 	</typeAliases>
+	
 	
 	<typeHandlers>
 	<!-- 특정 타입을 변경해주는 typeHandler 등록 태그 -->

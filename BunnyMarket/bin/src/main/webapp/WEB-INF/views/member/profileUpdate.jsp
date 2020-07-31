@@ -3,17 +3,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>프로필 수정하기</title>
-<script src="/bunny/resources/js/jquery/jquery-2.2.4.min.js"></script>
-</head>
-<body>
+
+<c:import url="../common/header.jsp"/>
+
+    <div class="breadcrumb-area">
+        <!-- Top Breadcrumb Area -->
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(img/bg-img/24.jpg);">
+           
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
 		<h2 align="center">회원 정보 수정</h2>
 		
-		<form id="updateForm" action="" method="post">
+		<form id="updateForm" name="memberUpdateFrm" action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post">
 			
 			<table align="center">
 				<tr>
@@ -24,7 +39,7 @@
 						onchange="loadImg(this);" />
 					</td>
 					<td width="150px">아이디 : </td>
-					<td><input type="text" name="userId" value="아이디" readonly></td>
+					<td><input type="text" name="userId" value="${member.userId}" readonly></td>
 					<td width="200px"></td>
 				</tr>
 				<tr>
@@ -40,20 +55,20 @@
 				<tr>
 					<td>닉네임 : </td>
 					<td>
-					<input type="text" id="nickName" name="nickName" required>
+					<input type="text" id="nickName" name="nickName" value="${member.nickName}" required>
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>생년월일 : </td>
 					<td>
-						<input type="text" name="birthday" value="1990-01-01" readonly>
+						<input type="text" name="birth" value="${member.birth}" readonly>
 					</td> 
 					<td></td>
 				</tr>
 				<tr>
 					<td>이메일 :</td>
-					<td><input type="text" name="email" value="abc@example.com"
+					<td><input type="text" name="email" value="${member.email}"
 					      style="width:140px;" readonly>
 					</td>
 					<td></td>
@@ -61,27 +76,29 @@
 				<tr>
 					<td>전화번호 : </td>
 					<td>
-					 <select name="phone1" id="phone1">
+					<!--  <select name="phone" id="phone">
                			 <option value="010" selected>010</option>
                			 <option value="011">011</option>
               			 <option value="016">016</option>
                			 <option value="019">019</option>
            			 </select>-
 						<input type="text" maxlength="4" id="phone2" name="phone2" size="2" numberonly required>-
-						<input type="text" maxlength="4" id="phone3" name="phone3" size="2" numberonly required>
+						<input type="text" maxlength="4" id="phone3" name="phone3" size="2" numberonly required> -->
+						<input type="text" id="phone" name="phone" value="${member.phone}" >
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>소개글 : </td>
-					<td><textarea name="introduce" id="introduce" cols="30" rows="10"></textarea></td>
+					<td><textarea name="introduce" id="introduce" cols="30" rows="10">${member.introduce}</textarea></td>
 					<td></td>
 				</tr>
 			</table>
 			<br>
 			<div class="btns" align="center">
 				<button id="cancel" onclick="history.go(-1)">취소하기</button> &nbsp;
-				<button id="updateBtn" onclick="update();">수정하기</button> 
+				<button id="updateBtn" onclick="update();">수정하기</button> &nbsp;
+				  
 			</div>
 			</form>
 
@@ -135,5 +152,4 @@
 			}
 		};
 		</script>
-</body>
-</html>
+<c:import url="../common/footer.jsp"/>

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
-import com.kh.bunny.product.model.vo.PComment;
 
 public interface AuctionService {
 
@@ -28,5 +27,10 @@ public interface AuctionService {
 	int selectOneBidderCount(int pno);
 
 	ArrayList<Bidder> selectAllBidder(int pno);
+
+	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
+
+	int selectTradeTotalContents();
+
 
 }

@@ -43,7 +43,7 @@
 		<set>
 			PCCONTENT = #{pcContent}
 		</set>
-		WHERE PCMNO = #{pcmno} <!-- pno는 굳이 넣을 필요 없을거같지만.. -->
+		WHERE PNO = #{pno} AND PCMNO = #{pcmno} <!-- pno는 굳이 넣을 필요 없을거같지만.. -->
 	</update>
 	
 	<!-- 댓글 삭제 -->	
@@ -84,23 +84,15 @@
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</update>
 	
-	<select id="selectOneReplyPcmno" resultType="_int">
-		SELECT COUNT(*)
-		  FROM PCOMMENT
-		 WHERE REF_PCMNO = #{pcmno}
-	</select>
-	
-	<select id="selectOneReplyPcWriter" resultType="String">
-		SELECT PCWRITER
+	<select id="selectOneReplyPno" resultType="_int">
+		SELECT PNO
 		  FROM PCOMMENT
 		 WHERE PCMNO = #{pcmno}
 	</select>
 	
-	<select id="selectOnePComment" resultType="Pcomment">
-		SELECT *
-		  FROM PCOMMENT
-		 WHERE PNO = #{pno}
-		   AND PCMNO = (SELECT MAX(PCMNO) FROM PCOMMENT WHERE PNO = #{pno})
+	<select id="sellCount" resultType="_int">
+		SELECT COUNT(*) FROM PRODUCT
+		WHERE PWRITER = #{pWriter}
 	</select>
 	
 </mapper>
