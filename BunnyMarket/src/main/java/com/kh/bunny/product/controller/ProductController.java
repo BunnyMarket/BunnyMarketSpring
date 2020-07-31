@@ -50,7 +50,7 @@ public class ProductController {
 		int totalContents = productService.selectProductTotalContents();
 		
 		// 페이지 HTML 생성 
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "productList.do");
+		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "/bunny/product/productList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
@@ -429,8 +429,11 @@ public class ProductController {
 		// 192.168.20.214 - 민정
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
+<<<<<<< HEAD
 	
 	
+=======
+>>>>>>> refs/remotes/origin/dev_QNA_lee
 
 
 }

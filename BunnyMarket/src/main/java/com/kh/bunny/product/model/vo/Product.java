@@ -1,6 +1,13 @@
 package com.kh.bunny.product.model.vo;
 
 import java.io.Serializable;
+<<<<<<< HEAD
+=======
+import java.security.Timestamp;
+import java.sql.Date;
+
+import org.springframework.web.multipart.MultipartFile;
+>>>>>>> refs/remotes/origin/dev_QNA_lee
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

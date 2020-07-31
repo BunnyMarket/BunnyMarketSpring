@@ -8,14 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.kh.bunny.QNA.model.dao.QNADAO;
 import com.kh.bunny.QNA.model.exception.QNAException;
+import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 @Service("QNAService")
 
 public class QNAServiceImpl implements QNAService {
 
+
 	@Autowired
 	QNADAO qnaDAO;
+
 	
 	@Override
 	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage) {
@@ -75,6 +78,32 @@ public class QNAServiceImpl implements QNAService {
 	@Override
 	public int selectCurrentQno() {
 		return qnaDAO.selectCurrentQno();
+	}
+
+	@Override
+	public int insertQComment(QComment qcomment) {
+		
+		return qnaDAO.insertQCcomment(qcomment);
+	}
+
+	@Override
+	public List<Object> selectQCommentList(int qno) {
+		return qnaDAO.selectQCommentList(qno);
+	}
+
+	@Override
+	public int updateQComment(QComment qcomment) {
+		return qnaDAO.updateQComment(qcomment);
+	}
+
+	@Override
+	public int selectOneReplyQcno(int qcno) {
+		return qnaDAO.selectOneReplyQcno(qcno);
+	}
+
+	@Override
+	public int deleteQComment(int qcno) {
+		return qnaDAO.deleteQComment(qcno);
 
 	}
 

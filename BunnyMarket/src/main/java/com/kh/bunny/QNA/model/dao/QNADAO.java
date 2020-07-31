@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 
@@ -25,5 +26,16 @@ public interface QNADAO {
 	int deleteQNA(int qNo);
 
 	int selectCurrentQno();
+
+	int insertQCcomment(QComment qcomment);
+
+	List<Object> selectQCommentList(int qno);
+
+	int updateQComment(QComment qcomment);
+
+	
+	int selectOneReplyQcno(int qcno);
+
+	int deleteQComment(int qcno);
 	
 }

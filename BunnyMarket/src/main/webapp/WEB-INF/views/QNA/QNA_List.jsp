@@ -28,7 +28,7 @@
 </div>
 <!--  여깁니다 -->
 
-<!-- ##### Cart Area Start ##### -->
+
 <div class="cart-area section-padding-0-100 clearfix">
 	<div class="container">
 		<div class="row">
@@ -58,11 +58,11 @@
 									<td align="left">${q.QWriter}</td>
 									<td align="center">${q.QDate}</td>
 							
-									 <c:if test="${q.qcCheck ne 0}">
-											<td style="color: red;" align="center">완료</td>
+									 <c:if test="${admin.adminId}.match(/bunny.*/)">
+											<td style="color: red;" align="center">확인</td>
 										</c:if>
 
-									 <c:if test="${q.qcCheck eq 0}">
+									 <c:if test="${admin.adminId}.match(/bunny.*/)eq 0">
 											<td style="color: black;" align="center">대기중</td>
 										</c:if>
 										<td></td> 
@@ -71,36 +71,37 @@
 						</tbody>
 					</table>
 					<div class="checkout_btn_inner" align="right">
-						<br /> <br /> <a class="btn alazea-btn mr-30"
+						<br /> <br /> 
+						<a class="btn alazea-btn mr-30"
 							href="${pageContext.request.contextPath}/QNA/QNAInsertView.do">등록하기</a>
-
 						<a class="btn alazea-btn mr-30"
 							href="${pageContext.request.contextPath}">메인으로</a> <br /> <br />
 					</div>
 					<!-- Pagination -->
 					<nav aria-label="Page navigation">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="fa fa-angle-right"></i></a></li>
-						</ul>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
+<!-- ##### Shop Area Start ##### -->
+    <section class="shop-page section-padding-0-100">
+        <div class="container">
+            <div class="row">
+                <!-- All Products Area -->
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="shop-products-area">
+                        <div>
+	                        <c:out value="${pageBar}" escapeXml="false"/>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
 <script>
-/* function selectOne(qno){
-	if(${member.userId eq 'admin'})
-		location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?no=' + qno;
-	else
-		location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?no=' + qno;
-	)
-}; */
-
 $(function(){
 	$("#tableArea td").click(function(){
 		var admin = '${admin.adminId}';
@@ -112,6 +113,7 @@ $(function(){
 		}
 			});
 	}); 
+	
 
 
 </script>

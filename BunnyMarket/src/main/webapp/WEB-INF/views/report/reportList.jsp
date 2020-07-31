@@ -27,6 +27,7 @@
 	</div>
 </div>
 <!--  여깁니다 -->
+
 <div class="cart-area section-padding-0-100 clearfix">
 	<div class="container">
 		<div class="row">
@@ -77,18 +78,27 @@
 					</div>
 					<!-- Pagination -->
 					<nav aria-label="Page navigation">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="fa fa-angle-right"></i></a></li>
-						</ul>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- ##### Shop Area Start ##### -->
+    <section class="shop-page section-padding-0-100">
+        <div class="container">
+            <div class="row">
+                <!-- All Products Area -->
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="shop-products-area">
+                        <div>
+	                        <c:out value="${pageBar}" escapeXml="false"/>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <script>
 $(function(){
 	$("#tableArea td").click(function(){

@@ -51,8 +51,11 @@ public interface ProductService {
 
 	PComment selectOnePComment(int pno);
 
+<<<<<<< HEAD
 	List<Object> selectProductListMap();
 
+=======
+>>>>>>> refs/remotes/origin/dev_QNA_lee
 	
 	
 	

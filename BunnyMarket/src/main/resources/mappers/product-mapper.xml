@@ -47,7 +47,6 @@
 		VALUES(SEQ_PCMNO.NEXTVAL, #{pno}, #{pcWriter}, #{pcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), #{ref_pcmno}, #{pcLevel})
 	</insert>
 
-	
 	<!-- 댓글 수정 -->
 	<update id = "updatePComment" parameterType = "PComment">
 		UPDATE PCOMMENT

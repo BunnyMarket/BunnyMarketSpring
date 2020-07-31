@@ -51,5 +51,8 @@ public interface ProductDAO {
 
 	List<Object> selectProductListMap();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/dev_QNA_lee
 }

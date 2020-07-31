@@ -3,6 +3,7 @@ package com.kh.bunny.QNA.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 
 public interface QNAService {
@@ -22,6 +23,19 @@ public interface QNAService {
    int deleteQNA(int qNo);
 
    int selectCurrentQno();
+
+   int insertQComment(QComment qcomment);
+
+   // 댓글 목록 불러오기
+   List<Object> selectQCommentList(int qno);
+
+   // 댓글 수정
+   int updateQComment(QComment qcomment);
+
+   //댓글 삭제
+   int selectOneReplyQcno(int qcno);
+
+   int deleteQComment(int qcno);
 
    
 }
