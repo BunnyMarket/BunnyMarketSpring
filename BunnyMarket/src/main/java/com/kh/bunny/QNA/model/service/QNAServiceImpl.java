@@ -106,5 +106,11 @@ public class QNAServiceImpl implements QNAService {
 		return qnaDAO.deleteQComment(qcno);
 
 	}
+	
+	@Override
+	public List<Map<String, String>> selectQnAList(int cPage, int numPerPage) {
+		
+		return qnaDAO.selectQnAList(cPage,numPerPage);
+	}
 
 }

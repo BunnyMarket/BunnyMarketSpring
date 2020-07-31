@@ -82,4 +82,10 @@ public class QNADAOImpl implements QNADAO {
 		return sqlSession.delete("qnaMapper.deleteQComment", qcno);
 	}
 	
+	@Override
+	public List<Map<String, String>> selectQnAList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("qnaMapper.selectQnAList", null, rows) ;
+	}
+	
 }

@@ -44,7 +44,7 @@
 								<th colspan="2" style="width: 40%; text-align: center;">제목</th>
 								<th style="padding-right: 80px; width: 15%; text-align: center;">작성자</th>
 								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
-								<th style="padding-left: 8px; width: 20%; text-align: center;">답변여부</th>
+								<th style="padding-left: 8px; width: 20%; text-align: center;">확인여부</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -60,11 +60,11 @@
 							
 									 <c:if test="${admin.adminId}.match(/bunny.*/)">
 											<td style="color: red;" align="center">확인</td>
-										</c:if>
+									 </c:if>
 
 									 <c:if test="${admin.adminId}.match(/bunny.*/)eq 0">
 											<td style="color: black;" align="center">대기중</td>
-										</c:if>
+									 </c:if>
 										<td></td> 
 								</tr>
 							</c:forEach>

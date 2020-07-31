@@ -82,9 +82,9 @@
 							<p>공지사항 O</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						<%-- href="${ pageContext.request.contextPath }/ "--%>
-						onclick="openQA();"> <i	class="material-icons">library_books</i>
-							<p>Q&A O</p>
+						 href="${ pageContext.request.contextPath }/admin/QNA/QnAList.do">	
+						 <i	class="material-icons">library_books</i>
+							<p>Q&A </p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/views/admin/message.jsp">

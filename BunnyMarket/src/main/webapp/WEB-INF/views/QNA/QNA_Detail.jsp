@@ -48,8 +48,10 @@
 								<br /> <br /> <br /><br /><br />
 								<br /><br /><br />
 								<div class="post-meta mb-30" align="right">
+								<c:if test="${qna.QWriter eq member.userId }">
 									<button type="button" class="btn alazea-btn mt-15"
 											onclick="location.href='${ pageContext.request.contextPath }/QNA/QNAUpdateView.do?qno=${qna.qno}'">수정하기</button>
+								</c:if>
 								</div>
 								<br/><br/>
 								<blockquote>
@@ -96,9 +98,9 @@
 																<input type="hidden" name="qno" value="${qcomment.qno}"/>
 																<input type="hidden" name="qcno" value="${qcomment.qcno}"/>
 																<a class="active" onclick="replyComment(${st.index});">Reply</a>
-																<c:if test="${qcomment.QWriter eq member.nickName }">
+																<c:if test="${(qcomment.QWriter eq admin.adminId) or ( qcomment.QWriter eq member.userId)}">
 																		&nbsp;&nbsp;
-																		<a class="active" onclick="updateViewComment(${qcomment.qcno}, ${st.index });">Update</a>
+																<a class="active" onclick="updateViewComment(${qcomment.qcno}, ${st.index });">Update</a>
 																		&nbsp;&nbsp;
 																		<a class="active" onclick="deleteComment(${qcomment.qcno});">Delete</a>
 																</c:if>
@@ -158,7 +160,7 @@
 																			</div>
 																			<p id="repcContent-${st.index }">${ reComment.qcContent }</p>
 																			<p id="repcContent2-${st.index }"></p>
-																			<c:if test="${qcomment.QWriter eq member.userId }">
+																			<c:if test="${(qcomment.QWriter eq admin.adminId) or ( qcomment.QWriter eq member.userId)}">
 																				<form id="replyForm-${reComment.qcno}" method="post">
 																					<input type="hidden" name="qcno" value="${reComment.qcno}">
 																					<input type="hidden" name="qno" value="${qna.qno }"/>

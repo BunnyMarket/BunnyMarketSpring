@@ -106,6 +106,7 @@ public class QNAController {
 	@RequestMapping("/QNA/QNADetail.do")
 	public String selectOne(@RequestParam int qno, Model model,HttpSession session) {
 		
+		
 		QNA q = qnaService.selectOneQNA(qno);
 
 		model.addAttribute("qna", q);
@@ -233,12 +234,20 @@ public class QNAController {
 	}
 
 	@RequestMapping("/QNA/QNASelectOneAdmin.do")
-	public String selectOneAdmin(@RequestParam int qno, Model model,HttpSession session) {
+	public String selectOneAdmin(@RequestParam int qno, Model model,HttpSession session) {	
 		
 		QNA q = qnaService.selectOneQNA(qno);
+
 		model.addAttribute("qna", q);
+        
+		List<Object> QComments = qnaService.selectQCommentList(qno);
+		System.out.println("qcomments: " + QComments);
+		System.out.println("qcomments : " + QComments.size());
+		
+		model.addAttribute("qna", q).addAttribute("qcomments", QComments).addAttribute("qcommentSize", QComments.size());
 
 		return "QNA/QNA_Detail";
+		
 	}
 
 	@RequestMapping("/QNA/FAQ.do")
@@ -288,10 +297,15 @@ public class QNAController {
 	public String qcommentInsert(@RequestParam int qno,
 										QComment qcomment, Model model, HttpSession session) {
 		
+		adminMember am = (adminMember)session.getAttribute("admin");
 		Member m = (Member)session.getAttribute("member");
-		String userId = m.getNickName();
+		if(m != null) {String userId = m.getUserId();
+						qcomment.setQWriter(userId);
+		}else if(am != null ){
+			String adminId = am.getAdminId();
+			qcomment.setQWriter(adminId);		
+		}
 		
-		qcomment.setQWriter(userId);
 		
 		System.out.println("댓글아 달아졌니" + qcomment);
 		String msg = "";
@@ -369,6 +383,28 @@ public class QNAController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("admin/QNA/QnAList.do")
+	public String selectQnAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
+			Model model, HttpServletRequest request) {
+
+		
+		int numPerPage = 10;
+
+		List<Map<String, String>> list = qnaService.selectQnAList(cPage, numPerPage);
+
+		System.out.println("qnaList 가져오는지 확인: " + list);
+
+		int totalContents = qnaService.selectQNATotalContents();
+
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QnAList.do");
+		
+		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
+				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
+		
+		System.out.println("model : " + model);
+		return "admin/QnAList";
+
+	}
 
 	
 }
