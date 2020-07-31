@@ -57,24 +57,22 @@
 			 <mapping path="/auction/auctionInsertEnd.do"/>
 			 <mapping path="/auction/auctionDetail.do"/>
 			 
+			 <mapping path="/product/productDetail.do"/>
+			 <mapping path="/product/productInsert.do"/>
+			 <mapping path="/product/productInsertEnd.do"/>
+			 <mapping path="/product/productView.do"/>
+			 <mapping path="/product/productUpdate.do"/>
+			 <mapping path="/product/productDelete.do"/>
+			 <mapping path="/product/pcommentInsert.do"/>
+			 <mapping path="/product/pcommentUpdate.do"/>
+			 <mapping path="/product/pcommentDelete.do"/>
+			 
 			 <!-- 게시글 전용 URL 등록하기 -->
 			 <mapping path="/board/**/*.do"/>
 			 <exclude-mapping path="/board/boardList.do"/>
 			 <!-- 인터셉터 등록 -->
 			<beans:bean id="loginCheckInterceptor"
 			            class="com.kh.bunny.common.interceptor.LoginCheckInterceptor" />
-			
-		</interceptor>
-		<interceptor>
-		
-			<mapping path="/admin/main/home.do"/>
-			<mapping path="/admin/adminMember/adminList.do"/>
-			<mapping path="/admin/adminMember/adminStatusOn.do"/>
-			<mapping path="/admin/adminMember/adminStatusOff.do"/>
-			<mapping path="/admin/adminMember/adminInsert.do"/>
-			
-			<beans:bean id="adminloginCheckInterceptor"
-			            class="com.kh.bunny.common.interceptor.AdminLoginCheckInterceptor" />
 		</interceptor>
 		</interceptors>
 	

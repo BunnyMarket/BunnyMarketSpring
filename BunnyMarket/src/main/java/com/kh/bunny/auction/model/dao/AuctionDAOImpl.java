@@ -83,9 +83,6 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return new ArrayList<Bidder>(sqlSession.selectList("auctionMapper.selectAllBidder", pno));
 	}
 
-	@Override
-	public int updateCount(int pno) {
-		return sqlSession.update("auctionMapper.updateTotalCount",pno);
-	}
+
 
 }

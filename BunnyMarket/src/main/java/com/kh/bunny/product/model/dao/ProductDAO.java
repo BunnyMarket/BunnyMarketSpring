@@ -29,9 +29,6 @@ public interface ProductDAO {
 	// 상품 게시글의 댓글 목록 불러오기  
 	List<Object> selectPCommentList(int pno);
 	
-	// 상품 count
-	int updateCount(int pno);
-	
 	// 댓글 생성 
 	int insertPComment(PComment pcomment);
 	
@@ -50,5 +47,6 @@ public interface ProductDAO {
 	PComment selectOnePComment(int pno);
 
 	List<Object> selectProductListMap();
+
 
 }

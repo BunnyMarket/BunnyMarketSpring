@@ -23,8 +23,6 @@ public interface AuctionDAO {
 
 	int insertAuction(Auction auction);
 
-	int updateCount(int pno);
-	
 	int insertBidder(Bidder b);
 
 	int selectOneBidderCount(int pno);

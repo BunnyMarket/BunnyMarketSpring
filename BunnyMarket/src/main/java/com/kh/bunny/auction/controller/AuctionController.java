@@ -44,19 +44,19 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
-				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
 				, Model model, HttpServletRequest request
 			) {
 		
 		int numPerPage = 9;
-		List<Map<String, String>> list = auctionService.selectAuctionList(pPage, numPerPage);
+		List<Map<String, String>> list = auctionService.selectAuctionList(aPage, numPerPage);
 		
 		System.out.println("무엇이 들어있느냐? : " + list);
 		System.out.println("무엇이 들어있느냐? : " + list.size());
 		
 		int totalContents = auctionService.selectAuctionTotalContents();
 		
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "auctionList.do");
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
@@ -66,18 +66,18 @@ public class AuctionController {
 		return "auction/auctionList";
 	}
 	
-	@RequestMapping("/auction/bidderCount.do")
-	@ResponseBody
-	public int bidderCount(@RequestParam int pno) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		int bidderCount = auctionService.selectBidderCount(pno);
-		System.out.println("pno : " + pno + " / bidderCount는 무엇일랑가? "+bidderCount);
-		map.put("bidderCount", bidderCount);
-		
-		return bidderCount;
-	}
+//	@RequestMapping("/auction/bidderCount.do")
+//	@ResponseBody
+//	public int bidderCount(@RequestParam int pno) {
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		int bidderCount = auctionService.selectBidderCount(pno);
+//		System.out.println("pno : " + pno + " / bidderCount는 무엇일랑가? "+bidderCount);
+//		map.put("bidderCount", bidderCount);
+//		
+//		return bidderCount;
+//	}
 	
 	
 	@RequestMapping("/auction/auctionDetail.do")
@@ -212,7 +212,7 @@ public class AuctionController {
 	@RequestMapping("/auction/insertBidder.do")
 	public String insertBidder(@RequestParam int pno, @RequestParam int bPrice, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("member");
-		String userId = m.getUserId();
+		String userId = m.getNickName();
 		
 		Auction a = auctionService.selectOneAuction(pno);
 		
@@ -221,9 +221,9 @@ public class AuctionController {
 		
 		if(a.getBPrice() > bPrice || a.getPPrice() > bPrice) {
 			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
-		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice) && bPrice % 10 != 0) {
+		} else if(bPrice % 10 != 0) {
 			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
-		} else if((a.getBPrice() > bPrice || a.getPPrice() > bPrice)  && a.getPBuyer().equals(userId)) { 
+		} else if(a.getPBuyer().equals(userId)) { 
 			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
 		} else {
 			Bidder b = new Bidder(pno, userId, bPrice);

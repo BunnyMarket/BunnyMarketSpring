@@ -72,8 +72,17 @@
 							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
 						<br />
 
-						<h4 class="price"><span style="color:orange; font: bold;">${product.PPrice}</span>당근</h4>
+						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>
+						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<br />
+						
+						<script type="text/javascript">
+						   	$(function(){
+								var originP = $("#originPPrice").val();
+					    		$("#pCarrot").text(parseInt(originP).toLocaleString());
+						   	});
+						   		
+						</script>
 
 						<h5>글 작성날짜</h5>
 						<p>${ product.PDate }</p>
@@ -172,7 +181,7 @@
 																<input type="hidden" name="pno" value="${product.pno }"/>
 																<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>
 																<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>
-																<c:if test="${pcomment.pcWriter eq member.nickName }">
+																<c:if test="${pcomment.pcWriter eq member.userId }">
 																		&nbsp;&nbsp;
 																		<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>
 																		&nbsp;&nbsp;
@@ -620,10 +629,6 @@
 
 </script>
 
-<<<<<<< HEAD
 
 <%@ include file="../common/footer.jsp"%>
 
-=======
-<%@ include file="../common/footer.jsp"%>
->>>>>>> refs/remotes/origin/dev_QNA_lee

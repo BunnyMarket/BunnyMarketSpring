@@ -85,14 +85,24 @@
 						</c:if>
 						<div class="modal-layout"></div>
 						<br />
-						
-						<c:if test="${a.PPrice gt a.BPrice }">
-                        	<h4 class="price"><span style="color:orange; font: bold;">${a.PPrice}</span>당근</h4>
-						</c:if>
-						<c:if test="${a.PPrice lt a.BPrice }">
-                        	<h4 class="price"><span style="color:orange; font: bold;">${a.BPrice}</span>당근</h4>
-						</c:if>
-						
+						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
+                       	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>
+						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
+						<script type="text/javascript">
+						   	$(function(){
+								var originP = $("#originPPrice").val();
+								var originB = $("#originBPrice").val();
+								
+								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
+						   		
+								if(originP > originB){
+						    		$("#pCarrot").text(parseInt(originP).toLocaleString());
+								} else {
+									$("#pCarrot").text(parseInt(originB).toLocaleString());
+								}
+						   	});
+						   		
+						</script>
 						<br /> 
 
 						<h5>총 입찰자 : ${bCount}명</h5>
@@ -189,7 +199,7 @@
 																<input type="hidden" name="pno" value="${a.pno }"/>
 																<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>
 																<a class="active" onclick="replyComment(${st.index});">Reply</a>
-																<c:if test="${pcomment.pcWriter eq member.userId }">
+																<c:if test="${pcomment.pcWriter eq member.nickName }">
 																		&nbsp;&nbsp;
 																		<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>
 																		&nbsp;&nbsp;
@@ -249,7 +259,7 @@
 																			</div>
 																			<p id="repcContent-${st.index }">${ reComment.pcContent }</p>
 																			<p id="repcContent2-${st.index }"></p>
-																			<c:if test="${pcomment.pcWriter eq member.userId }">
+																			<c:if test="${pcomment.pcWriter eq member.nickName }">
 																				<form id="replyForm-${reComment.pcmno}" method="post">
 																					<input type="hidden" name="pcmno" value="${reComment.pcmno}">
 																					<input type="hidden" name="pno" value="${a.pno }"/>

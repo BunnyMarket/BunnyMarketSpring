@@ -5,7 +5,9 @@
 <mapper namespace="auctionMapper">
 	
 	<sql id="selectSQL">
-		SELECT P.*, A.AEDATE 
+		SELECT P.*, A.AEDATE , (SELECT COUNT(*)
+							      FROM BIDDER
+							     WHERE PNO = P.PNO) bCount
 		 FROM PRODUCT P
 		 JOIN AUCTION A ON(A.PNO = P.PNO)
 	</sql>
@@ -37,9 +39,6 @@
 		WHERE P.PNO = #{pno}
 	</select>
 	
-	<update id="updateTotalCount">
-		UPDATE PRODUCT SET PTOTAL = PTOTAL+1 WHERE PNO = #{pno}	
-	</update>
 	
 	<select id="bidderCount" resultType="_int">
 		SELECT COUNT(*)

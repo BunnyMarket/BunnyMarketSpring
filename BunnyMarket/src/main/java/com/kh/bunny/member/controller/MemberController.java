@@ -3,7 +3,6 @@ package com.kh.bunny.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -420,58 +418,7 @@ public class MemberController {
 		return mv;
 
 	}
-	//admin 회원 리스트
-	@RequestMapping("/admin/member/memberList.do")
-	public String memberList(
-			 @RequestParam(
-					 value="pPage",
-					 required=false, 
-					 defaultValue="1")
-				int cPage, Model model
-			) {
-		int numPerPage = 10; 
-		
-		List<Map<String, String>> list
-			= memberService.selectMemberList(cPage, numPerPage);
 	
-		int totalContents = memberService.selectMemberTotalContents();
-		
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "memberList.do");
-		
-		model.addAttribute("user", list);
-		model.addAttribute("totalContents", totalContents);
-		model.addAttribute("numPerPage",numPerPage);
-		model.addAttribute("pageBar", pageBar);
-		
-		
-		return "admin/customerList";
-	}
-
-	// 회원 비활성화
-	@RequestMapping("/admin/member/memberCountUp.do")
-	@ResponseBody
-	public Map<String, Object> memberCountUp(@RequestParam String userId) {
-		System.out.println("controller : " + userId);
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		boolean memberKill =memberService.selectOneCountUp(userId) > 0 ? true : false;
-		
-		map.put("kill", memberKill);
-		
-		return map; 
-	}
 	
-	// 회원 활성화
-	@RequestMapping("/admin/member/memberCountDown.do")
-	@ResponseBody
-	public Map<String, Object> memberCountDown(@RequestParam String userId) {
-		System.out.println("controllercd : " + userId);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		boolean memberSave =memberService.selectOneCountDown(userId) > 0 ? true : false;
-		
-		map.put("save", memberSave);
-		
-		return map; 
-	}
 }
