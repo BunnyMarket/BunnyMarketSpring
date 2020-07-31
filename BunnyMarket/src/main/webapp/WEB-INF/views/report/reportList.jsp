@@ -53,9 +53,9 @@
 					        <tr id="${r.RNo}">
 					        
 							<td>${r.RNo }</td>
-							<td colspan="2"> ${r.RTitle}</td>
+							<td colspan="2" style="padding-left: 150px;"> ${r.RTitle}</td>
 							<td>${r.RWriter }</td>
-							<td>${r.RDate }</td>
+							<td style="padding-left: 45px;">${r.RDate }</td>
 							
 							<c:if test="${fn:contains(r.RContent, '<img') == 'true' }">
 							 <td style="color:green;" align="center">첨부</td>
@@ -90,7 +90,7 @@
             <div class="row">
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
-                    <div class="shop-products-area">
+                    <div class="shop-products-area" style="margin-left: 300px;">
                         <div>
 	                        <c:out value="${pageBar}" escapeXml="false"/>
                         </div>

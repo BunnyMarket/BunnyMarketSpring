@@ -18,9 +18,9 @@ public class QNAServiceImpl implements QNAService {
 QNADAO qnaDAO;
 	
 	@Override
-	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage, String userId) {
 		
-		return qnaDAO.selectQNAList(cPage,numPerPage);
+		return qnaDAO.selectQNAList(cPage,numPerPage, userId);
 	}
 
 	@Override

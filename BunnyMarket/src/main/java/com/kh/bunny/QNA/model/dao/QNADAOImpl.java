@@ -18,9 +18,9 @@ public class QNADAOImpl implements QNADAO {
 	SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage) {
+	public List<Map<String, String>> selectQNAList(int cPage, int numPerPage, String userId) {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
-		return sqlSession.selectList("qnaMapper.selectQNAList", null, rows) ;
+		return sqlSession.selectList("qnaMapper.selectQNAList", userId, rows) ;
 	}
 
 	@Override
