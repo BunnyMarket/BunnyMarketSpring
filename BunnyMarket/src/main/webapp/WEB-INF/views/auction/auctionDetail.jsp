@@ -83,6 +83,10 @@
 								입찰자 명단 보기
 							</button>
 						</c:if>
+						<br /><br /><br />
+						 <button type="button" class="btn alazea-btn mt-15" style="float: right"
+						onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>  
+         
 						<div class="modal-layout"></div>
 						<br />
 						

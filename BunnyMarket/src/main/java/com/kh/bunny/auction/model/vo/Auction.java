@@ -14,7 +14,6 @@ public class Auction extends Product implements Serializable {
 	private String aeDate;
 	private int pno;
 	private int aeTime;
-	
 	public Auction() {
 		super();
 		// TODO Auto-generated constructor stub

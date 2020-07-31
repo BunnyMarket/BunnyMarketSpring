@@ -24,5 +24,6 @@ public interface ReportService {
 
 	int deleteReport(int rno);
 	
+	
 
 }

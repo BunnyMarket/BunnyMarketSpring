@@ -71,7 +71,7 @@
 					<div class="checkout_btn_inner" align="right">
 						<br /> <br /> 
 						<a class="btn alazea-btn mr-30"
-						  	href="${pageContext.request.contextPath}/report/reportInsertView.do">등록하기</a>
+						  	href="${pageContext.request.contextPath}/report/reportDirectInsertView.do">등록하기</a>
 						<a class="btn alazea-btn mr-30"
 						  	href="${pageContext.request.contextPath}">메인으로</a> 
 						<br /><br />
@@ -103,8 +103,8 @@
 $(function(){
 	$("#tableArea td").click(function(){
 		var rNo = $(this).parent().attr("id");
-		
-		if(${member.userId eq 'admin'}){
+		var admin = '${admin.adminId}';
+		if(admin.match(/bunny.*/)){
 			location.href = "${pageContext.request.contextPath}/report/reportSelectOneAdmin.do?rno=" + rNo;
 		}else{
 			location.href = "${pageContext.request.contextPath}/report/reportPassword.do?rno=" + rNo;
