@@ -19,14 +19,13 @@
 		 <typeAlias type = "com.kh.bunny.product.model.vo.Product" alias = "Product" />
 		 <typeAlias type = "com.kh.bunny.product.model.vo.PComment"  alias = "PComment"/>  
 		 <typeAlias type = "com.kh.bunny.common.Str2ArrayHandler" alias = "Str2ArrayHandler" />
-		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/> 
-		 <typeAlias type = "com.kh.bunny.notice.model.vo.Notice"  alias = "Notice"/> 
-		 <typeAlias type = "com.kh.bunny.adminMember.model.vo.adminMember"  alias = "AdminMember"/> 
+		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/>
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Auction" alias = "Auction" /> 
-		 <typeAlias type = "com.kh.bunny.auction.model.vo.Bidder" alias = "Bidder" /> 
-		  <typeAlias type = "com.kh.bunny.QNA.model.vo.QComment"  alias = "QComment"/> 
+		 <typeAlias type = "com.kh.bunny.auction.model.vo.Bidder" alias = "Bidder" />
+		 <typeAlias type = "com.kh.bunny.point.model.vo.BunnyPoint" alias = "BunnyPoint" />  
+		 <typeAlias type="com.kh.bunny.review.model.vo.Review" alias="review"/>
+		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QComment"  alias = "QComment"/> 
 		  <typeAlias type = "com.kh.bunny.report.model.vo.Report"  alias = "Report"/> 
-
 
 	</typeAliases>
 	

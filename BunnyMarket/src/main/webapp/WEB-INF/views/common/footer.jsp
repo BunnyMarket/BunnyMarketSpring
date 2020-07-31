@@ -134,10 +134,6 @@
 									class="fa fa-heart-o" aria-hidden="true"></i> by <a
 									href="https://colorlib.com" target="_blank">Colorlib</a>
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								
-								<!-- 지도 마커 png이미지 출처 표기(이미지 출처 표기하래..ㅠ 아니면 고소당한대 ㅠ ) -->
-								<a href='https://pngtree.com/so/자료-좀'>자료-좀 png from pngtree.com</a>
-								
 							</p>
 						</div>
 					</div>

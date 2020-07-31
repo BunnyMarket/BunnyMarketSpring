@@ -118,7 +118,7 @@
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
 	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
 	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                                        </div> 
+	                                        </div>
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
@@ -138,7 +138,7 @@
                         </nav>
                         <!-- Pagination -->
                         <div>
-                            <c:out value="${pageBar}" escapeXml="false"/>
+                            <c:out value = "${ pageBar }" escapeXml = "false" />
                         </div>
                     </div>
                 </div>
@@ -147,5 +147,10 @@
     </section>
     <!-- ##### Shop Area End ##### -->
     
+    <script>
+    	console.log("확인확인");
+    	console.log("확인 : " + ${list});
+    
+    </script>
 
 <c:import url="../../views/common/footer.jsp"/>
