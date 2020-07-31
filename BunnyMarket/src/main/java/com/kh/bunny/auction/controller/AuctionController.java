@@ -44,19 +44,19 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
-				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
+				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage
 				, Model model, HttpServletRequest request
 			) {
 		
 		int numPerPage = 9;
-		List<Map<String, String>> list = auctionService.selectAuctionList(aPage, numPerPage);
+		List<Map<String, String>> list = auctionService.selectAuctionList(pPage, numPerPage);
 		
 		System.out.println("무엇이 들어있느냐? : " + list);
 		System.out.println("무엇이 들어있느냐? : " + list.size());
 		
 		int totalContents = auctionService.selectAuctionTotalContents();
 		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionList.do");
+		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "auctionList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)

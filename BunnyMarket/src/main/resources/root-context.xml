@@ -12,7 +12,7 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> 
+		<property name="url" value="jdbc:oracle:thin:@localhost:49161:xe"/> 
 											<!-- 윈도우는 1572인가..1571인가.. -->
 		<property name="username" value="BUNNY"/>
 		<property name="password" value="BUNNY"/>

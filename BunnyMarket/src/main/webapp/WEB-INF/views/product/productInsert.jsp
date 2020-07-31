@@ -114,10 +114,6 @@
 						</div>
 					</div>
 					
-<<<<<<< HEAD
-					
-=======
->>>>>>> refs/remotes/origin/dev_QNA_lee
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />

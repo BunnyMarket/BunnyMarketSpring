@@ -113,8 +113,6 @@
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/${p.PImg}" alt=""></a>
 	                                        <div class="product-meta d-flex">
 	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
 	                                        </div>
 	                                    </div>
 	                                    <!-- Product Info -->
