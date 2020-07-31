@@ -101,7 +101,7 @@ let chartConfig = {
 		        margin: '45px 20px 38px 45px'
 		      },
 		      scaleX: { //카테고리 목록
-		        values: ['${}', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
+		        values: ['Drug', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
 		        guide: {
 		          visible: false
 		        },
