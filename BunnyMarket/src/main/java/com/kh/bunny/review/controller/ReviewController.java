@@ -60,7 +60,7 @@ public class ReviewController {
 		} catch (Exception e) {
 			throw new MemberException("리뷰 등록 오류!");
 		}
-		
+		System.out.println("제발 되었으면 좋겠어요....");
 		
 		model.addAttribute("loc", loc)
 		 .addAttribute("msg", msg);
