@@ -63,6 +63,18 @@
 			 <!-- 인터셉터 등록 -->
 			<beans:bean id="loginCheckInterceptor"
 			            class="com.kh.bunny.common.interceptor.LoginCheckInterceptor" />
+			
+		</interceptor>
+		<interceptor>
+		
+			<mapping path="/admin/main/home.do"/>
+			<mapping path="/admin/adminMember/adminList.do"/>
+			<mapping path="/admin/adminMember/adminStatusOn.do"/>
+			<mapping path="/admin/adminMember/adminStatusOff.do"/>
+			<mapping path="/admin/adminMember/adminInsert.do"/>
+			
+			<beans:bean id="adminloginCheckInterceptor"
+			            class="com.kh.bunny.common.interceptor.AdminLoginCheckInterceptor" />
 		</interceptor>
 		</interceptors>
 	

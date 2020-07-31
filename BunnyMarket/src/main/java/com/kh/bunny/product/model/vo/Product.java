@@ -2,6 +2,12 @@ package com.kh.bunny.product.model.vo;
 
 import java.io.Serializable;
 
+import java.security.Timestamp;
+import java.sql.Date;
+
+import org.springframework.web.multipart.MultipartFile;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +33,6 @@ public class Product implements Serializable {
 	private int pTotal;   
 	private String pBuyer;
 	private int bPrice;
+	private String pCategory;
 
 }

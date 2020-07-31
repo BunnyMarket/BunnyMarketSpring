@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.vo.PComment;
@@ -48,7 +50,7 @@ public class ProductController {
 		int totalContents = productService.selectProductTotalContents();
 		
 		// 페이지 HTML 생성 
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "productList.do");
+		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "/bunny/product/productList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
@@ -57,6 +59,37 @@ public class ProductController {
 		
 		return "product/productList";
 		
+		
+	}
+	
+	
+	// 맵에 상품 리스트 불러오기 
+	@RequestMapping("/product/productListMap.do")
+	public String selectBoardListMap(Model model) {
+		
+		List<Object> products = productService.selectProductListMap();
+		
+		System.out.println("productController에서 지도를 위한 list를 가져오나 확인 : " + products);
+		System.out.println("가져온 상품의 개수 : " + products.size());
+		
+		// product 객체를 받은 리스트 products를 JSON으로 변환해주기 
+		ObjectMapper mapper = new ObjectMapper();
+		String mapJson = null;
+		
+		try {
+			mapJson = mapper.writeValueAsString(products);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("mapJson으로 잘 만들었니? : " + mapJson);
+		
+		
+		model.addAttribute("products", products)
+			 .addAttribute("mapJson", mapJson);
+		
+		
+		return "product/productMap";
 		
 	}
 	
@@ -308,7 +341,6 @@ public class ProductController {
 //		return hmap;
 //	}
 	
-	
 	// 댓글 수정하기 
 	@RequestMapping("/product/pcommentUpdate.do")
 	@ResponseBody
@@ -397,35 +429,7 @@ public class ProductController {
 		// 192.168.20.214 - 민정
 		return "http://localhost:8088/bunny/resources/upload/product/desc/" + renamedName;
 	}
-	
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

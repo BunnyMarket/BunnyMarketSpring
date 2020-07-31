@@ -1,7 +1,10 @@
 package com.kh.bunny.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,11 +57,31 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	
 	
+	//admin
+	
+	@Override
+	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("memberMapper.selectMemberList", null, rows);
+	}
+
+	@Override
+	public int selectMemberTotalContents() {
+		return sqlSession.selectOne("memberMapper.selectMemberTotalContents");
+	}
+	
+	@Override
+	public int selectOneCountUp(String userId) {
+		System.out.println("dao : " + userId);
+		return sqlSession.update("memberMapper.selectOneCountUp", userId); 
+	}
 	
 	
-	
-	
-	
+	@Override
+	public int selectOneCountDown(String userId) {
+		System.out.println("dao : " + userId);
+		return sqlSession.update("memberMapper.selectOneCountDown", userId); 
+	}
 	
 	
 	

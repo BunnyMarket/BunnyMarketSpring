@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qnaMapper">
+
+	<select id="selectQNAList" resultType="QNA">
+		SELECT Q.QNO, Q.QWRITER, Q.QTITLE, Q.QCONTENT, Q.QDATE
+		          ,   (SELECT COUNT(*) FROM QCOMMENT QC WHERE QC.QNO = Q.QNO) QCCHECK
+		  FROM QNA Q
+		 ORDER BY Q.QDATE DESC
+	</select>
+	<select id="selectQNATotalContent" resultType="_int">
+		SELECT COUNT(*)
+		FROM QNA
+	</select>
+
+   <insert id="insertQNA">
+   INSERT INTO QNA
+   VALUES (SEQ_QNO.NEXTVAL, #{qWriter}, #{qTitle},#{qContent}, DEFAULT)
+   </insert>
+   
+   <select id="selectOneQNA" parameterType="_int" resultType="QNA">
+      SELECT * FROM QNA
+      WHERE QNO =#{qno}
+   </select>
+   
+   <update id="updateQNA" parameterType="QNA">
+     UPDATE QNA SET
+     QTITLE =#{qTitle},
+     QCONTENT =#{qContent}
+     WHERE QNO =#{qno}
+   </update>
+   
+   <delete id="deleteQNA" parameterType="_int">
+   DELETE FROM QNA
+   WHERE QNO =#{qno}
+   </delete>
+   
+   <select  id="selectCurrentQno" parameterType="_int" resultType="_int">
+   		SELECT MAX(QNO) FROM QNA
+   </select>
+   
+   <select  id="selectQCommentList" resultType= "QComment">
+    SELECT * FROM QCOMMENT
+    WHERE QNO =#{qno}
+    ORDER BY QCDATE DESC
+   </select>
+   
+   <insert id="insertQComment" parameterType="QComment">
+     INSERT INTO QCOMMENT
+     VALUES(SEQ_QCNO.NEXTVAL, #{qno}, #{qWriter}, #{qcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'),  #{ref_qcno}, #{qcLevel})
+   </insert>
+   
+   <update id="updateQComment" parameterType="QComment">
+     UPDATE QCOMMENT
+      <set>
+       QCCONTENT =#{qcContent}
+      </set>
+      WHERE QCNO =#{qcno}
+   </update>
+   
+   <delete id="deleteQComment" parameterType="_int">
+     DELETE FROM QCOMMENT
+     WHERE QCNO =#{qcno}
+   </delete>
+   
+   <!--  댓글에 대댓글이 몇개 달렸는지 찾는 쿼리 -->
+   <select  id="selectOneReplyQcno" resultType="_int">
+	 SELECT COUNT(*)
+	 FROM QCOMMENT
+	 WHERE REF_QCNO =#{qcno}
+   </select> 
+   
+   <!-- 댓글의 작성자 누구인지 찾는 쿼리   -->
+   <select id="selectOneRelyQWriter" resultType="String">
+     SELECT QWRITER
+     FROM QCOMMENT
+     WHERE QCNO =#{qcno}
+   </select>
+   
+   <!--  해당 글에서 가장 마지막 댓글을 찾는 쿼리 -->
+   <select  id="selectOneQComment" resultType="Qcomment">
+     SELECT * 
+     FROM QCOMMENT
+     WHERE QNO =#{qno}
+     AND QCNO = (SELECT MAX(QCNO) FROM QCOMMENT WHERE QNO =#{qno})
+   </select>
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

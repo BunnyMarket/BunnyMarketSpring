@@ -1,6 +1,8 @@
 package com.kh.bunny.member.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.bunny.member.model.vo.Member;
 
@@ -20,8 +22,14 @@ public interface MemberDAO {
 	public boolean email_check(String email) throws Exception;    //이메일 중복 확인
 
 	
+	// admin
+	List<Map<String, String>> selectMemberList(int cPage, int numPerPage);
 
+	int selectMemberTotalContents();
+
+	int selectOneCountUp(String userId);
 	
+	int selectOneCountDown(String userId);
 	
 	
 }
