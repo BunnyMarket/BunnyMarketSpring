@@ -58,11 +58,11 @@
 									<td align="left">${q.QWriter}</td>
 									<td align="center">${q.QDate}</td>
 							
-									 <c:if test="${q.qcCheck ne 0}">
-											<td style="color: red;" align="center">완료</td>
+									 <c:if test="${admin.adminId}.match(/bunny.*/)">
+											<td style="color: red;" align="center">확인</td>
 										</c:if>
 
-									 <c:if test="${q.qcCheck eq 0}">
+									 <c:if test="${admin.adminId}.match(/bunny.*/)eq 0">
 											<td style="color: black;" align="center">대기중</td>
 										</c:if>
 										<td></td> 
@@ -113,13 +113,7 @@ $(function(){
 			});
 	}); 
 	
-function selectOne(qno){
-	if(${member.userId eq 'admin'})
-		location.href = '${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?no=' + qno;
-	else
-		location.href = '${pageContext.request.contextPath}/QNA/QNAPassword.do?no=' + qno;
-	
-}; 
+
 
 </script>
 

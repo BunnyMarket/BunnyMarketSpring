@@ -67,7 +67,7 @@
 								<div class="comment_area clearfix">
 									<h4 class="headline">${ qcommentSize } Comments</h4>
 									<c:if test = "${ qcommentSize eq 0 }">
-										<h5>첫번째 댓글의 주인공이 되어보세요!</h5>
+										<h5>아직 댓글이 없습니다.  (｡•́︿•̀｡)  </h5>
 									</c:if>
 
 									<ol>
@@ -93,6 +93,7 @@
 															
 															<!--  본인일 경우 수정 삭제버튼 출력 -->
 															<form id="replyForm-${qcomment.qcno}" method="post">
+																<input type="hidden" name="qno" value="${qcomment.qno}"/>
 																<input type="hidden" name="qcno" value="${qcomment.qcno}"/>
 																<a class="active" onclick="replyComment(${st.index});">Reply</a>
 																<c:if test="${qcomment.QWriter eq member.nickName }">

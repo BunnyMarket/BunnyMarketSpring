@@ -274,18 +274,14 @@ public class QNAController {
 	}
 
 	// 댓글 생성
-	
 	@RequestMapping("/QNA/qcommentInsert.do")
 	public String qcommentInsert(@RequestParam int qno,
 										QComment qcomment, Model model, HttpSession session) {
-		
-		
 		
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getNickName();
 		
 		qcomment.setQWriter(userId);
-		
 		
 		System.out.println("댓글아 달아졌니" + qcomment);
 		String msg = "";
@@ -337,7 +333,7 @@ public class QNAController {
 		
 		String msg ="";
 		String loc ="/QNA/QNADetail.do?qno=" + qcomment.getQno();
-		
+		System.out.println("qno 내놔 : " + qcomment.getQno());
 		try {
 			
 			boolean hasReply = qnaService.selectOneReplyQcno(qcomment.getQcno()) > 0 ? true:false;

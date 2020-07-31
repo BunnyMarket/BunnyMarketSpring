@@ -64,13 +64,31 @@
      DELETE FROM QCOMMENT
      WHERE QCNO =#{qcno}
    </delete>
-</mapper>
-
-<!-- <select  id="selectOneReplyQcno" resultType="_int">
+   
+   <!--  댓글에 대댓글이 몇개 달렸는지 찾는 쿼리 -->
+   <select  id="selectOneReplyQcno" resultType="_int">
 	 SELECT COUNT(*)
 	 FROM QCOMMENT
 	 WHERE REF_QCNO =#{qcno}
-</select> -->
+   </select> 
+   
+   <!-- 댓글의 작성자 누구인지 찾는 쿼리   -->
+   <select id="selectOneRelyQWriter" resultType="String">
+     SELECT QWRITER
+     FROM QCOMMENT
+     WHERE QCNO =#{qcno}
+   </select>
+   
+   <!--  해당 글에서 가장 마지막 댓글을 찾는 쿼리 -->
+   <select  id="selectOneQComment" resultType="Qcomment">
+     SELECT * 
+     FROM QCOMMENT
+     WHERE QNO =#{qno}
+     AND QCNO = (SELECT MAX(QCNO) FROM QCOMMENT WHERE QNO =#{qno})
+   </select>
+   
+</mapper>
+
 
 
 
