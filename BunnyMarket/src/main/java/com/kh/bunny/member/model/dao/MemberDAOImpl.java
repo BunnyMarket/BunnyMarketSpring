@@ -1,10 +1,8 @@
 package com.kh.bunny.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,43 +43,66 @@ public class MemberDAOImpl implements MemberDAO {
 		return (Integer)hmap.get("result");
 	}
 
+	
+
 	@Override
-	public boolean email_check(String email) throws Exception {
-		 email
-	        =sqlSession.selectOne("member.email_check", email);
-	    
-	        //조건식 ? true일때의 값 : false일때의 값
-	        return (email==null) ? true : false;
+	public Member findId(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findId",m);
 	}
+
+	@Override
+	public int pwdUpdate(Member m) {
+		
+		return sqlSession.update("memberMapper.pwdUpdate",m);
+	}
+
+	@Override
+	public int idDupCheck(String userId) {
+	
+		return sqlSession.selectOne("memberMapper.idDupCheck",userId);
+	}
+
+	@Override
+	public int nickDupCheck(String nickName) {
+		return sqlSession.selectOne("memberMapper.nickDupCheck",nickName);
+	}
+
+	@Override
+	public int emailDupCheck(String email) {
+	
+		return sqlSession.selectOne("memberMapper.emailDupCheck",email);
+	}
+
+	@Override
+	public int phoneDupCheck(String phone) {
+	
+		return sqlSession.selectOne("memberMapper.phoneDupCheck",phone);
+	}
+
+	@Override
+	public ArrayList<Member> findSeller(String nickName) {
+
+		return new ArrayList<Member>(sqlSession.selectList("memberMapper.findSeller",nickName));
+	}
+
+	@Override
+	public Member findSeller2(String nickName) {
+		return sqlSession.selectOne("memberMapper.findSeller",nickName);
+	}
+
+	
+
+	
 
 	
 	
 	
-	//admin
-	
-	@Override
-	public List<Map<String, String>> selectMemberList(int cPage, int numPerPage) {
-		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return sqlSession.selectList("memberMapper.selectMemberList", null, rows);
-	}
-
-	@Override
-	public int selectMemberTotalContents() {
-		return sqlSession.selectOne("memberMapper.selectMemberTotalContents");
-	}
-	
-	@Override
-	public int selectOneCountUp(String userId) {
-		System.out.println("dao : " + userId);
-		return sqlSession.update("memberMapper.selectOneCountUp", userId); 
-	}
 	
 	
-	@Override
-	public int selectOneCountDown(String userId) {
-		System.out.println("dao : " + userId);
-		return sqlSession.update("memberMapper.selectOneCountDown", userId); 
-	}
+	
+	
+	
 	
 	
 	

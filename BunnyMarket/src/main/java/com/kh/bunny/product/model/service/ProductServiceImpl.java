@@ -29,12 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product selectOneProduct(int pno) {
-		Product p = productDAO.selectOneProduct(pno);
-		
-		if(p != null){
-			int result = productDAO.updateCount(pno);
-		}
-		return p;
+		return productDAO.selectOneProduct(pno);
 	}
 
 	@Override
@@ -63,8 +58,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int updatePComment(PComment pcomment) {
-		return productDAO.updatePComment(pcomment);
+	public int updatePComemnt(PComment pcomment) {
+		return productDAO.updatePComemnt(pcomment);
 	}
 
 	@Override
@@ -73,23 +68,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int selectOneReplyPcmno(int pcmno) {
-		return productDAO.selectOneReplyPcmno(pcmno);
+	public int selectOneReplyPno(int pcmno) {
+		return productDAO.selectOneReplyPno(pcmno);
 	}
 
 	@Override
-	public String selectOneReplyPcWriter(int pcmno) {
-		return productDAO.selectOneReplyPcWriter(pcmno);
-	}
-
-	@Override
-	public PComment selectOnePComment(int pno) {
-		return productDAO.selectOnePComment(pno);
-	}
-
-	@Override
-	public List<Object> selectProductListMap() {
-		return productDAO.selectProductListMap();
+	public int sellCount(String pWriter) {
+		
+		return productDAO.sellCount(pWriter);
 	}
 
 

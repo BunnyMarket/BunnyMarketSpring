@@ -68,7 +68,6 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                
                                     <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${member.nickName}');" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">경매중인 상품$ <span class="text-muted"></span></label>
                                     
