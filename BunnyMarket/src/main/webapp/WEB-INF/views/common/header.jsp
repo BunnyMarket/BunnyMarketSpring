@@ -256,7 +256,7 @@
 									</li>
 									<li><a href="#">결제하기</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/views/payment/pBuyer.jsp">구매자</a></li>
+											<li><a href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno=1">구매자</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pSeller.jsp">판매자</a></li>
 											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointCharge.do', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
 										</ul>

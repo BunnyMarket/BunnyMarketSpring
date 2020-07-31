@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dealMapper">
+	
+	<!-- 거래 하나 가져오기 -->
+	<select id="selectOneDeal" resultType = "Deal">
+		SELECT *
+		FROM DEAL 
+		WHERE DNO = #{dno}
+	</select>
+	
+	<!-- 상대 거래자 정보 가져오기 -->
+	<select id="selectOtherMember" resultType = "Member">
+		SELECT * FROM MEMBER
+		WHERE USERID = #{userId}
+	
+	</select>
+	
+	<!-- 거래의 상품 하나 가져오기 -->
+	<select id="selectOneProduct" resultType = "Product">
+		SELECT * FROM PRODUCT
+		WHERE PNO = #{pno}
+	</select>
+	
+	<!-- 거래 목록 가져오기 -->
+	<select id="selectDealList" resultType = "Deal">
+	
+	</select>
+	
+	
+	<!-- 구매자 거래 생성 -->
+	<update id = "updateBuyerDeal" parameterType = "Deal">
+	
+	</update>
+	
+	<!-- 판매자 거래 생성 -->
+	<update id = "updateSellerDeal" parameterType = "Deal">
+	
+	</update>
+	
+	
+</mapper>
