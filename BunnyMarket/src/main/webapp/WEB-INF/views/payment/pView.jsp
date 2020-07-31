@@ -206,6 +206,13 @@
 							paid_at : rsp.paid_at,
 							receipt_url : rsp.receipt_url */
 						//기타 필요한 데이터가 있으면 추가 전달
+						}, success : function(data){
+							if(data.fineCharge == true){
+								alert("잘 들어왔습지요");
+							} else {
+								alert("땡땡 틀림~");
+							}
+							
 						}
 					});
 					

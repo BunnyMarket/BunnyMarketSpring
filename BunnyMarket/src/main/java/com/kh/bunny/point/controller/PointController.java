@@ -41,11 +41,9 @@ public class PointController {
 		
 		try {
 			
-			int result = pointService.pointChargeInsert(bunnyPoint);
+			fineCharge = pointService.pointChargeInsert(bunnyPoint) > 0 ? true : false;
 			
-			if(result > 0) {
-				
-			}
+			hmap.put("fineCharge", fineCharge);
 			
 			
 		} catch (Exception e) {
@@ -53,7 +51,7 @@ public class PointController {
 		}
 		
 		
-		return "common/msg";
+		return hmap;
 	}
 }
 
