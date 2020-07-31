@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.bunny.deal.model.vo.Deal;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.vo.Product;
 
 @Repository("DealDAO")
 public class DealDAOImpl implements DealDAO {
@@ -32,6 +34,16 @@ public class DealDAOImpl implements DealDAO {
 	@Override
 	public int updateSellerDeal(Deal deal) {
 		return sqlSession.update("dealMapper.updateSellerDeal", deal);
+	}
+
+	@Override
+	public Product selectOneProduct(int pno) {
+		return sqlSession.selectOne("dealMapper.selectOneProduct", pno);
+	}
+
+	@Override
+	public Member selectOtherMember(String userId) {
+		return sqlSession.selectOne("dealMapper.selectOtherMember", userId);
 	}
 
 	

@@ -11,6 +11,19 @@
 		WHERE DNO = #{dno}
 	</select>
 	
+	<!-- 상대 거래자 정보 가져오기 -->
+	<select id="selectOtherMember" resultType = "Member">
+		SELECT * FROM MEMBER
+		WHERE USERID = #{userId}
+	
+	</select>
+	
+	<!-- 거래의 상품 하나 가져오기 -->
+	<select id="selectOneProduct" resultType = "Product">
+		SELECT * FROM PRODUCT
+		WHERE PNO = #{pno}
+	</select>
+	
 	<!-- 거래 목록 가져오기 -->
 	<select id="selectDealList" resultType = "Deal">
 	

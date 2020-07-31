@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.bunny.deal.model.dao.DealDAO;
 import com.kh.bunny.deal.model.vo.Deal;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.vo.Product;
 
-@Service("productService")
+@Service("dealService")
 public class DealServiceImpl implements DealService {
 
 	@Autowired
@@ -32,6 +34,16 @@ public class DealServiceImpl implements DealService {
 	@Override
 	public int updateSellerDeal(Deal deal) {
 		return dealDAO.updateSellerDeal(deal);
+	}
+
+	@Override
+	public Product selectOneProduct(int pno) {
+		return dealDAO.selectOneProduct(pno);
+	}
+
+	@Override
+	public Member selectOtherMember(String userId) {
+		return dealDAO.selectOtherMember(userId);
 	}
 
 

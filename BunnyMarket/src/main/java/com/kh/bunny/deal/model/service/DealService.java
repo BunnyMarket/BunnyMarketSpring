@@ -3,6 +3,8 @@ package com.kh.bunny.deal.model.service;
 import java.util.List;
 
 import com.kh.bunny.deal.model.vo.Deal;
+import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.vo.Product;
 
 public interface DealService {
 	
@@ -18,6 +20,13 @@ public interface DealService {
 	// 판매자 거래 생성 
 	int updateSellerDeal(Deal deal);
 	
+	
+	// 거래 상품 가져오기 
+	Product selectOneProduct(int pno);
+
+	
+	// 상대 거래자의 정보 가져오기 
+	Member selectOtherMember(String userId);
 	
 	
 	
