@@ -98,9 +98,6 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectList("productMapper.selectProductListMap");
 	}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/dev_QNA_lee
 
 }
