@@ -63,10 +63,8 @@
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
-							<input type="hidden" name="pPrice" id="pPriceOrigin" value="0"/>
-							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 하한가 설정" required />
+							<input type="text" class="form-control" id="pPrice" name="pPrice" placeholder="상품 하한가 설정" required />
 							<br />
-							
 							
 							<label for="aeDate">경매 기간 설정</label><label style="float: right;" id="pEndDate" for="pEndDate">경매 종료날짜 :</label>
 	                        <div class="search_by_terms">
@@ -85,20 +83,19 @@
 							<label for="pcno" style="float: none;">카테고리 설정</label>
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%">
-                                  <option value="1">전자기기</option>
-                                  <option value="2">가구</option>
-                                  <option value="3">악세서리</option>
-                                  <option value="4">의류</option>
-                                  <option value="5">장난감</option>
-                                  <option value="6">책</option>
-                                  <option value="7">기타</option>
+                                  <option value="1" selected>컴퓨터</option>
+                                  <option value="2">옷</option>
+                                  <option value="3">책</option>
+                                  <option value="4">가구</option>
+                                  <!-- <option value="5">ㅎㅎ</option>
+                                  <option value="6">ㄴㄴ</option>
+                                  <option value="7">33</option> -->
                                 </select>
 	                        </div>
 							<br />
 
 							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
-							<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
+							<input type="text" id="address" name="pAddress" class="form-control" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
 							<input type="hidden" name="pWriter" value="TEST1">
 						</div>
 					</div>
@@ -138,14 +135,8 @@
 	
 </section>
 <!-- ##### Single Product Details Area End ##### -->
-<script>
-	
-	$("#pPriceComma").focusout(function(){
-		$("#pPriceOrigin").val($("#pPriceComma").val());
-		var origin = $("#pPriceOrigin").val();
-		$("#pPriceComma").val(parseInt(origin).toLocaleString());
-	});
-	
+
+	<script>
 	// 사진 게시판 미리보기 기능 지원 스크립트
 		$(function(){
 			$('#pImgFileArea').hide();
@@ -234,7 +225,7 @@
 					/* 지도 생성 */
 				    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				    mapOption = { 
-				        center: new kakao.maps.LatLng(37.519117706115296, 126.98912931531106), // 지도의 중심좌표
+				        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 				        level: 3 // 지도의 확대 레벨
 				    };
 				
@@ -281,7 +272,7 @@
 	                
 	               
 			        console.log("입력받은 주소 : " + fullAddr);
-			        console.log("보여주기 위해 입력받은 주소 : " + showshowfullAddr);
+			        console.log("보여주기 위해 입력받은 주소 : " + showshowfullAddr); // 사용자에게 보여주기 위한 괄호까지 들어간 주소 
 
 			        
 			        
@@ -307,19 +298,12 @@
 
 			                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			                map.setCenter(coords);
-			                
-			                
-			                
-			                
-			                
 			            } 
 			        });    
 			        
 			        document.getElementById('map').style.border = "4px solid #bcbcbc";
-				 
 	            }
 	        }).open();
-	        
 	    };
 	</script>
 
