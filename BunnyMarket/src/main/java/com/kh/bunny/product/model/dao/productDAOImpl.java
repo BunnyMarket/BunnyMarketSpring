@@ -50,6 +50,10 @@ public class productDAOImpl implements ProductDAO {
 	}
 
 	@Override
+	public int updateCount(int pno) {
+		return sqlSession.update("productMapper.updateTotalCount",pno);
+	}
+	@Override
 	public List<Object> selectPCommentList(int pno) {
 		return sqlSession.selectList("productMapper.selectPCommentList", pno);
 	}
@@ -87,6 +91,11 @@ public class productDAOImpl implements ProductDAO {
 	@Override
 	public PComment selectOnePComment(int pno) {
 		return sqlSession.selectOne("productMapper.selectOnePComment", pno);
+	}
+
+	@Override
+	public List<Object> selectProductListMap() {
+		return sqlSession.selectList("productMapper.selectProductListMap");
 	}
 
 

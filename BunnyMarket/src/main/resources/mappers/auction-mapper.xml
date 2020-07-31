@@ -37,6 +37,9 @@
 		WHERE P.PNO = #{pno}
 	</select>
 	
+	<update id="updateTotalCount">
+		UPDATE PRODUCT SET PTOTAL = PTOTAL+1 WHERE PNO = #{pno}	
+	</update>
 	
 	<select id="bidderCount" resultType="_int">
 		SELECT COUNT(*)

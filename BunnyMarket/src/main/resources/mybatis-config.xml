@@ -19,11 +19,17 @@
 		 <typeAlias type = "com.kh.bunny.product.model.vo.Product" alias = "Product" />
 		 <typeAlias type = "com.kh.bunny.product.model.vo.PComment"  alias = "PComment"/>  
 		 <typeAlias type = "com.kh.bunny.common.Str2ArrayHandler" alias = "Str2ArrayHandler" />
-		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/>
+		 <typeAlias type = "com.kh.bunny.QNA.model.vo.QNA"  alias = "QNA"/> 
+		 <typeAlias type = "com.kh.bunny.notice.model.vo.Notice"  alias = "Notice"/> 
+		 <typeAlias type = "com.kh.bunny.adminMember.model.vo.adminMember"  alias = "AdminMember"/> 
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Auction" alias = "Auction" /> 
 		 <typeAlias type = "com.kh.bunny.auction.model.vo.Bidder" alias = "Bidder" /> 
+		  <typeAlias type = "com.kh.bunny.QNA.model.vo.QComment"  alias = "QComment"/> 
+		  <typeAlias type = "com.kh.bunny.report.model.vo.Report"  alias = "Report"/> 
+
 
 	</typeAliases>
+	
 	
 	<typeHandlers>
 	<!-- 특정 타입을 변경해주는 typeHandler 등록 태그 -->

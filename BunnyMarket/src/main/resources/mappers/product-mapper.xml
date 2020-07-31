@@ -11,6 +11,13 @@
 		FROM PRODUCT WHERE PTYPE = 1 
 		ORDER BY PDATE DESC, PNO DESC
 	</select>
+	
+	<!-- 상품 목록을 지도에 출력하기 위한 쿼리 -->
+	<select id="selectProductListMap" resultType = "Product">
+		SELECT *
+		FROM PRODUCT 
+		ORDER BY PDATE DESC, PNO DESC
+	</select>
 
 	<!-- 총 상품의 개수를 출력하는 쿼리 -->
 	<select id="selectProductTotalContent" resultType = "_int">
@@ -22,6 +29,10 @@
 		SELECT * FROM PRODUCT
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</select>
+	<!-- 상품 게시글 조회수 -->
+	<update id="updateTotalCount">
+		UPDATE PRODUCT SET PTOTAL = PTOTAL+1 WHERE PNO = #{pno}	
+	</update>
 	
 	<!-- 상품 게시글을 상세보기하면서 댓글 목록 불러오기 -->
 	<select id="selectPCommentList" resultType = "PComment">
@@ -36,7 +47,6 @@
 		VALUES(SEQ_PCMNO.NEXTVAL, #{pno}, #{pcWriter}, #{pcContent}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), #{ref_pcmno}, #{pcLevel})
 	</insert>
 
-	
 	<!-- 댓글 수정 -->
 	<update id = "updatePComment" parameterType = "PComment">
 		UPDATE PCOMMENT
@@ -61,6 +71,8 @@
 	 -->
 	</insert>
 
+	
+	
 	
 	<!-- 상품 게시글 삭제하는 쿼리 -->
 	<delete id = "deleteProduct" parameterType = "_int">

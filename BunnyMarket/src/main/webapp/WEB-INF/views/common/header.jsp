@@ -17,7 +17,7 @@
 <!-- 주소 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <!-- 지도 부르기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=037f9ae8baf28354df2203507cf3111a&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=037f9ae8baf28354df2203507cf3111a&libraries=services, clusterer, drawing"></script>
 
 <!-- Title -->
 <title>Bunny Market</title>
@@ -145,12 +145,25 @@
 										</div>
 									</div>
 								</div>
-								<c:if test="${empty member}">
+								<c:choose>
+								<c:when test="${empty member and empty admin}">
 								<!-- Login -->
 								<div class="login">
 									<a href="${pageContext.request.contextPath}/login.do"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
 								</div>
-								</c:if>
+								
+								</c:when>
+								<c:when test="${!empty admin}">
+								<!-- Login -->
+								<div class="login">
+									<a href="#"><i class="fa fa-user" aria-hidden="true"></i>
+										<span>관리자님이 접속하셨습니다.(${admin.adminId})</span>
+									</a>
+
+								</div>
+								
+								</c:when>
+								</c:choose>
 								<c:if test="${!empty member}">
 
 									<span><a
@@ -216,24 +229,28 @@
 								<ul>
 									<li><a href="#">관리자</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/views/admin/customerList.jsp">관리자-고객리스트</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/message.jsp">관리자-메세지</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/admin/transactions.jsp">관리자-트랜잭션</a></li>
+
+											<%-- <li><a href="${ pageContext.request.contextPath }/admin/member/memberList.do">관리자-고객리스트</a></li> --%>
+											<li><a href="${ pageContext.request.contextPath }/admin/adminLoginCheck.do">관리자-메세지</a></li>
+											<%-- <li><a href="${ pageContext.request.contextPath }/views/admin/reportList.jsp">관리자-신고리스트</a></li>
+											<li><a href="${ pageContext.request.contextPath }/views/admin/tansactions.jsp">관리자-트랜잭션</a></li>
+											<li><a href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">관리자-공지사항</a></li> --%>
+
 										</ul></li>
 									<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li>
 									<li><a href="#">고객센터</a>
 										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/views/QNA/FAQ.jsp">F.A.Q</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/QNA/QNA_List.jsp">Q&A</a></li>
-											<li><a href="${ pageContext.request.contextPath }/views/report/reportList.jsp">신고하기</a></li>
+											<li><a href="${ pageContext.request.contextPath }/notice/mNotice.do">공지사항</a></li>
+											<li><a href="${ pageContext.request.contextPath }/QNA/FAQ.do">F.A.Q</a></li>
+											<li><a href="${ pageContext.request.contextPath }/QNA/QNAList.do">Q&A</a></li>
+											<li><a href="${ pageContext.request.contextPath }/report/reportList.do">신고하기</a></li>
 										</ul>
 									</li>
 									<li><a href="#">상품</a>
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
 											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
-											<li><a href="#">상품 지도로 보기</a></li>
+											<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">상품 지도로 보기</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/member/review.jsp">후기 작성하기</a></li>
 										</ul>
 									</li>
@@ -241,7 +258,7 @@
 										<ul class="dropdown">
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pBuyer.jsp">구매자</a></li>
 											<li><a href="${ pageContext.request.contextPath }/views/payment/pSeller.jsp">판매자</a></li>
-											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/payment/pView.jsp', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
+											<li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointCharge.do', '_blank', 'width=600px, height=800px'))">당근 충전하기</a></li>
 										</ul>
 									</li>
 									<li><a href="${pageContext.request.contextPath}/views/member/myPage.jsp">MyPage</a></li>
