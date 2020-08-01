@@ -218,7 +218,6 @@ public class AuctionController {
 		
 		String msg = "";
 		String loc = "/auction/auctionDetail.do?pno="+pno;
-		System.out.println("pno : " + pno + ", bPrice : " + bPrice);
 		
 		if(a.getBPrice() >= bPrice || a.getPPrice() >= bPrice) {
 			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
