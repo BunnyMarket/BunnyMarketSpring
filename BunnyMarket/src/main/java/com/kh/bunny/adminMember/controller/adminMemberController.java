@@ -198,7 +198,7 @@ public class adminMemberController {
 			session.invalidate();
 			
 		}
-		
+		System.out.println("끼룩");
 		/* model.addAttribute("loc", loc).addAttribute("msg",msg); */
 		return "redirect:/admin/adminLogin.do";
 	}
