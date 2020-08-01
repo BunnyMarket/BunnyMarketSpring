@@ -56,8 +56,7 @@
 									<td>${q.qno}</td>
 									<td colspan="2" align="center">${q.QTitle}</td>
 									<td></td>
-									<td align="left">${q.QWriter}</td>
-									
+									<td align="left">${q.QWriter}</td>			
 									<td align="center">${q.QDate}</td>	
 									<td></td>
 								</tr>
