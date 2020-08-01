@@ -40,47 +40,45 @@
 		WHERE USERID = #{userId}
 	</delete>
 	
-	<select id="checkIdDuplicate" parameterType="hashmap" statementType="CALLABLE">
-		{ CALL ID_DUP_CHK(
-                       #{userId, mode=IN, jdbcType=VARCHAR}, 
-		               #{result, mode=OUT, jdbcType=NUMERIC, javaType=integer} ) 
-		 }
-	</select>
 	
 	
-	 <!-- 이메일 중복확인 관련 mapper-->
-    <select id = "email_check" resultType="String">
-        SELECT EMAIL FROM MEMBER
-        WHERE EMAIL = #{email}
+	
+	
+    
+    <select id = "findId" parameterType="Member" resultType="Member">
+    	SELECT USERID FROM MEMBER
+    	WHERE EMAIL = #{email} AND USERNAME=#{userName}
     </select>
     
-    <!-- admin -->
-	<select  id="selectMemberList" resultType="member">
-		SELECT * FROM MEMBER ORDER BY COUNT DESC
+    <!-- 비밀번호 변경 -->
+    <update id="pwdUpdate" parameterType="Member">
+			UPDATE MEMBER SET USERPWD = #{userPwd} WHERE USERID = #{userId}
+		</update>
+		
+	<select id="idDupCheck" parameterType="string" resultType="_int">
+			SELECT COUNT(*) FROM MEMBER WHERE USERID= #{userId}
+		</select>
+		
+	<select id="nickDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME = #{nickName}
 	</select>
 	
-	
-	<select  id="selectMemberTotalContents" resultType="_int">
-		SELECT COUNT(*) FROM MEMBER
+	<select id="emailDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	
-	<update id="selectOneCountUp" parameterType="_int" >
-		UPDATE MEMBER 
-		 <set>
-			MSTATUS = 0 	  
-		 </set> 
-		WHERE USERID = #{userId}		
-	</update>
+	<select id="phoneDupCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER WHERE PHONE = #{phone}
+	</select>
 	
-	<update id="selectOneCountDown" parameterType="_int">
-		UPDATE MEMBER 
-		 <set>
-			MSTATUS = 1 	  
-		 </set> 
-		WHERE USERID = #{userId}	
-	</update>
+	<select id="findSeller"  resultType="Member">
+		SELECT * FROM MEMBER WHERE NICKNAME = #{nickName}
+	</select>
+    
+    
 	
 </mapper>
+
 
 
 

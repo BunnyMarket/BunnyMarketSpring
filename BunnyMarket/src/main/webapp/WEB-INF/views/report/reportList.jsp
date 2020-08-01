@@ -53,9 +53,9 @@
 					        <tr id="${r.RNo}">
 					        
 							<td>${r.RNo }</td>
-							<td colspan="2"> ${r.RTitle}</td>
+							<td colspan="2" style="padding-left: 150px;"> ${r.RTitle}</td>
 							<td>${r.RWriter }</td>
-							<td>${r.RDate }</td>
+							<td style="padding-left: 45px;">${r.RDate }</td>
 							
 							<c:if test="${fn:contains(r.RContent, '<img') == 'true' }">
 							 <td style="color:green;" align="center">첨부</td>
@@ -71,7 +71,7 @@
 					<div class="checkout_btn_inner" align="right">
 						<br /> <br /> 
 						<a class="btn alazea-btn mr-30"
-						  	href="${pageContext.request.contextPath}/report/reportInsertView.do">등록하기</a>
+						  	href="${pageContext.request.contextPath}/report/reportDirectInsertView.do">등록하기</a>
 						<a class="btn alazea-btn mr-30"
 						  	href="${pageContext.request.contextPath}">메인으로</a> 
 						<br /><br />
@@ -90,7 +90,7 @@
             <div class="row">
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
-                    <div class="shop-products-area">
+                    <div class="shop-products-area" style="margin-left: 300px;">
                         <div>
 	                        <c:out value="${pageBar}" escapeXml="false"/>
                         </div>
@@ -103,8 +103,8 @@
 $(function(){
 	$("#tableArea td").click(function(){
 		var rNo = $(this).parent().attr("id");
-		
-		if(${member.userId eq 'admin'}){
+		var admin = '${admin.adminId}';
+		if(admin.match(/bunny.*/)){
 			location.href = "${pageContext.request.contextPath}/report/reportSelectOneAdmin.do?rno=" + rNo;
 		}else{
 			location.href = "${pageContext.request.contextPath}/report/reportPassword.do?rno=" + rNo;

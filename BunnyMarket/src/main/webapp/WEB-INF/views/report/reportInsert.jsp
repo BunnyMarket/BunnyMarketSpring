@@ -40,6 +40,7 @@
 					<div class="col-12 col-md-10" style="text-align: center;">
 						<div class="single_product_desc">
 							<input type="hidden" name="rWriter"  value="${member.userId}">
+				
 							<input type="text" class="form-control" name="rTitle" placeholder="신고글 제목을 입력" required />
 							<br />
 						</div>
@@ -80,15 +81,20 @@
 					
 					<div class="col-12 col-md-2" style="text-align: center; padding-top: 7px;">
 						<div class="single_product_desc">
-							<label for="p" style="padding-left: 15px;">신고할 글 주소 *</label>
+							<label for="p" style="padding-left: 15px;">신고할 글 제목 *</label>
 							<br />
 						</div>
 					</div>
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
-							<input type="text" class="form-control" name="pno" placeholder="신고글 번호 입력"  />
+				
+						<input type="hidden" name = "pno" value ="${pno}">
+							<input type="text" class="form-control" name="pTitle"  value="${pTitle } " readonly  />
+
 							<br />
 						</div>
+						
+			
 					</div>
 					
 					<!-- 썸머노트 -->

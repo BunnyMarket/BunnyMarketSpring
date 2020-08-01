@@ -13,7 +13,7 @@ import com.kh.bunny.QNA.model.vo.QNA;
 
 public interface QNADAO {
 
-	List<Map<String, String>> selectQNAList(int cPage, int numPerPage);
+	List<Map<String, String>> selectQNAList(int cPage, int numPerPage, String userId);
 	
 	int selectQNATotalContents();
 	

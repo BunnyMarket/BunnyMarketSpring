@@ -8,8 +8,11 @@
 		SELECT Q.QNO, Q.QWRITER, Q.QTITLE, Q.QCONTENT, Q.QDATE
 		          ,   (SELECT COUNT(*) FROM QCOMMENT QC WHERE QC.QNO = Q.QNO) QCCHECK
 		  FROM QNA Q
+		  JOIN MEMBER M ON Q.QWRITER = M.USERID
+		  WHERE Q.QWRITER =#{userId}
 		 ORDER BY Q.QDATE DESC
 	</select>
+	
 	<select id="selectQNATotalContent" resultType="_int">
 		SELECT COUNT(*)
 		FROM QNA
@@ -95,15 +98,4 @@
 	</select>
    
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
 

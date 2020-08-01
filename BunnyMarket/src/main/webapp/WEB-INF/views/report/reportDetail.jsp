@@ -50,9 +50,10 @@
 							<br /><br /><br />
 							
 							<div align="right">
+							
 		                         <button type="button" class="btn alazea-btn mt-15"
 										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${report.RNo}'">수정하기</button>
-	                      	<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>
+	                      	      <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>
 				            </div>
 						<br /><br /><br />
 						

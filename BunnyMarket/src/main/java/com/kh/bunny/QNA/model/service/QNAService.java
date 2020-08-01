@@ -10,7 +10,7 @@ public interface QNAService {
    static int QNA_SERVICE_ERROR = 0;
    static int QNA_SERVICE_COMPLETE = 1;
    
-   List<Map<String, String>> selectQNAList (int cPage, int numPerPage);
+   List<Map<String, String>> selectQNAList (int cPage, int numPerPage, String userId);
    
    int selectQNATotalContents();
    

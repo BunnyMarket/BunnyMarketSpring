@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
-import com.kh.bunny.product.model.vo.PComment;
 
 @Repository("auctionDAO")
 public class AuctionDAOImpl implements AuctionDAO {
@@ -84,8 +83,20 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 
 	@Override
-	public int updateCount(int pno) {
-		return sqlSession.update("auctionMapper.updateTotalCount",pno);
+	public List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName) {
+
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("auctionMapper.selectTradeList", nickName, rows);
 	}
+
+	@Override
+	public int selectTradeTotalContents() {
+		return sqlSession.selectOne("auctionMapper.selectTradeTotalContent");
+	}
+
+
+	
+
 
 }

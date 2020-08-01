@@ -62,8 +62,20 @@ public class ReportController {
 		return "report/reportList";
 	}
 	
+	// 신고글 직접 등록
+	@RequestMapping("/report/reportDirectInsertView.do")
+	public String detailDirectReport() {
+		
+		return "report/reportInsert";
+	}
+	
 	@RequestMapping("/report/reportInsertView.do")
-	public String detailReport() {
+	public String detailReport(@RequestParam String pTitle, @RequestParam int pno, Model model) {
+		System.out.println("pTitle : " + pTitle);
+		System.out.println("pno : " + pno);
+		
+		model.addAttribute("pTitle", pTitle)
+		           .addAttribute("pno", pno);
 		
 		return "report/reportInsert";
 	}

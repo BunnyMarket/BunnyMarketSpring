@@ -42,10 +42,10 @@
 							<tr>
 								<th style="width: 10%">번호</th>
 								<th colspan="2" style="width: 40%; text-align: center;">제목</th>
+								 <th></th>
 								<th style="padding-right: 80px; width: 15%; text-align: center;">작성자</th>
 								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
-								<th style="padding-left: 8px; width: 20%; text-align: center;">확인여부</th>
-								<th></th>
+								 <th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,17 +55,10 @@
 
 									<td>${q.qno}</td>
 									<td colspan="2" align="center">${q.QTitle}</td>
-									<td align="left">${q.QWriter}</td>
-									<td align="center">${q.QDate}</td>
-							
-									 <c:if test="${admin.adminId}.match(/bunny.*/)">
-											<td style="color: red;" align="center">확인</td>
-									 </c:if>
-
-									 <c:if test="${admin.adminId}.match(/bunny.*/)eq 0">
-											<td style="color: black;" align="center">대기중</td>
-									 </c:if>
-										<td></td> 
+									<td></td>
+									<td align="left">${q.QWriter}</td>			
+									<td align="center">${q.QDate}</td>	
+									<td></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -91,7 +84,7 @@
             <div class="row">
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
-                    <div class="shop-products-area">
+                    <div class="shop-products-area" style="margin-left: 250px;">
                         <div>
 	                        <c:out value="${pageBar}" escapeXml="false"/>
                         </div>

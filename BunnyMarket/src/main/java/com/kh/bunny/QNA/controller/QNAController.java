@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.QNA.model.exception.QNAException;
@@ -44,13 +45,15 @@ public class QNAController {
 	@RequestMapping("/QNA/QNAList.do")
 
 	public String selectQNAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
-			Model model, HttpServletRequest request) {
-
-
+			Model model, HttpServletRequest request, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("member");
+		String userId = m.getUserId();
+			
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10;
 
-		List<Map<String, String>> list = qnaService.selectQNAList(cPage, numPerPage);
+		List<Map<String, String>> list = qnaService.selectQNAList(cPage, numPerPage, userId);
 
 		System.out.println("qnaList 가져오는지 확인: " + list);
 
