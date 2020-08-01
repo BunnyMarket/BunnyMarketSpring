@@ -12,6 +12,7 @@ import com.kh.bunny.auction.model.dao.AuctionDAO;
 import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
+import com.kh.bunny.product.model.vo.PComment;
 
 @Service("auctionService")
 public class AuctionServiceImpl implements AuctionService {
@@ -41,7 +42,13 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public Auction selectOneAuction(int pno) {
-		return auctionDAO.selectOneAuction(pno);
+		Auction a = auctionDAO.selectOneAuction(pno);
+		
+		if(a != null){
+			int result = auctionDAO.updateCount(pno);
+		}
+		return a;
+		
 	}
 
 	@Override
@@ -82,19 +89,17 @@ public class AuctionServiceImpl implements AuctionService {
 	public ArrayList<Bidder> selectAllBidder(int pno) {
 		return auctionDAO.selectAllBidder(pno);
 	}
-
+	
 	@Override
 	public List<Map<String, String>> selectTradeList(int aPage, int numPerPage, String nickName) {
 		
-		
-		
 		return auctionDAO.selectTradeList(aPage, numPerPage, nickName);
 	}
-
+	
 	@Override
 	public int selectTradeTotalContents() {
 		return auctionDAO.selectTradeTotalContents();
 	}
-
+	
 	
 }

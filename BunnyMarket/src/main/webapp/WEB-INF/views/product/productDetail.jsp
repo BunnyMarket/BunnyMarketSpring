@@ -3,25 +3,21 @@
 
 <%@ include file="../common/header.jsp"%>
 <style>
-/* 커스텀 오버레이  */
-.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
-.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
-.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
-.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-
-/* 좌표로 주소 띄우기위한 css */
-.map_wrap {position:relative;width:100%;height:350px;}
-.title {font-weight:bold;display:block;}
-.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
-#centerAddr {display:block;margin-top:2px;font-weight: normal;}
-.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-
-.contents {font-weight:bold;display:block;}
-
-
-
-
+	/* 커스텀 오버레이  */
+	.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+	.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+	.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+	.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+	.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+	
+	/* 좌표로 주소 띄우기위한 css */
+	.map_wrap {position:relative;width:100%;height:350px;}
+	.title {font-weight:bold;display:block;}
+	.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+	#centerAddr {display:block;margin-top:2px;font-weight: normal;}
+	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	
+	.contents {font-weight:bold;display:block;}
 </style>
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
@@ -37,13 +33,13 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a
-							href="${ pageContext.request.contextPath }"><i
-								class="fa fa-home"></i> 홈화면</a></li>
-						<li class="breadcrumb-item"><a
-							href="${ pageContext.request.contextPath }/views/product/productList.jsp">상품</a></li>
-						<li class="breadcrumb-item active" aria-current="page">상품
-							상세보기</li>
+						<li class="breadcrumb-item">
+							<a href="${ pageContext.request.contextPath }/"> <i class="fa fa-home"></i> 홈화면</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="${ pageContext.request.contextPath }/product/productList.do">상품</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">상품 상세보기</li>
 					</ol>
 				</nav>
 			</div>
@@ -71,16 +67,25 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
-						<input type="hidden" name="pTitle" value="${ product.PTitle }" />
 						<button type="button" class="btn alazea-btn mt-15"
 							style="float: right"
 							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
 						<br /><br /><br />
-                         <button type="button" class="btn alazea-btn mt-15"
-							style="float: right"
-							onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
-						<h4 class="price"><span style="color:orange; font: bold;">${product.PPrice}</span>당근</h4>
+                        <button type="button" class="btn alazea-btn mt-15"
+								style="float: right"
+								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+						
+						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>
+						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<br />
+						
+						<script type="text/javascript">
+						   	$(function(){
+								var originP = $("#originPPrice").val();
+					    		$("#pCarrot").text(parseInt(originP).toLocaleString());
+						   	});
+						   		
+						</script>
 
 						<h5>글 작성날짜</h5>
 						<p>${ product.PDate }</p>
@@ -135,10 +140,9 @@
 									<div class="col-12 col-md-6">
 										<br /> <br />
 										<h4>판매자 정보</h4>
-										<h4>${a.PWriter}</h4>
-										<h5><a href="${ pageContext.request.contextPath }/member/profileAfter.do?userId=${a.PWriter}" title="프로필 보기" style="font-size: 17px; color: green;">판매자 프로필 보기</a></h5>
-										
-										
+										<h4>${product.PWriter}</h4>
+										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
+										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -155,11 +159,13 @@
 										<h5>첫번째 댓글의 주인공이 되어보세요!</h5>
 									</c:if>
 
+									<input type="hidden"  id="pcommentSize" value="${ pcommentSize }"/>
 									<ol>
 										<!-- Single Comment Area -->
 										<c:forEach items="${ pcomments }" var="pcomment" varStatus="st">
 											<li class="single_comment_area">
 												<c:if test = "${ pcomment.pcLevel eq 0}">
+													<div id="olPlz-${ pcommentSize }"></div>
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
@@ -167,21 +173,25 @@
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
+															<input type="hidden" id="pcContent-${st.index}" value="${ pcomment.pcContent }"/>
 															<div
 																class="d-flex align-items-center justify-content-between">
 																<h5>${ pcomment.pcWriter }</h5>
 																<span class="comment-date">${ pcomment.pcDate }</span>
 															</div>
-															<p>${ pcomment.pcContent }</p>
-															<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>
-															<c:if test="${pcomment.pcWriter eq member.userId }">
-																<form id="replyForm" method="post">
-																	&nbsp;&nbsp;
-																	<a class="active" href="#" onclick = "updateComment(${st.index});">Update</a>
-																	&nbsp;&nbsp;
-																	<a class="active" href="#" onclick = "deleteComment(${pcomment.pcmno});">Delete</a>
-																</form>
-															</c:if>
+															<p id="rpcContent-${st.index }">${ pcomment.pcContent }</p>
+															<p id="rpcContent2-${st.index }"></p>
+															<form id="replyForm-${pcomment.pcmno}" method="post">
+																<input type="hidden" name="pno" value="${product.pno }"/>
+																<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>
+																<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>
+																<c:if test="${pcomment.pcWriter eq member.userId }">
+																		&nbsp;&nbsp;
+																		<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>
+																		&nbsp;&nbsp;
+																		<a class="active" onclick="deleteComment(${pcomment.pcmno});">Delete</a>
+																</c:if>
+															</form>
 															<div class="contact-form-area" id="reReplyDiv-${st.index }" style="display: none;">
 																<!-- Comment Form -->
 																<form action="${pageContext.request.contextPath }/product/pcommentInsert.do" method="post">
@@ -191,7 +201,7 @@
 																	<div class="col-12">
 																		<div class="form-group">
 																			<textarea class="form-control" name="pcContent"
-																				id="rmessage" cols="30" rows="10" placeholder="Comment"></textarea>
+																					  id="replyComment-${st.index }" cols="30" rows="10" placeholder="Comment"></textarea>
 																		</div>
 																	</div>
 																	<div class="col-12">
@@ -200,6 +210,21 @@
 																		</button>
 																	</div>
 																</form>
+															</div>
+															<div class="contact-form-area" id="upReplyDiv-${st.index }" style="display: none;">
+																<!-- Comment Form -->
+																<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="${pcomment.pcmno }">
+																<div class="col-12">
+																	<div class="form-group">
+																		<textarea class="form-control" name="pcContent"
+																				   id="updateComment-${st.index }" cols="30" rows="10" placeholder="Comment"></textarea>
+																	</div>
+																</div>
+																<div class="col-12">
+																	<button type="submit" class="btn alazea-btn" onclick="updateComment(${pcomment.pcmno}, ${st.index })">
+																		Post Comment
+																	</button>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -214,20 +239,35 @@
 																		</div>
 																		<!-- Comment Content -->
 																		<div class="comment-content">
-																			<div
-																				class="d-flex align-items-center justify-content-between">
+																			<div class="d-flex align-items-center justify-content-between">
 																				<h5>${ reComment.pcWriter }</h5>
 																				<span class="comment-date">${ reComment.pcDate }</span>
 																			</div>
-																			<p>${ reComment.pcContent }</p>
+																			<p id="repcContent-${st.index }">${ reComment.pcContent }</p>
+																			<p id="repcContent2-${st.index }"></p>
 																			<c:if test="${pcomment.pcWriter eq member.userId }">
-																				<form id="reReplyForm" method="post">
+																				<form id="replyForm-${reComment.pcmno}" method="post">
 																					<input type="hidden" name="pcmno" value="${reComment.pcmno}">
 																					<input type="hidden" name="pno" value="${product.pno }"/>
-																					<a class="active" href="#" onclick = "updateComment();">Update</a>&nbsp;&nbsp;
-																					<a class="active" href="#" onclick = "deleteComment();">Delete</a>
+																					<a class="active" href="#" onclick = "updateReViewComment(${reComment.pcmno}, ${st.index });">Update</a>&nbsp;&nbsp;
+																					<a class="active" href="#" onclick = "deleteComment(${reComment.pcmno});">Delete</a>
 																				</form>
 																			</c:if>
+																			<div class="contact-form-area" id="upReReplyDiv-${st.index }" style="display: none;">
+																				<!-- Comment Form -->
+																				<input type="hidden" id="reContent-${st.index }" value="${ reComment.pcContent }"/>
+																				<div class="col-12">
+																					<div class="form-group">
+																						<textarea class="form-control" name="pcContent"
+																								  id="updateReComment-${st.index }" cols="30" rows="10"></textarea>
+																					</div>
+																				</div>
+																				<div class="col-12">
+																					<button type="submit" class="btn alazea-btn"  onclick="updateReComment(${reComment.pcmno}, ${st.index })">
+																						Post Comment
+																					</button>
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																</li>
@@ -261,8 +301,8 @@
 													</div>
 												</div>
 												<div class="col-12">
+													<!-- <button type="submit" class="btn alazea-btn"> -->
 													<button type="submit" class="btn alazea-btn">
-													<!-- <button type="button" class="btn alazea-btn" onclick="replyComment();"> -->
 														Post Comment
 													</button>
 												</div>
@@ -448,12 +488,14 @@
 	
 </script>
 <script>
-	/* function replyComment(){
-		console.log("댓글달기 버튼 클릭");
-		var pno = $("#commentpno").val();
-		var ref = $("#ref_pcmno").val();
-		var pcLevel = $("#pcLevel").val();
+	/* function replyComment1(){
+		var pno = $("#Icommentpno").val();
+		var ref = $("#Iref_pcmno").val();
+		var pcLevel = $("#IpcLevel").val();
 		var content = $("#message").val();
+		var pCount = $("#pcommentSize").val();
+		
+		console.log("댓글달기 버튼 클릭");
 		console.log(pno);
 		$.ajax({
 			  data : {
@@ -463,56 +505,175 @@
 				 	  , pcContent : content
 				 	}
 			, url : '${pageContext.request.contextPath }/product/pcommentInserta.do'
+			, dataType : 'json'
 			, success : function(data){
 				if(data.isInsert == true){
-					alert("성공" + data);
+					// 인서트 성공하고 level 이 0이면 / 1이면 두가지로 나누어야 함.
+					alert("성공" + data.isInsert);
+					alert("성공 데이터" + data.pcomment.pcmno);
 					$('#commentHead').html('이걸 이렇게?');
-					$('.comment_area ol').html("나오냐구");
-					$('.comment_area ol').html("<li class='single_comment_area'>"
-												+ "<div class='comment-wrapper d-flex'>"
-												+ "<div class='comment-author'>"
-												+ "<img src='${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg'></div>"
-												+ "<div class='comment-content'>"
-												+ "<div class='d-flex align-items-center justify-content-between'>"
-												+ "<h5>" + data.pcomment.pcWriter + "</h5>"
-												+ "<span class='comment-date'>" + data.pcomment.pcDate + "</span></div>"
-												+ "<p>" + content + "</p>"
-												+ "<a class='active' href='#' onclick = 'replyComment();'>Reply</a>&nbsp;&nbsp;"
-												+ "<a class='active' href='#' onclick = 'updateComment();'>Update</a>&nbsp;&nbsp;"
-												+ "<a class='active' href='#' onclick = 'deleteComment();'>Delete</a>"
-												+ "</div></div></li>"
-											);
+					$('#olPlz-${ pcommentSize }').html('<li class="single_comment_area">'
+									 	 + '<div class="comment-wrapper d-flex">'
+									 	 + '<div class="comment-author">'
+									 	 + '<img src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg"></div>'
+									 	 + '<div class="comment-content">'
+									 	 + '<div class="d-flex align-items-center justify-content-between">'
+									 	 + '<h5>' + data.pcomment.pcWriter + '</h5>'
+									 	 + '<span class="comment-date">' + data.pcomment.pcDate + '</span></div>'
+									 	 + '<p id="rpcContent-${st.index }">' + content + '</p>'
+									 	 + '<a class="active" href="#">Reply</a>'
+									 	 + '</div></div></li>'
+										 + '<p id="rpcContent2-${st.index }"></p>'
+										 + '<form id="replyForm-${pcomment.pcmno}" method="post">'
+										 + '<input type="hidden" name="pno" value="${product.pno }"/>'
+										 + '<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>'
+										 + '<a class="active" href="#" onclick="replyComment(${st.index});">Reply</a>'
+										 + '<c:if test="${pcomment.pcWriter eq member.userId }">'
+										 + '&nbsp;&nbsp;<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>'
+										 + '&nbsp;&nbsp;<a class="active" onclick="deleteComment(${pcomment.pcmno});">Delete</a>'
+										 + '</c:if></form></div></div></li>');
+				} else {
+					alert("댓글 등록에 실패하였습니다.");
 				}
+			}, fail : function(data) {
+				alert("ajax로 댓글 실패");
 			}
 		});
-		$('#commentHead').html('이걸 이렇게?');
 	} */
 	
 	function replyComment(st){
 		
-		// $("#reReplyDiv").css("display","block");
 		$("#reReplyDiv-"+st).toggle();
+		$("#replyComment--"+st).focus();
+	}
+	
+	function updateViewComment(pcmno, st){
 		
-		//$(this).siblings().eq(5).toggle();
-		$("#rmessage").focus();
-		// location.href="${pageContext.request.contextPath}/product/rpcommentInsert?ref_pcmno="+pcmno;
+		var pcContent = $("#pcContent-"+st).val();
+		$("#upReplyDiv-"+st).toggle();
+		$("#updateComment-"+st).text(pcContent);
 	}
 	
-	function updateComment(){
-		console.log("댓글 수정 클릭!");
+	function updateComment(pcmno, st){
+		var upPcContent = $("#updateComment-"+st).val();
+		var updateConfirm = confirm("수정하시겠습니까?");
+		
+		if(updateConfirm){
+			$.ajax({
+				  data : {
+					  	  pcContent : upPcContent
+					  	, pcmno : pcmno
+					  }
+				, type : 'post'
+				, dataType : 'json'
+				, url : '${pageContext.request.contextPath}/product/pcommentUpdate.do'
+				, success : function(data){
+					if(data.updateCheck == true){
+						$("#upReplyDiv-"+st).css("display", "none");
+						$("#rpcContent-"+st).remove();
+						$("#rpcContent2-"+st).text(upPcContent);
+					}
+					
+				}, fail : function(data){
+					alert("실패하였습니다.");
+				}
+			});
+		} else {
+			alert("수정이 취소되었습니다.");
+			$("#upReplyDiv-"+st).css("display", "none");
+		}
+	}
+	
+	function updateReViewComment(pcmno, st){
+		var pcContent = $("#reContent-"+st).val();
+		$("#upReReplyDiv-"+st).toggle();
+		$("#updateReComment-"+st).text(pcContent);
+	}
+	
+	function updateReComment(pcmno, st){
+		var upPcContent = $("#updateReComment-"+st).val();
+		var updateConfirm = confirm("수정하시겠습니까?");
+		
+		if(updateConfirm){
+			$.ajax({
+				  data : {
+					  	  pcContent : upPcContent
+					  	, pcmno : pcmno
+					  }
+				, type : 'post'
+				, dataType : 'json'
+				, url : '${pageContext.request.contextPath}/product/pcommentUpdate.do'
+				, success : function(data){
+					if(data.updateCheck == true){
+						$("#upReReplyDiv-"+st).css("display", "none");
+						$("#repcContent-"+st).remove();
+						$("#repcContent2-"+st).text(upPcContent);
+					}
+					
+				}, fail : function(data){
+					alert("실패하였습니다.");
+				}
+			});
+		} else {
+			alert("수정이 취소되었습니다.");
+			$("#upReReplyDiv-"+st).css("display", "none");
+		}
 	}
 	
 	
-	function deleteComment(){
+	function deleteComment(pcmno){
 		console.log('삭제 버튼 클릭!');
 		if(confirm("정말 삭제하시겠습니까?") == true){
-			$("#reReplyForm").attr("action", "${pageContext.request.contextPath}/product/pcommentDelete.do").submit();
+			$("#replyForm-"+pcmno).attr("action", "${pageContext.request.contextPath}/product/pcommentDelete.do").submit();
 		} else {
 			return;
 		}
 	}
 	
+	var sellCount = 0;
+	$('#sellerInfo').click(function(){
+		/* $('#sellerName').text('${a.PWriter}'); */
+		
+		$.ajax({
+			  data : {nickName : '${a.PWriter}'}
+			, url : "${ pageContext.request.contextPath }/member/sellerProfile.do"
+			, dataType : "Json"
+			,  async:false
+			, success : function(data){
+			
+				var pWriter = data.seller.nickName;
+				$.ajax({
+					data : {pWriter : pWriter},
+					url : "${pageContext.request.contextPath}/product/sellCount.do",
+					async:false,
+					dataType : "Json",
+					success : function(data){
+						sellCount = data;
+						
+						
+					}
+				});
+				
+				/* $.each(result , function(idx, val) {
+					console.log(idx + " " + val.introduce);
+				}); */
+				var photo = data.seller.photo;
+				$('#sellerName').text("아이디 : " + data.seller.nickName);
+				$('#sellerIntroduce').text("자기소개 : " + data.seller.introduce);
+				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
+				$('#sellerReport').text("신고 당한 횟수 : " + data.seller.count + "회");
+				$('#sellCount').text("총거래 : " + sellCount + "회");
+				
+				
+			}, fail : {
+				
+			}
+		});
+		
+	});
 
 </script>
 
+
 <%@ include file="../common/footer.jsp"%>
+

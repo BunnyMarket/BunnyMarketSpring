@@ -2,6 +2,23 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/header.jsp"%>
+<style>
+	/* 커스텀 오버레이  */
+	.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+	.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+	.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+	.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+	.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+	
+	/* 좌표로 주소 띄우기위한 css */
+	.map_wrap {position:relative;width:100%;height:350px;}
+	.title {font-weight:bold;display:block;}
+	.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+	#centerAddr {display:block;margin-top:2px;font-weight: normal;}
+	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	
+	.contents {font-weight:bold;display:block;}
+</style>
 
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
@@ -44,7 +61,7 @@
 						<div>
 							<div id="pImgArea">
 								<img id="titleImg" class="d-block w-100" width="344.8px"
-									src="${pageContext.request.contextPath}/resources/upload/auction/${a.PImg}"
+									src="${pageContext.request.contextPath}/resources/upload/product/${a.PImg}"
 									height="357.56px">
 							</div>
 						</div>
@@ -65,20 +82,31 @@
 								입찰자 명단 보기
 							</button>
 						</c:if>
-						<br /><br /><br />
-						 <button type="button" class="btn alazea-btn mt-15" style="float: right"
-						onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>  
-         
 						<div class="modal-layout"></div>
 						<br />
+						<br /><br />
+                        <button type="button" class="btn alazea-btn mt-15" style="float: right"
+								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
+						<br />
 						
-						<c:if test="${a.PPrice gt a.BPrice }">
-                        	<h4 class="price"><span style="color:orange; font: bold;">${a.PPrice}</span>당근</h4>
-						</c:if>
-						<c:if test="${a.PPrice lt a.BPrice }">
-                        	<h4 class="price"><span style="color:orange; font: bold;">${a.BPrice}</span>당근</h4>
-						</c:if>
-						
+						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
+                       	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>
+						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
+						<script type="text/javascript">
+						   	$(function(){
+								var originP = $("#originPPrice").val();
+								var originB = $("#originBPrice").val();
+								
+								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
+						   		
+								if(originP > originB){
+						    		$("#pCarrot").text(parseInt(originP).toLocaleString());
+								} else {
+									$("#pCarrot").text(parseInt(originB).toLocaleString());
+								}
+						   	});
+						   		
+						</script>
 						<br /> 
 
 						<h5>총 입찰자 : ${bCount}명</h5>
@@ -105,10 +133,9 @@
 							<li class="nav-item"><a href="#addi-info" class="nav-link"
 								data-toggle="tab" role="tab">추가 정보</a></li>
 							<li class="nav-item"><a href="#reviews" class="nav-link"
-								data-toggle="tab" role="tab"> 댓글<span class="text-muted">(1)</span>
+								data-toggle="tab" role="tab"> 댓글<span class="text-muted">(${pcommentSize })</span>
 							</a></li>
 						</ul>
-						<div>ㅎㅇ</div>
 						<!-- Tab Content -->
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane fade show active"
@@ -136,7 +163,7 @@
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
 										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
-											<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
+										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -148,77 +175,128 @@
 							<div role="tabpanel" class="tab-pane fade" id="reviews">
 								<!-- Comment Area Start -->
 								<div class="comment_area clearfix">
-									<h4 class="headline">2 Comments</h4>
+									<h4 class="headline">${ pcommentSize } Comments</h4>
+									<c:if test = "${ pcommentSize eq 0 }">
+										<h5>첫번째 댓글의 주인공이 되어보세요!</h5>
+									</c:if>
 
 									<ol>
 										<!-- Single Comment Area -->
-										<li class="single_comment_area">
-											<div class="comment-wrapper d-flex">
-												<!-- Comment Meta -->
-												<div class="comment-author">
-													<img
-														src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg"
-														alt="">
-												</div>
-												<!-- Comment Content -->
-												<div class="comment-content">
-													<div class="d-flex align-items-center justify-content-between">
-														<h5>Simona Halep</h5>
-														<span class="comment-date">09:00 AM, 20 Jun 2018</span>
-													</div>
-													<p>Neque porro quisquam est, qui dolorem ipsum quia
-														dolor sit amet, consectetu adipisci velit, sed quia non
-														numquam eius modi</p>
-													<a class="active" href="#">Reply</a>
-												</div>
-											</div>
-											<ol class="children">
-												<li class="single_comment_area">
+										<c:forEach items="${ pcomments }" var="pcomment" varStatus="st">
+											<li class="single_comment_area">
+												<c:if test = "${ pcomment.pcLevel eq 0}">
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img
-																src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg"
-																alt="">
+															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt=""><!-- member의 대표이미지 경로 적어주기 -->
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
+															<input type="hidden" id="pcContent-${st.index}" value="${ pcomment.pcContent }"/>
 															<div
 																class="d-flex align-items-center justify-content-between">
-																<h5>Rafael Nadal</h5>
-																<span class="comment-date">09:30 AM, 20 Jun 2018</span>
+																<h5>${ pcomment.pcWriter }</h5>
+																<span class="comment-date">${ pcomment.pcDate }</span>
 															</div>
-															<p>Neque porro quisquam est, qui dolorem ipsum quia
-																dolor sit amet, consectetu adipisci velit, sed quia non
-																numquam eius modi</p>
-															<a class="active" href="#">Reply</a>
+															<p id="rpcContent-${st.index }">${ pcomment.pcContent }</p>
+															<p id="rpcContent2-${st.index }"></p>
+															<form id="replyForm-${pcomment.pcmno}" method="post">
+																<input type="hidden" name="pno" value="${a.pno }"/>
+																<input type="hidden" name="pcmno" value="${pcomment.pcmno}"/>
+																<a class="active" onclick="replyComment(${st.index});">Reply</a>
+																<c:if test="${pcomment.pcWriter eq member.nickName }">
+																		&nbsp;&nbsp;
+																		<a class="active" onclick="updateViewComment(${pcomment.pcmno}, ${st.index });">Update</a>
+																		&nbsp;&nbsp;
+																		<a class="active" onclick="deleteComment(${pcomment.pcmno});">Delete</a>
+																</c:if>
+															</form>
+															<div class="contact-form-area" id="reReplyDiv-${st.index }" style="display: none;">
+																<!-- Comment Form -->
+																<form action="${pageContext.request.contextPath }/auction/pcommentInsert.do" method="post">
+																	<input type="hidden" id="commentpno" name="pno" value="${a.pno }"/>
+																	<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="${pcomment.pcmno }">
+																	<input type="hidden" id="pcLevel" name="pcLevel" value="1">
+																	<div class="col-12">
+																		<div class="form-group">
+																			<textarea class="form-control" name="pcContent"
+																					  id="umessage" cols="30" rows="10" placeholder="Comment"></textarea>
+																		</div>
+																	</div>
+																	<div class="col-12">
+																		<button type="submit" class="btn alazea-btn">
+																			Post Comment
+																		</button>
+																	</div>
+																</form>
+															</div>
+															<div class="contact-form-area" id="upReplyDiv-${st.index }" style="display: none;">
+																<!-- Comment Form -->
+																<input type="hidden" id="ref_pcmno" name="ref_pcmno" value="${pcomment.pcmno }">
+																<div class="col-12">
+																	<div class="form-group">
+																		<textarea class="form-control" name="pcContent"
+																				   id="updateComment-${st.index }" cols="30" rows="10" placeholder="Comment"></textarea>
+																	</div>
+																</div>
+																<div class="col-12">
+																	<button type="submit" class="btn alazea-btn" onclick="updateComment(${pcomment.pcmno}, ${st.index })">
+																		Post Comment
+																	</button>
+																</div>
+															</div>
 														</div>
 													</div>
-												</li>
-											</ol>
-										</li>
-										<li class="single_comment_area">
-											<div class="comment-wrapper d-flex">
-												<!-- Comment Meta -->
-												<div class="comment-author">
-													<img
-														src="${ pageContext.request.contextPath }/resources/img/bg-img/39.jpg"
-														alt="">
-												</div>
-												<!-- Comment Content -->
-												<div class="comment-content">
-													<div
-														class="d-flex align-items-center justify-content-between">
-														<h5>Maria Sharapova</h5>
-														<span class="comment-date">02:20 PM, 20 Jun 2018</span>
-													</div>
-													<p>Neque porro quisquam est, qui dolorem ipsum quia
-														dolor sit amet, consectetu adipisci velit, sed quia non
-														numquam eius modi</p>
-													<a class="active" href="#">Reply</a>
-												</div>
-											</div>
-										</li>
+													<c:forEach items="${ pcomments }" var="reComment"> <!-- 리댓들 달아주기 -->
+														<c:if test = "${ reComment.pcLevel eq 1 and reComment.ref_pcmno eq pcomment.pcmno}">
+															<ol class="children">
+																<li class="single_comment_area">
+																	<div class="comment-wrapper d-flex">
+																		<!-- Comment Meta -->
+																		<div class="comment-author">
+																			<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+																		</div>
+																		<!-- Comment Content -->
+																		<div class="comment-content">
+																			<div class="d-flex align-items-center justify-content-between">
+																				<h5>${ reComment.pcWriter }</h5>
+																				<span class="comment-date">${ reComment.pcDate }</span>
+																			</div>
+																			<p id="repcContent-${st.index }">${ reComment.pcContent }</p>
+																			<p id="repcContent2-${st.index }"></p>
+																			<c:if test="${pcomment.pcWriter eq member.nickName }">
+																				<form id="replyForm-${reComment.pcmno}" method="post">
+																					<input type="hidden" name="pcmno" value="${reComment.pcmno}">
+																					<input type="hidden" name="pno" value="${a.pno }"/>
+																					<a class="active" href="#" onclick = "updateReViewComment(${reComment.pcmno}, ${st.index });">Update</a>&nbsp;&nbsp;
+																					<a class="active" href="#" onclick = "deleteComment(${reComment.pcmno});">Delete</a>
+																				</form>
+																			</c:if>
+																			<div class="contact-form-area" id="upReReplyDiv-${st.index }" style="display: none;">
+																				<!-- Comment Form -->
+																				<input type="hidden" id="reContent-${st.index }" value="${ reComment.pcContent }"/>
+																				<div class="col-12">
+																					<div class="form-group">
+																						<textarea class="form-control" name="pcContent"
+																								  id="updateReComment-${st.index }" cols="30" rows="10"></textarea>
+																					</div>
+																				</div>
+																				<div class="col-12">
+																					<button type="submit" class="btn alazea-btn"  onclick="updateReComment(${reComment.pcmno}, ${st.index })">
+																						Post Comment
+																					</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</li>
+															</ol>
+														</c:if>
+													</c:forEach>
+													
+												</c:if>
+											</li>
+										</c:forEach>
 									</ol>
 								</div>
 								<!-- Comment Area End -->
@@ -226,20 +304,26 @@
 								<!-- Leave A Comment -->
 								<div class="leave-comment-area clearfix">
 									<div class="comment-form">
-										<h4 class="headline">Leave A Comment</h4>
+										<h4 class="headline" id = "commentHead">댓글 남기기</h4>
 
 										<div class="contact-form-area">
 											<!-- Comment Form -->
-											<form action="#" method="post">
+											<form action="${pageContext.request.contextPath }/auction/pcommentInsert.do" method="post">
+												<input type="hidden" name="pno" value="${a.pno }"/>
+												<input type="hidden" name="ref_pcmno" value="0">
+												<input type="hidden" name="pcLevel" value="0">
+												<div class="col-12"><div class="form-group" id="forMessage"></div></div>
 												<div class="col-12">
 													<div class="form-group">
-														<textarea class="form-control" name="message" id="message"
-															cols="30" rows="10" placeholder="Comment"></textarea>
+														<textarea class="form-control" name="pcContent"
+															id="message" cols="30" rows="10" placeholder="Comment"></textarea>
 													</div>
 												</div>
 												<div class="col-12">
-													<button type="submit" class="btn alazea-btn">Post
-														Comment</button>
+													<!-- <button type="submit" class="btn alazea-btn"> -->
+													<button type="submit" class="btn alazea-btn">
+														Post Comment
+													</button>
 												</div>
 											</form>
 										</div>
@@ -267,20 +351,33 @@
 				<input type="hidden" name="pno" value="${a.pno }" />
 				<div class="modal-body row">
 					<div class="col-12">
-					<c:if test="${a.PPrice gt a.BPrice }">
-						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.PPrice }</span>당근</h4>
-					</c:if>
-					<c:if test="${a.PPrice lt a.BPrice }">
-						<h4>현재 상품의 가격 : <span style="color:orange; font: bold;">${a.BPrice }</span>당근</h4>
-					</c:if>
+					<input type="hidden" id="BoriginPPrice" value="${a.PPrice}"/>
+                    <input type="hidden" id="BoriginBPrice" value="${a.BPrice}"/>
+					<h4>현재 상품의 가격 : <span style="color:orange; font: bold;" id="bidPrice"></span>당근</h4>
 						<br />
 					</div>
 					<div class="col-12">
 						<div class="form-group">
 							<h4 class="title">입찰금액을 입력해주세요.</h4>
-							<input type="text" class="form-control" name="bPrice" id="contact-subject" style="border: 1px solid #e1e1e1;" />
+							<input type="number" class="form-control" name="bPrice" id="bidPriceComma" style="border: 1px solid #e1e1e1;" />
 							<br />
 						</div>
+						<script type="text/javascript">
+						   	$(function(){
+						   		
+					    		var originP = $("#BoriginPPrice").val();
+								var originB = $("#BoriginBPrice").val();
+								
+								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
+						   		
+								if(originP > originB){
+						    		$("#bidPrice").text(parseInt(originP).toLocaleString());
+								} else {
+									$("#bidPrice").text(parseInt(originB).toLocaleString());
+								}
+						   	});
+						   		
+						</script>
 					</div>
 					<div class="col-12">
 						<h5>경매 시작일</h5>
@@ -344,10 +441,9 @@
 </div>
 <!-- ##### Single Product Details Area End ##### -->
 
-
 <script>
-		
-	//지도 넣기 
+	
+	// 지도 넣기 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = {
 	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -388,7 +484,7 @@
 	
 	
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('${product.PAddress}', function(result, status) {
+	geocoder.addressSearch('${a.PAddress}', function(result, status) {
 	    // 정상적으로 검색이 완료됐으면 
 	    if (status === kakao.maps.services.Status.OK) {
 	    	coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -413,7 +509,7 @@
 	    console.log("lat : " + sellerLat);
 	    console.log("long : " + sellerLong); */
 	    
-	    var sellerURL = 'https://map.kakao.com/link/to/${product.PAddress},'+coords.getLat()+','+coords.getLng();
+	    var sellerURL = 'https://map.kakao.com/link/to/${a.PAddress},'+coords.getLat()+','+coords.getLng();
 	    // console.log(sellerURL); 
 	    
 	 	// 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -465,6 +561,95 @@
 			$('.modal').modal('hide');
 		});
 	});
+	
+	function replyComment(st){
+		$("#reReplyDiv-"+st).toggle();
+		$("#updateComment-"+st).focus();
+	}
+	
+	function updateViewComment(pcmno, st){
+		
+		var pcContent = $("#pcContent-"+st).val();
+		$("#upReplyDiv-"+st).toggle();
+		$("#updateComment-"+st).text(pcContent);
+	}
+	
+	function updateComment(pcmno, st){
+		var upPcContent = $("#updateComment-"+st).val();
+		var updateConfirm = confirm("수정하시겠습니까?");
+		
+		if(updateConfirm){
+			$.ajax({
+				  data : {
+					  	  pcContent : upPcContent
+					  	, pcmno : pcmno
+					  }
+				, type : 'post'
+				, dataType : 'json'
+				, url : '${pageContext.request.contextPath}/auction/pcommentUpdate.do'
+				, success : function(data){
+					if(data.updateCheck == true){
+						$("#upReplyDiv-"+st).css("display", "none");
+						$("#rpcContent-"+st).remove();
+						$("#rpcContent2-"+st).text(upPcContent);
+					}
+					
+				}, fail : function(data){
+					alert("실패하였습니다.");
+				}
+			});
+		} else {
+			alert("수정이 취소되었습니다.");
+			$("#upReplyDiv-"+st).css("display", "none");
+			$("#pcContent-"+st).clear();
+		}
+	}
+	
+	function updateReViewComment(pcmno, st){
+		var pcContent = $("#reContent-"+st).val();
+		$("#upReReplyDiv-"+st).toggle();
+		$("#updateReComment-"+st).text(pcContent);
+	}
+	
+	function updateReComment(pcmno, st){
+		var upPcContent = $("#updateReComment-"+st).val();
+		var updateConfirm = confirm("수정하시겠습니까?");
+		
+		if(updateConfirm){
+			$.ajax({
+				  data : {
+					  	  pcContent : upPcContent
+					  	, pcmno : pcmno
+					  }
+				, type : 'post'
+				, dataType : 'json'
+				, url : '${pageContext.request.contextPath}/auction/pcommentUpdate.do'
+				, success : function(data){
+					if(data.updateCheck == true){
+						$("#upReReplyDiv-"+st).css("display", "none");
+						$("#repcContent-"+st).remove();
+						$("#repcContent2-"+st).text(upPcContent);
+					}
+					
+				}, fail : function(data){
+					alert("실패하였습니다.");
+				}
+			});
+		} else {
+			alert("수정이 취소되었습니다.");
+			$("#upReReplyDiv-"+st).css("display", "none");
+			$("#repcContent-"+st).clear();
+		}
+	}
+	
+	
+	function deleteComment(pcmno){
+		if(confirm("정말 삭제하시겠습니까?") == true){
+			$("#replyForm-"+pcmno).attr("action", "${pageContext.request.contextPath}/auction/pcommentDelete.do").submit();
+		} else {
+			return;
+		}
+	}
 	var sellCount = 0;
 	$('#sellerInfo').click(function(){
 		/* $('#sellerName').text('${a.PWriter}'); */
@@ -506,8 +691,6 @@
 		});
 		
 	});
-	
-	
 
 </script>
 

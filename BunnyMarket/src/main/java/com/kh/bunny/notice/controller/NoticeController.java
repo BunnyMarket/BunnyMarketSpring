@@ -52,7 +52,7 @@ public class NoticeController {
 	@RequestMapping("/notice/mNotice.do")
 	public String selectmNoticeList(
 			 @RequestParam(
-					 value="cPage",
+					 value="pPage",
 					 required=false, 
 					 defaultValue="1")
 				int cPage, Model model

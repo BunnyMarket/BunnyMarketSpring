@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
+import com.kh.bunny.product.model.vo.PComment;
 
 public interface AuctionDAO {
 
@@ -21,6 +22,8 @@ public interface AuctionDAO {
 	int insertProduct(Auction auction);
 
 	int insertAuction(Auction auction);
+	
+	int updateCount(int pno);
 
 	int insertBidder(Bidder b);
 
@@ -31,9 +34,10 @@ public interface AuctionDAO {
 	List<Map<String, String>> selectAuctionListAddBidder(int aPage, int numPerPage);
 
 	ArrayList<Bidder> selectAllBidder(int pno);
-
+	
 	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
-
+	
 	int selectTradeTotalContents();
 
+	
 }

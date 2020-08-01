@@ -89,8 +89,8 @@ public class ReportController {
 		int rno =0;
 		
 		try {
-		result = reportService.insertReport(r);
-		rno = reportService.selectCurrentRno();
+			result = reportService.insertReport(r);
+			rno = reportService.selectCurrentRno();
 		}catch (Exception e) {
 			throw new ReportException("Report 등록 오류!" + e.getMessage());
 		}

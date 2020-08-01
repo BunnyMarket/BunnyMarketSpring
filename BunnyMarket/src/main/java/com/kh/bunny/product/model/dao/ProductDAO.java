@@ -26,6 +26,9 @@ public interface ProductDAO {
 	// 상품 게시글 삭제 
 	int deleteProduct(int pno);
 
+	// 상품 count
+	int updateCount(int pno);
+	
 	// 상품 게시글의 댓글 목록 불러오기  
 	List<Object> selectPCommentList(int pno);
 	
@@ -33,16 +36,20 @@ public interface ProductDAO {
 	int insertPComment(PComment pcomment);
 	
 	// 댓글 수정 
-	int updatePComemnt(PComment pcomment);
+	int updatePComment(PComment pcomment);
 	
 	// 댓글 삭제 
 	int deletePComment(int pcmno);
 
 	int insertRePComment(PComment pcomment);
 
-	int selectOneReplyPno(int pcmno);
+	int selectOneReplyPcmno(int pcmno);
+
+	String selectOneReplyPcWriter(int pcmno);
+
+	PComment selectOnePComment(int pno);
+
+	List<Object> selectProductListMap();
 
 	int sellCount(String pWriter);
-
-
 }

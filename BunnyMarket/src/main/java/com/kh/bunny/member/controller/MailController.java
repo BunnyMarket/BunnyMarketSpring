@@ -57,7 +57,7 @@ public class MailController {
 	    //이메일 발송 메소드
 	    SimpleMailMessage mailMessage = new SimpleMailMessage();
 	    mailMessage.setSubject("[인증] BUNNY 서비스 회원가입 인증메일입니다.");
-	    mailMessage.setFrom("model_so@naver.com");
+	    mailMessage.setFrom("maybeaprils@naver.com");
 	    mailMessage.setText("환영합니다! 우측 인증번호를 입력해주세요. [ "+authNum+" ]");
 	    mailMessage.setTo(email);
 	    try {
@@ -71,7 +71,7 @@ public class MailController {
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setSubject("[아이디찾기] BUNNY 마켓 아이디찾기 결과입니다. ");
-		mailMessage.setFrom("model_so@naver.com");
+		mailMessage.setFrom("maybeaprils@naver.com");
 	    mailMessage.setText("아이디찾기 결과입니다. 아이디 : ["+userId+"]" );
 	    mailMessage.setTo(email);
 	    try {

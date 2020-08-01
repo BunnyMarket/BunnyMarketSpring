@@ -56,7 +56,8 @@
 									<td>${q.qno}</td>
 									<td colspan="2" align="center">${q.QTitle}</td>
 									<td></td>
-									<td align="left">${q.QWriter}</td>			
+									<td align="left">${q.QWriter}</td>
+									
 									<td align="center">${q.QDate}</td>	
 									<td></td>
 								</tr>
@@ -79,20 +80,20 @@
 	</div>
 </div>
 <!-- ##### Shop Area Start ##### -->
-    <section class="shop-page section-padding-0-100">
-        <div class="container">
-            <div class="row">
-                <!-- All Products Area -->
-                <div class="col-12 col-md-8 col-lg-9">
-                    <div class="shop-products-area" style="margin-left: 250px;">
-                        <div>
-	                        <c:out value="${pageBar}" escapeXml="false"/>
-                        </div>
-                     </div>
-                </div>
+<section class="shop-page section-padding-0-100">
+    <div class="container">
+        <div class="row">
+            <!-- All Products Area -->
+            <div class="col-12 col-md-8 col-lg-9">
+                <div class="shop-products-area" style="margin-left: 250px;">
+                    <div>
+                     <c:out value="${pageBar}" escapeXml="false"/>
+                    </div>
+                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     
 <script>
 $(function(){

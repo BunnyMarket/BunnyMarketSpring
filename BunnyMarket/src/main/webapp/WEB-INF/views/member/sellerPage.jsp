@@ -17,8 +17,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i class="fa fa-home"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">상점</li>
                         </ol>
                     </nav>
                 </div>
@@ -33,17 +33,17 @@
                <div class="col-12" align="center">
                     <div class="cart-table clearfix">
                   <c:if test="${seller.photo == null }">
-				<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="344.8px" height="357.56px"
+				<img src="${pageContext.request.contextPath }/resources/img/usericon.png" id="userImg" class="circleImg" width="344.8px" height="357.56px"
 				alt="userImg" />
 			</c:if>
 			<c:if test="${seller.photo != null }">
-				<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="344.8px" height="357.56px"
+				<img src="${pageContext.request.contextPath }/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="344.8px" height="357.56px"
 				alt="userImg"/>
 			</c:if> <br />
                   <h3>${seller.nickName}님의 상점</h3>
                </div>
                <div>
-                  <p><a href="tradeView.do?userId=${seller.nickName}">판매중인 상품 보기</a> </p>
+                  <p><a href="${pageContext.request.contextPath }/member/tradeView.do?userId=${seller.nickName}">판매중인 상품 보기</a> </p>
                   <br /><br />
                </div>
             </div>
@@ -62,7 +62,8 @@
                         <!-- Tabs -->
                         <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
                             <li class="nav-item">
-                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${seller.userId}님의 Reviews <span class="text-muted"></span></a>
+                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${seller.userId}님의 Reviews 
+                                <span class="text-muted"></span></a>
                             </li>
                         </ul>
                         <!-- Tab Content -->

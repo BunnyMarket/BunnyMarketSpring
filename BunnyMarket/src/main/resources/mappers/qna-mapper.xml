@@ -90,12 +90,5 @@
      AND QCNO = (SELECT MAX(QCNO) FROM QCOMMENT WHERE QNO =#{qno})
    </select>
    
-   	<select id="selectQnAList" resultType="QNA">
-		SELECT Q.QNO, Q.QWRITER, Q.QTITLE, Q.QCONTENT, Q.QDATE
-		          ,   (SELECT COUNT(*) FROM QCOMMENT QC WHERE QC.QNO = Q.QNO) QCCHECK
-		  FROM QNA Q
-		 ORDER BY Q.QDATE DESC
-	</select>
-   
 </mapper>
 

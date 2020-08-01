@@ -149,7 +149,7 @@ public class adminMemberController {
 	@RequestMapping("/admin/adminLogin.do")
 	public String adminLog() {
 
-		return "/admin/adminLogin";
+		return "admin/adminLogin";
 
 	}
 	
