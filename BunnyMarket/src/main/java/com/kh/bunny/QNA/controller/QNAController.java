@@ -24,6 +24,7 @@ import com.kh.bunny.QNA.model.exception.QNAException;
 import com.kh.bunny.QNA.model.service.QNAService;
 import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
+import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -278,39 +279,45 @@ public class QNAController {
 	}
 
 	// 댓글 생성
-	@RequestMapping("/QNA/qcommentInsert.do")
-	public String qcommentInsert(@RequestParam int qno,
-										QComment qcomment, Model model, HttpSession session) {
-		
-		Member m = (Member)session.getAttribute("member");
-		String userId = m.getNickName();
-		
-		qcomment.setQWriter(userId);
-		
-		System.out.println("댓글아 달아졌니" + qcomment);
-		String msg = "";
-		String loc ="/QNA/QNADetail.do?qno=" + qcomment.getQno();
-		
-		 try {
-		int result = qnaService.insertQComment(qcomment);
-		
-		if(result > 0) {
-			msg ="댓글 달기 성공!";
-		}else {
-			msg = "댓글 달기 실패,,,";
+		@RequestMapping("/QNA/qcommentInsert.do")
+		public String qcommentInsert(@RequestParam int qno,
+											QComment qcomment, Model model, HttpSession session) {
+			
+			adminMember am = (adminMember)session.getAttribute("admin");
+			Member m = (Member)session.getAttribute("member");
+			
+			if(m != null) {String userId = m.getUserId();
+							qcomment.setQWriter(userId);
+			}else if(am != null ){
+				String adminId = am.getAdminId();
+				qcomment.setQWriter(adminId);		
+			}
+			
+			
+			System.out.println("댓글아 달아졌니" + qcomment);
+			String msg = "";
+			String loc ="/QNA/QNADetail.do?qno=" + qcomment.getQno();
+			
+			 try {
+			int result = qnaService.insertQComment(qcomment);
+			
+			if(result > 0) {
+				msg ="댓글 달기 성공!";
+			}else {
+				msg = "댓글 달기 실패,,,";
+			}
+			
+		  }catch(Exception e) {
+			  throw new QNAException("QNA 댓글에서 에러 발생!" + e.getMessage());
+		  }
+		  
+		  model.addAttribute("loc", loc)
+		  		     .addAttribute("msg", msg);
+		  
+		  return "common/msg";
+		  		
+			
 		}
-		
-	  }catch(Exception e) {
-		  throw new QNAException("QNA 댓글에서 에러 발생!" + e.getMessage());
-	  }
-	  
-	  model.addAttribute("loc", loc)
-	  		     .addAttribute("msg", msg);
-	  
-	  return "common/msg";
-	  		
-		
-	}
 	
 	// 댓글 수정하기
 	@RequestMapping("/QNA/qcommentUpdate.do")
