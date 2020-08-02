@@ -131,6 +131,19 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.selectLoveTotalContent",nickName);
 	}
 
+	@Override
+	public List<Map<String, String>> selectCompleteProductList(int aPage, int numPerPage, String nickName) {
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("productMapper.selectCompleteProductList", nickName, rows);
+	}
+
+	@Override
+	public int selectCompleteProductTotalContents(String nickName) {
+		return sqlSession.selectOne("productMapper.selectCompleteProductTotalContents",nickName);
+	}
+
+	
 
 	
 }

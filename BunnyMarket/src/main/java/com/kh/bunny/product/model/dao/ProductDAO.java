@@ -60,4 +60,10 @@ public interface ProductDAO {
 	List<Map<String, String>> selectLoveList(int aPage, int numPerPage, String nickName);
 
 	int selectLoveTotalContents(String nickName);
+
+	List<Map<String, String>> selectCompleteProductList(int aPage, int numPerPage, String nickName);
+
+	int selectCompleteProductTotalContents(String nickName);
+
+
 }

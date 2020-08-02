@@ -146,5 +146,19 @@
 		WHERE L.USERID = #{nickName}
 	</select>
 	
+	<select id="selectCompleteProductList" parameterType="string" resultType = "PRODUCT">
+      	SELECT * FROM PRODUCT P
+		JOIN DEAL D ON(D.PNO=P.PNO)
+		WHERE D.DBID = #{nickName}  OR D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS = 1 
+		ORDER BY P.PDATE DESC, P.PNO DESC
+      
+   </select>
+	
+	<select id="selectCompleteProductTotalContents" resultType = "_int">
+		SELECT COUNT(*) FROM PRODUCT P
+		JOIN DEAL D ON(D.PNO=P.PNO)
+		WHERE D.DBID = #{nickName} OR D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS = 1
+		ORDER BY P.PDATE DESC, P.PNO DESC
+	</select>
 	
 </mapper>

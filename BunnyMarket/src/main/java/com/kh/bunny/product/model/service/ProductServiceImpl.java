@@ -121,4 +121,16 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.selectLoveTotalContents(nickName);
 	}
 
+	@Override
+	public List<Map<String, String>> selectCompleteProductList(int aPage, int numPerPage, String nickName) {
+		// TODO Auto-generated method stub
+		return productDAO.selectCompleteProductList(aPage, numPerPage, nickName);
+	}
+
+	@Override
+	public int selectCompleteProductTotalContents(String nickName) {
+		// TODO Auto-generated method stub
+		return productDAO.selectCompleteProductTotalContents(nickName);
+	}
+
 }
