@@ -9,10 +9,31 @@
 		VALUES(SEQ_BPNO.NEXTVAL, #{userId}, SYSDATE, #{bPoint}, 1)
 	</insert>
 	
-	<select id="selectOneNowPoint" parameterType="_int">
+	<select id="selectOneNowPoint" resultType="_int">
 		SELECT NOWPOINT
 		  FROM MEMBER
 		 WHERE NICKNAME = #{userId}
+	</select>
+	
+	<select id="selectMyPoint" resultType="PointHistory">
+		SELECT PH.*, B.BPDATE, B.BPSTATUS
+		  FROM POINTHISTORY PH
+		  JOIN BUNNYPOINT B ON (PH.BPNO = B.BPNO)
+		 WHERE PH.USERID = #{userId}
+		 ORDER BY PH.PHNO DESC
+	</select>
+	
+	<select id="selectPointTotalContents" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM POINTHISTORY
+		 WHERE USERID = #{userId}
+	</select>
+	<select id="selectAllProduct" resultType="Product">
+		SELECT *
+		  FROM PRODUCT 
+	     WHERE PSTATUS = 1
+	       AND PNO = ${pno}
+		 ORDER BY PDATE DESC, PNO DESC
 	</select>
 </mapper>
 

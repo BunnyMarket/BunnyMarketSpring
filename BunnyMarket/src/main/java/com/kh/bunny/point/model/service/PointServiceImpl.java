@@ -1,10 +1,15 @@
 package com.kh.bunny.point.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.point.model.dao.PointDAO;
 import com.kh.bunny.point.model.vo.BunnyPoint;
+import com.kh.bunny.product.model.vo.Product;
 
 @Service("pointService")
 public class PointServiceImpl implements PointService{
@@ -20,6 +25,21 @@ public class PointServiceImpl implements PointService{
 	@Override
 	public int selectOneNowPoint(String userId) {
 		return pointDAO.selectOneNowPoint(userId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectMyPoint(String userId, int pPage, int numPerPage) {
+		return pointDAO.selectMyPoint(userId, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectPointTotalContents(String userId) {
+		return pointDAO.selectPointTotalContents(userId);
+	}
+
+	@Override
+	public Product selectOneProduct(int pno) {
+		return pointDAO.selectOneProduct(pno);
 	}
 	
 }

@@ -347,8 +347,8 @@
 				<h3 class="modal-title" id="myModalLabel">입찰</h3>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
-			<form action="${pageContext.request.contextPath}/auction/insertBidder.do" method="post">
-				<input type="hidden" name="pno" value="${a.pno }" />
+			<form id="goBidder" method="post">
+				<input type="hidden" name="pno" id="BidderPno" value="${a.pno }" />
 				<div class="modal-body row">
 					<div class="col-12">
 					<input type="hidden" id="BoriginPPrice" value="${a.PPrice}"/>
@@ -360,6 +360,8 @@
 						<div class="form-group">
 							<h4 class="title">입찰금액을 입력해주세요.</h4>
 							<input type="number" class="form-control" name="bPrice" id="bidPriceComma" style="border: 1px solid #e1e1e1;" />
+		            		<div class="Bfail" style="color: orange; font-weight: bold; font-size: 20px;"></div>
+		            		<input type="hidden" id="bidderCheck" value="0"/>
 							<br />
 						</div>
 						<script type="text/javascript">
@@ -376,7 +378,8 @@
 									$("#bidPrice").text(parseInt(originB).toLocaleString());
 								}
 						   	});
-						   		
+							
+						   	
 						</script>
 					</div>
 					<div class="col-12">

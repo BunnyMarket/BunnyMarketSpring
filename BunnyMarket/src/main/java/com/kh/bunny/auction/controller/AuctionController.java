@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +25,7 @@ import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
@@ -41,6 +39,9 @@ public class AuctionController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
@@ -214,18 +215,10 @@ public class AuctionController {
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getNickName();
 		
-		Auction a = auctionService.selectOneAuction(pno);
-		
 		String msg = "";
 		String loc = "/auction/auctionDetail.do?pno="+pno;
 		
-		if(a.getBPrice() >= bPrice || a.getPPrice() >= bPrice) {
-			msg = "입찰 하려는 금액이 기존 금액보다 작습니다.";
-		} else if(bPrice % 10 != 0) {
-			msg = "입찰은 10당근 씩 해주시기 바랍니다.";
-		} else if(a.getPBuyer() != null && a.getPBuyer().equals(userId)) { 
-			msg = "최고가로 입찰중인 회원은 입찰할 수 없습니다. ";
-		} else {
+		try {
 			Bidder b = new Bidder(pno, userId, bPrice);
 			System.out.println("b가 뭐라구? : " + b);
 			int result = auctionService.insertBidder(b);
@@ -235,13 +228,47 @@ public class AuctionController {
 			} else {
 				msg = "입찰 실패!";
 			}
-			
+		} catch (Exception e) {
+			throw new AuctionException();
 		}
 		
 		model.addAttribute("loc", loc)
 			 .addAttribute("msg", msg);
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/auction/bidderCheckInvalid.do")
+	@ResponseBody
+	public Map<String, Object> bidderCheck(@RequestParam int pno, @RequestParam int bPrice, HttpSession session, Model model){
+		System.out.println("잘 들어오고 있나요?" + pno + bPrice);
+		Member m = (Member)session.getAttribute("member");
+		
+		Auction a = auctionService.selectOneAuction(pno);
+		Member bM = memberService.selectOne(m.getUserId());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("잘 들어오고 있나요?" + pno + bPrice);
+		int msg = 0;
+		
+		if(bM.getNowPoint() < bPrice) {
+			msg = 0; //"당근이 부족합니다.";
+		} else if(a.getBPrice() >= bPrice || a.getPPrice() >= bPrice) {
+			msg = 1; //"입찰 하려는 금액이 기존 금액보다 작습니다.";
+		} else if(bPrice % 10 != 0) {
+			msg = 2; //"입찰은 10당근 씩 해주시기 바랍니다.";
+		} else if(a.getPBuyer() != null && a.getPBuyer().equals(m.getNickName())) { 
+			msg = 3; //"최고가로 입찰중인 회원은 입찰할 수 없습니다.";
+		} else if((a.getBPrice() > a.getPPrice() && bM.getNowPoint() < a.getBPrice()) 
+					|| (a.getPPrice() > a.getBPrice() && bM.getNowPoint() < a.getPPrice())) {
+			msg = 4;
+		} else {
+			msg = 5;
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
 	}
 	
 	// 댓글 생성하기 
