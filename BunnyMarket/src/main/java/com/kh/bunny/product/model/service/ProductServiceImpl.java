@@ -97,5 +97,28 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productDAO.sellCount(pWriter);
 	}
+	
+	@Override
+	public List<Map<String, String>> selectTradeList(int aPage, int numPerPage, String nickName) {
+		
+		return productDAO.selectTradeList(aPage, numPerPage, nickName);
+	}
+	
+	@Override
+	public int selectTradeTotalContents(String nickName) {
+		return productDAO.selectTradeTotalContents(nickName);
+	}
+
+	@Override
+	public List<Map<String, String>> selectLoveList(int aPage, int numPerPage, String nickName) {
+		// TODO Auto-generated method stub
+		return productDAO.selectLoveList(aPage, numPerPage, nickName);
+	}
+
+	@Override
+	public int selectLoveTotalContents(String nickName) {
+		// TODO Auto-generated method stub
+		return productDAO.selectLoveTotalContents(nickName);
+	}
 
 }

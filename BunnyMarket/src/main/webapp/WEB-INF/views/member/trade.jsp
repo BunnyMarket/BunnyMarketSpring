@@ -73,13 +73,13 @@
                                     
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck2">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck2" onclick="goProductSelling('${member.nickName}');">
                                     <label class="custom-control-label" for="customCheck2">판매중인 상품$ <span class="text-muted">(72)</span></label>
                                     
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3" onclick="goLoveProduct('${member.nickName}');">>
                                     <label class="custom-control-label" for="customCheck3">찜한 목록 <span class="text-muted">(20)</span></label>
                                 </div>
                                 <!-- Single Checkbox -->
@@ -105,49 +105,7 @@
                         </div>
                         </div>
                         </div>
-               <%--  <c:forEach begin="1" end="10" var="i"></c:forEach>
-               <div class="col-12 col-md-8 col-lg-9">
-                    <div class="shop-products-area">
-                        <div class="row">
-							<c:forEach items="${list}" var="p" varStatus="st">
-                            <!-- Single Product Area -->
-	                            <div class="col-12 col-sm-6 col-lg-4">
-	                                <div class="single-product-area mb-50">
-	                                    <!-- Product Image -->
-	                                    <div class="product-img" style="height: 300px; width: 255px;" >
-	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
-	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/${p.PImg}" alt=""></a>
-	                                        <div class="product-meta d-flex">
-	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                                        </div>
-	                                    </div>
-	                                    <!-- Product Info -->
-	                                    <div class="product-info mt-15 text-center">
-	                                        <p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
-	                                            ${p.PTitle}
-	                                        </a></p>
-	                                        <p id="bidderCount-${st.index}"></p>
-											
-											<c:if test="${p.PPrice gt p.BPrice }">
-		                                        <h6>${p.PPrice} 당근</h6>
-											</c:if>
-											<c:if test="${p.PPrice lt p.BPrice }">
-		                                        <h6>${p.BPrice} 당근</h6>
-											</c:if>
-                                            
-	                                    </div>
-	                                </div>
-	                            </div>
-							</c:forEach>
-						</div>
-						
-                        <div>
-	                        <c:out value="${pageBar}" escapeXml="false"/>
-                        </div> 
-                     </div>
-                </div> --%>
+              
             </div>
         </div>
     </section>
@@ -166,13 +124,7 @@
     			nickName : nickName
     		}, dataType : "json",
     		success : function(result){
-    			 console.log(result.list);
-    			 console.log(result.totalContents);
-    			 console.log(result.numPerPage);
-    			 console.log(result.pageBar);
-    			var tlist = list;
-    			var list = list;
-    	
+    				$("#auctionTrade").empty();
     	    	   for(var i in result.list){
     	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
 						    	    	   +'	<div class="single-product-area mb-50">'
@@ -209,6 +161,99 @@
     		
     	});
     };
+    
+    
+    function goProductSelling(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/product/productTradeList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    		}
+    		
+    	});
+    };
+    
+    
+    function goLoveProduct(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/product/loveProductList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    		}
+    		
+    	});
+    };
+    
   </script>
 
 <c:import url="../../views/common/footer.jsp"/>

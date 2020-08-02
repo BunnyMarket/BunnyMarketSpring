@@ -52,4 +52,12 @@ public interface ProductDAO {
 	List<Object> selectProductListMap();
 
 	int sellCount(String pWriter);
+	
+	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
+	
+	int selectTradeTotalContents(String nickName);
+
+	List<Map<String, String>> selectLoveList(int aPage, int numPerPage, String nickName);
+
+	int selectLoveTotalContents(String nickName);
 }

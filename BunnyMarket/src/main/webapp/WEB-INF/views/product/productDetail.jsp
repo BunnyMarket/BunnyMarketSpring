@@ -74,7 +74,11 @@
                         <button type="button" class="btn alazea-btn mt-15"
 								style="float: right"
 								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
-						
+								
+						<br/><br/><br/>
+						<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">
+						찜하기
+						</button>
 						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<br />

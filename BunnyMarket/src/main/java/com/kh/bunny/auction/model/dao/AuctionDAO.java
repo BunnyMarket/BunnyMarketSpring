@@ -37,7 +37,7 @@ public interface AuctionDAO {
 	
 	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
 	
-	int selectTradeTotalContents();
+	int selectTradeTotalContents(String nickName);
 
 	
 }

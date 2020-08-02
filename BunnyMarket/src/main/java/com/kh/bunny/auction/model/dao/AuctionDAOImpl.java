@@ -97,8 +97,8 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 	
 	@Override
-	public int selectTradeTotalContents() {
-		return sqlSession.selectOne("auctionMapper.selectTradeTotalContent");
+	public int selectTradeTotalContents(String nickName) {
+		return sqlSession.selectOne("auctionMapper.selectTradeTotalContent",nickName);
 	}
 
 }

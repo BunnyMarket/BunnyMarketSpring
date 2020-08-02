@@ -119,4 +119,32 @@
 		WHERE PWRITER = #{pWriter}
 	</select>
 	
+	<select id="selectTradeList" parameterType="string" resultType = "Product">
+      
+      SELECT *
+		FROM PRODUCT WHERE PTYPE = 1  AND PWRITER = #{nickName} AND PSTATUS = 1
+		ORDER BY PDATE DESC, PNO DESC
+   </select>
+	
+	<select id="selectTradeTotalContent" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		 WHERE PTYPE = 1 AND PWRITER = #{nickName} AND PSTATUS = 1
+	</select>
+	
+	<select id="selectLoveList" parameterType="string" resultType = "PRODUCT">
+      	SELECT * FROM PRODUCT P
+		JOIN LOVE L ON(L.PNO=P.PNO)
+		WHERE L.USERID = #{nickName}
+		ORDER BY P.PDATE DESC, P.PNO DESC
+      
+   </select>
+	
+	<select id="selectLoveTotalContent" resultType = "_int">
+		SELECT COUNT(*) FROM PRODUCT P
+		JOIN LOVE L ON(L.PNO=P.PNO)
+		WHERE L.USERID = #{nickName}
+	</select>
+	
+	
 </mapper>
