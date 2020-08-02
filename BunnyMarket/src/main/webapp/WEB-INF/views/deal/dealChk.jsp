@@ -9,7 +9,7 @@
 	<div
 		class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
 		style="background-image: url(img/bg-img/24.jpg);">
-		<h2>구매자의 거래 확인 페이지</h2>
+		<h2>여기로 왜 안와..</h2>
 	</div>
 
 	<div class="container">
@@ -122,14 +122,14 @@
 								<div
 									class="single-products d-flex justify-content-between align-items-center">
 									<h5>제품 가격 :</h5>
-									<h5>${ product.PPrice*100 }원 &nbsp;&nbsp;(${ product.PPrice }당근)</h5>
+									<h5>${ product.PPrice }</h5>
 								</div>
 							</div>
 						</div>
 						<c:if test = "${ product.PType == 2 }">
 							<div class="subtotal d-flex justify-content-between align-items-center">
 								<h5>입찰 가격 :</h5>
-								<h5>${ product.BPrice*100 }원 &nbsp;&nbsp;(${ product.BPrice }당근)</h5>
+								<h5>${ product.BPrice }</h5>
 							</div>
 						</c:if>
 						<div class="shipping d-flex justify-content-between align-items-center">

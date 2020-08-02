@@ -87,7 +87,7 @@
 			PPRICE = #{pPrice},
 			PADDRESS = #{pAddress},
 			PCONTENT = #{pContent},
-			PCNO = #{pcno}
+			PCNO = #{pcno},
 			<if test = "pImg != null">
 				PIMG = #{pImg}
 			</if>

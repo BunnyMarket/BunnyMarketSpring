@@ -26,18 +26,27 @@
 	
 	<!-- 거래 목록 가져오기 -->
 	<select id="selectDealList" resultType = "Deal">
-	
+		SELECT * FROM DEAL 
+		WHERE DSID = #{userId} OR DBID = #{userId}
 	</select>
 	
 	
 	<!-- 구매자 거래 생성 -->
 	<update id = "updateBuyerDeal" parameterType = "Deal">
-	
+		UPDATE DEAL 
+		SET
+			DADDRESS = #{ dAddress },
+			DBSTATUS = #{ dbStatus }
+		WHERE DNO = #{ dno }
 	</update>
 	
 	<!-- 판매자 거래 생성 -->
 	<update id = "updateSellerDeal" parameterType = "Deal">
-	
+		UPDATE DEAL 
+		SET
+			DDELNUM = #{ dDelNum },
+			DSSTATUS = #{ dsStatus }
+		WHERE DNO = #{ dno }
 	</update>
 	
 	
