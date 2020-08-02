@@ -1,7 +1,6 @@
 package com.kh.bunny.point.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.point.model.exception.PointException;
 import com.kh.bunny.point.model.service.PointService;
@@ -39,10 +35,9 @@ public class PointController {
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getNickName();
 		
+		bunnyPoint.setUserId(userId);
 		HashMap<String , Object> hmap = new HashMap<String, Object>();
 		boolean fineCharge = false;
-		
-		bunnyPoint.setUserId(userId);
 		System.out.println("포인트로 들어왔어요? : " + bunnyPoint);
 		int nowPoint = 0;
 		try {
@@ -51,7 +46,6 @@ public class PointController {
 			
 			nowPoint = pointService.selectOneNowPoint(userId);
 			System.out.println("웨?? fineCharge : " + fineCharge);
-			System.out.println("현재 포인트 : " + nowPoint);
 			
 		} catch (Exception e) {
 			throw new PointException("[포인트 결제 중 문제 발생] : " + e.getMessage());
@@ -62,48 +56,5 @@ public class PointController {
 		
 		return hmap;
 	}
-	
-	@RequestMapping("/point/myPointView.do")
-	public String goMyPointView(@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage,
-								Model model, HttpSession session) {
-		
-		Member m = (Member)session.getAttribute("member");
-		String userId = m.getNickName();
-		
-		List<Map<String, String>> list = null;
-		
-		int totalContents = 0;
-		int numPerPage = 10;
-		int nowPoint = 0;
-		
-//		try {
-			 list = pointService.selectMyPoint(userId, pPage, numPerPage);
-
-			 totalContents = pointService.selectPointTotalContents(userId);
-			 nowPoint = pointService.selectOneNowPoint(userId);
-//		} catch (Exception e) {
-//			throw new PointException();
-//		}
-		
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "point/myPointView.do");
-		
-		model.addAttribute("myPoint", list)
-			 .addAttribute("totalContents", totalContents)
-			 .addAttribute("numPerPage", numPerPage)
-			 .addAttribute("pageBar", pageBar)
-			 .addAttribute("nowPoint", nowPoint);
-		
-		return "member/myPoint";
-	}
-	
-	
 }
-
-
-
-
-
-
-
-
 

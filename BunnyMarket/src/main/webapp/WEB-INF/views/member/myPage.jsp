@@ -44,7 +44,7 @@
                </div>
                <div>
                   <p><a href="memberView.do?userId=${member.userId}" style="font-size: 20px;">회원정보 상세보기</a></p>
-                  <p><a href="${pageContext.request.contextPath}/point/myPointView.do" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
+                  <p><a href="#" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
                   <p><a href="tradeView.do?userId=${member.userId}">판매중인 상품 보기</a> </p>
                   <br /><br />
                </div>

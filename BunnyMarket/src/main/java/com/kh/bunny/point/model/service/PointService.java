@@ -1,8 +1,5 @@
 package com.kh.bunny.point.model.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.kh.bunny.point.model.vo.BunnyPoint;
 
 public interface PointService {
@@ -13,10 +10,6 @@ public interface PointService {
 	int pointChargeInsert(BunnyPoint bunnyPoint);
 	
 	int selectOneNowPoint(String userId);
-
-	List<Map<String, String>> selectMyPoint(String userId, int pPage, int numPerPage);
-
-	int selectPointTotalContents(String userId);
 	
 	
 }
