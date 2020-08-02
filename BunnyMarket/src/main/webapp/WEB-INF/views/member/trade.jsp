@@ -89,8 +89,12 @@
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck5">
-                                    <label class="custom-control-label" for="customCheck5">구매완료 상품 <span class="text-muted">(20)</span></label>
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck5" onclick="goCompleteProduct('${member.nickName}');">>
+                                    <label class="custom-control-label" for="customCheck5">구매완료 상품(일반 상품) <span class="text-muted">(20)</span></label>
+                                </div>
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck6">
+                                    <label class="custom-control-label" for="customCheck6">구매완료 상품(경매 상품) <span class="text-muted">(20)</span></label>
                                 </div>
                                 
                             </div>
@@ -212,6 +216,51 @@
     function goLoveProduct(nickName){
     	$.ajax({
     		url : "${pageContext.request.contextPath}/product/loveProductList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    		}
+    		
+    	});
+    };
+    
+    function goCompleteProduct(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/product/completeProductList.do",
     		data :{
     			nickName : nickName
     		}, dataType : "json",

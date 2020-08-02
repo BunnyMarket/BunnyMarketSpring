@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
@@ -441,6 +442,86 @@ public class ProductController {
 		
 		
 	}
+	@RequestMapping("/product/productTradeList.do")
+	@ResponseBody
+	public Map<String, Object> tradeList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = productService.selectTradeList(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		int totalContents = productService.selectTradeTotalContents(nickName);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "tradeList.do");
+		result.put("list", tlist);
+		result.put("totalContents", totalContents);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return result;
+	}
+	
+	@RequestMapping("/product/loveProductList.do")
+	@ResponseBody
+	public Map<String, Object> loveProductList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = productService.selectLoveList(aPage, numPerPage,nickName);
+		
+		
+		
+		int totalContents = productService.selectLoveTotalContents(nickName);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "loveProductList.do");
+		result.put("list", tlist);
+		result.put("totalContents", totalContents);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return result;
+	}
+	
+	@RequestMapping("/product/completeProductList.do")
+	@ResponseBody
+	public Map<String, Object> completeProductList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = productService.selectCompleteProductList(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		int totalContents = productService.selectCompleteProductTotalContents(nickName);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "loveProductList.do");
+		result.put("list", tlist);
+		result.put("totalContents", totalContents);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return result;
+	}
+
 
 
 }
