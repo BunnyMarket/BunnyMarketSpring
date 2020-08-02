@@ -77,7 +77,29 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public int insertBidder(Bidder b) {
-		return auctionDAO.insertBidder(b);
+		
+		int result = 0;
+		
+		try {
+			
+			result = auctionDAO.insertBidder(b);
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 문제 발생");
+			
+			result = auctionDAO.updateBeforeBidderMember(b.getPno());
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 회원 포인트 차감 할 때 문제발생함");
+			
+			result = auctionDAO.updateBeforeBidder(b.getPno());
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 입찰자에서 문제발생함");
+			
+			result = auctionDAO.updateBeforeUsedPoint(b.getPno());
+			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 사용포인트에서 문제발생함");
+			
+		} catch (Exception e) {
+			System.out.println("문제가 발생한 옥션 : " + b);
+			throw new AuctionException("인서트 하다 문제발생함" + e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override

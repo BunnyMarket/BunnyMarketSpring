@@ -65,8 +65,9 @@
                                     	<h5 style="padding-top: 10px">당근 충전하기</h5>
                                     </td>
                                     <td style="text-align: right;">
-                                        <!-- 경매창에서 구입하기눌렀을때 당근 충전이 필요하면 더 충전해야하는 당근을 보여주기 -->
-                                        <!-- <div class = "price" style="padding-top: 20px">100 당근이 필요해요!</div> -->
+                                    	<c:if test="${realPrice ne null}">
+	                                        <div class = "price" style="padding-top: 20px"><span>${realPrice}</span>당근이 필요해요!</div>
+                                    	</c:if>
                                     </td>
                                 </tr>
                                 <tr>
@@ -206,9 +207,10 @@
 							//기타 필요한 데이터가 있으면 추가 전달
 							}, success : function(data){
 								if(data.fineCharge == true){
+									var point = $('#bPoint').val();
 									console.log("성공쓰~");
 									$("#chargeDiv").css("display", "none");
-									successCharge(data.nowPoint);
+									successCharge(data.nowPoint, point);
 								}
 							}
 						});
@@ -232,7 +234,10 @@
 			}
 		}
 		
-		function successCharge(bPoint){
+		function successCharge(nowPoint, bPoint){
+			var carrot = (bPoint/100).toLocaleString();
+			var comma = (bPoint/1).toLocaleString();
+			var memberCarrot = (nowPoint/100).toLocaleString();
 			var html = '<table class="table table-responsive">'
 					 + '	<thead>'
 					 + '		<tr>'
@@ -247,18 +252,30 @@
 					 + '			<td>'
 					 + '				<div class="price" style="padding-top: 20px">'
 					 + '					<p style="font-size: 23px;">'
-					 + '						<span style="color:orange">' +  + '</span>당근' 
-					 + '						(<span style="color:orange">' +  + '</span>원)'
+					 + '						<span style="color:orange">' + carrot + '</span>당근' 
+					 + '						(<span style="color:orange">' + comma + '</span>원)'
+	                 + '					</p>'
+	                 + '				</div>'
+	                 + '			</td>'
+	                 + '		</tr>'
+					 + '		<tr>'
+					 + '			<td>'
+					 + '				<h5 style="padding-top: 10px">원래 포인트</h5>'
+					 + '			</td>'
+					 + '			<td>'
+					 + '				<div class="price" style="padding-top: 20px">'
+					 + '					<p style="font-size: 23px;">'
+					 + '						<span style="color:orange">' + memberCarrot + '</span>당근' 
 	                 + '					</p>'
 	                 + '				</div>'
 	                 + '			</td>'
 	                 + '		</tr>'
 	                 + '		<tr>'
 	                 + '			<td>'
-	                 + '				<p style="padding-top: 10px"><a href="">상품 구매하러 가기</a></p><br />'
+	                 + '				<p style="padding-top: 10px"><a onclick="goProduct();">상품 구매하러 가기</a></p><br />'
 	                 + '			</td>'
 	                 + '			<td>'
-	                 + '				<p style="padding-top: 10px"><a href="">포인트 확인하러 가기</a></p><br />'
+	                 + '				<p style="padding-top: 10px"><a onclick="goPoint();">내 포인트 확인하러 가기</a></p><br />'
 	                 + '			</td>'
 	                 + '		</tr>'
 	                 + '	</tbody>'
@@ -267,6 +284,19 @@
 			$("#confirmDiv").css("display", "inline-block");
 			$("#confirmDiv").append(html);
 		}
+		
+
+		/* 퀵메뉴 창닫기 기능 */ 
+		function goProduct() {
+		   opener.location.href="${pageContext.request.contextPath}/auction/auctionList.do";
+		   window.open('','_self').close();
+		}
+		
+		function goPoint() {
+			   opener.location.href="${pageContext.request.contextPath}/point/myPointView.do";
+			   window.open('','_self').close();
+			}
+
 	</script>
 	
 	

@@ -123,6 +123,49 @@
 		 WHERE PTYPE = 2 AND PWRITER = #{nickName}
 	</select>
 	
+	<update id="updateBeforeBidderMember" parameterType="Member">
+		<![CDATA[
+			UPDATE MEMBER
+			   SET NOWPOINT = NOWPOINT + (SELECT BPRICE
+			                                FROM BIDDER 
+			                               WHERE BNO = (SELECT MAX(BNO)
+			                                              FROM BIDDER
+			                                             WHERE PNO = #{pno}
+			                                               AND BNO < (SELECT MAX(BNO)
+			                                                            FROM BIDDER)))
+			 WHERE USERID = (SELECT USERID 
+			                   FROM BIDDER 
+			                  WHERE BNO = (SELECT MAX(BNO)
+			                                 FROM BIDDER
+			                                WHERE PNO = #{pno}
+			                                  AND BNO < (SELECT MAX(BNO)
+			                                               FROM BIDDER)))
+		]]>
+	</update>
+	
+	<update id="updateBeforeBidder" parameterType="Bidder">
+		<![CDATA[
+			UPDATE BIDDER
+			   SET BSTATUS = 0
+			 WHERE BNO = (SELECT MAX(BNO)
+			                 FROM BIDDER
+			                WHERE PNO = #{pno}
+			                  AND BNO < (SELECT MAX(BNO)
+			                               FROM BIDDER))
+		]]>
+	</update>
+	
+	<update id="updateBeforeUsedPoint" parameterType="UsedPoint">
+		<![CDATA[
+			UPDATE USEDPOINT
+			   SET UPSNO = 3
+			 WHERE UPNO = (SELECT MAX(UPNO) 
+			                 FROM USEDPOINT 
+			                WHERE UPNO < (SELECT MAX(UPNO) 
+			                                FROM USEDPOINT
+			                               WHERE PNO = #{pno}))
+		]]>
+	</update>
 	
 </mapper>
 

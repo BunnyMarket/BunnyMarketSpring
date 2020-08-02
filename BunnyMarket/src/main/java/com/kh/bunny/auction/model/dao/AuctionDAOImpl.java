@@ -101,4 +101,19 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return sqlSession.selectOne("auctionMapper.selectTradeTotalContent",nickName);
 	}
 
+	@Override
+	public int updateBeforeBidderMember(int pno) {
+		return sqlSession.update("auctionMapper.updateBeforeBidderMember", pno);
+	}
+
+	@Override
+	public int updateBeforeBidder(int pno) {
+		return sqlSession.update("auctionMapper.updateBeforeBidder", pno);
+	}
+
+	@Override
+	public int updateBeforeUsedPoint(int pno) {
+		return sqlSession.update("auctionMapper.updateBeforeUsedPoint", pno);
+	}
+
 }

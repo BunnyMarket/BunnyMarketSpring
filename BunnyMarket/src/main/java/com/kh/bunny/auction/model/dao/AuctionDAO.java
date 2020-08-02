@@ -39,5 +39,11 @@ public interface AuctionDAO {
 	
 	int selectTradeTotalContents(String nickName);
 
+	int updateBeforeBidderMember(int pno);
+
+	int updateBeforeBidder(int pno);
+
+	int updateBeforeUsedPoint(int pno);
+
 	
 }

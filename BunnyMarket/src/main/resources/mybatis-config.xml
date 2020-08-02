@@ -25,6 +25,7 @@
 		<typeAlias type = "com.kh.bunny.point.model.vo.PointHistory" alias="PointHistory"/>
 		<typeAlias type = "com.kh.bunny.deal.model.vo.Deal" alias = "Deal" />
 		<typeAlias type="com.kh.bunny.review.model.vo.Review" alias="review"/>
+		<typeAlias type = "com.kh.bunny.point.model.vo.UsedPoint" alias="UsedPoint"/>
 		<typeAlias type="com.kh.bunny.love.model.vo.Love" alias="love"/>
 		
 	</typeAliases>
