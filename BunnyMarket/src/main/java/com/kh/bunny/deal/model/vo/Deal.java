@@ -24,4 +24,5 @@ public class Deal implements Serializable {
 	private int dMethod;
 	private int dsStatus;
 	private int dbStatus;
+	private String dDelNum;
 }
