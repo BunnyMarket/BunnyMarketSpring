@@ -339,9 +339,9 @@ public class AuctionController {
 		System.out.println("무엇이 들어있느냐? : " + tlist);
 		System.out.println("무엇이 들어있느냐? : " + tlist.size());
 		
-		int totalContents = auctionService.selectTradeTotalContents();
+		int totalContents = auctionService.selectTradeTotalContents(nickName);
 		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "tradeList.do");
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "/auction/auctionTradeList.do?PWRITER="+nickName);
 		result.put("list", tlist);
 		result.put("totalContents", totalContents);
 		result.put("numPerPage", numPerPage);

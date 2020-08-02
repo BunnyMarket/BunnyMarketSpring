@@ -97,8 +97,8 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 	
 	@Override
-	public int selectTradeTotalContents() {
-		return auctionDAO.selectTradeTotalContents();
+	public int selectTradeTotalContents(String nickName) {
+		return auctionDAO.selectTradeTotalContents(nickName);
 	}
 	
 	
