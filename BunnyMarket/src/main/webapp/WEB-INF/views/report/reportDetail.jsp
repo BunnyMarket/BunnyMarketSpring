@@ -53,7 +53,8 @@
 							
 		                         <button type="button" class="btn alazea-btn mt-15"
 										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${report.RNo}'">수정하기</button>
-	                      	      <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>
+	                      	<!--      <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>  --> 
+	                      	        <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="deleteReport(${report.RNo});"/>
 				            </div>
 						<br /><br /><br />
 						
@@ -76,5 +77,15 @@
 		</form>
 	</div>
 </section>
+<script>
+function deleteReport(RNo){
+	if(confirm("정말 삭제하시겠습니까?") == true){
+		(location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}').submit();
+	}else{
+		return;
+	}
+}
+
+</script>
 
 <c:import url="../common/footer.jsp" />

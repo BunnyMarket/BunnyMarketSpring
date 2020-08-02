@@ -67,7 +67,7 @@
 								<div class="comment_area clearfix">
 									<h4 class="headline">${ qcommentSize } Comments</h4>
 									<c:if test = "${ qcommentSize eq 0 }">
-										<h5>아직 댓글이 없습니다.  (｡•́︿•̀｡)  </h5>
+										<h5>아직 댓글이 없습니다.  ( •́︿•̀｡)  </h5>
 									</c:if>
 
 									<ol>
@@ -239,7 +239,7 @@
 			
 			function updateViewComment(qcno, st){
 				
-				var pcContent = $("#qcContent-"+st).val();
+				var qcContent = $("#qcContent-"+st).val();
 				$("#upReplyDiv-"+st).toggle();
 				$("#updateComment-"+st).text(qcContent);
 			}
@@ -271,7 +271,7 @@
 				} else {
 					alert("수정이 취소되었습니다.");
 					$("#upReplyDiv-"+st).css("display", "none");
-					$("#qcContent-"+st).clear();
+					//$("#qcContent-"+st).clear();
 				}
 			}
 			
@@ -309,7 +309,7 @@
 				} else {
 					alert("수정이 취소되었습니다.");
 					$("#upReReplyDiv-"+st).css("display", "none");
-					$("#reqcContent-"+st).clear();
+					//$("#reqcContent-"+st).clear();
 				}
 			}
 			

@@ -57,8 +57,8 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="submit" class="btn alazea-btn mt-15" >수정하기</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					
-					<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADelete.do?qno=${qna.qno}'"/>
+					<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="deleteQNA(${qna.qno});"/>
+					<!--<input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/QNA/QNADelete.do?qno=${qna.qno}'"/>   -->
 				</div>
 			</form>
 		</div>
@@ -119,7 +119,13 @@
        e.preventDefault();
 	});
 
-	
+	function deleteQNA(qno){
+		if(confirm("정말 삭제하시겠습니까?")==true){
+			(location.href='${ pageContext.request.contextPath }/QNA/QNADelete.do?qno=${qna.qno}').submit();
+		}else{
+			return;
+		}
+	}
 
 	
 </script>
