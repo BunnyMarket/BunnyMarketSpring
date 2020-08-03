@@ -85,14 +85,16 @@ public class AuctionServiceImpl implements AuctionService {
 			result = auctionDAO.insertBidder(b);
 			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 문제 발생");
 			
-			result = auctionDAO.updateBeforeBidderMember(b.getPno());
-			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 회원 포인트 차감 할 때 문제발생함");
-			
-			result = auctionDAO.updateBeforeBidder(b.getPno());
-			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 입찰자에서 문제발생함");
-			
-			result = auctionDAO.updateBeforeUsedPoint(b.getPno());
-			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 사용포인트에서 문제발생함");
+			if(b.getBPrice() > 0) {
+				result = auctionDAO.updateBeforeBidderMember(b.getPno());
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 회원 포인트 차감 할 때 문제발생함");
+				
+				result = auctionDAO.updateBeforeBidder(b.getPno());
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 입찰자에서 문제발생함");
+				
+				result = auctionDAO.updateBeforeUsedPoint(b.getPno());
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 사용포인트에서 문제발생함");				
+			}
 			
 		} catch (Exception e) {
 			System.out.println("문제가 발생한 옥션 : " + b);

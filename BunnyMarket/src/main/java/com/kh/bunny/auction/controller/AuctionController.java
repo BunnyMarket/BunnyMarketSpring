@@ -223,7 +223,7 @@ public class AuctionController {
 			System.out.println("b가 뭐라구? : " + b);
 			int result = auctionService.insertBidder(b);
 			
-			if (result >0) {
+			if (result > 0) {
 				msg = "입찰 성공!";
 			} else {
 				msg = "입찰 실패!";
@@ -378,6 +378,10 @@ public class AuctionController {
 		
 		return result;
 	}
+	
+	
+	
+	
 }
 
 
