@@ -62,7 +62,7 @@
 							<p>관리자 홈 O</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						href=" ${ pageContext.request.contextPath }/views/admin/reportList.jsp">
+						href=" ${ pageContext.request.contextPath }/admin/deal/dealList.do">
 							<i class="material-icons">content_paste</i>
 							<p>거래 현황</p>
 					</a></li>

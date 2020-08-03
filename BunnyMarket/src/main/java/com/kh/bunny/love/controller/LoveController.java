@@ -12,22 +12,37 @@ import com.kh.bunny.love.model.service.LoveService;
 import com.kh.bunny.love.model.vo.Love;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.service.ProductService;
+import com.kh.bunny.product.model.vo.Product;
 
 @Controller
 public class LoveController {
 	@Autowired
 	LoveService loveService;
 	
+	@Autowired
+	ProductService productService;
+	
 	@RequestMapping("/love/loveInsert.do")
 	public String loveInsert(@RequestParam int pno, Model model, Love love, HttpSession session) {
 		int result;
 		Member m = (Member)session.getAttribute("member");
+		int pType = productService.selectOneProduct(pno).getPType();
 		
 		love.setPno(pno);
 		love.setUserId(m.getUserId());
 		
 		String loc = "/auction/auctionDetail.do?pno="+love.getPno();
 		String msg ="";
+		if( pType == 1) {
+			loc = "/product/productDetail.do?pno="+love.getPno();
+		}
+		else if (pType ==2 ) {
+			loc = "/auction/auctionDetail.do?pno="+love.getPno();
+			msg = "";
+		}
+			
+	
 		System.out.println(love);
 		try {
 			

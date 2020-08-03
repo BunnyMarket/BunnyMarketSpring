@@ -132,6 +132,10 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return productDAO.selectCompleteProductTotalContents(nickName);
 	}
+	@Override
+	public int selectOnemakeZero(int pno) {
+		return productDAO.selectOnemakeZero(pno);
+	}
 
 	@Override
 	public int productPurchase(Product product) {

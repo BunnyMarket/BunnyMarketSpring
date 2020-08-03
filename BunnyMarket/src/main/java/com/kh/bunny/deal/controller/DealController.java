@@ -1,5 +1,10 @@
 package com.kh.bunny.deal.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.deal.model.service.DealService;
 import com.kh.bunny.deal.model.vo.Deal;
 import com.kh.bunny.member.model.service.MemberService;
@@ -22,14 +29,15 @@ public class DealController {
 	DealService dealService;
 	
 	@Autowired
+	ProductService productService;
+	@Autowired
 	MemberService memberService;
+
 	
 	// 상품 거래 목록 가져오기 
 	@RequestMapping("deal/dealList.do")
 	public String selectDealList(Model model) {
-		
-		
-		
+
 		return "";
 	}
 	
@@ -201,6 +209,50 @@ public class DealController {
 		
 	}
 
+	//admin
+	@RequestMapping("/admin/deal/dealList.do")
+	public String selectAdminQnAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
+			Model model, HttpServletRequest request) {
+		
+		
+		int numPerPage = 10;
+
+		List<Map<String, String>> deal = dealService.selectDealList(cPage, numPerPage);
+
+		int totalContents = dealService.selectDealTotalContents();
+
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "dealList.do");
+		
+		model.addAttribute("deal", deal).addAttribute("totalContents", totalContents)
+				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
+		
+		System.out.println("model : " + model);
+		return "admin/transactions";
+
+	}
+	
+	@RequestMapping("/admin/dealReturn.do")
+	@ResponseBody
+	public Map<String, Object> dealRefund(@RequestParam int dno ) {
+		System.out.println("controller : " + dno);
+		Deal deal = dealService.selectOneDeal(dno);
+		int price=0;
+		Product p = productService.selectOneProduct(deal.getPno());
+		if(p.getPType() == 1) {
+			price = p.getPPrice();
+		} else if(p.getPType() == 2) {
+			price = p.getBPrice();
+		}
+		deal.setPrice(price);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean refund =dealService.selectdealRefund(deal) > 0 ? true : false;
+		
+		map.put("refund", refund);
+		
+		return map; 
+	}
+	
 }
 
 

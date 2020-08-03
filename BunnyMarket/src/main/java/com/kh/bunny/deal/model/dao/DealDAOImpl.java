@@ -1,6 +1,7 @@
 package com.kh.bunny.deal.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,19 @@ public class DealDAOImpl implements DealDAO {
 	public Member selectOtherMember(String userId) {
 		return sqlSession.selectOne("dealMapper.selectOtherMember", userId);
 	}
-
 	
+	@Override
+	public List<Map<String, String>> selectDealList (int cPage, int numPerPage){
+		return sqlSession.selectList("dealMapper.selectAdminDealList");
+	}
+	
+	@Override
+	public int selectDealTotalContents() {
+		return sqlSession.selectOne("dealMapper.selectadminDealTotalContent");
+	}
+	
+	@Override
+	public int selectdealRefund(Deal deal) {
+		return sqlSession.update("dealMapper.updateBuyerRefund", deal);
+	}
 }

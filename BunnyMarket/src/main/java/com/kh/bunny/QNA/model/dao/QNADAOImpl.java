@@ -87,4 +87,10 @@ public class QNADAOImpl implements QNADAO {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return sqlSession.selectList("qnaMapper.selectQnAList", null, rows) ;
 	}
+	
+	@Override
+	public List<Object> selectQCommentList() {
+		return sqlSession.selectList("qnaMapper.selectQCommentAllList");
+	}
+
 }

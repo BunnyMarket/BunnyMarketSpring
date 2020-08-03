@@ -90,12 +90,25 @@
      AND QCNO = (SELECT MAX(QCNO) FROM QCOMMENT WHERE QNO =#{qno})
    </select>
    
-   <select id="selectQnAList" resultType="QNA">
+ <!--   <select id="selectQnAList" resultType="QNA">
 		SELECT Q.QNO, Q.QWRITER, Q.QTITLE, Q.QCONTENT, Q.QDATE
 		          ,   (SELECT COUNT(*) FROM QCOMMENT QC WHERE QC.QNO = Q.QNO) QCCHECK
 		  FROM QNA Q
 		 ORDER BY Q.QDATE DESC
+	</select> -->
+   <select id="selectQnAList" resultType="QNA">
+		
+	SELECT Q.*,(CASE WHEN QC.QWRITER LIKE 'adminbunny%' THEN 'Y'
+                  ELSE 'N' END) AS CK
+        FROM QNA Q
+        LEFT JOIN QCOMMENT QC ON Q.QNO = QC.QNO
+        ORDER BY Q.QDATE DESC, (CASE CK WHEN 'Y' THEN 1 ELSE 2 END)	
 	</select>
-   
+	
+   <select  id="selectQCommentAllList" resultType= "QComment">
+    SELECT QNO, QWRITER 
+    FROM QCOMMENT
+    ORDER BY QCDATE DESC
+   </select>
 </mapper>
 

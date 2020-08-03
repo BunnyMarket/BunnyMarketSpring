@@ -179,6 +179,12 @@
 		)
 	</select>
 	
+
+	<!-- 신고상품 제재 -->
+	<update id="selectOnemakeZero" parameterType="_int">
+		UPDATE PRODUCT SET PSTATUS = 0 WHERE PNO = #{pno}
+	</update>
+
 	
 	<select id="sellCompleteProductList" parameterType="string" resultType = "PRODUCT">
       	SELECT * FROM PRODUCT P
@@ -188,7 +194,6 @@
 		)
       
    </select>
-   
    
 	
 </mapper>

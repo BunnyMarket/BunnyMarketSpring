@@ -1,6 +1,7 @@
 package com.kh.bunny.deal.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,17 @@ public class DealServiceImpl implements DealService {
 		return dealDAO.selectOtherMember(userId);
 	}
 
+	@Override
+	public List<Map<String, String>> selectDealList (int cPage, int numPerPage){
+		return dealDAO.selectDealList(cPage, numPerPage);
+	}
 
+	@Override
+	public int selectDealTotalContents() {
+		return dealDAO.selectDealTotalContents();
+	}
+	@Override
+	public int selectdealRefund(Deal deal) {
+		return dealDAO.selectdealRefund(deal);
+	}
 }

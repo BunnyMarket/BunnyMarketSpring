@@ -1,6 +1,7 @@
 package com.kh.bunny.deal.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.bunny.deal.model.vo.Deal;
 import com.kh.bunny.member.model.vo.Member;
@@ -26,5 +27,10 @@ public interface DealDAO {
 	// 상대 거래자의 정보 가져오기 
 	Member selectOtherMember(String userId);
 		
+	List<Map<String, String>> selectDealList (int cPage, int numPerPage);
+	
+	int selectDealTotalContents();
+	
+	int selectdealRefund(Deal deal);
 
 }

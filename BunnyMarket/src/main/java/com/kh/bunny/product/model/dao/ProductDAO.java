@@ -64,6 +64,8 @@ public interface ProductDAO {
 	List<Map<String, String>> selectCompleteProductList(int aPage, int numPerPage, String nickName);
 
 	int selectCompleteProductTotalContents(String nickName);
+	
+	int selectOnemakeZero(int pno);
 
 	List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName);
 

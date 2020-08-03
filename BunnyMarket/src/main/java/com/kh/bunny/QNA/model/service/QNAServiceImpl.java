@@ -112,5 +112,10 @@ public class QNAServiceImpl implements QNAService {
 		
 		return qnaDAO.selectQnAList(cPage,numPerPage);
 	}
+	
+	@Override
+	public List<Object> selectQCommentList() {
+		return qnaDAO.selectQCommentList();
+	}
 
 }
