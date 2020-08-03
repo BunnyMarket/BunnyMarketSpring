@@ -99,21 +99,18 @@
                         <th>답변여부</th>
                       </thead>
                      <c:forEach items="${list}" var ="q">
-                   	   <c:set var ="cwriter" value="${qcomments.QWriter}"/>
                      	<tr id="${q.qno}" >
 	                     	<td>${q.qno}</td>
 							<td>${q.QTitle}</td>
 							<td>${q.QWriter}</td>
 							<td>${q.QDate}</td>
-							<td>${qcomments.QWriter}</td>
-							<%-- <c:choose>
-								<c:when test="${fn:contains(cwriter, 'bunny')}">
-									<td style="color: red;" align="center">확인</td>
-								</c:when>
-								<c:otherwise>
-									<td style="color: black;" align="center">확인필요</td>
-								</c:otherwise>
-							</c:choose> --%>
+							<c:if test="${q.ck eq 'Y'}">
+								<td style="color: black;" align="center">확인완료</td>
+							</c:if>
+							<c:if test="${q.ck eq 'N'}">
+								<td style="color: red;" align="center">확인필요</td>
+							</c:if>
+							
 						</tr>
                      </c:forEach>
                     </table>

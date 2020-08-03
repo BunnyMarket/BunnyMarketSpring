@@ -72,5 +72,6 @@ public interface ProductService {
 
 	List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName);
 	
+	int selectOnemakeZero(int pno);
 
 }

@@ -39,4 +39,7 @@ public interface QNADAO {
 	int deleteQComment(int qcno);
 	
 	List<Map<String, String>> selectQnAList(int cPage, int numPerPage);
+	
+	List<Object> selectQCommentList();
+	
 }

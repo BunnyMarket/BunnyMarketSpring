@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Dashboard by Creative Tim
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -114,42 +113,87 @@
                         <th>거래 성사 상태 </th>
                         <th>point</th>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>판매자</td>
-                          <td>바닐라 라떼</td>
-                          <td>5600</td>
-                          <td>07/01</td>
+                      <tbody> 
+                      <c:forEach items="${deal}" var="d" varStatus="st">
+                        <tr id="${d.dno}" >
+                          <td>${d.dsId}</td>
+                          <td>${d.PTitle}</td>
+                          <td>${d.PPrice}</td>
+                          <td>${d.DDate}</td>
+	                     <td>
+	                     <input type="hidden" id="dmethod-${st.index}" value="${d.DMethod}" />
+	                       <input type="radio" name="${d.DMethod}" id="stop-${st.index}" value="${d.DMethod}" disabled> 거래중지 <br/>
+	                       <input type="radio" name="${d.DMethod}" id="dt-${st.index}"value="${d.DMethod}"disabled > 직거래
+	                       <input type="radio" name="${d.DMethod}" id="par-${st.index}" value="${d.DMethod}" disabled > 택배 <br/>
+	                       <input type="radio" name="${d.DMethod}" id="nd-${st.index}" value="${d.DMethod}" disabled > 미결정
+	                      
+	                      </td>
                           <td>
-                          <input type="radio"> 택배 <br/>
-                          <input type="radio"> 직거래
+                          <input type="hidden" id="dsStatus-${st.index}" value="${d.dsStatus}" />
+                          <input type="hidden" id="dbStatus-${st.index}" value="${d.dbStatus}" />
+                          <input type="checkbox" id="seller-${st.index}" disabled> 판매자 (${d.dsId}) <br/>
+                          <input type="checkbox" id="buyer-${st.index}"disabled> 구매자  (${d.dbId})<br/>
                           </td>
                           <td>
-                          <input type="checkbox"> 판매자 <br/>
-                          <input type="checkbox"> 구매자 <br/>
-                          </td>
-                          <td>
-                          <button class="btn">포인트</button>
-                          </td>
-                        </tr>
-                       <tr>
-                          <td>판매자2</td>
-                          <td>돌체라뗴</td>
-                          <td>6400</td>
-                          <td>07/02</td>
-                          <td>
-                          <input type="radio"> 택배 <br/>
-                          <input type="radio"> 직거래
-                          </td>
-                          <td>
-                          <input type="checkbox"> 판매자 <br/>
-                          <input type="checkbox"> 구매자 <br/>
-                          </td>
-                          <td>
-                          <button class="btn">포인트</button>
-                          <!-- 완료 할떄 class ->btn를 id btn으로 -->
+                          <c:if test="${d.DMethod eq 0}">
+                          <button class="btn" id="btn-${st.index}">포인트</button>
+                          </c:if>
                           </td>
                         </tr>
+                         <script>
+					    	$(function(){
+					    		var seller = $('#dsStatus-${st.index}').val();
+					    		var buyer = $('#dbStatus-${st.index}').val();
+					    		if(seller == 1){
+					    			$('#seller-${st.index}').attr('checked', 'checked');
+					    		}
+					    		if(buyer == 1){
+					    			$('#buyer-${st.index}').attr('checked', 'checked');
+					    		}
+					    	});
+					    	$(function(){
+					    		var stop = $('#stop-${st.index}').val();
+					    		var dt = $('#dt-${st.index}').val();
+					    		var par = $('#par-${st.index}').val();
+					    		var nd = $('#nd-${st.index}').val();
+					    		if(stop == 0){
+					    			$('#stop-${st.index}').attr('checked', 'checked');
+					    		}
+					    		if(dt == 1){
+					    			$('#dt-${st.index}').attr('checked', 'checked');
+					    		}
+					    		if(par == 2){
+					    			$('#par-${st.index}').attr('checked', 'checked');
+					    		}
+					    		if(nd == 3){
+					    			$('#nd-${st.index}').attr('checked', 'checked');
+					    		}
+					    	});
+					    	
+					    	  $(function(){
+			                   		$('#btn-${st.index}').on('click',function(){
+			                   				$.ajax({
+			                 	   				type : 'POST',
+			                 	   				url : '${pageContext.request.contextPath}/admin/dealReturn.do',
+			                 	   				data : {"dno" : '${d.dno}'},
+			                 					dataType : "json",
+			                 					success: function(data){
+			                 						if(data.refund == true){
+			                 							alert("포인트 돌려주기 성공");
+			                 						
+			                 						} else {
+			                 							console.log(data);
+			                 						}
+			                 					},
+			                 					fail : function(data){
+			                 						alert("포인트 돌려주기 실패");
+			                 						console.log(data);
+			                 					}
+			                 			}); 
+			                   		});
+					    	  });	
+					    </script>
+                     </c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -159,13 +203,7 @@
 	<br/>
 <div class="pagingArea" >
 	<div class="pa">
-		<button class="paging"><</button>
-		<button class="paging">1</button>
-		<button class="paging">2</button>
-		<button class="paging">3</button>
-		<button class="paging">4</button>
-		<button class="paging">5</button>
-		<button class="paging">></button>
+	<c:out value="${pageBar}"  escapeXml="false"/>
 	</div>
 </div>
 <br/>
@@ -186,6 +224,8 @@
 </div>
 <br>
 <br>
+   
     <%@ include file="common/footer.jsp" %>
+    
 
 

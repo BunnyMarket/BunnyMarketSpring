@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="../common/header.jsp"%>
 <style>
 	/* 커스텀 오버레이  */
@@ -18,6 +20,16 @@
 	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 	
 	.contents {font-weight:bold;display:block;}
+	
+	.modal {text-align: center;
+	@media screen and (min-width: 768px) { 
+    .modal:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
+	.modal-dialog {display: inline-block;text-align: left;vertical-align: middle;}
+	
+		.wblur{-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(5px);}
+	.disabledbutton { pointer-events: none;opacity: 0.4;}
+
+
 </style>
 <!-- ##### Breadcrumb Area Start ##### -->
 <div class="breadcrumb-area">
@@ -49,7 +61,7 @@
 <!-- ##### Breadcrumb Area End ##### -->
 
 <!-- ##### Single Product Details Area Start ##### -->
-<section class="single_product_details_area mb-50">
+<section class="single_product_details_area mb-50" >
 	<div class="produts-details--content mb-50">
 		<div class="container">
 			<div class="row justify-content-between">
@@ -67,6 +79,7 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
+
 						<c:if test="${sessionScope.member.userId eq product.PWriter}">
 							<c:if test="${product.PStatus == 2}">
 								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>
@@ -83,9 +96,15 @@
                         <button type="button" class="btn alazea-btn mt-15"
 								style="float: right"
 								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+						</c:if>
+						<br /><br /><br />
+						<c:if test="${!empty admin}">
+						<button type="button" id="warn" class="btn alazea-btn mt-15"
+							style="float: right">잠금</button>
+						</c:if>
 								
 						<br/><br/><br/>
-						</c:if>
+						
 						
 						<c:if test="${sessionScope.member.userId ne product.PWriter}">
 							<c:if test="${product.PStatus != 2}">
@@ -114,7 +133,7 @@
 								var originP = $("#originPPrice").val();
 					    		$("#pCarrot").text(parseInt(originP).toLocaleString());
 						   	});
-						   		
+						   	
 						</script>
 
 						<h5>글 작성날짜</h5>
@@ -373,9 +392,30 @@
 		</div>
 	</div>
 
-
 </section>
 <!-- ##### Single Product Details Area End ##### -->
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel"></h3>
+				
+			</div>
+				<div class="modal-body row">
+					<div class="col-12">
+					<h1>관리자가 확인중인 상품입니다.</h1>
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			
+		</div>
+	</div>
+</div>
+</div>
+
+
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -400,6 +440,46 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+$(function(){
+	if('${product.PStatus == 0}'){
+		$('#myModal1').modal();
+		$('section').addClass('wblur');
+	}
+	
+});
+$(function(){
+	console.log('${product.PStatus}')});
+
+
+
+$(function(){
+	$("#warn").click(function(){
+		$.ajax({
+			type : 'POST',
+			url : '${pageContext.request.contextPath}/product/productTypeChange.do',
+			data : {"pno" : "${product.pno}"},
+			dataType : "json",
+			success: function(data){
+				if(data.kill == true){
+					alert("제재 성공");
+				} else {
+					console.log(data);
+				}
+			},
+			fail : function(data){
+				alert("제재 실패");
+				console.log(data);
+			}
+		});
+	});
+});
+
+
+</script>
+
 <script>
 		
 	// 지도 넣기 
@@ -746,7 +826,7 @@
 		});
 		
 	});
-
+	
 </script>
 
 

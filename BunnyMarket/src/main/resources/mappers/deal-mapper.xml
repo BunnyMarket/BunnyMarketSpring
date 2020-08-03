@@ -58,5 +58,22 @@
 		WHERE DNO = #{ dno }
 	</update>
 	
+	<select id="selectAdminDealList" resultType="Deal">
+		SELECT D.*, P.PTITLE , (D.DDATE +10) AS EXTDATE
+			FROM DEAL D 
+		JOIN PRODUCT P ON P.PNO = D.PNO
+        ORDER BY EXTDATE 
+	</select>
+	
+	<select id="selectadminDealTotalContent" resultType="_int">
+		SELECT COUNT(*)
+		FROM DEAL
+	</select>
+	
+	<update id="updateBuyerRefund" parameterType="Deal">
+		UPDATE MEMBER 
+			SET NOWPOINT = NOWPOINT + #{price}
+			WHERE USERID = #{dbId}
+	</update>
 	
 </mapper>

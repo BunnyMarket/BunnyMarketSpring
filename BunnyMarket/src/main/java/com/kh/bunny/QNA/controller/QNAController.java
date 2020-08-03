@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -53,8 +54,9 @@ public class QNAController {
 
 		List<Map<String, String>> list = qnaService.selectQNAList(cPage, numPerPage, userId);
 
-		System.out.println("qnaList 가져오는지 확인: " + list);
-
+		/*
+		 * System.out.println("qnaList 가져오는지 확인: " + list);
+		 */
 		int totalContents = qnaService.selectQNATotalContents();
 
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QNAList.do");
@@ -62,7 +64,7 @@ public class QNAController {
 		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
 				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
 		
-		System.out.println("model : " + model);
+		/* System.out.println("model : " + model); */
 		return "QNA/QNA_List";
 
 	}
@@ -374,12 +376,9 @@ public class QNAController {
 	public String selectAdminQnAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
 			Model model, HttpServletRequest request) {
 
-		
 		int numPerPage = 10;
 
 		List<Map<String, String>> list = qnaService.selectQnAList(cPage, numPerPage);
-
-		System.out.println("qnaList 가져오는지 확인: " + list);
 
 		int totalContents = qnaService.selectQNATotalContents();
 

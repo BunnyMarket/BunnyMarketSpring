@@ -144,6 +144,10 @@ public class productDAOImpl implements ProductDAO {
 	}
 
 	@Override
+	public int selectOnemakeZero(int pno) {
+		return sqlSession.update("productMapper.selectOnemakeZero", pno);
+	}
+
 	public int productPuserchase(Product product) {
 		return sqlSession.update("productMapper.purchaseProduct", product);
 	}
@@ -155,7 +159,7 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectList("productMapper.sellCompleteProductList", nickName, rows);
 	}
 
-	
+
 
 	
 }

@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.bunny.product.model.exception.ProductException;
-import com.kh.bunny.product.model.service.ProductService;
-import com.kh.bunny.product.model.vo.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
+import com.kh.bunny.product.model.exception.ProductException;
+import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
 
 @Controller
 public class ProductController {
@@ -100,12 +100,14 @@ public class ProductController {
 	
 	// 상품 상세보기 
 	@RequestMapping("/product/productDetail.do")
-	public String selectOne(@RequestParam int pno, Model model) {
+	public String selectOne(@RequestParam int pno, Model model, HttpSession session) {
 		Product p = productService.selectOneProduct(pno);
 		List<Object> PComments = productService.selectPCommentList(pno);
 		
+		adminMember am = (adminMember)session.getAttribute("admin");
+		Member m = (Member)session.getAttribute("member");
 		String sellerPhoto = (memberService.selectOne(p.getPWriter())).getPhoto();
-		
+
 		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
 		System.out.println("PComment객체 갯수 : " + PComments.size());
@@ -563,7 +565,20 @@ public class ProductController {
 		return result;
 	}
 
-	
+
+	@RequestMapping("/product/productTypeChange.do")
+	@ResponseBody
+	public Map<String, Object> productTypeChange(@RequestParam int pno) {
+		
+		System.out.println("controller : " + pno);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean productKill = productService.selectOnemakeZero(pno) > 0 ? true : false;
+		
+		map.put("kill", productKill);
+		
+		return map; 
+	}
 	
 	@RequestMapping("/product/sellCompleteProductList.do")
 	@ResponseBody
@@ -583,6 +598,7 @@ public class ProductController {
 		
 		
 		return result;
+
 	}
 
 

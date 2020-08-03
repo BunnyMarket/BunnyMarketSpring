@@ -18,6 +18,14 @@
 	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 	
 	.contents {font-weight:bold;display:block;}
+	
+	#modal2 {text-align: center;
+	@media screen and (min-width: 768px) { 
+    #modal2:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
+	#modal2-dialog {display: inline-block;text-align: left;vertical-align: middle;}
+
+	.wblur{-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(5px);}
+	.disabledbutton { pointer-events: none;opacity: 0.4;}
 </style>
 
 <!-- ##### Breadcrumb Area Start ##### -->
@@ -82,6 +90,10 @@
 								입찰자 명단 보기
 							</button>
 						</c:if>
+						<c:if test="${!empty sessionScope.admin.adminId}">
+						<button type="button" id="blur" class="btn alazea-btn mt-15"
+							style="float: right">잠금</button>
+						</c:if>
 						<div class="modal-layout"></div>
 						<br />
 						<br /><br />
@@ -94,10 +106,10 @@
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<script type="text/javascript">
 						   	$(function(){
-						   		console.log('${a.PPrice}');
-						   		console.log('${a.BPrice}');
 								var originP = $("#originPPrice").val();
 								var originB = $("#originBPrice").val();
+								
+								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
 						   		
 								if(originP > originB){
 						    		$("#pCarrot").text(parseInt(originP).toLocaleString());
@@ -451,6 +463,26 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel"></h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+				<div class="modal-body row">
+					<div class="col-12">
+					<h1>관리자가 확인중인 상품입니다.</h1>
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			
+		</div>
+	</div>
+</div>
+</div>
 <!-- ##### Single Product Details Area End ##### -->
 
 <script>
@@ -703,6 +735,97 @@
 		});
 		
 	});
+	
+	$(function(){
+		$("#blur").click(function(){
+			$('#myModal2').modal();
+			$('section').addClass('wblur disabledbutton');
+		});
+	});
+
+		
+	$("#bidPriceComma").on("keyup", function(){
+		
+		var bidderPrice = $("#bidPriceComma").val().trim();
+		var bPno = $("#BidderPno").val();
+		
+        if(bidderPrice.length<1) {
+        	$(".Bfail").text("입찰하려는 당근이 부족합니다.");
+        	return;
+        	
+        } else {
+        	
+			$.ajax({
+				  url : "${pageContext.request.contextPath}/auction/bidderCheckInvalid.do"
+				, dataType : "json"
+				, data : {
+						  bPrice : bidderPrice
+						, pno : bPno
+				}, success : function(data){
+					if(data.msg == 0){
+						$(".Bfail").text("입찰하려는 당근이 부족합니다.");
+						$("#bidderCheck").val(3);
+					} else if(data.msg == 1){
+						$(".Bfail").text("입찰 하려는 금액이 기존 금액보다 작습니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 2){
+						$(".Bfail").text("입찰은 10당근 씩 해주시기 바랍니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 3){
+						$(".BfailMax").text("최고가로 입찰중인 회원은 입찰할 수 없습니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 4){
+						$(".Bfail").text("당근이 부족하여 구매하실 수 없습니다.");
+						$("#bidderCheck").val(4);
+					} else {
+						$(".Bfail").text("");
+						$(".BfailMax").text("");
+						$("#bidderCheck").val(1);
+					} 
+				}, error : function(jqxhr, textStatus, errorThrown){
+	                console.log("ajax 처리 실패");
+	                //에러로그
+	                console.log(jqxhr);
+	                console.log(textStatus);
+	                console.log(errorThrown);
+	            }
+				
+			});
+        }
+	});
+	$(function(){
+		$("#bidderBtn").on("click", function(){
+			var $check = $("#bidderCheck").val();
+			var $bPrice = parseInt($("#bidPriceComma").val());
+			var $bPno = $("#BidderPno").val(); 
+			
+			if(confirm("정말 입찰하시겠습니까?")){
+				console.log("check :  " + $check + ", bPrice : " + $bPrice + ", pno : " + $bPno);
+				if($check == 1) {
+					$("#goBidder").attr('action', '${ pageContext.request.contextPath }/auction/insertBidder.do').submit();
+					return true;
+				} else if ($check == 4){
+					if(confirm("당근이 부족하여 구매하실 수 없습니다. \n부족한 당근을 구매하시겠습니까?")){
+						window.open('${ pageContext.request.contextPath }/point/pointChargeViewProduct.do?pno='+$bPno+'&bPrice='+$bPrice, '_blank', 'width=600px, height=800px');
+						return false;
+					}
+				} else if ($check == 3){
+					if(confirm("당근이 부족합니다. \n부족한 당근을 구매하시겠습니까?")){
+						window.open('${ pageContext.request.contextPath }/point/pointChargeView.do','_blank', 'width=600px, height=800px');
+						return false;
+					}
+				} else {
+					alert("입찰금액을 확인해주세요.");
+					$("#bidPriceComma").focus();
+					return false;
+				}
+				
+			} else {
+				alert("입찰을 취소합니다.");
+				return false;
+			}
+			
+		});
 		
 	$("#bidPriceComma").on("keyup", function(){
 		
