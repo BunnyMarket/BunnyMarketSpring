@@ -166,7 +166,33 @@
 			                               WHERE PNO = #{pno}))
 		]]>
 	</update>
+
+	<select id="completeAuctionList" parameterType="string" resultType = "Auction">
+      
+       SELECT * FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DBID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 2
+		)
+   </select>
 	
+	<select id="selectCompleteAuctionTotalContents" resultType = "_int">
+		SELECT COUNT(*) FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DBID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 2
+		)
+	</select>
+
+
+<select id="sellCompleteAuctionList" parameterType="string" resultType = "Auction">
+      
+       SELECT * FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 2
+		)
+   </select>
 </mapper>
 
 <!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->

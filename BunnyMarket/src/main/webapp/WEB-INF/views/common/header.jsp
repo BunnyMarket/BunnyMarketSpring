@@ -165,9 +165,12 @@
 								</c:choose>
 									<c:if test="${!empty member}">
 	
+											<form  name="myForm" action="${ pageContext.request.contextPath }/member/memberMyPage.do" method="POST">
+											<input type="hidden" name="userId" value="${member.userId}">
+											</form>
 										<span>
-											<a href="${pageContext.request.contextPath}/member/memberMyPage.do?userId=${member.userId}"
-												title="내정보보기">${member.userName}님,&nbsp;안녕하세요</a>
+											<a href="#"
+												title="내정보보기" onclick="javascript:document.myForm.submit();">${member.nickName}님,&nbsp;안녕하세요 </a>
 										</span>
 								        &nbsp; 
 								        <div class="login">

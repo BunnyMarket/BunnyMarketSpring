@@ -382,6 +382,85 @@ public class AuctionController {
 	
 	
 	
+	
+	@RequestMapping("/auction/completeAuctionList.do")
+	@ResponseBody
+	public Map<String, Object> completeAuctionList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = auctionService.completeAuctionList(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		int totalContents = auctionService.selectCompleteAuctionTotalContents(nickName);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "/auction/auctionTradeList.do?PWRITER="+nickName);
+		result.put("list", tlist);
+		result.put("totalContents", totalContents);
+		result.put("numPerPage", numPerPage);
+		result.put("pageBar", pageBar);
+		
+		
+		
+		return result;
+	}
+	
+	@RequestMapping("/auction/sellCompleteAuctionList.do")
+	@ResponseBody
+	public Map<String, Object> sellCompleteAuctionList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = auctionService.sellCompleteAuctionList(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		
+		
+		result.put("list", tlist);
+		
+		
+		
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 

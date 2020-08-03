@@ -124,6 +124,21 @@ public class AuctionServiceImpl implements AuctionService {
 	public int selectTradeTotalContents(String nickName) {
 		return auctionDAO.selectTradeTotalContents(nickName);
 	}
+
+	@Override
+	public List<Map<String, String>> completeAuctionList(int aPage, int numPerPage, String nickName) {
+		return auctionDAO.completeAuctionList(aPage, numPerPage, nickName);
+	}
+
+	@Override
+	public int selectCompleteAuctionTotalContents(String nickName) {
+		return auctionDAO.selectCompleteAuctionTotalContents(nickName);
+	}
+
+	@Override
+	public List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName) {
+		return auctionDAO.sellCompleteAuctionList(aPage, numPerPage, nickName);
+	}
 	
 	
 }

@@ -43,13 +43,22 @@
                   <h3>${member.nickName}님의 상점</h3>
                </div>
                <div>
-                  <p><a href="memberView.do?userId=${member.userId}" style="font-size: 20px;">회원정보 상세보기</a></p>
+               <form id="myForm2" action="${ pageContext.request.contextPath }/member/memberView.do" method="post">
+               		<input type="hidden" name="userId" value="${member.userId}">
+                  </form>
+                  <p><a href="#" id="goMypage" onclick="goMypage();" style="font-size: 20px;">회원정보 상세보기</a></p>
                   <p><a href="${pageContext.request.contextPath}/point/myPointView.do" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
                   <p><a href="tradeView.do?userId=${member.userId}">판매중인 상품 보기</a> </p>
                   <br /><br />
                </div>
             </div>
-                
+            
+            <script type="text/javascript">
+            	function goMypage(){
+            		$("#myForm2").submit();
+            	}
+             
+            </script>
                
              
     

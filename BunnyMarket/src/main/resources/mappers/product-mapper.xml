@@ -146,31 +146,49 @@
 	
 	<select id="selectLoveList" parameterType="string" resultType = "PRODUCT">
       	SELECT * FROM PRODUCT P
-		JOIN LOVE L ON(L.PNO=P.PNO)
+		WHERE P.PNO IN (
+		SELECT L.PNO FROM LOVE L
 		WHERE L.USERID = #{nickName}
-		ORDER BY P.PDATE DESC, P.PNO DESC
+		)
       
    </select>
 	
 	<select id="selectLoveTotalContent" resultType = "_int">
 		SELECT COUNT(*) FROM PRODUCT P
-		JOIN LOVE L ON(L.PNO=P.PNO)
+		WHERE P.PNO IN (
+		SELECT L.PNO FROM LOVE L
 		WHERE L.USERID = #{nickName}
+		)
 	</select>
 	
+	<!-- 구매완료 매퍼 -->
 	<select id="selectCompleteProductList" parameterType="string" resultType = "PRODUCT">
       	SELECT * FROM PRODUCT P
-		JOIN DEAL D ON(D.PNO=P.PNO)
-		WHERE D.DBID = #{nickName}  OR D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS = 1 
-		ORDER BY P.PDATE DESC, P.PNO DESC
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DBID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 1
+		)
       
    </select>
 	
 	<select id="selectCompleteProductTotalContents" resultType = "_int">
 		SELECT COUNT(*) FROM PRODUCT P
-		JOIN DEAL D ON(D.PNO=P.PNO)
-		WHERE D.DBID = #{nickName} OR D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS = 1
-		ORDER BY P.PDATE DESC, P.PNO DESC
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DBID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE= 1
+		)
 	</select>
+	
+	
+	<select id="sellCompleteProductList" parameterType="string" resultType = "PRODUCT">
+      	SELECT * FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 1
+		)
+      
+   </select>
+   
+   
 	
 </mapper>

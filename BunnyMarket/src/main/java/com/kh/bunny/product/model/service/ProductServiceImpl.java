@@ -138,4 +138,10 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.productPuserchase(product);
 	}
 
+	@Override
+	public List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName) {
+		// TODO Auto-generated method stub
+		return productDAO.sellCompleteProductList(aPage, numPerPage, nickName);
+	}
+
 }

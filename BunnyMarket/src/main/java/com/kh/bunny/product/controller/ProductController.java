@@ -563,6 +563,27 @@ public class ProductController {
 		return result;
 	}
 
+	
+	
+	@RequestMapping("/product/sellCompleteProductList.do")
+	@ResponseBody
+	public Map<String, Object> sellCompleteProductList(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 9;
+		 
+		List<Map<String, String>> tlist = productService.sellCompleteProductList(aPage, numPerPage,nickName);
+		
+		
+		result.put("list", tlist);
+		
+		
+		
+		
+		return result;
+	}
 
 
 }
