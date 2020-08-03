@@ -74,4 +74,6 @@ public interface ProductService {
 	
 	int selectOnemakeZero(int pno);
 
+	List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName);
+
 }

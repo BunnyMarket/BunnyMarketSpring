@@ -184,6 +184,7 @@
 										</c:if> <br />
 										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
 										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
+										<button type="button" class="btn btn-outline-secondary" id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>

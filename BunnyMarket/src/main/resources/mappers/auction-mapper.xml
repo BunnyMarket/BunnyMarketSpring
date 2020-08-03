@@ -193,6 +193,15 @@
 		WHERE D.DSID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 2
 		)
    </select>
+   
+   <select id="goTradeAuction" parameterType="string" resultType = "Auction">
+      
+       SELECT * FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS!=1 AND P.PTYPE = 2
+		)
+   </select>
 </mapper>
 
 <!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->

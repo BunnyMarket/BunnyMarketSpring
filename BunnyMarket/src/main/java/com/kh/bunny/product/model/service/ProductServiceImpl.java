@@ -148,4 +148,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.sellCompleteProductList(aPage, numPerPage, nickName);
 	}
 
+	@Override
+	public List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName) {
+		return productDAO.goTradeProduct(aPage, numPerPage, nickName);
+	}
+
 }

@@ -492,7 +492,7 @@ public class ProductController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = productService.selectTradeList(aPage, numPerPage,nickName);
 		
@@ -519,7 +519,7 @@ public class ProductController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = productService.selectLoveList(aPage, numPerPage,nickName);
 		
@@ -545,7 +545,7 @@ public class ProductController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = productService.selectCompleteProductList(aPage, numPerPage,nickName);
 		
@@ -587,7 +587,7 @@ public class ProductController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = productService.sellCompleteProductList(aPage, numPerPage,nickName);
 		
@@ -600,7 +600,26 @@ public class ProductController {
 		return result;
 
 	}
+	@RequestMapping("/product/goTradeProduct.do")
+	@ResponseBody
+	public Map<String, Object> goTradeProduct(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 100;
+		 
+		List<Map<String, String>> tlist = productService.goTradeProduct(aPage, numPerPage,nickName);
+		
+		
+		result.put("list", tlist);
+		
+		
+		
+		
+		return result;
 
+	}
 
 }
 
