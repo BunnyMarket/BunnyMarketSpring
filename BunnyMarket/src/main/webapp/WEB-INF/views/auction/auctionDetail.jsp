@@ -94,10 +94,10 @@
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<script type="text/javascript">
 						   	$(function(){
+						   		console.log('${a.PPrice}');
+						   		console.log('${a.BPrice}');
 								var originP = $("#originPPrice").val();
 								var originB = $("#originBPrice").val();
-								
-								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
 						   		
 								if(originP > originB){
 						    		$("#pCarrot").text(parseInt(originP).toLocaleString());
@@ -359,8 +359,9 @@
 					<div class="col-12">
 						<div class="form-group">
 							<h4 class="title">입찰금액을 입력해주세요.</h4>
-							<input type="number" class="form-control" name="bPrice" id="bidPriceComma" style="border: 1px solid #e1e1e1;" />
+							<input type="text" class="form-control" name="bPrice" id="bidPriceComma" style="border: 1px solid #e1e1e1;" />
 		            		<div class="Bfail" style="color: orange; font-weight: bold; font-size: 20px;"></div>
+		            		<div class="BfailMax" style="color: orange; font-weight: bold; font-size: 20px;"></div>
 		            		<input type="hidden" id="bidderCheck" value="0"/>
 							<br />
 						</div>
@@ -394,7 +395,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
+					<button type="button" id="bidderBtn" class="btn alazea-btn mt-15" style="float: right">입찰하기</button>
 					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
 				</div>
 			</form>
@@ -694,7 +695,91 @@
 		});
 		
 	});
+		
+	$("#bidPriceComma").on("keyup", function(){
+		
+		var bidderPrice = $("#bidPriceComma").val().trim();
+		var bPno = $("#BidderPno").val();
+		
+        if(bidderPrice.length<1) {
+        	$(".Bfail").text("입찰하려는 당근이 부족합니다.");
+        	return;
+        	
+        } else {
+        	
+			$.ajax({
+				  url : "${pageContext.request.contextPath}/auction/bidderCheckInvalid.do"
+				, dataType : "json"
+				, data : {
+						  bPrice : bidderPrice
+						, pno : bPno
+				}, success : function(data){
+					if(data.msg == 0){
+						$(".Bfail").text("입찰하려는 당근이 부족합니다.");
+						$("#bidderCheck").val(3);
+					} else if(data.msg == 1){
+						$(".Bfail").text("입찰 하려는 금액이 기존 금액보다 작습니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 2){
+						$(".Bfail").text("입찰은 10당근 씩 해주시기 바랍니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 3){
+						$(".BfailMax").text("최고가로 입찰중인 회원은 입찰할 수 없습니다.");
+						$("#bidderCheck").val(0);
+					} else if(data.msg == 4){
+						$(".Bfail").text("당근이 부족하여 구매하실 수 없습니다.");
+						$("#bidderCheck").val(4);
+					} else {
+						$(".Bfail").text("");
+						$(".BfailMax").text("");
+						$("#bidderCheck").val(1);
+					} 
+				}, error : function(jqxhr, textStatus, errorThrown){
+	                console.log("ajax 처리 실패");
+	                //에러로그
+	                console.log(jqxhr);
+	                console.log(textStatus);
+	                console.log(errorThrown);
+	            }
+				
+			});
+        }
+	});
+	$(function(){
+		$("#bidderBtn").on("click", function(){
+			var $check = $("#bidderCheck").val();
+			var $bPrice = parseInt($("#bidPriceComma").val());
+			var $bPno = $("#BidderPno").val(); 
+			
+			if(confirm("정말 입찰하시겠습니까?")){
+				console.log("check :  " + $check + ", bPrice : " + $bPrice + ", pno : " + $bPno);
+				if($check == 1) {
+					$("#goBidder").attr('action', '${ pageContext.request.contextPath }/auction/insertBidder.do').submit();
+					return true;
+				} else if ($check == 4){
+					if(confirm("당근이 부족하여 구매하실 수 없습니다. \n부족한 당근을 구매하시겠습니까?")){
+						window.open('${ pageContext.request.contextPath }/point/pointChargeViewProduct.do?pno='+$bPno+'&bPrice='+$bPrice, '_blank', 'width=600px, height=800px');
+						return false;
+					}
+				} else if ($check == 3){
+					if(confirm("당근이 부족합니다. \n부족한 당근을 구매하시겠습니까?")){
+						window.open('${ pageContext.request.contextPath }/point/pointChargeView.do','_blank', 'width=600px, height=800px');
+						return false;
+					}
+				} else {
+					alert("입찰금액을 확인해주세요.");
+					$("#bidPriceComma").focus();
+					return false;
+				}
+				
+			} else {
+				alert("입찰을 취소합니다.");
+				return false;
+			}
+			
+		});
 
+	});
 </script>
 
 
