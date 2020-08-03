@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.bunny.deal.model.service.DealService;
 import com.kh.bunny.deal.model.vo.Deal;
+import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.Product;
@@ -19,6 +20,9 @@ public class DealController {
 	
 	@Autowired
 	DealService dealService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	// 상품 거래 목록 가져오기 
 	@RequestMapping("deal/dealList.do")
@@ -37,6 +41,8 @@ public class DealController {
 		Member member = (Member)session.getAttribute("member"); // 현재 로그인한 사람의 정보  
 		Deal deal = dealService.selectOneDeal(dno);
 		Product product = dealService.selectOneProduct(deal.getPno());
+		
+		String sellerPhoto = (memberService.selectOne(product.getPWriter())).getPhoto();
 		
 		Member other = new Member();
 		
@@ -62,7 +68,8 @@ public class DealController {
 		
 		model.addAttribute("deal", deal)
 			 .addAttribute("product", product)
-			 .addAttribute("other", other);
+			 .addAttribute("other", other)
+			 .addAttribute("sellerPhoto", sellerPhoto);
 		
 		String loc = "";
 		
@@ -86,14 +93,25 @@ public class DealController {
 	// 구매자 거래 생성 
 	@RequestMapping("/deal/dealBuyerChk.do")
 	public String dealBuyerChk(@RequestParam int dno, 
-							   @RequestParam String dAddress, 
+							   @RequestParam String dAddress1,
+							   @RequestParam String dAddress2,
+							   @RequestParam int dMethod,
 							   Model model, HttpSession session) {
 		System.out.println("dealBuyerChk로 들어옴.");
-		System.out.println("dno : " + dno);
-		System.out.println("dAddress : " + dAddress);
+		
+		String dAddress = "";
+		
+		if(dAddress1.length() == 0 || dAddress2.length() == 0) {
+			dAddress = "";
+		} else {
+			dAddress = dAddress1 + " " + dAddress2;
+		}
+		
 		Deal deal = dealService.selectOneDeal(dno);
 		deal.setDbStatus(1);
 		deal.setDAddress(dAddress);
+		deal.setDMethod(dMethod);
+		
 		
 		Product product = dealService.selectOneProduct(deal.getPno());
 		
@@ -135,16 +153,18 @@ public class DealController {
 	// 판매자 거래 생성 
 	@RequestMapping("/deal/dealSellerChk.do")
 	public String dealSellerChk(@RequestParam int dno, 
-							    @RequestParam String delNum,
+							    @RequestParam String delNum1,
+							    @RequestParam String delNum2,
 							    Model model, HttpSession session) {
 		System.out.println("dealSellerChk로 들어옴.");
 		System.out.println("dno : " + dno);
-		System.out.println("delNum : " + delNum);
+		System.out.println("delNum1 : " + delNum1);
+		System.out.println("delNum2 : " + delNum2);
 		
 		
 		Deal deal = dealService.selectOneDeal(dno);
 		deal.setDsStatus(1);
-		deal.setDDelNum(delNum);
+		deal.setDDelNum(delNum1 + " : " + delNum2);
 		
 		Product product = dealService.selectOneProduct(deal.getPno());
 		

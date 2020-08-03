@@ -26,6 +26,7 @@ import com.kh.bunny.product.model.vo.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.vo.PComment;
 
@@ -34,6 +35,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService; 
+	
+	@Autowired
+	MemberService memberService;
 	
 	@RequestMapping("/product/productList.do")
 	public String selectBoardList(
@@ -100,13 +104,16 @@ public class ProductController {
 		Product p = productService.selectOneProduct(pno);
 		List<Object> PComments = productService.selectPCommentList(pno);
 		
+		String sellerPhoto = (memberService.selectOne(p.getPWriter())).getPhoto();
+		
 		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
 		System.out.println("PComment객체 갯수 : " + PComments.size());
 		
 		model.addAttribute("product", p)
 		     .addAttribute("pcomments", PComments)
-		     .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
+		     .addAttribute("pcommentSize", PComments.size()) // 댓글 갯수 출력
+		     .addAttribute("sellerPhoto", sellerPhoto);
 		
 		
 		return "product/productDetail";
@@ -282,12 +289,45 @@ public class ProductController {
 		
 	}
 	
+	@RequestMapping("/product/buyingProduct.do")
+	public String buyingProduct(@RequestParam int pno, HttpSession session, Model model) {
+		String msg = "";
+		String loc = "";
+		String userId = ((Member)session.getAttribute("member")).getUserId();
+		
+		Product p = productService.selectOneProduct(pno);
+		
+		p.setPStatus(2);
+		p.setPBuyer(userId);
+		
+		int result = productService.productPurchase(p);
+		
+		
+		if (result >0) {
+			msg = "상품 구매 완료! 결제 확인을 해주세요";
+			System.out.println("상품 구매 완료!");
+			loc = "/member/memberMyPage.do?userId="+userId;
+			
+		} else {
+			msg = "상품 구매 실패했습니다. ㅠㅠ 무슨 일이죠 이게?";
+			System.out.println("상품 구매 실패");
+			loc = "/product/productList.do";
+		}
+		
+		model.addAttribute("loc", loc).addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
 	// 댓글 생성하기 
 	@RequestMapping("/product/pcommentInsert.do")
 	public String pcommentInsert(PComment pcomment, Model model, HttpSession session) {
 		
 		Member m = (Member)session.getAttribute("member");
 		String userId = m.getNickName();
+		
+		String userImg = m.getPhoto();
+		System.out.println("userImg : " + userImg);
 		
 		pcomment.setPcWriter(userId);
 		System.out.println("댓글 들어옴 ? " + pcomment);
@@ -307,7 +347,8 @@ public class ProductController {
 		}
 		 
 		model.addAttribute("loc", loc)
-			 .addAttribute("msg", msg);
+			 .addAttribute("msg", msg)
+			 .addAttribute("userImg", userImg);
 		
 		return "common/msg";
 	}

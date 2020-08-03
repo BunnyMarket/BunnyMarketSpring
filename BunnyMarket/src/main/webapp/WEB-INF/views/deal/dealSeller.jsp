@@ -90,11 +90,27 @@
 								<label for="company">택배사</label> <input type="text"
 									class="form-control" id="address" value="">
 							</div>  -->
-							<div class="col-12 mb-4">
-								<label for="company">택배사 + 송장 번호*</label> <input type="text"
-									class="form-control" id="delNum" name = "delNum" value="testtest"
-									placeholder="송장번호를 반드시 입력해주세요" required>
-							</div>
+							<br /><br />
+							<h5>거래수단 : </h5>
+							<c:if test = "${ deal.DMethod == 1 }">
+								<h5>직거래</h5>
+							</c:if>
+							
+							<c:if test = "${ deal.DMethod == 3 }">
+								<h5>미결정</h5>
+							</c:if>
+							
+							<c:if test = "${ deal.DMethod == 2 }">
+								<h5>택배거래</h5>
+								<div class="col-12 mb-4">
+									<label for="company">택배사 *</label> <input type="text"
+										class="form-control" id="delNum" name = "delNum1"
+										placeholder="택배사를 반드시 입력해주세요" required>
+									<label for="company">송장번호 *</label> <input type="text"
+										class="form-control" id="delNum" name = "delNum2"
+										placeholder="송장번호를 반드시 입력해주세요" required>
+								</div>
+							</c:if>
 						</div>
 
 						<hr />

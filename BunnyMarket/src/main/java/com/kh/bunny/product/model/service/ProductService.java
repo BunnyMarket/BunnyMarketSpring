@@ -66,6 +66,9 @@ public interface ProductService {
 	List<Map<String, String>> selectCompleteProductList(int aPage, int numPerPage, String nickName);
 
 	int selectCompleteProductTotalContents(String nickName);
+
+	int productPurchase(Product product);
+
 	
 
 }

@@ -67,18 +67,44 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
-						<button type="button" class="btn alazea-btn mt-15"
-							style="float: right"
-							onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
-						<br /><br /><br />
+						<c:if test="${sessionScope.member.userId eq product.PWriter}">
+							<c:if test="${product.PStatus == 2}">
+								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>
+							</c:if>
+							<c:if test="${product.PStatus != 2}">
+								<button type="button" class="btn alazea-btn mt-15"
+									style="float: right"
+									onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
+								<br /><br /><br />
+							</c:if>
+						</c:if>
+						
+						<c:if test="${sessionScope.member.userId ne product.PWriter}">
                         <button type="button" class="btn alazea-btn mt-15"
 								style="float: right"
 								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
 								
 						<br/><br/><br/>
-						<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">
-						찜하기
-						</button>
+						</c:if>
+						
+						<c:if test="${sessionScope.member.userId ne product.PWriter}">
+							<c:if test="${product.PStatus != 2}">
+								<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">
+								찜하기
+								</button>
+								<br /><br /><br />
+							</c:if>
+						<c:if test="${product.PStatus != 2}">
+							 <button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+										data-toggle="modal" data-target="#myModal3">
+									구매하기
+							</button>
+						</c:if>
+						<c:if test="${product.PStatus == 2}">
+							<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>구매 완료된 상품입니다.</button>
+						</c:if>
+						</c:if>
+							
 						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<br />
@@ -145,6 +171,14 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${product.PWriter}</h4>
+										<c:if test="${userImg == null }">
+											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+											alt="userImg" />
+										</c:if>
+										<c:if test="${userImg != null }">
+											<img src="/bunny/resources/member/profile/${ sellerPhoto }" id="userImg" class="circleImg" width="150px" height="150px"
+											alt="userImg"/>
+										</c:if> <br />
 										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
 										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button>
 										<br />
@@ -173,7 +207,14 @@
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt=""><!-- member의 대표이미지 경로 적어주기 -->
+															<c:if test="${sellerPhoto == null }">
+																<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg" />
+															</c:if>
+															<c:if test="${sellerPhoto != null }">
+																<img src="/bunny/resources/member/profile/${ sellerPhoto }" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg"/>
+															</c:if> <br />
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
@@ -239,7 +280,14 @@
 																	<div class="comment-wrapper d-flex">
 																		<!-- Comment Meta -->
 																		<div class="comment-author">
-																			<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+																			<c:if test="${userImg == null }">
+																				<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg" />
+																			</c:if>
+																			<c:if test="${userImg != null }">
+																				<img src="/bunny/resources/member/profile/${ userImg }" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg"/>
+																			</c:if> <br />
 																		</div>
 																		<!-- Comment Content -->
 																		<div class="comment-content">
@@ -328,7 +376,30 @@
 
 </section>
 <!-- ##### Single Product Details Area End ##### -->
-
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">구매창</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form id="goBuyer" action="${pageContext.request.contextPath }/product/buyingProduct.do" method="post">
+				<input type="hidden" name="pno" id="BidderPno" value="${product.pno }" />
+				<div class="modal-body row">
+					<div class="col-12">
+					<input type="hidden" id="BoriginPPrice" value="${product.PPrice}"/>
+					<h4>상품의 가격 : <span style="color:orange; font: bold;" id="bidPrice">${ product.PPrice }</span>당근</h4>
+						<br />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn alazea-btn mt-15" style="float: right">구매하기</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script>
 		
 	// 지도 넣기 
