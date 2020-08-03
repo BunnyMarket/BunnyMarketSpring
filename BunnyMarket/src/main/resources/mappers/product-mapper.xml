@@ -195,5 +195,13 @@
       
    </select>
    
+   <select id="goTradeProduct" parameterType="string" resultType = "PRODUCT">
+      	SELECT * FROM PRODUCT P
+		WHERE P.PNO IN (
+		SELECT D.PNO FROM DEAL D
+		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS != 1 AND P.PTYPE = 1
+		)
+      
+   </select>
 	
 </mapper>

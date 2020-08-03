@@ -130,9 +130,16 @@ public class AuctionDAOImpl implements AuctionDAO {
 
 	@Override
 	public List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName) {
-RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
 		
 		return sqlSession.selectList("auctionMapper.completeAuctionList", nickName, rows);
+	}
+
+	@Override
+	public List<Map<String, String>> goTradeAuction(int aPage, int numPerPage, String nickName) {
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("auctionMapper.goTradeAuction", nickName, rows);
 	}
 
 }

@@ -359,7 +359,7 @@ public class AuctionController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = auctionService.selectTradeList(aPage, numPerPage,nickName);
 		
@@ -390,7 +390,7 @@ public class AuctionController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = auctionService.completeAuctionList(aPage, numPerPage,nickName);
 		
@@ -417,7 +417,7 @@ public class AuctionController {
 				, Model model, HttpServletRequest request, String nickName
 			) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int numPerPage = 9;
+		int numPerPage = 100;
 		 
 		List<Map<String, String>> tlist = auctionService.sellCompleteAuctionList(aPage, numPerPage,nickName);
 		
@@ -434,6 +434,30 @@ public class AuctionController {
 		return result;
 	}
 	
+	
+	@RequestMapping("/auction/goTradeAuction.do")
+	@ResponseBody
+	public Map<String, Object> goTradeAuction(
+				  @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+				, Model model, HttpServletRequest request, String nickName
+			) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int numPerPage = 100;
+		 
+		List<Map<String, String>> tlist = auctionService.goTradeAuction(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		
+		
+		result.put("list", tlist);
+		
+		
+		
+		
+		return result;
+	}
 	
 	
 	

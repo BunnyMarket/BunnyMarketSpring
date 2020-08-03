@@ -51,5 +51,7 @@ public interface AuctionDAO {
 
 	List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName);
 
+	List<Map<String, String>> goTradeAuction(int aPage, int numPerPage, String nickName);
+
 	
 }

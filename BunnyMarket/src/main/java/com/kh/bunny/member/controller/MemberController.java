@@ -61,6 +61,24 @@ public class MemberController {
 	public String tradeView() {
 		return "member/trade";
 	}
+	
+	@RequestMapping("/member/sellerTradeView.do")
+	public String sellerTradeView(@RequestParam String nickName, Model model) {
+		Map<String, Object> map = new HashMap<>();
+
+		ArrayList<Member> seList = memberService.findSeller(nickName);
+		
+		Member m = memberService.findSeller2(nickName);
+		System.out.println("멤버는 나오니? + " + m);
+		
+		System.out.println("seList : "+seList);
+		// 신고횟수 자기소개, 닉네임, 이미지, 판매중인 상품 개수
+		// map.put("seList",seList);
+		model.addAttribute("seller", m);
+		
+		return "member/sellerTrade";
+		
+	}
 
 	// 아이디 찾기 비밀번호 찾기 이동하기.
 	@RequestMapping("findIdView.do")

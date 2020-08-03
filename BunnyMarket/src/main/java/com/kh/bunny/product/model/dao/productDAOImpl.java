@@ -159,6 +159,13 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectList("productMapper.sellCompleteProductList", nickName, rows);
 	}
 
+	@Override
+	public List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName) {
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("productMapper.goTradeProduct", nickName, rows);
+	}
+
 
 
 	
