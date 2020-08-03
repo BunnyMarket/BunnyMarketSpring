@@ -148,6 +148,13 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.update("productMapper.purchaseProduct", product);
 	}
 
+	@Override
+	public List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName) {
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("productMapper.sellCompleteProductList", nickName, rows);
+	}
+
 	
 
 	

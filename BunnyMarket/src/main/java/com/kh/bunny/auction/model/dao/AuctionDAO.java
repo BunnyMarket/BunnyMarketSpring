@@ -45,5 +45,11 @@ public interface AuctionDAO {
 
 	int updateBeforeUsedPoint(int pno);
 
+	List<Map<String, String>> completeAuctionList(int aPage, int numPerPage, String nickName);
+
+	int selectCompleteAuctionTotalContents(String nickName);
+
+	List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName);
+
 	
 }

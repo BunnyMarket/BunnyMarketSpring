@@ -116,7 +116,7 @@
                      </div></td>
                      <td>
                      <div>
-               		  <button class="pwdUpdate" name="pwdUpdate" type="button" onclick="pwdUpdate();" >비밀번호 바꾸기</button>
+               		  <button class="pwdUpdate" name="pwdUpdate" type="button" onclick="return pwdUpdate();" >비밀번호 바꾸기</button>
                      </div>
                   </td> 
                </tr>
@@ -128,10 +128,13 @@
          
          
          <script>
-         var authNum = "";
+         var authNum = "0000";
          var authCheckNum = 0;   // 이메일인증 유효성 체크 통과 했는지?
          var dataUserId = "";	// 유저아이디 담기위한 변수
-        		 
+         var email1 = $("email1").val();
+         var regEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+         
+         
          function findId(){
      		
      		
@@ -170,8 +173,12 @@
      	
     	// 인증번호 전송 함수
         function send(){
-     		
-     		
+     		email1 = $('#email1').val();
+        	if(regEx.test(email1) == false){
+                alert("이메일 형식이 유효하지 않습니다.");
+                window.emailValidNum = 0;
+                
+             }else if(true){
      		
 		         $.ajax({
 		                url : "${pageContext.request.contextPath}/member/mailAuth.do",
@@ -185,6 +192,7 @@
 		                }  
 		            });
         }
+    }
      	
         // 인증번호 확인 함수
 	     function findPwd(){
@@ -208,6 +216,8 @@
 	    			
 	  // 비밀번호 찾기 후 변경
 	     function pwdUpdate(){
+		  
+		  
 	        	if(!isSamePwd($('#newPwd').val(),$('#newPwd2').val())){
 	        		alert("두 비밀번호가 같지 않습니다.");
 	        	}else{

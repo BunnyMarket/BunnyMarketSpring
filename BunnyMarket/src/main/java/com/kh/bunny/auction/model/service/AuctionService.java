@@ -32,4 +32,10 @@ public interface AuctionService {
 	List<Map<String, String>> selectTradeList(int aPage, int numPerPage,String nickName);
 	
 	int selectTradeTotalContents(String nickName);
+
+	List<Map<String, String>> completeAuctionList(int aPage, int numPerPage, String nickName);
+
+	int selectCompleteAuctionTotalContents(String nickName);
+
+	List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName);
 }

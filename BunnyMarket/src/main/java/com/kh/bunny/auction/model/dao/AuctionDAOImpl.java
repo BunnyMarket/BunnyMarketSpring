@@ -116,4 +116,23 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return sqlSession.update("auctionMapper.updateBeforeUsedPoint", pno);
 	}
 
+	@Override
+	public List<Map<String, String>> completeAuctionList(int aPage, int numPerPage, String nickName) {
+		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("auctionMapper.completeAuctionList", nickName, rows);
+	}
+
+	@Override
+	public int selectCompleteAuctionTotalContents(String nickName) {
+		return sqlSession.selectOne("auctionMapper.selectCompleteAuctionTotalContents",nickName);
+	}
+
+	@Override
+	public List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName) {
+RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
+		
+		return sqlSession.selectList("auctionMapper.completeAuctionList", nickName, rows);
+	}
+
 }

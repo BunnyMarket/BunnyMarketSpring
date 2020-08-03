@@ -174,8 +174,9 @@ public class MemberController {
 	}
 
 	// 마이페이지 이동
-	@RequestMapping("/member/memberMyPage.do")
-	public String memberMyPage(@RequestParam String userId, Model model) {
+	@RequestMapping(value = "/member/memberMyPage.do", method = RequestMethod.POST)
+	public String memberMyPage(@RequestParam ("userId") String userId, Model model) {
+		System.out.println(userId);
 		List<Map<String, String>> slist = reviewService.selectSellerReview(userId);
 		model.addAttribute("memberReviewList", slist);
 		model.addAttribute("member", memberService.selectOne(userId));
@@ -192,8 +193,9 @@ public class MemberController {
 	}
 
 	// 회원정보 정보 페이지 이동
-	@RequestMapping("/member/memberView.do")
+	@RequestMapping(value = "/member/memberView.do", method = RequestMethod.POST)
 	public String memberView(@RequestParam String userId, Model model) {
+		
 		logger.debug("[" + userId + "] : 회원 정보 페이지 접근!");
 
 		model.addAttribute("member", memberService.selectOne(userId));

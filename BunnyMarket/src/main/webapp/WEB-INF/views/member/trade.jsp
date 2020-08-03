@@ -79,7 +79,7 @@
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3" onclick="goLoveProduct('${member.nickName}');">>
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3" onclick="goLoveProduct('${member.nickName}');">
                                     <label class="custom-control-label" for="customCheck3">찜한 목록 <span class="text-muted">(20)</span></label>
                                 </div>
                                 <!-- Single Checkbox -->
@@ -89,12 +89,20 @@
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck5" onclick="goCompleteProduct('${member.nickName}');">>
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck5" onclick="goCompleteProduct('${member.nickName}');">
                                     <label class="custom-control-label" for="customCheck5">구매완료 상품(일반 상품) <span class="text-muted">(20)</span></label>
                                 </div>
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2" onclick="goCompleteAuction('${member.nickName}');">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck6">
                                     <label class="custom-control-label" for="customCheck6">구매완료 상품(경매 상품) <span class="text-muted">(20)</span></label>
+                                </div>
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck7" onclick="goSellCompleteProduct('${member.nickName}');">
+                                    <label class="custom-control-label" for="customCheck7">판매완료 상품(일반 상품) <span class="text-muted">(20)</span></label>
+                                </div>
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="radio" name="customCheck" class="custom-control-input" id="customCheck8" onclick="goSellCompleteAuction('${member.nickName}');">
+                                    <label class="custom-control-label" for="customCheck8">판매완료 상품(경매 상품) <span class="text-muted">(20)</span></label>
                                 </div>
                                 
                             </div>
@@ -160,7 +168,7 @@
     	    	   
     					
     	    	   }
-    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    	    	 
     		}
     		
     	});
@@ -206,7 +214,7 @@
     	    	   
     					
     	    	   }
-    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    	    	
     		}
     		
     	});
@@ -252,7 +260,7 @@
     	    	   
     					
     	    	   }
-    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    	    
     		}
     		
     	});
@@ -297,7 +305,142 @@
     	    	   
     					
     	    	   }
-    	    	   $("#auctionTrade").append('<c:out value="'+result.pageBar+'" escapeXml="false"/>');
+    	    	   
+    		}
+    		
+    	});
+    };
+    
+    function goCompleteAuction(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/auction/completeAuctionList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	 
+    		}
+    		
+    	});
+    };
+    
+    function goSellCompleteProduct(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/product/sellCompleteProductList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	
+    		}
+    		
+    	});
+    };
+    
+    function goSellCompleteAuction(nickName){
+    	$.ajax({
+    		url : "${pageContext.request.contextPath}/auction/sellCompleteAuctionList.do",
+    		data :{
+    			nickName : nickName
+    		}, dataType : "json",
+    		success : function(result){
+    				$("#auctionTrade").empty();
+    	    	   for(var i in result.list){
+    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
+						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
+						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
+						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'	<div class="product-info mt-15 text-center">'
+						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
+						    	    	   +		result.list[i].ptitle
+						    	    	   +'	</a></p>'
+						    	    	
+						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
+						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
+						//    	    	   +'</c:if>'
+						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
+						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
+						 //   	    	   +'</c:if>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+						    	   );
+    	    	   
+    	    	   
+    					
+    	    	   }
+    	    	  
     		}
     		
     	});
