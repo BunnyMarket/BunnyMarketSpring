@@ -59,8 +59,8 @@
 					<hr />
 				</div>
 			</div>
-			<h5>구매자 정보</h5>
 			<div class="row">
+			<h5>구매자 정보</h5>
 				<div class="col-12 mb-4">
 					<label for="name">받는 이 성함 : </label>${ member.userName }
 				</div>
@@ -86,10 +86,10 @@
 			<hr />
 			<br />
 			<hr />
-			<h5>판매자 정보</h5>
 			<div class="row">
+			<h5>판매자 정보</h5>
 				<div class="col-12 mb-4">
-					<label for="name">이름 : </label>${ other.userName }
+					<label for="name">보낸 이 성함 : </label>${ other.userName }
 				</div>
 				<div class="col-12 mb-4">
 					<label for="name">닉네임 : </label>${ other.nickName }
@@ -108,7 +108,7 @@
 							<div
 								class="single-products d-flex justify-content-between align-items-center">
 								<h5>제품 가격 :</h5>
-								<h5>${ product.PPrice }</h5>
+								<h5>${ product.PPrice*100 }</h5>
 							</div>
 						</div>
 					</div>
@@ -116,7 +116,7 @@
 						<div
 							class="subtotal d-flex justify-content-between align-items-center">
 							<h5>입찰 가격 :</h5>
-							<h5>${ product.BPrice }</h5>
+							<h5>${ product.BPrice*100 }</h5>
 						</div>
 					</c:if>
 					<div
@@ -128,10 +128,10 @@
 						class="order-total d-flex justify-content-between align-items-center">
 						<h5>Order Total</h5>
 						<c:if test="${ product.PType == 1 }">
-							<h5>${ product.PPrice - 1000}won</h5>
+							<h5>${ product.PPrice*100 - 1000}won</h5>
 						</c:if>
 						<c:if test="${ product.PType == 2 }">
-							<h5>${ product.BPrice - 1000}won</h5>
+							<h5>${ product.BPrice*100 - 1000}won</h5>
 						</c:if>
 					</div>
 				</div>

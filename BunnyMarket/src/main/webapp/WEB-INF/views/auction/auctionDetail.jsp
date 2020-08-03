@@ -162,6 +162,14 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
+										<c:if test="${sellerPhoto == null }">
+											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+											alt="userImg" />
+										</c:if>
+										<c:if test="${sellerPhoto != null }">
+											<img src="/bunny/resources/member/profile/${sellerPhoto}" id="userImg" class="circleImg" width="150px" height="150px"
+											alt="userImg"/>
+										</c:if> <br />
 										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
 										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
 										<br />

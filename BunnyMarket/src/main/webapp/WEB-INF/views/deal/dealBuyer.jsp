@@ -73,18 +73,29 @@
 									class="form-control" id="phone_number" name="phone" min="0"
 									value="${ member.phone }">
 							</div>
-							<div class="col-12 mb-4">
-								<label for="address">주소 *</label> <input type="text"
-									name="address1" class="form-control" id="address1"
-									placeholder="주소를 입력하세요." onclick = "addrSearch();">
-							</div>
 
 							<div class="col-12 mb-4">
-								<label for="address">상세 주소 *</label> <input type="text"
-									name = "address2" class="form-control" id="address2">
+								<!-- <input type="radio" name="dMethod" value = "0" /> 거래중지 -->
+								<div class="search_by_terms">
+								<label for="phone_number">거래수단 *</label>
+	                                <select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%">
+	                                  <option value="" hidden>거래 수단을 선택해주세요.</option>
+	                                  <option value="3">미결정</option>
+	                                  <option value="2">택배</option>
+	                                  <option value="1">직거래</option>
+	                                </select>
+	                        	</div>
+								
 							</div>
-							<input type="hidden" id = "dAddress" name="dAddress" value = "testAddress" />
-							<input type="hidden" name="dno" value = "${ deal.dno }" /> 
+							<div class="col-12 mb-4" id = "dAddressDiv" style = "display : none;">
+								<label for="address">주소 *</label> <input type="text"
+									name="dAddress1" class="form-control" id="address1" 
+									placeholder="주소를 입력하세요." onclick = "addrSearch();"> <br />
+								<label for="address">상세 주소 *</label> <input type="text"
+									name = "dAddress2" class="form-control" id="address2">
+								<input type="hidden" name="dno" id = "dAddressPlus" value = "${ deal.dno }" /> 
+							</div>
+							
 							<!-- <div class="col-md-12 mb-4">
 								<label for="order-notes">주문 시 요청 사항</label>
 								<textarea class="form-control" id="order-notes" cols="30" rows="10"
@@ -139,10 +150,10 @@
 						<div class="order-total d-flex justify-content-between align-items-center">
 							<h5>Order Total</h5>
 							<c:if test = "${ product.PType == 1 }">
-								<h5>${ product.PPrice + 1000}won</h5>
+								<h5>${ product.PPrice*100 + 1000}won</h5>
 							</c:if>
 							<c:if test = "${ product.PType == 2 }">
-								<h5>${ product.BPrice + 1000}won</h5>
+								<h5>${ product.BPrice*100 + 1000}won</h5>
 							</c:if>
 						</div>
 						<div class="checkout-btn mt-30">
@@ -156,6 +167,32 @@
 	</form>
 </div>
 <!-- ##### Checkout Area End ##### -->
+
+<script type = "text/javascript">
+
+	$(function(){
+		$('#dMethod').change(function(){
+			if(this.value == 2){
+				$('#dAddressDiv').show()
+				$('#address1').attr("required", true);
+				$('#address2').attr("required", true);
+				
+				
+			} else {
+				$('#dAddressDiv').hide();
+				$('#address1').attr("required", false);
+				$('#address2').attr("required", false);
+			}
+		});
+		
+	});
+  	
+  	
+</script>
+
+
+
+
 <script>
 	//참조 API : http://postcode.map.daum.net/guide
 	function addrSearch() {

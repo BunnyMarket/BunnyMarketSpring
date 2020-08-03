@@ -24,11 +24,19 @@
 		WHERE PNO = #{pno}
 	</select>
 	
-	<!-- 거래 목록 가져오기 -->
+	<!-- 거래 중인 목록 가져오기 -->
 	<select id="selectDealList" resultType = "Deal">
 		SELECT * FROM DEAL 
-		WHERE DSID = #{userId} OR DBID = #{userId}
+		WHERE DSID = (#{userId} OR DBID = #{userId}) AND (DBSTATUS = 0 OR DSSTATUS = 0)
+		
 	</select>
+	
+	<!-- 거래 완료된 목록 가져오기 -->
+	<select id="selectCompletedDealList" resultType = "Deal">
+		SELECT * FROM DEAL 
+		WHERE (DSID = #{userId} OR DBID = #{userId}) AND (DBSTATUS = 0 AND DSSTATUS = 0) 
+	</select>
+	
 	
 	
 	<!-- 구매자 거래 생성 -->
@@ -36,7 +44,8 @@
 		UPDATE DEAL 
 		SET
 			DADDRESS = #{ dAddress },
-			DBSTATUS = #{ dbStatus }
+			DBSTATUS = #{ dbStatus },
+			DMETHOD = #{ dMethod }
 		WHERE DNO = #{ dno }
 	</update>
 	

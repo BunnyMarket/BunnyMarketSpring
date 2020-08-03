@@ -143,6 +143,11 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.selectCompleteProductTotalContents",nickName);
 	}
 
+	@Override
+	public int productPuserchase(Product product) {
+		return sqlSession.update("productMapper.purchaseProduct", product);
+	}
+
 	
 
 	

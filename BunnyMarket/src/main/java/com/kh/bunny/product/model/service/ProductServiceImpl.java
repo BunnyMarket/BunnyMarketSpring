@@ -133,4 +133,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.selectCompleteProductTotalContents(nickName);
 	}
 
+	@Override
+	public int productPurchase(Product product) {
+		return productDAO.productPuserchase(product);
+	}
+
 }

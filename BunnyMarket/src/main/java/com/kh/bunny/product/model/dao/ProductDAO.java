@@ -66,4 +66,7 @@ public interface ProductDAO {
 	int selectCompleteProductTotalContents(String nickName);
 
 
+	int productPuserchase(Product product);
+
+
 }
