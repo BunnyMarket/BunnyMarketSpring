@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.vo.Report;
 
 @Repository("ReportDAO")
@@ -56,6 +57,17 @@ public class ReportDAOImpl implements ReportDAO {
 	public int deleteReport(int rno) {
 	
 		return sqlSession.delete("reportMapper.deleteReport", rno);
+	}
+
+	@Override
+	public int insertDirectReport(Report r) {
+		System.out.println("dao : " + r.getRNo());
+		return sqlSession.insert("reportMapper.insertDirectReport", r);
+	}
+
+	@Override
+	public Product selectOneProduct(int pno) {
+		return sqlSession.selectOne("reportMapper.oneProduct", pno);
 	}
 
 }

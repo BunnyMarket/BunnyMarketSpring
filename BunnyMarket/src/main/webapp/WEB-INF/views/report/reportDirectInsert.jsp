@@ -68,37 +68,17 @@
 					<div class="col-12 col-md-2"
 						style="text-align: center; padding-top: 7px;">
 						<div class="single_product_desc">
-							<label for="p" style="padding-left: 15px;">신고할 아이디(내가아님) *</label> <br />
+							<label for="p" style="padding-left: 15px;">신고할 아이디 *</label> <br />
 						</div>
 					</div>
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
-							<c:if test="${product.PWriter ne null }">
-							<input type="text" class="form-control" name="reported"  value="${product.PWriter }"  readonly/> <br />
-							</c:if>
-							 <c:if test="${auction.PWriter ne null }"> 
-							<input type="text" class="form-control" name="reported"  value="${auction.PWriter }"  readonly/> <br />
-						 </c:if> 
+							<input type="text" class="form-control" name="reported"
+								placeholder="아이디 입력" required /> <br />
 						</div>
 					</div>
 
-					<div class="col-12 col-md-2"
-						style="text-align: center; padding-top: 7px;">
-						<div class="single_product_desc">
-							<label for="p" style="padding-left: 15px;">신고할 상품 이름 *</label> <br />
-						</div>
-					</div>
-					<div class="col-12 col-md-10">
-						<div class="single_product_desc">
-                          
-							<input type="hidden" name="pno" value="${product.pno}">
-							 <input type="text" class="form-control" name="pTitle" value="${product.PTitle } " readonly /> <br />
-							
-						</div>
-
-
-					</div>
 
 					<!-- 썸머노트 -->
 					<div class="col-12 col-md-12">

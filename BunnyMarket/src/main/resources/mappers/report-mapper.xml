@@ -5,8 +5,9 @@
 <mapper namespace="reportMapper">
 
    <select  id="selectReportList" resultType="Report">
-    SELECT R.RNO, R.RWRITER, R.RTITLE, R.RCONTENT, R.RDATE
+    SELECT R.RNO, R.RWRITER, R.RTITLE, R.RCONTENT, R.RDATE, P.PNO, P.PTYPE
     FROM REPORT R
+    LEFT JOIN PRODUCT P ON (R.PNO = P.PNO)
     ORDER BY R.RDATE DESC
    </select>
    <select  id="selectReportTotalContents" resultType="_int">
@@ -14,7 +15,7 @@
    FROM REPORT
    </select>
    
-   <insert id="insertReport">
+  <insert id="insertReport" parameterType="Report">
    INSERT INTO REPORT
    VALUES(SEQ_RNO.NEXTVAL, #{rcNo}, #{rWriter}, #{reported}, #{pno}, #{rTitle}, #{rContent}, DEFAULT)
    </insert>
@@ -31,19 +32,28 @@
    </select>
    
    <update id="updateReport" parameterType="Report">
-	   UPDATE REPORT SET
-	   RTITLE =#{rTitle},
-	   RCNO =#{rcNo},
-	   REPORTED =#{reported},
-	   PNO =#{pno},
-	   RCONTENT =#{rContent}
+   UPDATE REPORT SET
+    RTITLE =#{rTitle},
+      RCONTENT =#{rContent}
 	   WHERE RNO =#{rNo}
+   
    </update>
    
    <delete id="deleteReport" parameterType="_int">
    DELETE FROM REPORT
    WHERE RNO =#{rNo}
    </delete>
+   
+   <insert id="insertDirectReport">
+    INSERT INTO REPORT
+    VALUES(SEQ_RNO.NEXTVAL, #{rcNo}, #{rWriter}, #{reported}, NULL, #{rTitle}, #{rContent}, DEFAULT)
+   </insert>
+   
+   
+   	<select id="oneProduct" resultType = "Product">
+		SELECT * FROM PRODUCT
+		WHERE PNO = #{pno}
+	</select>
 </mapper>
 
 

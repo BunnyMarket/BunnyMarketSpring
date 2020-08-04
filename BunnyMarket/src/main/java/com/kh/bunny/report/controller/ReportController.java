@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.bunny.auction.model.service.AuctionService;
+import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -40,8 +42,12 @@ public class ReportController {
 	ProductService productService;
 	
 	@Autowired
+	AuctionService auctionService;
+	
+	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	// 신고 리스트 출력(o)
 	@RequestMapping("/report/reportList.do")
 	public String selectReportList(@RequestParam(value ="pPage", required = false, defaultValue = "1") int cPage,
 			Model model) {
@@ -62,67 +68,79 @@ public class ReportController {
 		return "report/reportList";
 	}
 	
-	// 신고글 직접 등록
+	
+	// 신고글 직접 등록(o)
 	@RequestMapping("/report/reportDirectInsertView.do")
 	public String detailDirectReport() {
 		
-		return "report/reportInsert";
+		return "report/reportDirectInsert";
 	}
 	
+	
+	// 상품 신고글 등록(직접, 일반, 경매)
 	@RequestMapping("/report/reportInsertView.do")
-	public String detailReport(@RequestParam String pTitle, @RequestParam int pno, Model model) {
-		System.out.println("pTitle : " + pTitle);
-		System.out.println("pno : " + pno);
+	public String detailReport(@RequestParam int pno, Model model) {
 		
-		model.addAttribute("pTitle", pTitle)
-		           .addAttribute("pno", pno);
+		 Product p = reportService.selectOneProduct(pno);
+		System.out.println("p : " + p);
+		
+		model.addAttribute("product", p);
 		
 		return "report/reportInsert";
 	}
 	
+	// 상품 신고글 등록하고 상세보기로 넘김(o)
 	@RequestMapping("/report/reportInsert.do")
 	public String insertReport(Report r, Model model, HttpSession session) {
-		int result;
+		int result = 0;
 		
 		System.out.println("컨트롤러에서 r객체 확인 : " + r);
 		
 		int rno =0;
-		
+		String loc = "/report/reportList.do";
+		String msg ="";
 		try {
-			result = reportService.insertReport(r);
+			if(r.getPno() != 0) {
+				result = reportService.insertReport(r);
+			} else {
+				result = reportService.insertDirectReport(r);
+			}
 			rno = reportService.selectCurrentRno();
+			
+			if(result >0) {
+				msg = "Report 등록 성공!";
+				
+				loc = "/report/reportDetail.do?rno=" + rno;
+				
+			}else {
+				msg = "Report 등록 실패!";
+			}
 		}catch (Exception e) {
 			throw new ReportException("Report 등록 오류!" + e.getMessage());
 		}
 		
-		String loc = "report/reportList.do";
-		String msg ="";
-		
-		if(result >0) {
-			msg = "Report 등록 성공!";
-			
-			loc = "/report/reportDetail.do?rno=" + rno;
-			
-		}else {
-			msg = "Report 등록 실패!";
-		}
-		
+	
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
 		
 		return "common/msg";
 	}
 	
+	// 신고글 상세보기(직접, 상품, 경매)
 	@RequestMapping("/report/reportDetail.do")
 	public String selectOne(@RequestParam int rno, Model model) {
 		Report r = reportService.selectOneReport(rno);
 		
 		System.out.println("report객체 확인 : " + r);
-		
-		Product p = productService.selectOneProduct(r.getPno());
-		
-		String pTitle = p.getPTitle();
-		
-		model.addAttribute("report", r).addAttribute("pTitle", pTitle);
+		if(r.getPno() != 0) {
+			Product p = reportService.selectOneProduct(r.getPno());
+			
+			String pTitle = p.getPTitle();
+			
+			model.addAttribute("report", r).addAttribute("pTitle", pTitle);
+			
+		} else {
+			model.addAttribute("report", r);
+		}
 		
 		return "report/reportDetail";
 		
@@ -130,8 +148,7 @@ public class ReportController {
 	}
 	
 	
-	
-	
+	// 첨부파일
 	@RequestMapping("/report/reportImgInsert.do")
 	@ResponseBody
 	public String reportImgInsert(@RequestParam(value = "file", required = false) MultipartFile[] file, Model model,
@@ -169,6 +186,7 @@ public class ReportController {
 		return "http://localhost:8088/bunny/resources/upload/report/desc/" + renamedName;
 	}
 	
+	// 비밀번호 체크 (o)
 	@RequestMapping("/report/reportPassword.do")
 	public String pwdReport(@RequestParam int rno, Model model) {
 		model.addAttribute("rno",rno);
@@ -176,6 +194,7 @@ public class ReportController {
 		return "report/reportPassword";
 	}
 	
+	// 비밀번호 입력 후 넘어감 (o)
 	@RequestMapping("/report/reportSelectOnePassword.do")
 	public String selectOneReportPwd(@RequestParam int rno, @RequestParam String checkPwd, Model model,
 			HttpSession session) {
@@ -209,6 +228,7 @@ public class ReportController {
 				
 	}
 	
+	// 관리자 비밀번호  체크 x
 	@RequestMapping("/report/reportSelectOneAdmin.do")
 	public String selectOneAdmin(@RequestParam int rno, Model model) {
 		Report r = reportService.selectOneReport(rno);
@@ -218,6 +238,9 @@ public class ReportController {
 		return "report/reportDetail";
 	}
 	
+
+	
+	// 상품 신고 글 수정페이지 (직접, 상품, 경매)
 	@RequestMapping("/report/reportUpdateView.do")
 	public String reportUpdateView(@RequestParam int rno, Model model) {
 		model.addAttribute("report", reportService.selectOneReport(rno));
@@ -225,6 +248,7 @@ public class ReportController {
 		return "report/reportUpdate";
 	}
 	
+	// 신고글 수정 후 상세보기로 넘어감 (직접, 상품, 경매)
 	@RequestMapping("/report/reportUpdate.do")
 	public String reportUpdate(Report r, HttpSession session, Model model) {
 		System.out.println("지금 잘 들어왔니? : " + r);
@@ -244,6 +268,7 @@ public class ReportController {
 		return "common/msg";
 	}
 	
+	// 신고글 삭제 (o)
 	@RequestMapping("/report/reportDelete.do")
 	public String reportDelete(@RequestParam int rno, HttpSession session, Model model) {
 		int result = reportService.deleteReport(rno);

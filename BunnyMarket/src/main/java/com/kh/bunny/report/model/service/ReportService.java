@@ -3,6 +3,7 @@ package com.kh.bunny.report.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.vo.Report;
 
 public interface ReportService {
@@ -23,6 +24,10 @@ public interface ReportService {
 	int updateReport(Report r);
 
 	int deleteReport(int rno);
+
+	int insertDirectReport(Report r);
+
+	Product selectOneProduct(int pno);
 	
 	
 
