@@ -74,5 +74,7 @@ public interface ProductDAO {
 
 	List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName);
 
+	List<Object> searchProductList(String keyword, String condition);
+
 
 }

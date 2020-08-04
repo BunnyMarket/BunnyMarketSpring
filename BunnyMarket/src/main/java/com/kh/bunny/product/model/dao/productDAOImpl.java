@@ -1,6 +1,7 @@
 package com.kh.bunny.product.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -164,6 +165,16 @@ public class productDAOImpl implements ProductDAO {
 		RowBounds rows = new RowBounds((aPage - 1) * numPerPage, numPerPage);
 		
 		return sqlSession.selectList("productMapper.goTradeProduct", nickName, rows);
+	}
+
+	@Override
+	public List<Object> searchProductList(String keyword, String condition) {
+		HashMap<String, String> hmap = new HashMap<>();
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectList("productMapper.searchProductList", hmap);
 	}
 
 

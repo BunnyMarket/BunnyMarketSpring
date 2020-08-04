@@ -3,6 +3,7 @@ package com.kh.bunny.product.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -600,6 +602,7 @@ public class ProductController {
 		return result;
 
 	}
+	
 	@RequestMapping("/product/goTradeProduct.do")
 	@ResponseBody
 	public Map<String, Object> goTradeProduct(
@@ -615,11 +618,28 @@ public class ProductController {
 		result.put("list", tlist);
 		
 		
-		
-		
 		return result;
 
 	}
+	
+	@RequestMapping(value = "/product/searchProduct.do", method = RequestMethod.GET)
+	public String searchProduct(@RequestParam String keyword, @RequestParam String condition, Model model) {
+				
+		System.out.println("keyword 잘 들어왔니? : " + keyword);
+		System.out.println("condition 잘 들어왔니? : " + condition);
+		
+		List<Object> list = new ArrayList<Object>();
+		list = productService.searchProductList(keyword, condition);
+		
+		System.out.println("list잘 가져와? : " + list);
+//		System.out.println("list사이즈 : " + list.size());
+		
+		model.addAttribute("keyword", keyword)
+			 .addAttribute("list", list);
+		
+		return "product/productSearch";
+	}
+	
 
 }
 
