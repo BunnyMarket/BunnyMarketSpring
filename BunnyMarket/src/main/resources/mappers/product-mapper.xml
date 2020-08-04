@@ -4,6 +4,29 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productMapper">
 	
+	<!-- 상품 검색하는 쿼리 -->
+	<select id="searchProductList" parameterType = "hashmap" resultType = "Product">
+		SELECT * FROM PRODUCT
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		
+		<where>
+			<if test="condition == 'writer'">
+				PWRITER LIKE #{myPattern}
+			</if> 
+			<if test="condition == 'content'">
+				PCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				PTITLE LIKE #{myPattern}
+			</if>
+			
+			<if test="condition == 'all'">
+				PWRITER LIKE #{myPattern} OR PCONTENT LIKE #{myPattern} OR PTITLE LIKE #{myPattern} 
+			</if> 
+		</where>
+		
+	
+	</select>
 	
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 

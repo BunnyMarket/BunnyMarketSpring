@@ -153,4 +153,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.goTradeProduct(aPage, numPerPage, nickName);
 	}
 
+	@Override
+	public List<Object> searchProductList(String keyword, String condition) {
+		return productDAO.searchProductList(keyword, condition);
+	}
+
 }

@@ -270,10 +270,10 @@
 
 					<!-- Search Form -->
 					<div class="search-form">
-						<form action="#" method="get">
-							<input type="search" name="search" id="search"
-								placeholder="Type keywords &amp; press enter...">
-							<button type="submit" class="d-none"></button>
+						<form action="${pageContext.request.contextPath}/product/searchProduct.do" method="get">
+							<input type="hidden" name="condition" value = "all" />
+							<input type="text" name="keyword" id="search" placeholder="상품 관련 내용을 검색해보세요.">
+							<button type="submit" class="d-none"></button><!-- 엔터 이벤트를 넣어주는 d-none클래스..신기해.. -->
 						</form>
 						<!-- Close Icon -->
 						<div class="closeIcon">
