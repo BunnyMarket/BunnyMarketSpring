@@ -7,7 +7,7 @@
 	<sql id="selectSQL">
 		SELECT P.*, A.AEDATE , (SELECT COUNT(*)
 							      FROM BIDDER
-							     WHERE PNO = P.PNO) bCount
+							     WHERE PNO = P.PNO) BCOUNT
 		 FROM PRODUCT P
 		 JOIN AUCTION A ON(A.PNO = P.PNO)
 	</sql>
@@ -185,7 +185,7 @@
 	</select>
 
 
-<select id="sellCompleteAuctionList" parameterType="string" resultType = "Auction">
+	<select id="sellCompleteAuctionList" parameterType="string" resultType = "Auction">
       
        SELECT * FROM PRODUCT P
 		WHERE P.PNO IN (
@@ -194,6 +194,30 @@
 		)
    </select>
    
+   <select id="selectAuctionTypeList" resultType="Auction">
+		<include refid="selectSQL"/>
+		WHERE P.PTYPE = 2
+		  AND P.PSTATUS = 1
+		  <if test="pcno neq 0">
+			  AND P.PCNO = #{pcno}
+		  </if>
+		  <if test="order eq 1">
+		 	  ORDER BY P.PDATE DESC, 1 DESC
+		  </if>
+		  <if test="order eq 2">
+		  	  ORDER BY P.PDATE ASC, 1 DESC
+		  </if>
+        
+   </select>
+   
+   <select id="selectAuctionTypeTotalContents" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		 WHERE PTYPE = 2
+		   AND PSTATUS = 1
+		   AND PCNO = #{pcno}
+	</select>
+
    <select id="goTradeAuction" parameterType="string" resultType = "Auction">
       
        SELECT * FROM PRODUCT P
@@ -202,6 +226,14 @@
 		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS!=1 AND P.PTYPE = 2
 		)
    </select>
+   
+   <select id="selectTypeCount" resultType="_int">
+   		SELECT COUNT(*)
+		  FROM PRODUCT
+		 WHERE PCNO = #{pcno}
+		   AND PTYPE = 2
+   </select>
+
 </mapper>
 
 <!-- bidder 가 한명이라도 있으면 가격이 바뀌어야 함 (보여지는게)  -->

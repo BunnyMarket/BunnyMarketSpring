@@ -66,11 +66,12 @@
 			<div class="row justify-content-between">
 				<div class="col-12 col-md-6 col-lg-5">
 					<div class="single_product_thumb">
-						<div>
+						<div id="imgWrap">
 							<div id="pImgArea">
 								<img id="titleImg" class="d-block w-100" width="344.8px"
 									src="${pageContext.request.contextPath}/resources/upload/product/${a.PImg}"
 									height="357.56px">
+									<!-- <div class="img-cover"></div> -->
 							</div>
 						</div>
 					</div>
@@ -78,11 +79,13 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<c:if test="${sessionScope.member.userId ne a.PWriter}">
-							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-									data-toggle="modal" data-target="#myModal">
-								입찰하기
-							</button>
+						<c:if test="${a.PStatus eq 1 }">
+							<c:if test="${sessionScope.member.userId ne a.PWriter}">
+								<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+										data-toggle="modal" data-target="#myModal">
+									입찰하기
+								</button>
+							</c:if>
 						</c:if>
 						<c:if test="${sessionScope.member.userId eq a.PWriter}">
 							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
@@ -96,10 +99,12 @@
 						</c:if>
 						<div class="modal-layout"></div>
 						<br />
-						<br /><br />
-                        <button type="button" class="btn alazea-btn mt-15" style="float: right"
-								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }'">신고하기</button>
-						<br />
+						<c:if test="${a.PStatus eq 1 }">
+							<br /><br />
+	                        <button type="button" class="btn alazea-btn mt-15" style="float: right"
+									onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
+							<br />
+						</c:if>
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
                        	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>
@@ -827,6 +832,7 @@
 			}
 			
 		});
+		
 	});
 </script>
 

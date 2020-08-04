@@ -16,9 +16,10 @@
 	</select>
 	
 	<select id="selectMyPoint" resultType="PointHistory">
-		SELECT PH.*, B.BPDATE, B.BPSTATUS
+		SELECT PH.*, B.BPDATE, B.BPSTATUS, U.UPSNO, U.UPDT 
 		  FROM POINTHISTORY PH
-		  JOIN BUNNYPOINT B ON (PH.BPNO = B.BPNO)
+		  LEFT JOIN BUNNYPOINT B ON (PH.BPNO = B.BPNO)
+		  LEFT JOIN USEDPOINT U ON (U.UPNO = PH.UPNO)
 		 WHERE PH.USERID = #{userId}
 		 ORDER BY PH.PHNO DESC
 	</select>

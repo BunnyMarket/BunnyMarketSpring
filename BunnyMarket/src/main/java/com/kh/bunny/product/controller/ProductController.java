@@ -55,6 +55,7 @@ public class ProductController {
 		
 		// 페이지 계산을 위한 총 페이지 개수 
 		int totalContents = productService.selectProductTotalContents();
+		List<Integer> countList = productService.selectTypeCount();
 		
 		// 페이지 HTML 생성 
 		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "productList.do");
@@ -62,7 +63,8 @@ public class ProductController {
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
 			 .addAttribute("numberPerPage", numPerPage)
-			 .addAttribute("pageBar", pageBar);
+			 .addAttribute("pageBar", pageBar)
+			 .addAttribute("typeCount", countList);
 		
 		return "product/productList";
 		
@@ -602,7 +604,6 @@ public class ProductController {
 		return result;
 
 	}
-	
 	@RequestMapping("/product/goTradeProduct.do")
 	@ResponseBody
 	public Map<String, Object> goTradeProduct(
@@ -617,11 +618,46 @@ public class ProductController {
 		
 		result.put("list", tlist);
 		
-		
 		return result;
 
 	}
 	
+	@RequestMapping("/product/productListType.do")
+	@ResponseBody
+	public Map<String, Object> auctionListType(@RequestParam int pcno, @RequestParam int order, @RequestParam int count
+			, @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
+			, HttpServletRequest request
+		) {
+	
+		
+		int numPerPage = 9;
+		
+		if(count == 18) {
+			numPerPage = 18;
+		} else if (count == 36){
+			numPerPage = 36;
+		}
+		
+		Map<String, Integer> conditionMap = new HashMap<String, Integer>();
+		
+		conditionMap.put("order", order);
+		conditionMap.put("pcno", pcno);
+		
+		List<Map<String, String>> list = productService.selectProductTypeList(aPage, numPerPage, conditionMap);
+		
+		int totalContents = productService.selectProductTypeTotalContents(conditionMap);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionListType.do");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalTypeContents", totalContents);
+		map.put("numPerPage", numPerPage);
+		map.put("pageBar", pageBar);
+		
+		return map;
+	}
+
 	@RequestMapping(value = "/product/searchProduct.do", method = RequestMethod.GET)
 	public String searchProduct(@RequestParam String keyword, @RequestParam String condition, Model model) {
 				
@@ -639,7 +675,5 @@ public class ProductController {
 		
 		return "product/productSearch";
 	}
-	
-
 }
 

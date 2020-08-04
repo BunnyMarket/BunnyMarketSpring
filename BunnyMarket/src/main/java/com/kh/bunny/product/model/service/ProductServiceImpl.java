@@ -152,10 +152,32 @@ public class ProductServiceImpl implements ProductService {
 	public List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName) {
 		return productDAO.goTradeProduct(aPage, numPerPage, nickName);
 	}
-
+	
 	@Override
 	public List<Object> searchProductList(String keyword, String condition) {
 		return productDAO.searchProductList(keyword, condition);
 	}
+	
+	@Override
+	public List<Integer> selectTypeCount() {
+		
+		List<Integer> list = new ArrayList<Integer>();
+		
+		for(int i = 1; i < 8; i++) {
+			list.add(productDAO.selectTypeCount(i));
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Map<String, String>> selectProductTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap) {
+		return productDAO.selectProductTypeList(aPage, numPerPage, conditionMap);
+	}
 
+	@Override
+	public int selectProductTypeTotalContents(Map<String, Integer> conditionMap) {
+		return productDAO.selectProductTypeTotalContents(conditionMap);
+
+	}
 }

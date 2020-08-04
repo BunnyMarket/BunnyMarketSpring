@@ -40,9 +40,15 @@
 						<h4>현재 포인트</h4>
 						<h4 id="nowPoint" style="color: orange"></h4>
 					</div>
-					<div class="checkout-btn mt-30">
-						<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))" 
-						   class="btn alazea-btn w-100">당근 충전하러 가기☆</a>
+					<div align="center">
+						<div class="checkout-btn mt-30" style="width: 45%; display: inline-block;">
+							<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))" 
+							   class="btn alazea-btn w-100">당근 충전하러 가기☆</a>
+						</div>
+						<div class="checkout-btn mt-30" style="width: 45%; display: inline-block; background-color: yellow;">
+							<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))" 
+							   class="btn alazea-btn w-100">당근 환급하러 가기☆</a>
+						</div>
 					</div>
 					<hr />
 					<c:forEach items="${myPoint }" var="point" varStatus="st">
@@ -61,11 +67,47 @@
 						<c:if test="${point.bpStatus eq 2 }">
 							<div class="products">
 								<div class="products-data">
+									<h5>환급받은 당근</h5>
+									<div class="single-products d-flex justify-content-between align-items-center">
+										<input type="hidden" id="originPoint-${st.index }" value="${point.nowPoint }" />
+										<p>${point.updt }</p>
+										<h5 id="pointComma-${st.index }" style="color: red;"></h5>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${point.upsno eq 1}">
+							<div class="products">
+								<div class="products-data">
 									<h5>사용한 당근</h5>
 									<div class="single-products d-flex justify-content-between align-items-center">
 										<input type="hidden" id="originPoint-${st.index }" value="${point.nowPoint }" />
+										<p>${point.updt }</p>
+										<h5 id="pointComma-${st.index }" style="color: orange;"></h5>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${point.upsno eq 2}">
+							<div class="products">
+								<div class="products-data">
+									<h5>결제 완료된 당근</h5>
+									<div class="single-products d-flex justify-content-between align-items-center">
+										<input type="hidden" id="originPoint-${st.index }" value="${point.nowPoint }" />
+										<p>${point.updt }</p>
+										<h5 id="pointComma-${st.index }" style="color: orange;"></h5>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${point.upsno eq 3 }">
+							<div class="products">
+								<div class="products-data">
+									<h5>환불 받은 당근</h5>
+									<div class="single-products d-flex justify-content-between align-items-center">
+										<input type="hidden" id="originPoint-${st.index }" value="${point.nowPoint }" />
 										<p>${point.bpDate }</p>
-										<h5 id="pointComma-${st.index }" style="color: red;"></h5>
+										<h5 id="pointComma-${st.index }" style="color: blue;"></h5>
 									</div>
 								</div>
 							</div>

@@ -226,5 +226,35 @@
 		)
       
    </select>
+   
+   <select id="selectTypeCount" resultType="_int">
+   		SELECT COUNT(*)
+		  FROM PRODUCT
+		 WHERE PCNO = #{pcno}
+		   AND PTYPE = 1
+   </select>
+   
+   <select id="selectProductTypeList" resultType="PRODUCT">
+		SELECT *
+		FROM PRODUCT
+		WHERE PTYPE = 1
+		  <if test="pcno neq 0">
+			  AND PCNO = #{pcno}
+		  </if>
+		  <if test="order eq 1">
+		 	  ORDER BY PDATE DESC, 1 DESC
+		  </if>
+		  <if test="order eq 2">
+		  	  ORDER BY PDATE ASC, 1 DESC
+		  </if>
+        
+   </select>
+   
+   <select id="selectProductTypeTotalContents" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		 WHERE PTYPE = 1
+		   AND PCNO = #{pcno}
+	</select>
 	
 </mapper>

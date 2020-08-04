@@ -39,5 +39,11 @@ public interface AuctionService {
 
 	List<Map<String, String>> sellCompleteAuctionList(int aPage, int numPerPage, String nickName);
 
+	List<Map<String, String>> selectAuctionTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap);
+
+	int selectAuctionTypeTotalContents(Map<String, Integer> conditionMap);
+
 	List<Map<String, String>> goTradeAuction(int aPage, int numPerPage, String nickName);
+
+	List<Integer> selectTypeCount();
 }
