@@ -141,9 +141,33 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 
 	@Override
+	public List<Map<String, String>> selectAuctionTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap) {
+		return auctionDAO.selectAuctionTypeList(aPage, numPerPage, conditionMap);
+	}
+
+	@Override
+	public int selectAuctionTypeTotalContents(Map<String, Integer> conditionMap) {
+		return auctionDAO.selectAuctionTypeTotalContents(conditionMap);
+
+	}
+	@Override
 	public List<Map<String, String>> goTradeAuction(int aPage, int numPerPage, String nickName) {
 		return auctionDAO.goTradeAuction(aPage, numPerPage, nickName);
+
 	}
+
+	@Override
+	public List<Integer> selectTypeCount() {
+		
+		List<Integer> list = new ArrayList<Integer>();
+		
+		for(int i = 1; i < 8; i++) {
+			list.add(auctionDAO.selectTypeCount(i));
+		}
+		
+		return list;
+	}
+
 	
 	
 }

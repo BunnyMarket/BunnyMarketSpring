@@ -54,8 +54,6 @@ public class PointController {
 			fineCharge = pointService.pointChargeInsert(bunnyPoint) > 0 ? true : false;
 			
 			nowPoint = pointService.selectOneNowPoint(userId);
-			System.out.println("웨?? fineCharge : " + fineCharge);
-			System.out.println("현재 포인트 : " + nowPoint);
 			
 		} catch (Exception e) {
 			throw new PointException("[포인트 결제 중 문제 발생] : " + e.getMessage());
@@ -80,14 +78,14 @@ public class PointController {
 		int numPerPage = 10;
 		int nowPoint = 0;
 		
-//		try {
+		try {
 			 list = pointService.selectMyPoint(userId, pPage, numPerPage);
 
 			 totalContents = pointService.selectPointTotalContents(userId);
 			 nowPoint = pointService.selectOneNowPoint(userId);
-//		} catch (Exception e) {
-//			throw new PointException();
-//		}
+		} catch (Exception e) {
+			throw new PointException();
+		}
 		
 		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "point/myPointView.do");
 		

@@ -69,7 +69,6 @@ public interface ProductService {
 
 	int productPurchase(Product product);
 
-
 	List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName);
 	
 	int selectOnemakeZero(int pno);
@@ -77,5 +76,10 @@ public interface ProductService {
 	List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName);
 
 	List<Object> searchProductList(String keyword, String condition);
+	
+	List<Integer> selectTypeCount();
+	
+	List<Map<String, String>> selectProductTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap);
 
+	int selectProductTypeTotalContents(Map<String, Integer> conditionMap);
 }

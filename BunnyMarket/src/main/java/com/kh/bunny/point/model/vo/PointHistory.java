@@ -18,6 +18,8 @@ public class PointHistory extends BunnyPoint implements Serializable {
 	private int bpno;
 	private int upno;
 	private int nowPoint;
+	private int upsno;
+	private Date updt;
 	
 	public PointHistory(int bpno, String userId, Date bpDate, int bPoint, int bpStatus) {
 		super(bpno, userId, bpDate, bPoint, bpStatus);
