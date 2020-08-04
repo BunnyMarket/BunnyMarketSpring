@@ -3,6 +3,7 @@ package com.kh.bunny.report.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.vo.Report;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Report implements Serializable{
+public class Report extends Product implements Serializable{
 
 	private static final long serialVersionUID = 1999L;
     
@@ -25,4 +26,13 @@ public class Report implements Serializable{
 	private String rContent;
 	private Date rDate;
 	private String rcContent;
+	public Report(int pno, String pWriter, int pcno, String pImg, String pTitle, String pContent, int pPrice,
+			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, int bPrice,
+			String pCategory) {
+		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer, bPrice,
+				pCategory);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

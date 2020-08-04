@@ -39,16 +39,18 @@
 					<table class="table table-responsive" id="tableArea">
 						<thead class="col-12">
 							<tr>
-									<th style="width: 10%">번호</th>
+									<th style="width: 5%">번호</th>
 								<th colspan="2" style="width: 40%; text-align: center;">제목</th>
 								<th style="padding-right: 80px; width: 15%; text-align: center;">작성자</th>
 								<th style="padding-left: 8px; width: 15%; text-align: center;">등록일자</th>
-								<th style="padding-left: 8px; width: 20%; text-align: center;">첨부파일</th>
+								<th style="padding-left: 8px; width: 10%; text-align: center;">첨부파일</th>
+								<th style="padding-left: 8px; width: 15%; text-align: center;">유형</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${list }" var="r">
+						<c:forEach items="${list }" var="r" >
+						
 						<input type="hidden" value="${r.RNo}" />
 					        <tr id="${r.RNo}">
 					        
@@ -61,11 +63,22 @@
 							 <td style="color:green;" align="center">첨부</td>
 							</c:if>
 							<c:if test="${fn:contains(r.RContent, '<img') == 'false' }">
-							<td style="color: black;" align="center">첨부없음</td>
+							<td style="color: red;" align="center">없음</td>
 							</c:if>
-							<td></td>
+							
+							<c:if test="${r.PType eq 1 }">
+							<td style="color:black;" align= "center">상품</td>
+							</c:if>
+							 <c:if test="${r.PType eq 2  }"> 
+							 <td style="color:blue;" align= "center">경매</td>
+							 </c:if>
+							 <c:if test="${r.pno eq 0}">
+							 <td style="color:gray;" align= "center">일반</td>
+							 </c:if>
+							 <td></td>
 							</tr>
 							</c:forEach>
+							
 						</tbody>
 					</table>
 					<div class="checkout_btn_inner" align="right">

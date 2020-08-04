@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.dao.ReportDAO;
 import com.kh.bunny.report.model.exception.ReportException;
 import com.kh.bunny.report.model.vo.Report;
@@ -76,6 +77,33 @@ public class ReportServiceImpl implements ReportService {
 		else throw new ReportException("신고글 삭제 실패!");
 		
 		return result;
+	}
+
+	@Override
+	public int insertDirectReport(Report r) {
+		int result =0;
+		System.out.println("service : " + r.getRNo());
+		result = reportDAO.insertDirectReport(r);
+		
+		if(result == REPORT_SERVICE_ERROR) throw new ReportException();
+		
+		return result;
+	}
+
+	@Override
+	public Product selectOneProduct(int pno) {	
+		 Product p = null;
+		
+		try {
+			
+			p = reportDAO.selectOneProduct(pno);
+			
+			if(p == null)throw new ReportException();
+		}catch(Exception e) {
+			throw new ReportException("신고글 수정 오류 발생!" + e.getMessage());
+		}
+		
+		return p;
 	}
 	
 	

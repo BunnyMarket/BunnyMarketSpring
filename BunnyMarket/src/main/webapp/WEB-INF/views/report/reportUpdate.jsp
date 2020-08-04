@@ -78,7 +78,7 @@
 							<br />
 						</div>
 					</div>
-					
+					<c:if test="${r.pno ne 0 }">
 					<div class="col-12 col-md-2" style="text-align: center; padding-top: 7px;">
 						<div class="single_product_desc">
 							<label for="p" style="padding-left: 15px;">신고할 상품의 번호 *</label>
@@ -91,7 +91,7 @@
 							<br />
 						</div>
 					</div>
-					
+					</c:if>
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />

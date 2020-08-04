@@ -3,6 +3,7 @@ package com.kh.bunny.report.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.report.model.vo.Report;
 
 public interface ReportDAO {
@@ -20,4 +21,8 @@ public interface ReportDAO {
 	int updateReport(Report r);
 
 	int deleteReport(int rno);
+
+	int insertDirectReport(Report r);
+
+	Product selectOneProduct(int pno);
 }

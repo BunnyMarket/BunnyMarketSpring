@@ -98,7 +98,7 @@
 						<br />
 						<br /><br />
                         <button type="button" class="btn alazea-btn mt-15" style="float: right"
-								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
+								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }'">신고하기</button>
 						<br />
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>

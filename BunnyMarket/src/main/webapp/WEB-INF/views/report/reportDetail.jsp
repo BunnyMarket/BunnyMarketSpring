@@ -41,8 +41,13 @@
 								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>${report.RDate}</a> 
 								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>${report.RWriter}</a> <br><br>
 								<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>${report.rcContent}</a><br><br>
-								<a href="#"><i class="fa fa-user" aria-hidden="true">신고 접수 아이디: </i>${report.reported}</a> 
-								<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true">신고글 제목:</i>${pTitle}</a>
+								<a href="#"><i class="fa fa-user" aria-hidden="true">신고 접수 아이디: </i>${report.reported}</a>
+							<c:if test="${pTitle ne null}">
+									<a href="#"><i class="fa fa-shopping-cart" aria-hidden="true">신고글 제목:</i>${pTitle}</a>
+							</c:if>
+							<script>
+							console.log(pTitle)
+							</script>
 							</div>
 							
 							<p>${report.RContent}</p>
@@ -54,7 +59,7 @@
 		                         <button type="button" class="btn alazea-btn mt-15"
 										onclick="location.href='${ pageContext.request.contextPath }/report/reportUpdateView.do?rno=${report.RNo}'">수정하기</button>
 	                      	<!--      <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="location.href='${ pageContext.request.contextPath }/report/reportDelete.do?rno=${report.RNo}'"/>  --> 
-	                      	        <input type="button" class="btn alazea-btn mt-15" value="삭제하기" onclick="deleteReport(${report.RNo});"/>
+	                      	        <input type="button" class="btn alazea-btn mt-15" value="삭제하기"  onclick="deleteReport(${report.RNo});"/>
 				            </div>
 						<br /><br /><br />
 						
