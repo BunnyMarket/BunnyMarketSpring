@@ -177,17 +177,20 @@
 									        <%-- <button class="login" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button> --%>
 									        <a href="${pageContext.request.contextPath}/member/memberLogout.do"><i class="fa fa-user" aria-hidden="true"></i><span>Logout</span></a>
 								        &nbsp;
+								         <a href="${pageContext.request.contextPath}/point/myPointView.do"><i class="fa fa-user" aria-hidden="true"></i><span>당근내역 조회</span></a>
+								         &nbsp;
+										<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))"> 
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i> 
+											<span>당근 충전</span>
+										</a>
+										
 								        </div>
 							        </c:if>
 
 								<!-- Cart -->
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<div class="cart">
-									<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))"> 
-										<i class="fa fa-shopping-cart" aria-hidden="true"></i> 
-										<span>당근 충전</span>
-									</a>
-								</div>
+								
+								
 							</div>
 						</div>
 					</div>

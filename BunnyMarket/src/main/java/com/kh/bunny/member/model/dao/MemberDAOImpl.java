@@ -120,6 +120,11 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("memberMapper.selectOneCountDown", userId); 
 	}
 
+	@Override
+	public Object findPwdUserId(String email) {
+		return sqlSession.selectOne("memberMapper.findPwdUserId", email);
+	}
+
 	
 
 	

@@ -29,7 +29,7 @@
                     <button class="submit" >Login</button>
                     <br />
                     <div style="text-align:center;">
-                    <button type="button" id="findBtn" onclick="window.open('findIdView.do', '아이디 찾기','width = 580, height = 600');return false">아이디/비밀번호 찾기</button>
+                    <button type="button" id="findBtn" onclick="window.open('findIdView.do', '아이디 찾기','width = 580, height = 742');return false">아이디/비밀번호 찾기</button>
                     </div>
                 </form>
                

@@ -46,9 +46,12 @@
                <form id="myForm2" action="${ pageContext.request.contextPath }/member/memberView.do" method="post">
                		<input type="hidden" name="userId" value="${member.userId}">
                   </form>
-                  <p><a href="#" id="goMypage" onclick="goMypage();" style="font-size: 20px;">회원정보 상세보기</a></p>
-                  <p><a href="${pageContext.request.contextPath}/point/myPointView.do" style="font-size: 20px;">내 당근 내역 조회하기</a></p>
-                  <p><a href="tradeView.do?userId=${member.userId}">판매중인 상품 보기</a> </p>
+                  
+                  <button class="btn alazea-btn mt-15" id="goMypage" onclick="goMypage();">회원정보 수정하기</button> &nbsp;
+                  <button class="btn alazea-btn mt-15"  onclick="location.href='${pageContext.request.contextPath}/member/tradeView.do'">판매중인 상품 보기</button>
+                  
+                 
+                 
                   <br /><br />
                </div>
             </div>

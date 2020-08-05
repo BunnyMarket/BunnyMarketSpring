@@ -199,8 +199,9 @@
 											<img src="/bunny/resources/member/profile/${ sellerPhoto }" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
 										</c:if> <br />
-										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
-										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -794,7 +795,7 @@ $(function(){
 		/* $('#sellerName').text('${a.PWriter}'); */
 		
 		$.ajax({
-			  data : {nickName : '${a.PWriter}'}
+			  data : {nickName : '${product.PWriter}'}
 			, url : "${ pageContext.request.contextPath }/member/sellerProfile.do"
 			, dataType : "Json"
 			,  async:false

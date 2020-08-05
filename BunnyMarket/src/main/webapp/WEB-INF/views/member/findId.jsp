@@ -6,165 +6,158 @@
 <meta charset="UTF-8">
 <title>아이디/비밀번호 찾기</title>
 <script src="/bunny/resources/js/jquery/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet"
+	href="${ pageContext.request.contextPath }/resources/style.css">
 </head>
 <body>
-	<div id="idSearchArea">
-		<fieldset>
-		<legend>아이디찾기</legend>
-		<!-- action="findId();" -->
-         <form  id="findForm" class="findid" method="post">
-         <div id ="tb">
-            <table>
-               <tr>
-                  <td>이름</td>
-                  <td><div>
-                        <input type="text" id="userName" name="userName"
-                           placeholder="성명" required autofocus>
-                     </div></td>
-               </tr>
-               <tr>
-                  <td>이메일</td>
-                  <td>
-                     <div>
-                        <input type="email" id="email" name="email"
-                           required>
-                     </div>
-                  </td>
-                  <td>
-                     <div>
-                        <button class="searchbtn" onclick="findId();" type="button">찾기</button>
-                     </div>
-                  </td>
-               </tr>
-            </table></div>
-         </form>
-         
-         <div id="idFind"></div>
-        </fieldset>
+
+	<section class="single_product_details_area mb-50">
+		<div class="produts-details--content mb-50">
+			<div class="container">
+
+				<form id="findForm" class="findid" method="post">
+					<div class="row justify-content-between">
+
+
+						<div class="col-12 col-md-6">
+							<h2 align="center">아이디 찾기</h2>
+						</div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<!-- <h4 class="title">상품 제목</h4> -->
+								<label for="userName">이름</label> <input type="text"
+									id="userName" class="form-control" style="width: 100%;"
+									name="userName">
+							</div>
+						</div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<label for="email">이메일</label> <input type="email" id="email"
+									name="email" style="width: 100%;" class="form-control" />
+							</div>
+						</div>
+						<div class="col-4 col-md-6">
+							<div class="single_product_desc">
+								<button type="button" class="btn alazea-btn mt-30"
+									style="height: 45px;" onclick="findId();">조회하기</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="produts-details--content mb-50">
+			<div class="container">
+
+				<form id="findForm" class="findid" method="post">
+					<div class="row justify-content-between">
+
+
+						<div class="col-12 col-md-6">
+							<div id="idFind" class="single_product_desc"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</section>
 	
 	
+		<div class="produts-details--content mb-50" id="pwdFind2" name="pwdFind2">
+			<div class="container">
+
+				<form id="findPwd" class="findPwd" method="post">
+					<div class="row justify-content-between">
+
+
+						<div class="col-12 col-md-6">
+							<h2 align="center">비밀번호 찾기</h2>
+						</div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<!-- <h4 class="title">상품 제목</h4> -->
+								<label for="userId">아이디</label> <input type="text" id="userId"
+									class="form-control" style="width: 100%;" name="userId">
+								<label for="userName2">이름</label> <input type="text"
+									id="userName2" class="form-control" style="width: 100%;"
+									name="userName2">
+							</div>
+						</div>
+						<div class="col-4 col-md-6"></div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<label for="email1">이메일</label> <input type="email" id="email1"
+									name="email1" style="width: 100%;" class="form-control" /> 
+							</div>
+						</div>
+						<div class="col-4 col-md-6">
+							<div class="single_product_desc">
+								<button type="button" class="btn alazea-btn mt-30"
+									style="height: 45px;" onclick="send();">인증번호 요청</button>
+								<br>
+							</div>
+						</div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<label for="userAuthNum">인증번호</label> <input type="text"
+									id="userAuthNum" class="form-control" style="width: 100%;"
+									name="userAuthNum">
+							</div>
+						</div>
+						<div class="col-4 col-md-6">
+							<div class="single_product_desc">
+								<button type="button" class="btn alazea-btn mt-30"
+									style="height: 45px;" onclick="findPwd();">조회하기</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="produts-details--content mb-50" id="pwdFind" style="display:none;">
+			<div class="container">
+
+				<form id="findPwd" class="findPwd" method="post">
+					<div class="row justify-content-between">
+
+
+						
+						
+					
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<label for="newPwd">새 비밀번호</label> <input type="password" id="newPwd"
+									name="newPwd" style="width: 100%;" class="form-control" /> <br>
+							</div>
+						</div>
+						<div class="col-4 col-md-6">
+							<div class="single_product_desc">
+								
+								<br>
+							</div>
+						</div>
+						<div class="col-8 col-md-6">
+							<div class="single_product_desc">
+								<label for="newPwd2">새 비밀번호 확인</label> <input type="password"
+									id="newPwd2" class="form-control" style="width: 100%;"
+									name="newPwd2">
+							</div>
+						</div>
+						<div class="col-4 col-md-6">
+							<div class="single_product_desc">
+								<button type="button" class="btn alazea-btn mt-30"
+									style="height: 45px;" onclick="return pwdUpdate();">변경하기</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
 	
-   
-	  
-		<fieldset>
-		<legend>비밀번호찾기</legend>
-         <form  class="findPwd" method="post">
-         <div id="passwordArea">
-         <div id ="sb">
-            <table>
-               <tr>
-                  <td>아이디</td>
-                  <td><div>
-                        <input type="text" id="userId" name="userId"
-                           placeholder="아이디" required autofocus />
-                     </div></td>
-               </tr>            
-               <tr>
-                  <td>이름</td>
-                  <td><div>
-                        <input type="text" id="userName2" name="userName2"
-                           placeholder="성명" required />
-                     </div></td>
-               </tr>
-               <tr>
-                  <td>이메일</td>
-                  <td>
-                     <div>
-                        <input type="email" id="email1" name="email1"
-                           required>
-                     </div>
-                  </td>
-                  <td>
-                     <div>
-               		  <button class="searchbtn" type="button" onclick="send();">인증번호 발송</button>
-                     </div>
-                  </td> 
-               </tr>
-               <tr>
-                  <td>인증번호</td>
-                  <td><div>
-                        <input type="text" id="userAuthNum" name="userAuthNum" required />
-                     </div></td>
-                  <td>
-                     <div>
-                        <button class="findPwd2" id="findPwd2" type="button" onclick="findPwd();">찾기</button>
-                           
-                     </div>
-                  </td>                    
-               </tr>
-            </table></div>
-            
-            </div>
-            
-         </form>
-         
-         <div id="newPassword" style="display:none;">
-         <div id="sb">
-            <table>
-               <tr>
-                  <td>새 비밀번호</td>
-                  <td><div>
-                        <input type="password" id="newPwd" name="newPwd"
-                           placeholder="새 비밀번호" required autofocus />
-                     </div></td>
-               </tr>            
-               <tr>
-                  <td>새 비밀번호 확인</td>
-                  <td><div>
-                        <input type="password" id="newPwd2" name="newPwd2"
-                           placeholder="새 비밀번호 확인" required />
-                     </div></td>
-                     <td>
-                     <div>
-               		  <button class="pwdUpdate" name="pwdUpdate" type="button" onclick="return pwdUpdate();" >비밀번호 바꾸기</button>
-                     </div>
-                  </td> 
-               </tr>
-               </table>
-               </div>
-            </div>
-         
-         </fieldset> 
-         
-         
-         <script>
-         var authNum = "0000";
-         var authCheckNum = 0;   // 이메일인증 유효성 체크 통과 했는지?
-         var dataUserId = "";	// 유저아이디 담기위한 변수
-         var email1 = $("email1").val();
-         var regEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-         
-         
-         function findId(){
-     		
-     		
-     			
-     			console.log("들어옴");
-     			console.log($('#userName').val());
-     			
-     			$.ajax({
-     				url : "${pageContext.request.contextPath}/member/findId.do",
-     				data : {userName: $('#userName').val(), email : $('#email').val()},
-     				dataType : "json",
-     				success : function(data){
-     					console.log(data);
-						$("#idSearchArea").css({"display":"none"});
-						$("#idFind").html("<p style='color:red; font:20px;'>회원님의 아이디는 "+data.userId+" 입니다.</p>");
-     						
-     						
-     						 
-     				}	
-     					
-     					
-     				, error : function(req,status,error){
-     					alert("아이디 찾기에서 에러");
-     				
-     					console.log(status);
-     					console.log(error);
-     				}
-     		
-     		
-     			});
 
 
        }

@@ -42,6 +42,8 @@ public interface MemberService {
 	int selectOneCountUp(String userId);
 	
 	int selectOneCountDown(String userId);
+
+	Object findPwdUserId(String email);
 	 
 	 
 	
