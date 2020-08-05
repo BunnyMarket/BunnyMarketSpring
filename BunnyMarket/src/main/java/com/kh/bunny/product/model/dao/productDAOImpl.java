@@ -167,15 +167,6 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectList("productMapper.goTradeProduct", nickName, rows);
 	}
 	
-	@Override
-	public List<Object> searchProductList(String keyword, String condition) {
-		HashMap<String, String> hmap = new HashMap<>();
-		
-		hmap.put("keyword", keyword);
-		hmap.put("condition", condition);
-		
-		return sqlSession.selectList("productMapper.searchProductList", hmap);
-	}
 
 	@Override
 	public List<Map<String, String>> selectProductTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap) {
@@ -194,4 +185,30 @@ public class productDAOImpl implements ProductDAO {
 	public Integer selectTypeCount(int pcno) {
 		return sqlSession.selectOne("productMapper.selectTypeCount", pcno);
 	}
+
+	@Override
+	public List<Object> searchProductList(String keyword, String condition, int pPage, int numPerPage) {
+			HashMap<Object, Object> hmap = new HashMap<>();
+			RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+			
+			hmap.put("keyword", keyword);
+			hmap.put("condition", condition);
+			//hmap.put("rows", rows);
+			
+			
+			//return sqlSession.selectList("productMapper.searchProductList", hmap);
+			return sqlSession.selectList("productMapper.searchProductList", hmap, rows);
+	}
+
+	@Override
+	public int selectSproductTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("productMapper.selectSproductTotalContent", hmap);
+	}
+
+	
+	
 }

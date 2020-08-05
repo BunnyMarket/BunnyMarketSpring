@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -659,19 +660,35 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/product/searchProduct.do", method = RequestMethod.GET)
-	public String searchProduct(@RequestParam String keyword, @RequestParam String condition, Model model) {
+	public String searchProduct(@RequestParam String keyword,
+								@RequestParam String condition, 
+								Model model,
+								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
 				
 		System.out.println("keyword 잘 들어왔니? : " + keyword);
 		System.out.println("condition 잘 들어왔니? : " + condition);
 		
-		List<Object> list = new ArrayList<Object>();
-		list = productService.searchProductList(keyword, condition);
+		int numPerPage = 15; // 10개씩 나오도록 
+		List<Object> list = productService.searchProductList(keyword, condition, pPage, numPerPage);
 		
 		System.out.println("list잘 가져와? : " + list);
-//		System.out.println("list사이즈 : " + list.size());
+		System.out.println("list사이즈 : " + list.size());
+		
+		// 페이지 계산을 위한 총 페이지 개수 
+		int totalContents =  productService.selectSproductTotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"searchProduct.do?condition="+condition+"&keyword=" + keyword);
+
 		
 		model.addAttribute("keyword", keyword)
-			 .addAttribute("list", list);
+			 .addAttribute("list", list)
+			 .addAttribute("totalContents", totalContents)
+			 .addAttribute("pageBar", pageBar);
 		
 		return "product/productSearch";
 	}
