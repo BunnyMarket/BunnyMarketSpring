@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.common.util.ProductAjaxUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
@@ -44,28 +45,47 @@ public class ProductController {
 	
 	@RequestMapping("/product/productList.do")
 	public String selectBoardList(
-			@RequestParam(value = "pPage", required = false, defaultValue = "1")
-			int pPage, Model model) {
+			  @RequestParam(value="pcno", required=false, defaultValue = "0") int pcno
+			, @RequestParam(value="order", required=false, defaultValue = "1") int order
+			, @RequestParam(value="count", required=false, defaultValue = "9") int count
+			, @RequestParam(value="pPage", required = false, defaultValue = "1") int pPage
+			, Model model) {
 		
-		int numPerPage = 9; // 한 페이지에 9개의 게시글씩 나오도록 
+		int numPerPage = 0;
+		System.out.println("count : " + count);
+		if(count == 18) {
+			numPerPage = 18;
+		} else if (count == 36){
+			numPerPage = 36;
+		} else {
+			numPerPage = 9;
+		}
 		
-		List<Map<String, String>> list = productService.selectProductList(pPage, numPerPage);
+		Map<String, Integer> conditionMap = new HashMap<String, Integer>();
+		
+		conditionMap.put("order", order);
+		conditionMap.put("pcno", pcno);
+		conditionMap.put("count", count);
+		conditionMap.put("page", pPage);
+		
+		List<Map<String, String>> list = productService.selectProductTypeList(pPage, numPerPage, conditionMap);
 		
 		System.out.println("productController에서 list를 가져오나 확인 : " + list);
 		// Product list는 잘 가져오는 것 확인 완료 
 		
 		// 페이지 계산을 위한 총 페이지 개수 
-		int totalContents = productService.selectProductTotalContents();
-		List<Integer> countList = productService.selectTypeCount();
+		int totalContents = productService.selectProductTypeTotalContents(conditionMap);
 		
 		// 페이지 HTML 생성 
-		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "productList.do");
+		String pageBar = ProductAjaxUtils.getPageBar(totalContents, pPage, numPerPage, conditionMap, "productList.do");
+		List<Integer> countList = productService.selectTypeCount();
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
 			 .addAttribute("numberPerPage", numPerPage)
 			 .addAttribute("pageBar", pageBar)
-			 .addAttribute("typeCount", countList);
+			 .addAttribute("typeCount", countList)
+			 .addAttribute("condition", conditionMap);
 		
 		return "product/productList";
 		
@@ -625,18 +645,23 @@ public class ProductController {
 	
 	@RequestMapping("/product/productListType.do")
 	@ResponseBody
-	public Map<String, Object> auctionListType(@RequestParam int pcno, @RequestParam int order, @RequestParam int count
+	public Map<String, Object> auctionListType(
+			  @RequestParam(value="pcno", required=false, defaultValue = "0") int pcno
+			, @RequestParam(value="order", required=false, defaultValue = "1") int order
+			, @RequestParam(value="count", required=false, defaultValue = "9") int count
 			, @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
 			, HttpServletRequest request
 		) {
 	
 		
-		int numPerPage = 9;
+		int numPerPage = 0;
 		
 		if(count == 18) {
 			numPerPage = 18;
 		} else if (count == 36){
 			numPerPage = 36;
+		} else {
+			numPerPage = 9;
 		}
 		
 		Map<String, Integer> conditionMap = new HashMap<String, Integer>();
@@ -648,7 +673,7 @@ public class ProductController {
 		
 		int totalContents = productService.selectProductTypeTotalContents(conditionMap);
 		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionListType.do");
+		String pageBar = ProductAjaxUtils.getPageBar(totalContents, aPage, numPerPage, conditionMap, "productList.do");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);

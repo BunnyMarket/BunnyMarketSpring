@@ -43,11 +43,11 @@
                         <div class="search_by_terms">
                             <form class="form-inline">
                                 <select class="custom-select widget-title" id="orderBySelect">
-                                  <option selected value="1">최신글 보기</option>
+                                  <option value="1">최신글 보기</option>
                                   <option value="2">예전글 보기</option>
                                 </select>
                                 <select class="custom-select widget-title" id="countSelect">
-                                  <option selected value="9">9개씩 보기</option>
+                                  <option value="9">9개씩 보기</option>
                                   <option value="18">18개씩 보기</option>
                                   <option value="36">36개씩 보기</option>
                                 </select>
@@ -110,7 +110,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop-products-area">
@@ -121,7 +120,7 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img" style="height: 300px; width: 255px;" >
+	                                    <div class="product-img" style="height: 300px; width: 255px;" id="pImg-${st.index}">
 	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
 	                                        	<img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" style="height: 300px; width: 255px;">
 	                                        </a>
@@ -145,8 +144,13 @@
 							    	$(function(){
 							    		var origin = $("#originPrice-${st.index }").val();
 							    		$("#pCarrot-${st.index }").text(parseInt(origin).toLocaleString());
+							    		
+							    		var Pstatus = '${p.PStatus}';
+							    		if(Pstatus == 2){
+							    			$('<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료</h4>').appendTo('#pImg-${st.index}');
+							    			$('#pImg-${st.index} img').css('opacity', '0.2');
+							    		}
 							    	});
-							    
 							    </script>
                             </c:forEach>
 
@@ -156,9 +160,10 @@
 									onclick="location.href='${ pageContext.request.contextPath }/product/productInsert.do'">등록하기</button>
                         </nav>
                         <!-- Pagination -->
-                        <div>
-                            <c:out value = "${ pageBar }" escapeXml = "false" />
+                        <div id="pageOriginDiv">
+	                        <c:out value="${pageBar}" escapeXml="false"/>
                         </div>
+                        <div id="pageDiv"></div>
                     </div>
                 </div>
             </div>
@@ -183,6 +188,9 @@
 	   		var type = $("input[name=ptype]:checked").val();
 			var order = $("#orderBySelect option:selected").val();
 			var count = $("#countSelect option:selected").val();
+			console.log("type : " + type);
+			console.log("order : " + order);
+			console.log("count : " + count);
 			$.ajax({
 				  url : "${pageContext.request.contextPath}/product/productListType.do"
 				, data : {
@@ -206,34 +214,77 @@
 			$("#pageDiv").empty();
 			
 	 	    for(var i in list){
-	 	    	
 	 	    	var pprice = list[i].pprice;
  	    		price = parseInt(pprice).toLocaleString();
-	 	    	
-	    	    $("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'		<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+ list[i].pno+'">'
-						    	    	   +			list[i].ptitle
-						    	    	   +'		</a></p>'
-						    	    	   +'		<h6><span>'+price+'</span>당근</h6>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-					    	   );
-	 	    	
+	    	    if(list[i].pstatus == 2){
+		    	    $("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
+							    	    	   +'	<div class="single-product-area mb-50">'
+							    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+		    	    						   +'			<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료</h4>'
+		    	    						   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+	    	    							   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'">'
+						   					   +'				<img style="height: 300px; width: 255px; opacity: 0.2;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+			    	    	   				   +'			</a>'
+											   +'			<div class="product-meta d-flex">'
+							    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+							    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+							    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+							    	    	   +'			</div>'
+							    	    	   +'		</div>'
+							    	    	   +'		<div class="product-info mt-15 text-center">'
+							    	    	   +'			<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+ list[i].pno+'">'
+							    	    	   +				list[i].ptitle
+							    	    	   +'			</a></p>'
+							    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+							    	    	   +'		</div>'
+							    	    	   +'	</div>'
+							    	    	   +'</div>'
+						    	   );
+				
+	    	    } else {
+	    	    	$("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
+							    	    	   +'	<div class="single-product-area mb-50">'
+							    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+				 						   	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+											   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'">'
+						   					   +'				<img style="height: 300px; width: 255px;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+					    	   				   +'			</a>'
+											   +'			<div class="product-meta d-flex">'
+							    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+							    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+							    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+							    	    	   +'			</div>'
+							    	    	   +'		</div>'
+							    	    	   +'		<div class="product-info mt-15 text-center">'
+							    	    	   +'			<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+ list[i].pno+'">'
+							    	    	   +				list[i].ptitle
+							    	    	   +'			</a></p>'
+							    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+							    	    	   +'		</div>'
+							    	    	   +'	</div>'
+							    	    	   +'</div>'
+		    	   );
+	    	    }
+	 	    
 			}
 	 	   $("#pageDiv").append('<c:out value="'+pageBar+'" escapeXml="false"/>');
 			
 		}
+		
+		$(function(){
+			
+			var count = '${condition.count}' == 9 ? 0 : 18 ? 1 : 2;
+			var order = '${condition.order}' == 1 ? 0 : 1;
+			
+			if('${condition.page gt 1}'){
+				$("input[name=ptype]").eq('${condition.pcno}').attr('checked', 'checked');
+				
+				$("#countSelect option").eq(count).attr('selected', 'selected');	
+				
+				$("#orderBySelect option").eq(order).attr('selected', 'selected');
+			}
+		});
     </script>
+
 
 <c:import url="../../views/common/footer.jsp"/>

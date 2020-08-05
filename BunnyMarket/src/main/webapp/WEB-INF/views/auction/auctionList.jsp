@@ -41,11 +41,11 @@
                         <div class="search_by_terms">
                             <form class="form-inline">
                                 <select class="custom-select widget-title" id="orderBySelect">
-                                  <option selected value="1">최신글 보기</option>
+                                  <option value="1">최신글 보기</option>
                                   <option value="2">예전글 보기</option>
                                 </select>
                                 <select class="custom-select widget-title" id="countSelect">
-                                  <option selected value="9">9개씩 보기</option>
+                                  <option value="9">9개씩 보기</option>
                                   <option value="18">18개씩 보기</option>
                                   <option value="36">36개씩 보기</option>
                                 </select>
@@ -119,7 +119,7 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img" style="height: 300px; width: 255px;" >
+	                                    <div class="product-img" style="height: 300px; width: 255px;" id="pImg-${st.index}">
 	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
 	                                        	<img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/${p.PImg}" alt="">
@@ -179,6 +179,12 @@
 				$("#pCarrot-"+i).text(parseInt(originB).toLocaleString());
 			}
 	   		
+			var Pstatus = '${p.PStatus}';
+    		if(Pstatus == 2){
+    			$('<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료된 상품입니다.</h4>').appendTo('#pImg-${st.index}');
+    			$('#pImg-${st.index} img').css('opacity', '0.2');
+    		}
+			
 		}
    		
    	});
@@ -199,6 +205,8 @@
    		var type = $("input[name=ptype]:checked").val();
 		var order = $("#orderBySelect option:selected").val();
 		var count = $("#countSelect option:selected").val();
+		
+		count = count == 0 ? 0 : $("#countSelect option:selected").val();
 		console.log(type);
 		$.ajax({
 			  url : "${pageContext.request.contextPath}/auction/auctionListType.do"
@@ -232,31 +240,73 @@
  	    	} else {
  	    		price = parseInt(bprice).toLocaleString();
  	    	}
- 	    	
-    	    $("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
-					    	    	   +'	<div class="single-product-area mb-50">'
-					    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-					    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
-					    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'" alt=""></a>'			
-					    	    	   +'			<div class="product-meta d-flex">'
-					    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-					    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-					    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-					    	    	   +'			</div>'
-					    	    	   +'		</div>'
-					    	    	   +'	<div class="product-info mt-15 text-center">'
-					    	    	   +'		<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+ list[i].pno+'">'
-					    	    	   +			list[i].ptitle
-					    	    	   +'		</a></p>'
-					    	    	   +'		<p id="bidderCount-'+ i +'">경매 참가자 : '+ list[i].bcount +' 명</p>'
-					    	    	   +'		<h6><span>'+price+'</span>당근</h6>'
-					    	    	   +'	</div>'
-					    	    	   +'</div>'
-				    	   );
+ 	    	if(list[i].pstatus == 2){
+	    	    $("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+	    	    						   +'			<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료</h4>'
+	    	    						   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+    	    							   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'">'
+					   					   +'				<img style="height: 300px; width: 255px; opacity: 0.2;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+		    	    	   				   +'			</a>'
+										   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'		<div class="product-info mt-15 text-center">'
+						    	    	   +'			<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+ list[i].pno+'">'
+						    	    	   +				list[i].ptitle
+						    	    	   +'			</a></p>'
+						    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+					    	   );
+			
+    	    } else {
+    	    	$("#productForType").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+			 						   	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+										   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+list[i].pno+'">'
+					   					   +'				<img style="height: 300px; width: 255px;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+				    	   				   +'			</a>'
+										   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'		<div class="product-info mt-15 text-center">'
+						    	    	   +'			<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+ list[i].pno+'">'
+						    	    	   +				list[i].ptitle
+						    	    	   +'			</a></p>'
+						    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+	    	   );
+    	    }
  	    	
 		}
  	   $("#pageDiv").append('<c:out value="'+pageBar+'" escapeXml="false"/>');
 		
 	}
+	
+	$(function(){
+		
+		var count = '${condition.count}' == 9 ? 0 : 18 ? 1 : 2;
+		var order = '${condition.order}' == 1 ? 0 : 1;
+		
+		if('${condition.page gt 1}'){
+			$("input[name=ptype]").eq('${condition.pcno}').attr('checked', 'checked');
+			
+			$("#countSelect option").eq(count).attr('selected', 'selected');	
+			
+			$("#orderBySelect option").eq(order).attr('selected', 'selected');
+		}
+	});
 </script>
 <c:import url="../../views/common/footer.jsp"/>
