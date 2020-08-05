@@ -256,7 +256,9 @@
 		SELECT COUNT(*) 
 		  FROM PRODUCT
 		 WHERE PTYPE = 1
+		 <if test="pcno neq 0">
 		   AND PCNO = #{pcno}
+		 </if>
 	</select>
 	
 	<select id="selectSproductTotalContent" parameterType = "hashmap" resultType = "_int">

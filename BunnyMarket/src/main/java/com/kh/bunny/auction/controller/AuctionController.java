@@ -26,6 +26,7 @@ import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
+import com.kh.bunny.common.util.ProductAjaxUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -47,27 +48,44 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
-				  @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
+				  @RequestParam(value="pcno", required=false, defaultValue = "0") int pcno
+				, @RequestParam(value="order", required=false, defaultValue = "1") int order
+				, @RequestParam(value="count", required=false, defaultValue = "9") int count
+				, @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
 				, Model model, HttpServletRequest request
 			) {
 		
-		int numPerPage = 9;
-		List<Map<String, String>> list = auctionService.selectAuctionList(aPage, numPerPage);
+
+		int numPerPage = 0;
+		System.out.println("count : " + count);
+		if(count == 18) {
+			numPerPage = 18;
+		} else if (count == 36){
+			numPerPage = 36;
+		} else {
+			numPerPage = 9;
+		}
 		
-		System.out.println("무엇이 들어있느냐? : " + list);
-		System.out.println("무엇이 들어있느냐? : " + list.size());
+		Map<String, Integer> conditionMap = new HashMap<String, Integer>();
 		
+		conditionMap.put("order", order);
+		conditionMap.put("pcno", pcno);
+		conditionMap.put("count", count);
+		conditionMap.put("page", aPage);
 		
-		int totalContents = auctionService.selectAuctionTotalContents();
+		List<Map<String, String>> list = auctionService.selectAuctionTypeList(aPage, numPerPage, conditionMap);
+		
+		int totalContents = auctionService.selectAuctionTypeTotalContents(conditionMap);
+		String pageBar = ProductAjaxUtils.getPageBar(totalContents, aPage, numPerPage, conditionMap, "auctionList.do");
+		
 		List<Integer> countList = auctionService.selectTypeCount();
-		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionList.do");
 		
 		model.addAttribute("list", list)
 			 .addAttribute("totalContents", totalContents)
 			 .addAttribute("numPerPage", numPerPage)
 			 .addAttribute("pageBar", pageBar)
-			 .addAttribute("typeCount", countList);
+			 .addAttribute("typeCount", countList)
+			 .addAttribute("condition", conditionMap);
 		
 		return "auction/auctionList";
 	}
@@ -427,18 +445,22 @@ public class AuctionController {
 	
 	@RequestMapping("/auction/auctionListType.do")
 	@ResponseBody
-	public Map<String, Object> auctionListType(@RequestParam int pcno, @RequestParam int order, @RequestParam int count
+	public Map<String, Object> auctionListType(
+			  @RequestParam(value="pcno", required=false, defaultValue = "0") int pcno
+			, @RequestParam(value="order", required=false, defaultValue = "1") int order
+			, @RequestParam(value="count", required=false, defaultValue = "9") int count
 			, @RequestParam(value = "pPage", required = false, defaultValue = "1") int aPage
 			, HttpServletRequest request
 		) {
 	
-		
-		int numPerPage = 9;
-		
+		int numPerPage = 0;
+		System.out.println("count : " + count);
 		if(count == 18) {
 			numPerPage = 18;
 		} else if (count == 36){
 			numPerPage = 36;
+		} else {
+			numPerPage = 9;
 		}
 		
 		Map<String, Integer> conditionMap = new HashMap<String, Integer>();
@@ -448,12 +470,8 @@ public class AuctionController {
 		
 		List<Map<String, String>> list = auctionService.selectAuctionTypeList(aPage, numPerPage, conditionMap);
 		
-		System.out.println("타입 들어있느냐? : " + list);
-		System.out.println("타입 들어있느냐? : " + list.size());
-		
 		int totalContents = auctionService.selectAuctionTypeTotalContents(conditionMap);
-		
-		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "auctionListType.do");
+		String pageBar = ProductAjaxUtils.getPageBar(totalContents, aPage, numPerPage, conditionMap, "auctionList.do");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);

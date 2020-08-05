@@ -17,6 +17,15 @@
 		<!-- sql 태그의 쿼리를 가져다 쓸 때는 include 태그를 사용한다. -->
 		<include refid="selectSQL"/>
 		WHERE P.PTYPE = 2
+		  <if test="pcno neq 0">
+			  AND P.PCNO = #{pcno}
+		  </if>
+		  <if test="order eq 1">
+		 	  ORDER BY P.PDATE DESC, 1 DESC
+		  </if>
+		  <if test="order eq 2">
+		  	  ORDER BY P.PDATE ASC, 1 DESC
+		  </if>
         ORDER BY P.PDATE DESC, 1 DESC
 	</select>
 	
@@ -24,6 +33,9 @@
 		SELECT COUNT(*) 
 		  FROM PRODUCT
 		 WHERE PTYPE = 2
+		 <if test="pcno neq 0">
+			  AND P.PCNO = #{pcno}
+		  </if>
 	</select>
 	
 	<select id="selectBidderCount" statementType="CALLABLE" parameterType="hashmap">
@@ -197,7 +209,6 @@
    <select id="selectAuctionTypeList" resultType="Auction">
 		<include refid="selectSQL"/>
 		WHERE P.PTYPE = 2
-		  AND P.PSTATUS = 1
 		  <if test="pcno neq 0">
 			  AND P.PCNO = #{pcno}
 		  </if>
@@ -214,8 +225,9 @@
 		SELECT COUNT(*) 
 		  FROM PRODUCT
 		 WHERE PTYPE = 2
-		   AND PSTATUS = 1
+		 <if test="pcno neq 0">
 		   AND PCNO = #{pcno}
+		 </if>
 	</select>
 
    <select id="goTradeAuction" parameterType="string" resultType = "Auction">
