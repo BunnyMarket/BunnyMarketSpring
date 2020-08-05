@@ -47,6 +47,8 @@ public interface MemberDAO {
 	
 	int selectOneCountDown(String userId);
 
+	Object findPwdUserId(String email);
+
 	
 	
 	

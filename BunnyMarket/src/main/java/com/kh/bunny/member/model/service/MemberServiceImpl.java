@@ -124,6 +124,12 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("service : " + userId);
 		return memberDAO.selectOneCountDown(userId);
 	}
+
+	@Override
+	public Object findPwdUserId(String email) {
+		
+		return memberDAO.findPwdUserId(email);
+	}
 		
 
 	

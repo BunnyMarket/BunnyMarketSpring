@@ -99,7 +99,9 @@
 		 </set> 
 		WHERE USERID = #{userId}	
 	</update>
-	
+	<select id="findPwdUserId" resultType="String">
+		SELECT USERID FROM MEMBER WHERE EMAIL = #{email}
+	</select>
     
 	
 </mapper>

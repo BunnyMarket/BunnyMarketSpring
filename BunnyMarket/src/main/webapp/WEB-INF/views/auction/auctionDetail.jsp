@@ -146,8 +146,10 @@
 						<ul class="nav nav-tabs" role="tablist" id="product-details-tab">
 							<li class="nav-item"><a href="#description"
 								class="nav-link active" data-toggle="tab" role="tab">상세 설명</a></li>
+								<c:if test="${sessionScope.member.nickName ne a.PWriter}">
 							<li class="nav-item"><a href="#addi-info" class="nav-link"
 								data-toggle="tab" role="tab">추가 정보</a></li>
+								</c:if>
 							<li class="nav-item"><a href="#reviews" class="nav-link"
 								data-toggle="tab" role="tab"> 댓글<span class="text-muted">(${pcommentSize })</span>
 							</a></li>
@@ -186,9 +188,9 @@
 											<img src="/bunny/resources/member/profile/${sellerPhoto}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
 										</c:if> <br />
-										<button type="button" class="btn btn-outline-secondary" id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button>
-										<button type="button" class="btn btn-outline-secondary" id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button>
-										<button type="button" class="btn btn-outline-secondary" id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>

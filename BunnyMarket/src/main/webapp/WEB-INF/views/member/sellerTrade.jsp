@@ -69,30 +69,30 @@
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${seller.nickName}');" id="customCheck1">
-                                    <label class="custom-control-label" for="customCheck1">경매중인 상품$ <span class="text-muted"></span></label>
+                                    <label class="custom-control-label" for="customCheck1">경매중인 상품<span class="text-muted"></span></label>
                                     
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck2" onclick="goProductSelling('${seller.nickName}');">
-                                    <label class="custom-control-label" for="customCheck2">판매중인 상품$ <span class="text-muted">(72)</span></label>
+                                    <label class="custom-control-label" for="customCheck2">판매중인 상품<span class="text-muted"></span></label>
                                     
                                 </div>
                                                                                              
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck3" onclick="goCompleteProduct('${seller.nickName}');">
-                                    <label class="custom-control-label" for="customCheck3">구매완료 상품(일반 상품) <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck3">구매완료 상품(일반 상품) <span class="text-muted"></span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2" onclick="goCompleteAuction('${seller.nickName}');">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck7">
-                                    <label class="custom-control-label" for="customCheck7">구매완료 상품(경매 상품) <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck7">구매완료 상품(경매 상품) <span class="text-muted"></span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck8" onclick="goSellCompleteProduct('${seller.nickName}');">
-                                    <label class="custom-control-label" for="customCheck8">판매완료 상품(일반 상품) <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck8">판매완료 상품(일반 상품) <span class="text-muted"></span></label>
                                 </div>
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="radio" name="customCheck" class="custom-control-input" id="customCheck9" onclick="goSellCompleteAuction('${seller.nickName}');">
-                                    <label class="custom-control-label" for="customCheck9">판매완료 상품(경매 상품) <span class="text-muted">(20)</span></label>
+                                    <label class="custom-control-label" for="customCheck9">판매완료 상품(경매 상품) <span class="text-muted"></span></label>
                                 </div>
                                 
                             </div>

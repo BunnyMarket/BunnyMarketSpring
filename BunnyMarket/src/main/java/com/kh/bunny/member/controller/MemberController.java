@@ -150,7 +150,10 @@ public class MemberController {
 
 			if (m == null) {
 				msg = "존재하지 않은 아이디입니다.";
-			} else {
+			}else if(m.getmStatus() == 0) {
+				msg = "관리자에 의해 활동 정지된 아이디입니다. \\n관리자에게 문의해주세요 \\n전화번호 : 010-1111-1234.";
+			}else {
+			
 
 				// ** 비밀번호 암호화 검증
 				// 똑같은 비밀번호라도 암호화된 결과가 다르기 때문에
@@ -385,7 +388,7 @@ public class MemberController {
 		Member member = memberService.findId(m);
 
 		if (member != null) {
-			userId = member.getUserId();
+			userId = "회원님의 아이디는 : " + member.getUserId() + "입니다.";
 		} else {
 			userId = "입력하신 정보에 해당하는 회원이 없습니다.";
 		}
@@ -398,7 +401,7 @@ public class MemberController {
 	// 비밀번호찾기 후 수정
 	@RequestMapping("member/pwdUpdate.do")
 	@ResponseBody
-	public Map<String, Object> resetPwd(Member m) {
+	public Map<String, Object> resetPwd(@RequestParam String email, String userId, Member m) {
 
 		String msg = "";
 
