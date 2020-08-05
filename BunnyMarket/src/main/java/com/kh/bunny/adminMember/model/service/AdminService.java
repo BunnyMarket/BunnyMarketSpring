@@ -17,5 +17,9 @@ public interface AdminService {
 	int insertadminMember(adminMember am);
 	
 	adminMember selectOne(String adminId);
+
+	List<Map<String, Object>> chartCategoryCount();
+	
+	List<Map<String, Object>> chartMonthCount();
 	
 }

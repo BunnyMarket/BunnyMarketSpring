@@ -97,12 +97,20 @@
 		 ORDER BY Q.QDATE DESC
 	</select> -->
    <select id="selectQnAList" resultType="QNA">
-		
-	SELECT Q.*,(CASE WHEN QC.QWRITER LIKE 'adminbunny%' THEN 'Y'
-                  ELSE 'N' END) AS CK
-        FROM QNA Q
-        LEFT JOIN QCOMMENT QC ON Q.QNO = QC.QNO
-        ORDER BY Q.QDATE DESC, (CASE CK WHEN 'Y' THEN 1 ELSE 2 END)	
+	SELECT A.*, NVL(A.MONTH,0) AS AM, P.* , NVL(P.MONTH,0)AS PM FROM
+      (SELECT PTYPE AS P, SUBSTR(PDATE,6,2)MONTH, COUNT(*)PC
+		  FROM PRODUCT
+            WHERE PTYPE =1
+		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+         ORDER BY MONTH ASC)P
+FULL OUTER JOIN 
+        (SELECT PTYPE AS A, SUBSTR(PDATE,6,2)MONTH, COUNT(*)AC
+		  FROM PRODUCT
+            WHERE PTYPE =2
+		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+         ORDER BY MONTH ASC)A 
+ON A.MONTH = P.MONTH
+ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END) 
 	</select>
 	
    <select  id="selectQCommentAllList" resultType= "QComment">

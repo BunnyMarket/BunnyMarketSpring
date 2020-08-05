@@ -59,7 +59,7 @@
 					<li class="nav-item "><a class="nav-link"
 						href=" ${ pageContext.request.contextPath }/admin/main/home.do">
 							<i class="material-icons">notifications</i>
-							<p>관리자 홈 O</p>
+							<p class="li-menu">관리자 홈 </p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						href=" ${ pageContext.request.contextPath }/admin/deal/dealList.do">
@@ -67,40 +67,40 @@
 							<p>거래 현황</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						href=" ${ pageContext.request.contextPath }/views/admin/reportList.jsp">
+						href=" ${ pageContext.request.contextPath }/admin/report/reportList.do">
 							<i class="material-icons">notifications</i>
-							<p>신고 현황</p>
+							<p class="li-menu">신고 현황</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/admin/member/memberList.do">
 							<i class="material-icons">person</i>
-							<p>회원 리스트 O</p>
+							<p>회원 리스트 </p>
 					</a></li>
 					<li class="nav-item  "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">
 							<i class="material-icons">dashboard</i>
-							<p>공지사항 O</p>
+							<p class="li-menu">공지사항 </p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
 						 href="${ pageContext.request.contextPath }/admin/QNA/QnAList.do">	
 						 <i	class="material-icons">library_books</i>
-							<p>Q&A </p>
+							<p class="li-menu">Q&A </p>
 					</a></li>
-					<li class="nav-item "><a class="nav-link"
+				<%-- 	<li class="nav-item "><a class="nav-link"
 						href="${ pageContext.request.contextPath }/views/admin/message.jsp">
 							<i class="material-icons">library_books</i>
 							<p>메세지</p>
-					</a></li>
+					</a></li> --%>
 					<c:if test="${admin.adminId eq 'admin'}">
 						<li class="nav-item "><a class="nav-link"
 							href="${ pageContext.request.contextPath }/admin/adminMember/adminList.do">
 								<i class="material-icons">person</i>
-								<p>관리자 멤버관리 O</p>
+								<p class="li-menu">관리자 멤버관리 </p>
 						</a></li>
 					</c:if>
 					<li class="nav-item "><a class="nav-link"
 						onclick="openHome();"> <i class="material-icons">library_books</i>
-							<p>홈</p>
+							<p class="li-menu">홈</p>
 					</a></li>
 					<!-- <li class="nav-item ">
             <a class="nav-link" href="./icons.html">
@@ -199,7 +199,7 @@
 			<!-- End Navbar -->
 			<script>
 				$(function() {
-					$("p").mouseenter(function() {
+					$(".li-menu").mouseenter(function() {
 						$(this).parent().parent().addClass('navbarTest');
 					}).mouseout(function() {
 						$(this).parent().parent().removeClass('navbarTest');

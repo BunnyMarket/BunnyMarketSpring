@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.service.AdminService;
 import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.common.util.Utils;
@@ -34,7 +36,30 @@ public class adminMemberController {
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	@RequestMapping("/admin/main/home.do")
-	public String goHome() {
+	public String goHome(Model model) {
+		
+		List<Map<String, Object>> list = adminService.chartCategoryCount();
+		List<Map<String, Object>> month = adminService.chartMonthCount();
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String chartJson = null;
+		String monthJson = null;
+		
+		
+		try {
+			chartJson = mapper.writeValueAsString(list);
+			monthJson =mapper.writeValueAsString(month);
+		
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		System.out.println("monthJson : " + monthJson );
+	
+		model.addAttribute("list", list)
+				.addAttribute("chartJson", chartJson)
+				.addAttribute("monthJson", monthJson);
+		
 		return "admin/dashboard";
 	}
 	

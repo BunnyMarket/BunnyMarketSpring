@@ -18,12 +18,13 @@
 	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 	
 	.contents {font-weight:bold;display:block;}
+	.no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 	
-	#modal2 {text-align: center;
+	/* .modal {text-align: center;
 	@media screen and (min-width: 768px) { 
     #modal2:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
 	#modal2-dialog {display: inline-block;text-align: left;vertical-align: middle;}
-
+ */
 	.wblur{-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(5px);}
 	.disabledbutton { pointer-events: none;opacity: 0.4;}
 </style>
@@ -79,13 +80,11 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<c:if test="${a.PStatus eq 1 }">
-							<c:if test="${sessionScope.member.userId ne a.PWriter}">
-								<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-										data-toggle="modal" data-target="#myModal">
-									입찰하기
-								</button>
-							</c:if>
+						<c:if test="${sessionScope.member.userId ne a.PWriter}">
+							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+									data-toggle="modal" data-target="#myModal">
+								입찰하기
+							</button>
 						</c:if>
 						<c:if test="${sessionScope.member.userId eq a.PWriter}">
 							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
@@ -489,8 +488,65 @@
 	</div>
 </div>
 </div>
-<!-- ##### Single Product Details Area End ##### -->
 
+<div class="modal fade" id="adminwarning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel"></h3>
+				
+			</div>
+				<div class="modal-body row">
+					<div class="col-12">
+					<h1>관리자가 확인중인 상품입니다.</h1>
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			
+		</div>
+	</div>
+</div>
+</div>
+<!-- ##### Single Product Details Area End ##### -->
+<script>
+// 관리자
+	$(function(){
+		var pst = ${a.PStatus};
+		if (pst ==0){
+			$('#adminwarning').modal();
+			$('section').addClass('wblur disabledbutton').addClass('no-drag');
+		}
+	});
+	
+
+$(function(){
+	$("#blur").click(function(){
+		$.ajax({
+			type : 'POST',
+			url : '${pageContext.request.contextPath}/product/productTypeChange.do',
+			data : {pno : "${a.pno}"},
+			dataType : "json",
+			success: function(data){
+				if(data.kill == true){
+					alert("제재 성공");
+					$('#adminwarning').modal();
+					$('section').addClass('wblur disabledbutton').addClass('no-drag');
+					
+				} else {
+					console.log(data);
+				}
+			},
+			fail : function(data){
+				alert("제재 실패");
+				console.log(data);
+			}
+		});
+	});
+});
+
+
+</script>
 <script>
 	
 	// 지도 넣기 
@@ -833,6 +889,7 @@
 			
 		});
 		
+	
 	});
 </script>
 

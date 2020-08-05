@@ -50,4 +50,15 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("memberService" +adminId);
 		return adminDAO.selectOne(adminId);
 	}
+
+	@Override
+	public List<Map<String, Object>> chartCategoryCount() {	
+		return adminDAO.selectChartCategoryCount();
+	}
+
+
+	@Override
+	public List<Map<String, Object>> chartMonthCount() {
+		return adminDAO.selectChartMonthCount();
+	}
 }

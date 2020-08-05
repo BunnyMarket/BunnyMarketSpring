@@ -173,7 +173,14 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+ table{
+	 text-align : center; 
+	 }
   	
+  	th{
+		color : black;
+		font-weight :700;
+	}
   	
   </style>
 
