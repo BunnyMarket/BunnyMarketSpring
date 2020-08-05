@@ -35,6 +35,8 @@
 		ORDER BY PDATE DESC, PNO DESC
 	</select>
 	
+	
+	
 	<!-- 상품 목록을 지도에 출력하기 위한 쿼리 -->
 	<select id="selectProductListMap" resultType = "Product">
 		SELECT *
@@ -255,6 +257,29 @@
 		  FROM PRODUCT
 		 WHERE PTYPE = 1
 		   AND PCNO = #{pcno}
+	</select>
+	
+	<select id="selectSproductTotalContent" parameterType = "hashmap" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM PRODUCT
+		  
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 
+		 <where>
+			<if test="condition == 'writer'">
+				PWRITER LIKE #{myPattern}
+			</if> 
+			<if test="condition == 'content'">
+				PCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				PTITLE LIKE #{myPattern}
+			</if>
+			
+			<if test="condition == 'all'">
+				PWRITER LIKE #{myPattern} OR PCONTENT LIKE #{myPattern} OR PTITLE LIKE #{myPattern} 
+			</if> 
+		</where>
 	</select>
 	
 </mapper>

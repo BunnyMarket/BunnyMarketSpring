@@ -74,13 +74,16 @@ public interface ProductDAO {
 
 	List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName);
 
-	List<Object> searchProductList(String keyword, String condition);
-	
+	List<Object> searchProductList(String keyword, String condition, int pPage, int numPerPage);
+
 	List<Map<String, String>> selectProductTypeList(int aPage, int numPerPage, Map<String, Integer> conditionMap);
 
 	int selectProductTypeTotalContents(Map<String, Integer> conditionMap);
 	
 	Integer selectTypeCount(int pcno);
+
+	int selectSproductTotalContents(String keyword, String condition);
+
 	
 	
 

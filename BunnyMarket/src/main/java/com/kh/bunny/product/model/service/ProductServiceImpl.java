@@ -154,8 +154,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<Object> searchProductList(String keyword, String condition) {
-		return productDAO.searchProductList(keyword, condition);
+	public List<Object> searchProductList(String keyword, String condition, int pPage, int numPerPage) {
+		return productDAO.searchProductList(keyword, condition, pPage, numPerPage);
 	}
 	
 	@Override
@@ -179,5 +179,11 @@ public class ProductServiceImpl implements ProductService {
 	public int selectProductTypeTotalContents(Map<String, Integer> conditionMap) {
 		return productDAO.selectProductTypeTotalContents(conditionMap);
 
+	}
+
+
+	@Override
+	public int selectSproductTotalContents(String keyword, String condition) {
+		return productDAO.selectSproductTotalContents(keyword, condition);
 	}
 }
