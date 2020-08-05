@@ -19,4 +19,8 @@ public interface AdminDAO {
 	int insertadminMember(adminMember am);
 	
 	adminMember selectOne(String adminId);
+
+	List<Map<String, Object>> selectChartCategoryCount();
+
+	List<Map<String, Object>> selectChartMonthCount();
 }

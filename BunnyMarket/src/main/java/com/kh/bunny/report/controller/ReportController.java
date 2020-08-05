@@ -289,8 +289,35 @@ public class ReportController {
 	}
 	
 	
+	// admin 신고 리스트 출력
+	@RequestMapping("/admin/report/reportList.do")
+	public String ReportList(@RequestParam(value ="pPage", required = false, defaultValue = "1") int cPage,
+			Model model) {
+		
+		int numPerPage = 10;
+		
+		List<Map<String, String>> list = reportService.selectReportList(cPage, numPerPage);
+		
+		System.out.println("reportList 가져오는지 확인:" + list);
+		
+		int totalContents = reportService.selectReportTotalContents();
+		
+		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "reportList.do");
+		
+		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
+		           .addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
+		
+		return "admin/report/reportList";
+	}
 	
-	
+	@RequestMapping("/admin/report/reportSelectOneAdmin.do")
+	public String adminSelectOne(@RequestParam int rno, Model model) {
+		Report r = reportService.selectOneReport(rno);
+		
+		model.addAttribute("report",r);
+		
+		return "admin/report/reportDetail";
+	}
 	
 	
 	

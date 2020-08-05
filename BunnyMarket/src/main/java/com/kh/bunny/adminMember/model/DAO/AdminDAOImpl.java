@@ -49,5 +49,15 @@ public class AdminDAOImpl implements AdminDAO {
 		System.out.println("selectOne DAO" + adminId);
 		return sqlSession.selectOne("adminMapper.LoginMember", adminId);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectChartCategoryCount() {
+		return sqlSession.selectList("adminMapper.chartCategoryCount");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectChartMonthCount() {
+		return sqlSession.selectList("adminMapper.chartChartMonthCount");
+	}
 }
 

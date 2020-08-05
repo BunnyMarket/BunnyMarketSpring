@@ -21,13 +21,14 @@
 	
 	.contents {font-weight:bold;display:block;}
 	
-	.modal {text-align: center;
+	/* .modal {text-align: center;
 	@media screen and (min-width: 768px) { 
-    .modal:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
+    .adminwarning:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
 	.modal-dialog {display: inline-block;text-align: left;vertical-align: middle;}
-	
-		.wblur{-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(5px);}
+	 */
+	.wblur{-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(5px);}
 	.disabledbutton { pointer-events: none;opacity: 0.4;}
+	.no-drag {-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 
 
 </style>
@@ -395,7 +396,7 @@
 </section>
 <!-- ##### Single Product Details Area End ##### -->
 
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="adminwarning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -442,13 +443,14 @@
 </div>
 
 <script>
+//관리자 admin
 
 $(function(){
-	if('${product.PStatus == 0}'){
-		$('#myModal1').modal();
-		$('section').addClass('wblur');
+	var st = ${product.PStatus};
+	if(st == 0){
+		$('#adminwarning').modal();
+		$('section').addClass('wblur disabledbutton').addClass('no-drag');
 	}
-	
 });
 $(function(){
 	console.log('${product.PStatus}')});
@@ -460,11 +462,13 @@ $(function(){
 		$.ajax({
 			type : 'POST',
 			url : '${pageContext.request.contextPath}/product/productTypeChange.do',
-			data : {"pno" : "${product.pno}"},
+			data : {pno : "${product.pno}"},
 			dataType : "json",
 			success: function(data){
 				if(data.kill == true){
 					alert("제재 성공");
+					$('#adminwarning').modal();
+					$('section').addClass('wblur disabledbutton').addClass('no-drag');
 				} else {
 					console.log(data);
 				}

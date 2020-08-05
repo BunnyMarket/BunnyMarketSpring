@@ -54,6 +54,69 @@
    </body> 
 
 <script>
+// 카테고리 별 json
+var chartJson = JSON.parse('${ chartJson }');
+var chartCategory = []; // 카테고리 이름
+var chartCategorycnt=[]; // 카테고리 count수
+
+chartJson.forEach(function(item){
+		console.log("PCONTENT : " + item.PCCONTENT);
+		chartCategory.push(item.PCCONTENT);
+		chartCategorycnt.push(item.CNT);
+});
+
+// 월별 json
+/* var monthPJson = JSON.parse('${monthPJson}');
+var monthAJson = JSON.parse('${monthAJson}');
+var chartMonthP = [];
+var chartMonthcntP =[];
+var chartMonthTypeP=[];
+var chartMonthA = [];
+var chartMonthcntA =[];
+var chartMonthTypeA=[];
+var chartMonth =[];
+
+if(chartMonthP.length>= chartMonthA.length){
+monthPJson.forEach(function(item){
+	chartMonth.push(item.MONTH);
+	chartMonthcntP.push(item.C);
+	chartMonthTypeP.push(item.PTYPE);
+});
+
+monthAJson.forEach(function(item){
+	chartMonthcntA.push(item.C);
+	chartMonthTypeA.push(item.PTYPE);
+});
+} else {
+	monthPJson.forEach(function(item){
+		chartMonthcntP.push(item.C);
+		chartMonthTypeP.push(item.PTYPE);
+	});
+
+	monthAJson.forEach(function(item){
+		chartMonth.push(item.MONTH);
+		chartMonthcntA.push(item.C);
+		chartMonthTypeA.push(item.PTYPE);
+	});
+	
+} */
+
+var monthJson = JSON.parse('${ monthJson }');
+var chartMonth = []; 
+var chartMonthcntP=[]; 
+var chartMonthTypeP=[]; 
+var chartMonthcntA=[]; 
+var chartMonthTypeA=[]; 
+
+monthJson.forEach(function(item){
+		chartMonth.push(item.MONTH);
+		chartMonthcntP.push(item.PC);
+		chartMonthcntA.push(item.AC);
+		chartMonthTypeP.push(item.P);
+		chartMonthTypeA.push(item.A);
+});
+
+
 let chartConfig = {
 		  backgroundColor: '#ecf2f6',
 		  graphset: [
@@ -101,7 +164,7 @@ let chartConfig = {
 		        margin: '45px 20px 38px 45px'
 		      },
 		      scaleX: { //카테고리 목록
-		        values: ['Drug', 'Drug', 'Footwear', 'Gift Card', 'Home', 'Jewelry', 'Garden', 'Other'],
+		        values: chartCategory,
 		        guide: {
 		          visible: false
 		        },
@@ -120,8 +183,8 @@ let chartConfig = {
 		          visible: false
 		        }
 		      },
-		      scaleY: {
-		        values: '0:300:100',
+		      scaleY: {	 // 시작값 : 맥스값 : 증가 단위값
+		        values: '0:30:1',
 		        guide: {
 		          rules: [
 		            {
@@ -152,7 +215,7 @@ let chartConfig = {
 		      },
 		      series: [
 		        { // 카테고리 목록별 값
-		          values: [100, 100, 100, 200, 100, 100, 100, 100],
+		          values: chartCategorycnt,
 		          styles: [
 		            {
 		              backgroundColor: '#4dbac0'
@@ -304,7 +367,7 @@ let chartConfig = {
 		        }
 		      ]
 		    },
-		    {
+		    { // 선그래프
 		      type: 'line',
 		      backgroundColor: '#fff',
 		      borderColor: '#dae5ec',
@@ -333,8 +396,8 @@ let chartConfig = {
 		      plotarea: {
 		        margin: '50px 25px 70px 46px'
 		      },
-		      scaleY: {
-		        values: '0:100:25',
+		      scaleY: { // 시작값 : 최대값 : 증가값
+		        values: '0:50:5',
 		        guide: {
 		          alpha: 0.5,
 		          lineColor: '#d2dae2',
@@ -352,8 +415,8 @@ let chartConfig = {
 		          visible: false
 		        }
 		      },
-		      scaleX: { 
-		        values: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+		      scaleX: { // 선  월
+		        values: chartMonth,
 		        guide: {
 		          visible: false
 		        },
@@ -418,9 +481,9 @@ let chartConfig = {
 		        visible: false
 		      },
 		      series: [
-		        { 
-		          text: 'Kenmore',
-		          values: [69, 68, 54, 48, 70, 74, 98, 70, 72, 68, 49, 69],
+		        { // 선 일반
+		          text: '일반상품',
+		          values: chartMonthcntP,
 		          lineColor: '#4dbac0',
 		          lineWidth: '2px',
 		          marker: {
@@ -434,13 +497,22 @@ let chartConfig = {
 		          shadow: false
 		        },
 		        {
-		          text: 'Craftsman',
-		          values: [51, 53, 47, 60, 48, 52, 75, 52, 55, 47, 60, 48],
-		          lineColor: '#25a6f7',
+		          text: '옥션',
+		          values: chartMonthcntA,
+		        /*   lineColor: '#25a6f7',
 		          lineWidth: '2px',
 		          marker: {
 		            backgroundColor: '#fff',
 		            borderColor: '#1993e0',
+		            borderWidth: '1px',
+		            shadow: false,
+		            size: 3
+		          }, */
+		          lineColor: '#ad6bae',
+		          lineWidth: '2px',
+		          marker: {
+		            backgroundColor: '#fff',
+		            borderColor: '#975098',
 		            borderWidth: '1px',
 		            shadow: false,
 		            size: 3
@@ -449,7 +521,7 @@ let chartConfig = {
 		          shadow: false,
 		          visible: true
 		        },
-		        {
+		       /*  {
 		          text: 'DieHard',
 		          values: [42, 43, 30, 50, 31, 48, 55, 46, 48, 32, 50, 38],
 		          lineColor: '#ad6bae',
@@ -479,7 +551,7 @@ let chartConfig = {
 		          },
 		          palette: 3,
 		          shadow: false
-		        }
+		        } */
 		      ]
 		    }
 		  ]

@@ -88,8 +88,16 @@
 	 text-align: center;
 	 border-radius:5px;
 	 }
-  
-  </style>
+	 
+	 table{
+	 text-align : center; 
+	 }
+  	
+	th{
+		color : black;
+		font-weight :700;
+	}
+</style>
 </head>
 	<%@ include  file="common/header.jsp"  %>
       <div class="content">
@@ -97,14 +105,14 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="background : orange;">
                   <h4 class="card-title ">거래 현황 확인</h4>
                   <p class="card-category"> </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
                     <table class="table" >
-                      <thead class=" text-primary">
+                      <thead class=" text-primary" >
                         <th>판매자 회원명 </th>
                         <th>상품페이지 제목</th>
                         <th>낙찰(판매)된 가격</th>

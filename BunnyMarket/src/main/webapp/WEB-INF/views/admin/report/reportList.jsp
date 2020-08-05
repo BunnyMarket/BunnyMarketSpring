@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Dashboard by Creative Tim
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -89,41 +88,73 @@
 	 text-align: center;
 	 border-radius:5px;
 	 }
-  
+	  table{
+	 text-align : center; 
+	 }
+  	
+  th{
+		color : black;
+		font-weight :700;
+	}
   </style>
 </head>
-	<%@ include  file="common/header.jsp"  %>
+	<%@ include  file="../common/header.jsp"  %>
       <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header card-header-primary">
+                <div class="card-header card-header-primary" style="background : orange">
                   <h4 class="card-title ">신고 현황</h4>
                   <p class="card-category"> </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                    <table class="table" >
+                    <table class="table" id="tableArea">
                       <thead class=" text-primary">
-                        <th>신고일 </th>
-                        <th>신고자 유형</th>
-                        <th>게시글</th>
-                        <th>pass</th>
+                        <tr>
+
+								<th style="width: 5%; color : black;">번호</th>
+								<th colspan="2" style="width: 40%; text-align: center; color : black;">제목</th>
+								<th style="padding-right: 80px; width: 15%; text-align: center; color : black;">작성자</th>
+								<th style="padding-left: 8px; width: 15%; text-align: center;color : black;">등록일자</th>
+								<th style="padding-left: 8px; width: 10%; text-align: center;color : black;">첨부파일</th>
+								<th style="padding-left: 8px; width: 15%; text-align: center;color : black;">유형</th>
+								<!-- https://stackoverflow.com/questions/12128425/contain-form-within-a-bootstrap-popover -->
+								
+								<th></th>
+							</tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>2020-07-01</td>
-                          <td>구매자</td>
-                          <td>바닐라 라뗴</td>
-                          <td><button class="btn">pass</button></td>
-                        </tr>
-                      <tr>
-                          <td>2020-07-03</td>
-                          <td>판매자</td>
-                          <td>돌체 라뗴</td>
-                          <td><button class="btn">pass</button></td>
-                      </tr>
+                      <c:forEach items="${list }" var="r" >
+						
+						<input type="hidden" value="${r.RNo}" />
+					        <tr id="${r.RNo}">
+					        
+							<td>${r.RNo }</td>
+							<td colspan="2" style="padding-left: 150px;"> ${r.RTitle}</td>
+							<td>${r.RWriter }</td>
+							<td style="padding-left: 45px;">${r.RDate }</td>
+							
+							<c:if test="${fn:contains(r.RContent, '<img') == 'true' }">
+							 <td style="color:green;" align="center">첨부</td>
+							</c:if>
+							<c:if test="${fn:contains(r.RContent, '<img') == 'false' }">
+							<td style="color: red;" align="center">없음</td>
+							</c:if>
+							
+							<c:if test="${r.PType eq 1 }">
+							<td style="color:black;" align= "center">상품</td>
+							</c:if>
+							 <c:if test="${r.PType eq 2  }"> 
+							 <td style="color:blue;" align= "center">경매</td>
+							 </c:if>
+							 <c:if test="${r.pno eq 0}">
+							 <td style="color:gray;" align= "center">일반</td>
+							 </c:if>
+							 <td></td>
+							</tr>
+							</c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -133,13 +164,9 @@
 	<br/>
 <div class="pagingArea" >
 	<div class="pa">
-		<button class="paging"><</button>
-		<button class="paging">1</button>
-		<button class="paging">2</button>
-		<button class="paging">3</button>
-		<button class="paging">4</button>
-		<button class="paging">5</button>
-		<button class="paging">></button>
+     <div>
+      	<c:out value="${pageBar}" escapeXml="false"/>
+     </div>
 	</div>
 </div>
 <br/>
@@ -157,6 +184,30 @@
 </div>
 <br>
 <br>
-    <%@ include file="common/footer.jsp" %>
+<script>
+$(function() {
+	$("#tableArea td")
+			.mouseenter(function() {
+				$(this).parent().css({
+					"background" : "#FAD7A0",
+					"cursor" : "pointer"
+				});
+			})
+			.mouseout(function() {
+				$(this).parent().css({
+					"background" : "white"
+				});
+			})
+			.click(
+					function() {
+						var rNo = $(this).parent().attr("id");
+						console.log("rNo=" + rNo);
+						location.href = "${pageContext.request.contextPath}/admin/report/reportSelectOneAdmin.do?rno=" + rNo;
+					});
+});
+
+	
+</script>
+    <%@ include file="../common/footer.jsp" %>
 
 

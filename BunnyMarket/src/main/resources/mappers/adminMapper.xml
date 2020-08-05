@@ -37,6 +37,46 @@
 	<select id="LoginMember" parameterType="String" resultType="AdminMember">
 		SELECT * FROM ADMIN WHERE ADMINID = #{adminId}
 	</select>
+	
+	<select  id="chartCategoryCount" resultType = "HashMap">
+		SELECT C.PCNO, C.PCCONTENT ,NVL(P.A,0)AS CNT
+		  FROM (
+		       SELECT PCNO, COUNT(*) A
+		         FROM PRODUCT 
+		        GROUP BY PCNO
+		  )P
+		 RIGHT JOIN PCATEGORY C ON c.pcno = P.PCNO
+	</select>
+	
+	<select id="chartChartMonthPCount" resultType="HashMap">
+		 SELECT PTYPE, SUBSTR(PDATE,6,2)MONTH, COUNT(*)C
+		  FROM PRODUCT
+           WHERE PTYPE =1
+		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+		 ORDER BY MONTH ASC
+	</select>
+	<select id="chartChartMonthACount" resultType="HashMap">
+		 SELECT PTYPE, SUBSTR(PDATE,6,2)MONTH, COUNT(*)C
+		  FROM PRODUCT
+           WHERE PTYPE =2
+		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+		 ORDER BY MONTH ASC
+	</select>
+	
+		<select id="chartChartMonthCount" resultType="HashMap">
+	SELECT A.*, NVL(A.MONTH,0) AS AM, P.* , NVL(P.MONTH,0)AS PM 
+	  FROM (SELECT PTYPE AS P, SUBSTR(PDATE,6,2)MONTH, COUNT(*)PC
+		  	  FROM PRODUCT
+             WHERE PTYPE =1
+		 	 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+        	 ORDER BY MONTH ASC)P
+	  FULL OUTER JOIN (SELECT PTYPE AS A, SUBSTR(PDATE,6,2)MONTH, COUNT(*)AC
+					     FROM PRODUCT
+			            WHERE PTYPE =2
+					 	GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+			         	ORDER BY MONTH ASC)A ON A.MONTH = P.MONTH
+	 ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END)   
+	</select>
 </mapper>
 
 

@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-<head>  
+<head> 
 <style>
   .btn {
 	box-shadow:inset 0px 0px 0px 0px #97c4fe;
@@ -76,96 +76,56 @@
 	 text-align: center;
 	 border-radius:5px;
 	 }
- table{
-	 text-align : center;
-	 }
-	 th{
-		color : black;
-		font-weight :700;
-	}
+  
   </style>
- 
-	<c:import url="../admin/common/header.jsp"/>
-      <div class="content">
+<c:import url="../common/header.jsp"/>
+	 <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary" style="background : orange">
-                  <h4 class="card-title ">QnA</h4>
+                  <h4 class="card-title ">${report.RTitle}</h4>
                   <p class="card-category"> </p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" >
-                    <table class="table" id="tableArea" >
-                      <thead class=" text-primary">
-                        <th>번호 </th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>날짜</th>
-                        <th>답변여부</th>
-                      </thead>
-                     <c:forEach items="${list}" var ="q">
-                     	<tr id="${q.qno}" >
-	                     	<td>${q.qno}</td>
-							<td>${q.QTitle}</td>
-							<td>${q.QWriter}</td>
-							<td>${q.QDate}</td>
-							<c:if test="${q.ck eq 'Y'}">
-								<td style="color: black;" align="center">확인완료</td>
-							</c:if>
-							<c:if test="${q.ck eq 'N'}">
-								<td style="color: red;" align="center">확인필요</td>
-							</c:if>
+                   <div class="single-post-details-area">
+						<div class="content">
+							<h4 class="post-title"></h4>
+							<br />
+							<div class="post-meta mb-30">
+								<a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>${report.RDate}</a>  &nbsp;&nbsp;
+								<a href="#"><i class="fa fa-user" aria-hidden="true"></i>${report.RWriter}</a> <br><br>
+								<a href="#"><i class="fa " aria-hidden="true"></i>${report.rcContent}</a><br><br>
+								<a href="#"><i class="fa fa-user" aria-hidden="true">신고 접수 아이디: </i>${report.reported}</a>
+							</div>
+							<div class="post-meta mb-30">
+							</div>
+							<div></div>
 							
-						</tr>
-                     </c:forEach>
-                    </table>
+							<br/>
+							<div style="font-size : 30px;">${report.RContent}</div>
+							<br /> <br /> <br />
+							<blockquote>
+								<div class="blockquote-text">
+										<h5>“신고된 게시물/댓글은 담당자 확인 후 기준에 맞게 조치하고 있습니다.
+									           &nbsp;바니마켓은 건강하고 안전한 인터넷 환경 마련을
+										위해 최선의 노력을 하고 있습니다. ”</h5>
+									<h5>YOUNG BUNNY</h5>
+								</div>
+							</blockquote>
+
+						</div>
+					</div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-         </div>
-      </div>
-	<br/>
-<div class="pagingArea" >
-	<c:out value="${pageBar}" escapeXml="false"/>
-</div>
-<br/>
-<br/>
-<div class="searchArea">
-	<select id="searchCondition" name="searchCondition" >
-		<option value="title">제목</option>
-		<option value="content">내용</option>
-	</select>&nbsp;&nbsp;
-	<input type="search" id="keyword"> &nbsp;
-	<button class=" btn paging" onclick="search();">검색</button>
-</div>
+       
+  
 	
-<br>
-<br>
- <script>
- 	
-  	// 메뉴 바 색
-  	 	$(function(){
-  		$("#tableArea td").mouseenter(function(){
-  			$(this).parent().css({"background":"#FAD7A0","cursor":"pointer"});
-  		}).mouseout(function(){
-  			$(this).parent().css({"background" : "white"});
-  		}).click(function(){
-  			var QnANo = $(this).parent().attr("id");
-  			console.log("QnANo="+QnANo);
-  			location.href="${pageContext.request.contextPath}/QNA/QNASelectOneAdmin.do?qno=" + QnANo;
-  		});
-  	}); 
-  	
-  	function search(){
-  		location.href="${ pageContext.request.contextPath}/admin/notice/searchNotice.do?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
-  	}
-  	
-  </script>
-<c:import url="../admin/common/footer.jsp"/>
+	 <button class="btn paging" style="float: left;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeList.do'">리스트로</button>
+		    &nbsp; &nbsp; &nbsp;
 
 
-
+<c:import url="../common/footer.jsp"/>
