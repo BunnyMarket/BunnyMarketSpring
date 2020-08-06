@@ -61,4 +61,14 @@ public class AdminServiceImpl implements AdminService {
 	public List<Map<String, Object>> chartMonthCount() {
 		return adminDAO.selectChartMonthCount();
 	}
+
+	@Override
+	public List<Object> searchAdminMemberList(String keyword, String condition, int pPage, int numPerPage) {
+		return  adminDAO.searchAdminList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSAdminMemberTotalContents(String keyword, String condition) {
+		return adminDAO.selectSAdminMemberTotalContents(keyword, condition);
+	}
 }

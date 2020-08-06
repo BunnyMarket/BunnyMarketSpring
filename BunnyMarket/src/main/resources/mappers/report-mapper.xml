@@ -54,6 +54,48 @@
 		SELECT * FROM PRODUCT
 		WHERE PNO = #{pno}
 	</select>
+	
+	<select id="searchReportList" parameterType = "hashmap" resultType = "Report">
+		SELECT * FROM REPORT R
+         JOIN PRODUCT P ON R.RNO = P.PNO
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		<where>
+			<if test="condition == 'writer'">
+				RWRITER LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				RTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'type'">
+				PTYPE LIKE #{myPattern}
+			</if>
+			
+			<if test="condition == 'all'">
+				 RWRITER LIKE #{myPattern} OR RTITLE LIKE #{myPattern} OR PTYPE LIKE #{myPattern}
+			</if> 
+		</where>
+	</select>
+	
+	<select id="selectSReportTotalContent" parameterType = "hashmap" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM REPORT R
+         JOIN PRODUCT P ON R.RNO = P.PNO	  
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 <where>
+			<if test="condition == 'writer'">
+				RWRITER LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				RTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'type'">
+				PTYPE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'all'">
+				 RWRITER LIKE #{myPattern} OR RTITLE LIKE #{myPattern} OR PTYPE LIKE #{myPattern}
+			</if> 
+		</where>
+	</select>
 </mapper>
 
 

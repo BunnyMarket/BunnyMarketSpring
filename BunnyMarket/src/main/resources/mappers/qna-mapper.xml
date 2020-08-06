@@ -118,5 +118,74 @@ ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END)
     FROM QCOMMENT
     ORDER BY QCDATE DESC
    </select>
+   
+   <select id="searchQnAList" parameterType = "hashmap" resultType = "QNA">
+		SELECT *
+		  FROM (
+				SELECT ROW_NUMBER() OVER (PARTITION BY QNO ORDER BY CK DESC) NUM, A.*
+				  FROM(
+				      SELECT Q.*,(CASE WHEN QC.QWRITER LIKE 'adminbunny%' THEN 'Y'
+				                  ELSE 'N' END) AS CK
+				        FROM QNA Q
+				        LEFT JOIN QCOMMENT QC ON Q.QNO = QC.QNO
+				       ORDER BY Q.QDATE DESC, (CASE CK WHEN 'Y' THEN 1 ELSE 2 END) DESC
+				)A )
+		
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		<where>
+			NUM =1
+			<if test="condition == 'title'">
+				AND QTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'writer'">
+				AND QWRITER LIKE #{myPattern}
+			</if>
+			<if test="condition == 'content'">
+				AND QCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'check'">
+				AND CK LIKE #{myPattern}
+			</if>
+			<if test="condition == 'all'">
+				 AND QTITLE LIKE #{myPattern} OR QWRITER LIKE #{myPattern} OR QCONTENT LIKE #{myPattern} OR CK LIKE #{myPattern}
+			</if> 
+		</where>
+		ORDER BY CK, QDATE
+	</select>
+	
+		<select id="selectSQnATotalContent" parameterType = "hashmap" resultType = "_int">
+			SELECT COUNT(*)
+			  FROM(
+					SELECT ROW_NUMBER() OVER (PARTITION BY QNO ORDER BY CK DESC) NUM, A.*
+					  FROM(
+					      SELECT Q.*,(CASE WHEN QC.QWRITER LIKE 'adminbunny%' THEN 'Y'
+					                  ELSE 'N' END) AS CK
+					        FROM QNA Q
+					        LEFT JOIN QCOMMENT QC ON Q.QNO = QC.QNO
+					       ORDER BY Q.QDATE DESC, (CASE CK WHEN 'Y' THEN 1 ELSE 2 END) DESC
+					)A )
+	 
+	 
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 <where>
+		 	NUM =1
+			<if test="condition == 'title'">
+				AND QTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'writer'">
+				AND QWRITER LIKE #{myPattern}
+			</if>
+			<if test="condition == 'content'">
+				AND QCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'check'">
+				AND CK LIKE #{myPattern}
+			</if>
+			<if test="condition == 'all'">
+			 	AND QTITLE LIKE #{myPattern} OR QWRITER LIKE #{myPattern} OR QCONTENT LIKE #{myPattern} OR CK LIKE #{myPattern}
+			</if> 
+		</where>
+		ORDER BY CK, QDATE
+	</select>
 </mapper>
 

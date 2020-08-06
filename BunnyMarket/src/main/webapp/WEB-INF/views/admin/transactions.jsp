@@ -122,7 +122,7 @@
                         <th>point</th>
                       </thead>
                       <tbody> 
-                      <c:forEach items="${deal}" var="d" varStatus="st">
+                      <c:forEach items="${list}" var="d" varStatus="st">
                         <tr id="${d.dno}" >
                           <td>${d.dsId}</td>
                           <td>${d.PTitle}</td>
@@ -177,7 +177,7 @@
 					    			$('#nd-${st.index}').attr('checked', 'checked');
 					    		}
 					    	});
-					    	
+					    	refund
 					    	  $(function(){
 			                   		$('#btn-${st.index}').on('click',function(){
 			                   				$.ajax({
@@ -219,20 +219,23 @@
 <br/>
 <div class="searchArea">
 	<select id="searchCondition" name="searchCondition" >
-		<option value="sellerName">판매자명</option>
-		<option value="parcel">택배</option>
-		<option value="direct">직거래</option>
-		<option value="seller">판매자</option>
-		<option value="buyer">구매자</option>
-		<option value="complete">완료</option>
+		<option value="seller">판매자명</option>
+		<option value="title">제목</option>
 	</select>&nbsp;&nbsp;
 	<input type="search" id="keyword"> &nbsp;
-	<button class="paging" >검색</button>
+	<button class="paging" onclick="search();">검색</button>
 
 </div>
 <br>
 <br>
-   
+   <script>
+	function search() {
+		location.href = "${ pageContext.request.contextPath}/admin/deal/searchDeal.do?condition="
+				+ $('#searchCondition').val()
+				+ "&keyword="
+				+ $('#keyword').val();
+	}
+   </script>
     <%@ include file="common/footer.jsp" %>
     
 

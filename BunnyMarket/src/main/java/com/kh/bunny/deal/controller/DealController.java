@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.deal.model.service.DealService;
 import com.kh.bunny.deal.model.vo.Deal;
@@ -252,6 +254,36 @@ public class DealController {
 		
 		return map; 
 	}
+	//admin
+	@RequestMapping(value = "/admin/deal/searchDeal.do", method = RequestMethod.GET)
+	public String searchDeal(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 
+									 @RequestParam (value= "condition", required = false, defaultValue = "") String condition, 
+									 Model model,
+									 @RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
+
+		int numPerPage = 15; 
+		List<Object> list = dealService.searchDealList(keyword, condition, pPage, numPerPage);
+		
+		int totalContents =  dealService.selectSDealTotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"/admin/deal/searchDeal.do?condition="+condition+"&keyword=" + keyword);
+
+		
+		model.addAttribute("keyword", keyword)
+			 .addAttribute("list", list)
+			 .addAttribute("totalContents", totalContents)
+			 .addAttribute("pageBar", pageBar);
+		
+		System.out.println("totalContents:"+ totalContents);
+		System.out.println("list:"+list);
+		return "admin/transactions";
+	}
+	
 	
 }
 

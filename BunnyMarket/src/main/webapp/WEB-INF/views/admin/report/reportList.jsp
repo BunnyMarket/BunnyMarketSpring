@@ -149,7 +149,7 @@
 							 <c:if test="${r.PType eq 2  }"> 
 							 <td style="color:blue;" align= "center">경매</td>
 							 </c:if>
-							 <c:if test="${r.pno eq 0}">
+							 <c:if test="${r.pno eq 0 }">
 							 <td style="color:gray;" align= "center">일반</td>
 							 </c:if>
 							 <td></td>
@@ -174,13 +174,12 @@
 <br/>
 <div class="searchArea">
 	<select id="searchCondition" name="searchCondition" >
-		<option value="sellerName">판매자명</option>
-		<option value="buyerName">구매자명</option>
 		<option value="title">제목</option>
+		<option value="writer">작성자</option>
+		<option value="type">유형</option>
 	</select>&nbsp;&nbsp;
 	<input type="search" id="keyword"> &nbsp;
-	<button class="paging" >검색</button>
-
+	<button class=" btn paging" onclick="search();">검색</button>
 </div>
 <br>
 <br>
@@ -205,7 +204,9 @@ $(function() {
 						location.href = "${pageContext.request.contextPath}/admin/report/reportSelectOneAdmin.do?rno=" + rNo;
 					});
 });
-
+function search(){
+	location.href="${ pageContext.request.contextPath}/admin/report/searchReport.do?condition="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+}
 	
 </script>
     <%@ include file="../common/footer.jsp" %>

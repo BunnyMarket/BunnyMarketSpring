@@ -1,5 +1,6 @@
 package com.kh.bunny.notice.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,5 +56,26 @@ public class NoticeDAOImpl implements NoticeDAO {
 	@Override
 	public int updateCount(int nno) {
 		return sqlSession.update("noticeMapper.updateNoticeCount",nno);
+	}
+
+	@Override
+	public List<Object> searchNoticeList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("noticeMapper.searchNoticeList", hmap, rows);
+	}
+
+	@Override
+	public int selectSNoticeTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("noticeMapper.selectSNoticeTotalContent", hmap);
+	
 	}
 }

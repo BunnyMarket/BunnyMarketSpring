@@ -33,4 +33,8 @@ public interface DealDAO {
 	
 	int selectdealRefund(Deal deal);
 
+	List<Object> searchDealList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSDealTotalContents(String keyword, String condition);
+
 }

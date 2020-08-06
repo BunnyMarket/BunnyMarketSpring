@@ -56,4 +56,14 @@ public class NoticeImpl implements NoticeService {
 		return noticeDAO.deleteNotice(nno);
 	}
 
+	@Override
+	public List<Object> searchNoticeList(String keyword, String condition, int pPage, int numPerPage) {
+		return  noticeDAO.searchNoticeList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSNoticeTotalContents(String keyword, String condition) {
+		return noticeDAO.selectSNoticeTotalContents(keyword, condition);
+	}
+
 }

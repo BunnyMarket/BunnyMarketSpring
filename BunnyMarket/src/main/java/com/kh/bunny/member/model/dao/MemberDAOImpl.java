@@ -126,7 +126,26 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	
+	@Override
+	public List<Object> searchMemberList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("memberMapper.searchMemberList", hmap, rows);
+	}
 
+	@Override
+	public int selectSMemberTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("memberMapper.selectSMemberTotalContent", hmap);
+	
+	}
 	
 	
 	

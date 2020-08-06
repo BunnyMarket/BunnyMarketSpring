@@ -105,6 +105,16 @@ public class ReportServiceImpl implements ReportService {
 		
 		return p;
 	}
+
+	@Override
+	public List<Object> searchReportList(String keyword, String condition, int pPage, int numPerPage) {
+		return  reportDAO.searchReportList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSReportTotalContents(String keyword, String condition) {
+		return reportDAO.selectSReportTotalContents(keyword, condition);
+	}
 	
 	
 	

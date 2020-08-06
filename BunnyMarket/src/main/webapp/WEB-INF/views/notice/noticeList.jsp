@@ -179,7 +179,7 @@
 	});
 
 	function search() {
-		location.href = "${ pageContext.request.contextPath}/admin/notice/searchNotice.do?con="
+		location.href = "${ pageContext.request.contextPath}/admin/notice/searchNotice.do?condition="
 				+ $('#searchCondition').val()
 				+ "&keyword="
 				+ $('#keyword').val();

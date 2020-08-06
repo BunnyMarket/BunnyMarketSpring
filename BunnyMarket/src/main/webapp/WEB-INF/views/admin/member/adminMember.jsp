@@ -323,6 +323,13 @@ input:focus ~ .label-m, input:valid ~ .label-m{
 	<c:out value="${pageBar}"  escapeXml="false"/>
 	</div>
 </div>
+<div class="searchArea">
+	<select id="searchCondition" name="searchCondition" >
+		<option value="userId">아이디</option>
+	</select>&nbsp;&nbsp;
+	<input type="search" id="keyword"> &nbsp;
+	<button class=" btn paging" onclick="search();">검색</button>
+</div>
 <br/>
 
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -374,7 +381,9 @@ input:focus ~ .label-m, input:valid ~ .label-m{
 			$('.modal').modal('hide');
 		});
 	});
-
+	function search(){
+  		location.href="${ pageContext.request.contextPath}/admin/member/adminMemberId.do?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+  	}
 </script>
 <br/>
 <br/>

@@ -21,5 +21,9 @@ public interface AdminService {
 	List<Map<String, Object>> chartCategoryCount();
 	
 	List<Map<String, Object>> chartMonthCount();
+
+	List<Object> searchAdminMemberList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSAdminMemberTotalContents(String keyword, String condition);
 	
 }
