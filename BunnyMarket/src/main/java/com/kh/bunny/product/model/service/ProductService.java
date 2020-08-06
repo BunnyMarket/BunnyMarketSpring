@@ -88,5 +88,7 @@ public interface ProductService {
 	int giveMeDno(int pno);
 
 	int productPurchaseRequest(Product p);
+	
+	List<Product> selectProductTopList();
 
 }

@@ -230,5 +230,8 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.giveMeDeal", pno);
 	}
 	
-	
+	@Override
+	public List<Product> selectProductTopList() {
+		return sqlSession.selectList("productMapper.selectProductTopList");
+	}
 }

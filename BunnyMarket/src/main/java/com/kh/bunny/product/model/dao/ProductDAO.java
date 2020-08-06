@@ -92,6 +92,6 @@ public interface ProductDAO {
 
 	int giveMeDeal(int pno);
 
-	
+	List<Product> selectProductTopList();
 
 }

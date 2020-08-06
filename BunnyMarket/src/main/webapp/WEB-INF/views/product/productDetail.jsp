@@ -93,7 +93,7 @@
 							</c:if>
 						</c:if>
 						
-						<c:if test="${sessionScope.member.userId ne product.PWriter}">
+						<c:if test="${sessionScope.member.nickName ne product.PWriter}">
                         <button type="button" class="btn alazea-btn mt-15"
 								style="float: right"
 								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
@@ -485,14 +485,14 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<form action="${pageContext.request.contextPath }/report/reportMember.do" id="reportMember" method="post">
-				<input type="hidden" name="pno" value = "${ a.pno }"/>
-				<input type="hidden" name="pType" value = "${ a.PType }" />
-				<input type="hidden" name="reported" id="reportedName" value="${a.PWriter }" />
+				<input type="hidden" name="pno" value = "${ product.pno }"/>
+				<input type="hidden" name="pType" value = "${ product.PType }" />
+				<input type="hidden" name="reported" id="reportedName" value="${product.PWriter }" />
 				<div class="modal-body row">
 				
 					<div class="col-12">
 						<div class="form-group">
-							<h4 class="title"><font color = "orange">${a.PWriter}</font> 님에 대한 신고 사유가 무엇인가요?</h4>
+							<h4 class="title"><font color = "orange">${product.PWriter}</font> 님에 대한 신고 사유가 무엇인가요?</h4>
 							<select name="rcNo" id="" class = "form-control" required>
 								<option value="">----</option>
 								<option value="11">전문 판매업자로 의심</option>
@@ -857,7 +857,7 @@ function goBuyer(){
 	}
 	
 	function reportMember(){
-		if(confirm("${a.PWriter}님을 신고하시겠습니까?"))
+		if(confirm("${p.PWriter}님을 신고하시겠습니까?"))
 			{
 				//location.href = "${pageContext.request.contextPath}/report/reportMember.do";
 				$('#handleModal').modal("hide");
@@ -868,7 +868,7 @@ function goBuyer(){
 	
 	var sellCount = 0;
 	$('#sellerInfo').click(function(){
-		/* $('#sellerName').text('${a.PWriter}'); */
+		/* $('#sellerName').text('${p.PWriter}'); */
 		
 		$.ajax({
 			  data : {nickName : '${product.PWriter}'}

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
 
 @Repository("auctionDAO")
 public class AuctionDAOImpl implements AuctionDAO {
@@ -157,6 +158,11 @@ public class AuctionDAOImpl implements AuctionDAO {
 	@Override
 	public Integer selectTypeCount(int pcno) {
 		return sqlSession.selectOne("auctionMapper.selectTypeCount", pcno);
+	}
+
+	@Override
+	public List<Auction> selectAuctionTopList() {
+		return sqlSession.selectList("auctionMapper.selectAuctionTopList");
 	}
 
 }

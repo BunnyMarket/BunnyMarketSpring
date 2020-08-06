@@ -13,6 +13,7 @@ import com.kh.bunny.auction.model.exception.AuctionException;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
 
 @Service("auctionService")
 public class AuctionServiceImpl implements AuctionService {
@@ -166,6 +167,11 @@ public class AuctionServiceImpl implements AuctionService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<Auction> selectAuctionTopList() {
+		return auctionDAO.selectAuctionTopList();
 	}
 
 	
