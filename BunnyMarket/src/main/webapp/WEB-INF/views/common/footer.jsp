@@ -13,10 +13,12 @@
 					<div class="col-12 col-sm-6 col-lg-3">
 						<div class="single-footer-widget">
 							<div class="footer-logo mb-30">
-								<a href="#"><img src="${ pageContext.request.contextPath }/resources/img/core-img/logo.png" alt=""></a>
+								<a href="#"><img src="${ pageContext.request.contextPath }/resources/img/core-img/bunnyLogo2.png" alt=""></a>
 							</div>
-							<p>Lorem ipsum dolor sit samet, consectetur adipiscing elit.
-								India situs atione mantor</p>
+							<p>
+								당신이 원하던 바로 그 니즈(Needs) <br />
+								우리 바니마켓에서 해결해보세요!
+							</p>
 							<div class="social-info">
 								<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
 								<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -35,16 +37,14 @@
 							</div>
 							<nav class="widget-nav">
 								<ul>
-									<li><a href="#">Purchase</a></li>
-									<li><a href="#">FAQs</a></li>
-									<li><a href="#">Payment</a></li>
-									<li><a href="#">News</a></li>
-									<li><a href="#">Return</a></li>
-									<li><a href="#">Advertise</a></li>
-									<li><a href="#">Shipping</a></li>
-									<li><a href="#">Career</a></li>
-									<li><a href="#">Orders</a></li>
-									<li><a href="#">Policities</a></li>
+									<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 상품</a></li>
+									<li><a href="${ pageContext.request.contextPath }/QNA/FAQ.do">F.A.Q</a></li>
+									<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
+									<li><a href="${ pageContext.request.contextPath }/notice/mNotice.do">공지사항</a></li>
+									<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">지도로 보기</a></li>
+									<li><a href="${ pageContext.request.contextPath }/QNA/QNAList.do">Q & A</a></li>
+									<li><a href="${ pageContext.request.contextPath }/report/reportList.do">신고하기</a></li>
+									<li><a href="${pageContext.request.contextPath}/login.do">로그인</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -92,19 +92,19 @@
 
 							<div class="contact-information">
 								<p>
-									<span>Address:</span> 505 Silk Rd, New York
+									<span>Address:</span> 서울특별시 강남구 강남구 테헤란로14길 6
 								</p>
 								<p>
-									<span>Phone:</span> +1 234 122 122
+									<span>Phone:</span> +82 010 8282 8282
 								</p>
 								<p>
-									<span>Email:</span> info.deercreative@gmail.com
+									<span>Email:</span> bunnyYaho@naver.com
 								</p>
 								<p>
-									<span>Open hours:</span> Mon - Sun: 8 AM to 9 PM
+									<span>Open hours:</span> Mon - Sun: 9 AM to 6 PM
 								</p>
 								<p>
-									<span>Happy hours:</span> Sat: 2 PM to 4 PM
+									<span>Happy hours:</span> Sat: 1 PM to 2 PM
 								</p>
 							</div>
 						</div>
@@ -139,21 +139,6 @@
 								<a href='https://pngtree.com/so/자료-좀'>자료-좀 png from pngtree.com</a>
 								
 							</p>
-						</div>
-					</div>
-					<!-- Footer Nav -->
-					<div class="col-12 col-md-6">
-						<div class="footer-nav">
-							<nav>
-								<ul>
-									<li><a href="#">Home</a></li>
-									<li><a href="#">About</a></li>
-									<li><a href="#">Service</a></li>
-									<li><a href="#">Portfolio</a></li>
-									<li><a href="#">Blog</a></li>
-									<li><a href="#">Contact</a></li>
-								</ul>
-							</nav>
 						</div>
 					</div>
 				</div>

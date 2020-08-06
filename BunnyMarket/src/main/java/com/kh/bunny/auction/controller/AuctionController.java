@@ -102,10 +102,17 @@ public class AuctionController {
 		System.out.println("pcomments : " + PComments.size());
 		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
 		
+		int dno = 0;
+		if(a.getPBuyer() != null) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+		}
+		
 		model.addAttribute("auction", a)
 			 .addAttribute("bCount", bidderCount)
 			 .addAttribute("bList" , bList)
 			 .addAttribute("pcomments", PComments)
+			 .addAttribute("dno", dno)
 			 .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		return "auction/auctionDetail";

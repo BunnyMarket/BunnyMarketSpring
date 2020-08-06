@@ -84,6 +84,15 @@
 						<c:if test="${sessionScope.member.userId eq product.PWriter}">
 							<c:if test="${product.PStatus == 2}">
 								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>
+								<br /><br /><br />
+								<script>
+									console.log('${dno} :  디엔오');
+								</script>
+								<c:if test="${dno ne 0 }">
+								<button type = "button" class="btn alazea-btn mt-15" style="float: right"
+										onclick="goDealPlz();">거래페이지로 이동</button>
+								</c:if>
+								<br /><br /><br />
 							</c:if>
 							<c:if test="${product.PStatus != 2}">
 								<button type="button" class="btn alazea-btn mt-15"
@@ -109,7 +118,7 @@
 						
 						
 						
-						<c:if test="${sessionScope.member.userId ne product.PWriter}">
+						<c:if test="${sessionScope.member.nickName ne product.PWriter}">
 							<c:if test="${product.PStatus != 2}">
 								<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">
 								찜하기
@@ -121,9 +130,15 @@
 											data-toggle="modal" onclick="goBuy();">
 										구매하기
 								</button>
+								<br /><br /><br />
 							</c:if>
 							<c:if test="${product.PStatus == 2}">
 								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>구매 완료된 상품입니다.</button>
+								<br /><br /><br />
+								<c:if test="${product.PBuyer eq sessionScope.member.nickName and dno ne 0}">
+									<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
+								<br /><br /><br />
+								</c:if>
 							</c:if>
 						</c:if>
 							
@@ -908,7 +923,9 @@ function goBuyer(){
 		
 	});
 	
-
+	function goDealPlz(){
+		location.href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno=${ dno }";
+	}
 	
 	
 </script>

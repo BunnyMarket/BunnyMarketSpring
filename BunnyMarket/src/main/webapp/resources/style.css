@@ -16,13 +16,17 @@ Version: - v1.0
 @import url(css/magnific-popup.css);
 @import url(css/font-awesome.min.css);
 @import url(css/elegant-icon.css);
+@font-face { font-family: 'CookieRunOTF-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'Cafe24Ohsquare'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'CookieRun-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'InfinitySans-BoldA1'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-BoldA1.woff') format('woff'); font-weight: normal; font-style: normal; }
 /* :: 3.0 Base CSS */
 * {
   margin: 0;
   padding: 0; }
 
 body {
-  font-family: "Dosis", sans-serif;
+  font-family: 'InfinitySans-BoldA1', 'CookieRun-Regular', 'Cafe24Ohsquare', "CookieRunOTF-Bold", "Dosis", sans-serif;
   font-size: 16px;
   color: #707070; }
 

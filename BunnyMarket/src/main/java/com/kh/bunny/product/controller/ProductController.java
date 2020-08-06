@@ -142,11 +142,19 @@ public class ProductController {
 		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
 		System.out.println("PComment객체 갯수 : " + PComments.size());
 		Member seller = memberService.findSeller2(p.getPWriter());
+		
+		int dno = 0;
+		if(p.getPBuyer() != null) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+		}
+		
 		model.addAttribute("product", p)
 			 .addAttribute("seller",seller)
 		     .addAttribute("pcomments", PComments)
 		     .addAttribute("pcommentSize", PComments.size()) // 댓글 갯수 출력
-		     .addAttribute("sellerPhoto", sellerPhoto);
+		     .addAttribute("sellerPhoto", sellerPhoto)
+		     .addAttribute("dno", dno);
 		
 		
 		return "product/productDetail";
