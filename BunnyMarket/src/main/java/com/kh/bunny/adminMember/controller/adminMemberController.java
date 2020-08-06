@@ -87,7 +87,7 @@ public class adminMemberController {
 	 * 
 	 * 
 	 * return "admin/member/adminMember"; }
-	 */
+	
 	
 		model.addAttribute("list", list);
 		model.addAttribute("totalContents", totalContents);
@@ -97,7 +97,7 @@ public class adminMemberController {
 		
 		return "admin/member/adminMember";
 	}
-	
+*/
 	// 죽이기
 	@RequestMapping("/admin/adminMember/adminStatusOn.do")
 	@ResponseBody
