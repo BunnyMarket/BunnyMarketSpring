@@ -78,7 +78,14 @@
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt=""><!-- member의 대표이미지 경로 적어주기 -->
+														<c:if test="${qcomment.photo == null }">
+															<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg" />        <!-- member의 대표이미지 경로 적어주기 -->
+														</c:if> 
+														<c:if test="${qcomment.photo != null }">
+																<img src="/bunny/resources/member/profile/${qcomment.photo}" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg"/>
+															</c:if> <br />
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
@@ -148,7 +155,14 @@
 																	<div class="comment-wrapper d-flex">
 																		<!-- Comment Meta -->
 																		<div class="comment-author">
-																			<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+																			<c:if test="${reComment.photo == null }">
+																				<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg" />
+																			</c:if>
+																			<c:if test="${reComment.photo != null }">
+																				<img src="/bunny/resources/member/profile/${reComment.photo}" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg"/>
+																			</c:if> <br />
 																		</div>
 																		<!-- Comment Content -->
 																		<div class="comment-content">
@@ -156,8 +170,8 @@
 																				<h5>${ reComment.QWriter }</h5>
 																				<span class="comment-date">${ reComment.qcDate }</span>
 																			</div>
-																			<p id="repcContent-${st.index }">${ reComment.qcContent }</p>
-																			<p id="repcContent2-${st.index }"></p>
+																			<p id="reqcContent-${st.index }">${ reComment.qcContent }</p>
+																			<p id="reqcContent2-${st.index }"></p>
 																			<c:if test="${(qcomment.QWriter eq admin.adminId) or ( qcomment.QWriter eq member.userId)}">
 																				<form id="replyForm-${reComment.qcno}" method="post">
 																					<input type="hidden" name="qcno" value="${reComment.qcno}">
@@ -321,6 +335,8 @@
 					return;
 				}
 			}
+			
+		
 			</script>
 
 

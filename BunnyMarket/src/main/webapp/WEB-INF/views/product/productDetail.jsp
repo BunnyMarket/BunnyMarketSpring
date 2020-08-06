@@ -520,6 +520,8 @@ $(function(){
 					$('section').addClass('wblur disabledbutton').addClass('no-drag');
 				} else {
 					console.log(data);
+					$('#adminwarning').modal();
+					$('section').addClass('wblur');
 				}
 			},
 			fail : function(data){
