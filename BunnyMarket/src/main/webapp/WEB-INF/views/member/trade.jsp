@@ -161,103 +161,15 @@
     function goAuctionProduct(nickName){
     	goPage("/auction/auctionTradeList.do", "/auction/auctionDetail.do?pno=", nickName);
     };
-    
-    
     function goProductSelling(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/product/productTradeList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	
-    		}
-    		
-    	});
+    	goPage("/product/productTradeList.do", "/product/productDetail.do?pno=", nickName);
     };
-    
-    
     function goLoveProduct(nickName){
     	goPage("/product/loveProductList.do", "/product/productDetail.do?pno=", nickName);
     };
-    
     function goCompleteProduct(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/product/completeProductList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	   
-    		}
-    		
-    	});
+    	goPage("/product/completeProductList.do", "/product/productDetail.do?pno=", nickName);
     };
-    
     function goCompleteAuction(nickName){
     	goPage("/auction/completeAuctionList.do", "/auction/auctionDetail.do?pno=", nickName);
     };
@@ -268,7 +180,8 @@
     	goPage("/auction/sellCompleteAuctionList.do", "/auction/auctionDetail.do?pno=", nickName);
     };
     function goTradeProduct(nickName){
-    	$.ajax({
+    	goPage("/product/goTradeProduct.do", "/product/productDetail.do?pno=", nickName);
+    	/* $.ajax({
 			  url : "${pageContext.request.contextPath}/product/goTradeProduct.do"
 			, data : {
 					 nickName : nickName
@@ -314,10 +227,11 @@
 		    	   );
 				}
 			}
-		});
+		}); */
     }
 	function goTradeAuction(nickName){
-		$.ajax({
+		goPage("/auction/goTradeAuction.do", "/auction/auctionDetail.do?pno=", nickName);
+		/* $.ajax({
 			  url : "${pageContext.request.contextPath}/auction/goTradeAuction.do"
 			, data : {
 					 nickName : nickName
@@ -363,7 +277,7 @@
 		    	   );
 				}
 			}
-		});
+		}); */
     }
     function goPage(ajaxUrl, url, nickName){
 		// var order = $("#orderBySelect option:selected").val();

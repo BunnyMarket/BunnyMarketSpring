@@ -80,13 +80,13 @@
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
 						<h3 class="title">${a.PTitle}</h3>
-						<c:if test="${sessionScope.member.userId ne a.PWriter}">
+						<c:if test="${sessionScope.member.nickName ne a.PWriter}">
 							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
 									data-toggle="modal" data-target="#myModal">
 								입찰하기
 							</button>
 						</c:if>
-						<c:if test="${sessionScope.member.userId eq a.PWriter}">
+						<c:if test="${sessionScope.member.nickName eq a.PWriter}">
 							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
 									data-toggle="modal" data-target="#myModal">
 								입찰자 명단 보기
@@ -105,6 +105,9 @@
 									onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
 							<br />
 							</c:if>
+						</c:if>
+						<c:if test="${dno ne 0 and (sessionScope.member.nickName eq a.PBuyer or sessionScope.member.nickName eq a.PWriter)}">
+							<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
 						</c:if>
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>

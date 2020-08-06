@@ -169,7 +169,7 @@
 							</div>
 						</c:if>
 						<div class="checkout-btn mt-30">
-							<button type="submit" class="btn alazea-btn w-100">구매 확정</button>
+							<button type="submit" class="btn alazea-btn w-100">구매 확인</button>
 						</div>
 					</div>
 				</div>

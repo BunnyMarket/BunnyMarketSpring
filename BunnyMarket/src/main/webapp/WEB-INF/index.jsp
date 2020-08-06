@@ -23,8 +23,8 @@
                         좋은 제품 안전하게 구매하세요 
                      </p>
                      <div class="welcome-btn-group">
-                        <a href="#" class="btn alazea-btn mr-30">GET STARTED</a> <a
-                           href="#" class="btn alazea-btn active">CONTACT US</a>
+                        <a href="${ pageContext.request.contextPath }/product/productList.do" class="btn alazea-btn mr-30">일반 상품 보러가기</a> <a
+                           href="${ pageContext.request.contextPath }/auction/auctionList.do" class="btn alazea-btn active">경매 상품 보러가기</a>
                      </div>
                   </div>
                </div>
@@ -48,8 +48,8 @@
                         좋은 제품 안전하게 구매하세요 
                      </p>
                      <div class="welcome-btn-group">
-                        <a href="#" class="btn alazea-btn mr-30">GET STARTED</a> <a
-                           href="#" class="btn alazea-btn active">CONTACT US</a>
+                         <a href="${ pageContext.request.contextPath }/product/productList.do" class="btn alazea-btn mr-30">일반 상품 보러가기</a> <a
+                           href="${ pageContext.request.contextPath }/auction/auctionList.do" class="btn alazea-btn active">경매 상품 보러가기</a>
                      </div>
                   </div>
                </div>
