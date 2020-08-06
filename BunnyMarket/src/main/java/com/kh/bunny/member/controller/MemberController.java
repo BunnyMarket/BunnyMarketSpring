@@ -34,7 +34,7 @@ import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.review.model.service.ReviewService;
 
-@SessionAttributes(value = { "member" })
+@SessionAttributes(value = { "member", "enrollMember" })
 @Controller
 public class MemberController {
 	// 사용 기록을 남기기 위한 로그 객체 등록
@@ -90,9 +90,9 @@ public class MemberController {
 	// 회원 가입 기능 실행하기
 	@RequestMapping("memberEnrollEnd.do")
 	public String memberEnrollEnd(Member member, Model model) {
-
+System.out.println("member 되라 좋은말로할때: "+member);
 		logger.debug("회원 가입 처리 메소드");
-
+		
 		String plainPassword = member.getUserPwd();
 		System.out.println("비밀번호 암호화 전 : " + plainPassword);
 
