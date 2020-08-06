@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.common.util.Utils;
+import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.point.model.exception.PointException;
 import com.kh.bunny.point.model.service.PointService;
@@ -29,6 +30,9 @@ public class PointController {
 
 	@Autowired
 	PointService pointService;
+	
+	@Autowired
+	MemberService memberService; 
 	
 	@RequestMapping("/point/pointChargeView.do")
 	public String pointChargeView() {
@@ -98,12 +102,9 @@ public class PointController {
 		return "member/myPoint";
 	}
 	
-	@RequestMapping("/point/pointChargeViewProduct.do")
-	public String pointChargeViewProduct(@RequestParam int pno, @RequestParam int bPrice, Model model) {
-		//point/pointChargeViewProduct.do?pno=${a.pno}&bPrice='+bPrice
-		System.out.println("pno를 보여주세요 : " + pno);
+	@RequestMapping("/point/pointChargeViewAuction.do")
+	public String pointChargeViewAuction(@RequestParam int pno, @RequestParam int bPrice, Model model) {
 		Product p = pointService.selectOneProduct(pno);
-		System.out.println("p를 보여주세요 : " + p);
 		int realPrice = 0;
 		
 		if(p.getBPrice() > p.getPPrice()) {
@@ -117,7 +118,20 @@ public class PointController {
 		return "payment/pView";
 	}
 	
-	
+	@RequestMapping("/point/pointChargeViewProduct.do")
+	public String pointChargeViewProduct(@RequestParam int pno, Model model, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("member");
+		Product p = pointService.selectOneProduct(pno);
+		
+		Member m2 = memberService.selectOne(m.getUserId());
+		
+		int realPrice = p.getPPrice() - m2.getNowPoint();
+		
+		model.addAttribute("realPrice", realPrice);
+		
+		return "payment/pView";
+	}
 }
 
 

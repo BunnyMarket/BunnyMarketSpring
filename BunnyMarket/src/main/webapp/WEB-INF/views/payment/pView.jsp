@@ -107,8 +107,6 @@
 	                                	<div align="center">
 	                                		<input type="hidden" id="bpstatus" value="1" />
 											<button class="btn alazea-btn mt-15" id="kakaoPay" onclick="payByKakao();">카카오페이</button>
-											<button class="btn alazea-btn mt-15" id="naverPay" onclick="payByInicis();">네이버페이</button>
-											<button class="btn alazea-btn mt-15" id="creditCard" onclick="payByInicis();">신용카드</button>
 	                                	</div>
 									</td>
 								</tr>

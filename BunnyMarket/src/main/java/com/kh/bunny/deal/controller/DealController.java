@@ -56,6 +56,8 @@ public class DealController {
 		
 		Member other = new Member();
 		
+		String loc = "";
+		
 		if ((member.getUserId()).equals(deal.getDsId())) {
 			// 로그인 한 회원이 seller(판매자). other가 구매자인 경우 
 			other = dealService.selectOtherMember(deal.getDbId());
@@ -68,7 +70,7 @@ public class DealController {
 		} else {
 			
 			System.out.println("외부 침입자가 deal페이지에 들어오려함. 쫓아내야함.");
-			
+			loc = "redirect:/";
 		}
 		
 		System.out.println("dealDeatil cont에서 other멤버객체 확인 : " + other);
@@ -81,7 +83,6 @@ public class DealController {
 			 .addAttribute("other", other)
 			 .addAttribute("sellerPhoto", sellerPhoto);
 		
-		String loc = "";
 		
 		if ((member.getUserId()).equals(deal.getDsId())) {
 			// 로그인 한 회원의 아이디가 deal의 seller(판매자)와 같은 경우

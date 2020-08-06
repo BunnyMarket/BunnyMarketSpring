@@ -108,22 +108,40 @@
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
                        	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
+						<br /> 
+						
+						
+						<h5>카테고리</h5>
+						<h5 style="color:orange; font: bold;">${a.PCategory}</h5>
+						<br />
+						
+						<h5>거래방식</h5>
+						<h5 style="color:orange; font: bold;" id="dMethod"></h5>
+						<br />
 						<script type="text/javascript">
 						   	$(function(){
 								var originP = $("#originPPrice").val();
 								var originB = $("#originBPrice").val();
 								
-								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
+								console.log("a.pPrice" + originP + " / a.bPrice" +originB);
 						   		
 								if(originP > originB){
 						    		$("#pCarrot").text(parseInt(originP).toLocaleString());
 								} else {
 									$("#pCarrot").text(parseInt(originB).toLocaleString());
 								}
+								
+							   	var dMethod = '${a.DMethod}';
+					    		if(dMethod == 1){
+					    			$("#dMethod").text("직거래");
+					    		} else if(dMethod == 2){
+					    			$("#dMethod").text("택배");
+					    		} else {
+					    			$("#dMethod").text("미결정");
+					    		}
 						   	});
 						   		
 						</script>
-						<br /> 
 
 						<h5>총 입찰자 : ${bCount}명</h5>
 						<br />
@@ -397,6 +415,13 @@
 					<h4>현재 상품의 가격 : <span style="color:orange; font: bold;" id="bidPrice"></span>당근</h4>
 						<br />
 					</div>
+					<div class="col-12 mb-4">
+						<div class="search_by_terms">
+							<label for="dMethodCheck" style="font-size: 23px;">거래수단 확인</label>
+							<input type="checkbox" id="dMethodCheck"/>
+							<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:orange; font: bold;" id="dMethodModal"></span></h5>
+						</div>
+					</div>
 					<div class="col-12">
 						<div class="form-group">
 							<h4 class="title">입찰금액을 입력해주세요.</h4>
@@ -412,12 +437,21 @@
 					    		var originP = $("#BoriginPPrice").val();
 								var originB = $("#BoriginBPrice").val();
 								
-								console.log("p.pPrice" + originP + " / p.bPrice" +originB);
+								console.log("a.pPrice" + originP + " / a.bPrice" +originB);
 						   		
 								if(originP > originB){
 						    		$("#bidPrice").text(parseInt(originP).toLocaleString());
 								} else {
 									$("#bidPrice").text(parseInt(originB).toLocaleString());
+								}
+								
+								var dMethod = '${a.DMethod}';
+								if(dMethod == 1){
+									$("#dMethodModal").text("직거래");
+								} else if(dMethod == 2){
+									$("#dMethodModal").text("택배");
+								} else {
+									$("#dMethodModal").text("미결정");
 								}
 						   	});
 							
@@ -713,6 +747,17 @@ $(function(){
 	    
 	});
 	
+	$(function(){
+		var dMethod = '${a.DMethod}';
+   		if(dMethod == 1){
+   			$("#dMethod").text("직거래");
+   		} else if(dMethod == 2){
+   			$("#dMethod").text("택배");
+   		} else {
+   			$("#dMethod").text("미결정");
+   		}
+	});
+	    
 	// 취소시 모달창만 꺼지게 하는기능
 	function goBack(){
 		window.history.go();
@@ -942,31 +987,38 @@ $(function(){
 			var $check = $("#bidderCheck").val();
 			var $bPrice = parseInt($("#bidPriceComma").val());
 			var $bPno = $("#BidderPno").val(); 
+			var check = $("#dMethodCheck").is(":checked");
 			
-			if(confirm("정말 입찰하시겠습니까?")){
-				console.log("check :  " + $check + ", bPrice : " + $bPrice + ", pno : " + $bPno);
-				if($check == 1) {
-					$("#goBidder").attr('action', '${ pageContext.request.contextPath }/auction/insertBidder.do').submit();
-					return true;
-				} else if ($check == 4){
-					if(confirm("당근이 부족하여 구매하실 수 없습니다. \n부족한 당근을 구매하시겠습니까?")){
-						window.open('${ pageContext.request.contextPath }/point/pointChargeViewProduct.do?pno='+$bPno+'&bPrice='+$bPrice, '_blank', 'width=600px, height=800px');
+			if(check){
+				
+				if(confirm("정말 입찰하시겠습니까?")){
+					console.log("check :  " + $check + ", bPrice : " + $bPrice + ", pno : " + $bPno);
+					if($check == 1) {
+						$("#goBidder").attr('action', '${ pageContext.request.contextPath }/auction/insertBidder.do').submit();
+						return true;
+					} else if ($check == 4){
+						if(confirm("당근이 부족하여 구매하실 수 없습니다. \n부족한 당근을 구매하시겠습니까?")){
+							window.open('${ pageContext.request.contextPath }/point/pointChargeViewAuction.do?pno='+$bPno+'&bPrice='+$bPrice, '_blank', 'width=600px, height=800px');
+							return false;
+						}
+					} else if ($check == 3){
+						if(confirm("당근이 부족합니다. \n부족한 당근을 구매하시겠습니까?")){
+							window.open('${ pageContext.request.contextPath }/point/pointChargeView.do','_blank', 'width=600px, height=800px');
+							return false;
+						}
+					} else {
+						alert("입찰금액을 확인해주세요.");
+						$("#bidPriceComma").focus();
 						return false;
 					}
-				} else if ($check == 3){
-					if(confirm("당근이 부족합니다. \n부족한 당근을 구매하시겠습니까?")){
-						window.open('${ pageContext.request.contextPath }/point/pointChargeView.do','_blank', 'width=600px, height=800px');
-						return false;
-					}
+					
 				} else {
-					alert("입찰금액을 확인해주세요.");
-					$("#bidPriceComma").focus();
+					alert("입찰을 취소합니다.");
 					return false;
 				}
-				
 			} else {
-				alert("입찰을 취소합니다.");
-				return false;
+				alert("거래수단을 확인해주세요.");
+				$("#dMethodCheck").focus();
 			}
 			
 		});

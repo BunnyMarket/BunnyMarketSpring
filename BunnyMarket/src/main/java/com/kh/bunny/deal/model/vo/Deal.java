@@ -32,9 +32,9 @@ public class Deal extends Product implements Serializable {
 	
 	public Deal(int pno, String pWriter, int pcno, String pImg, String pTitle, String pContent, int pPrice,
 			String pDate, int pStatus, int pType, String pAddress, int pTotal, String pBuyer, int bPrice,
-			String pCategory) {
+			String pCategory, int dMethod, int dno) {
 		super(pno, pWriter, pcno, pImg, pTitle, pContent, pPrice, pDate, pStatus, pType, pAddress, pTotal, pBuyer, bPrice,
-				pCategory);
+				pCategory, dMethod, dno);
 
 	}
 	

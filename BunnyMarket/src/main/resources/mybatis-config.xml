@@ -10,7 +10,7 @@
 
 	<typeAliases>
 	
-		<typeAlias type = "com.kh.bunny.member.model.vo.Member"  alias = "member"/> 
+		<typeAlias type = "com.kh.bunny.member.model.vo.Member"  alias = "Member"/> 
 		<typeAlias type = "com.kh.bunny.adminMember.model.vo.adminMember"  alias = "AdminMember"/> 
 		<typeAlias type = "com.kh.bunny.common.Str2ArrayHandler" alias = "Str2ArrayHandler" />
 		<typeAlias type = "com.kh.bunny.product.model.vo.Product" alias = "Product" />

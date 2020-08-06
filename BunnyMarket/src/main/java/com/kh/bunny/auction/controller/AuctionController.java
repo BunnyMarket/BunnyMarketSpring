@@ -497,12 +497,7 @@ public class AuctionController {
 		System.out.println("무엇이 들어있느냐? : " + tlist);
 		System.out.println("무엇이 들어있느냐? : " + tlist.size());
 		
-		
-		
 		result.put("list", tlist);
-		
-		
-		
 		
 		return result;
 	}

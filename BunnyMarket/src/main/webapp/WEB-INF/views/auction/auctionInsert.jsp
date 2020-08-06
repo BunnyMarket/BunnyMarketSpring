@@ -33,7 +33,7 @@
 	<div class="produts-details--content mb-50">
 		<div class="container">
 
-			<form action="${ pageContext.request.contextPath }/auction/auctionInsertEnd.do" method="post" enctype="multipart/form-data">
+			<form action="${ pageContext.request.contextPath }/auction/auctionInsertEnd.do" method="post" enctype="multipart/form-data" id="auctionInsert">
 				<div class="row justify-content-between">
 					<div class="col-12 col-md-6 col-lg-5">
 						<div class="single_product_thumb">
@@ -42,11 +42,6 @@
 									<img id="titleImg" class="d-block w-100" width="344.8px" height="357.56px">
 								</div>
 								
-								<!--  
-									이거 script에서 .hide해줬는데 왜 안없어질꼬...
-									아 제이쿼리 파일 안넣어서인듯.
-									아직 원격저장소 새로 안만들어졌으니 이걸 확인하면 그때 제이쿼리 파일 넣어주세요~!
-								 -->
 								<div id="pImgFileArea">
 									<input type="file" id="titleImgArea" name="pImage" 
 										onchange="loadImg(this, 1);" />
@@ -95,7 +90,18 @@
                                 </select>
 	                        </div>
 							<br />
-
+							
+							<label for="pcno" style="float: none;">거래방식 설정(선택하지 않으면 미결정으로 등록됩니다.) *</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="gMethod" style="width: 100%" required="required">
+                                  <option value="" hidden>거래방식을 선택해주세요</option>
+                                  <option value="3">미결정</option>
+                                  <option value="2">택배</option>
+                                  <option value="1">직거래</option>
+                                </select>
+	                        </div>
+	                        
+	                        <br />
 							<label for="pAddress">주소 입력 </label>
 							<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
 							<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
@@ -125,11 +131,11 @@
 					<div class = "col-12 col-md-12">
 						<br />
 						<label for="Precautions"><a href="/auction/checkCautions.do">주의 사항 *</a></label>
-						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
+						<label for="checkCaution">주의사항을 확인하였습니다.</label> <input type="checkbox" required="required">
 					</div>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15">등록완료</button>
+					<button type="button" id="finalCheck" class="btn alazea-btn mt-15">등록완료</button>
 				</div>
 			</form>
 		</div>
@@ -139,6 +145,16 @@
 </section>
 <!-- ##### Single Product Details Area End ##### -->
 <script>
+	
+	$(function(){
+		$("#finalCheck").on("click", function(){
+			if(confirm("경매상품은 수정하실 수 없습니다. \n상품을 등록하시겠습니까?")){
+				$("#auctionInsert").submit();
+			} else {
+				alert("등록을 취소합니다.");
+			}
+		});
+	});
 	
 	$("#pPriceComma").focusout(function(){
 		$("#pPriceOrigin").val($("#pPriceComma").val());
@@ -209,7 +225,7 @@
 	               processData : false,
 	               success : function(fileUrl) {
 	                  check.summernote('insertImage', fileUrl);
-	                  alert("이미지 등록 성공!" + fileUrl);
+	                  alert("이미지 등록 성공!");
 	               },
 	               error : function(request, status, error) {
 	                  alert("code:" + request.status + "\n"

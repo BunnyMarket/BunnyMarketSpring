@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.common.util.ProductAjaxUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
@@ -325,21 +326,22 @@ public class ProductController {
 		
 		Product p = productService.selectOneProduct(pno);
 		
-		p.setPStatus(2);
 		p.setPBuyer(userId);
 		
 		int result = productService.productPurchase(p);
 		
+		int dno = productService.giveMeDno(pno);
+		System.out.println("dno 있어요?" + dno);
 		
 		if (result >0) {
 			msg = "상품 구매 완료! 결제 확인을 해주세요";
 			System.out.println("상품 구매 완료!");
-			loc = "/member/memberMyPage.do?userId="+userId;
+			loc = "/deal/dealDetail.do?dno="+dno;
 			
 		} else {
 			msg = "상품 구매 실패했습니다. ㅠㅠ 무슨 일이죠 이게?";
 			System.out.println("상품 구매 실패");
-			loc = "/product/productList.do";
+			loc = "/product/productDetail.do?pno="+pno;
 		}
 		
 		model.addAttribute("loc", loc).addAttribute("msg", msg);
@@ -717,6 +719,64 @@ public class ProductController {
 			 .addAttribute("pageBar", pageBar);
 		
 		return "product/productSearch";
+	}
+	
+	@RequestMapping("/product/buyingCheckInvalid.do")
+	@ResponseBody
+	public Map<String, Object> buyingCheck(@RequestParam int pno, HttpSession session, Model model){
+		
+		System.out.println("잘 들어오고 있나요?" + pno);
+		Member m = (Member)session.getAttribute("member");
+		
+		Product p = productService.selectOneProduct(pno);
+		Member bM = memberService.selectOne(m.getUserId());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("잘 들어오고 있나요?" + pno);
+		int msg = 0;
+		
+		if(bM.getNowPoint() < p.getPPrice()) {
+			msg = 0;
+		} else {
+			msg = 1;
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+	
+	// 구매 요청하기
+	@RequestMapping("/product/buyRequest.do")
+	public String buyRequest(@RequestParam int pno, @RequestParam int dMethod, HttpSession session, Model model) {
+		
+		String msg = "";
+		String loc = "";
+		String userId = ((Member)session.getAttribute("member")).getUserId();
+		
+		Product p = productService.selectOneProduct(pno);
+		
+		p.setPBuyer(userId);
+		
+		int result = productService.productPurchaseRequest(p);
+		
+		
+		if (result >0) {
+			msg = "구매 요청 완료!";
+			System.out.println("상품 구매 요청 완료!");
+			loc = "/product/productDetail.do?pno="+pno;
+			
+		} else {
+			msg = "상품 구매 실패했습니다. ㅠㅠ 무슨 일이죠 이게?";
+			System.out.println("상품 구매 실패");
+			loc = "/product/productDetail.do?pno="+pno;
+		}
+		
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg)
+			 .addAttribute("dMethod", dMethod);
+		
+		return "common/msg";
 	}
 }
 

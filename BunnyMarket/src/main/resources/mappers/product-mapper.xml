@@ -31,8 +31,9 @@
 	<!-- 상품 목록을 출력하는 쿼리 -->
 	<select id="selectProductList" resultType = "Product"> 
 		SELECT *
-		FROM PRODUCT WHERE PTYPE = 1 
-		ORDER BY PDATE DESC, PNO DESC
+		  FROM PRODUCT  
+		 WHERE PTYPE = 1 
+		 ORDER BY PDATE DESC, PNO DESC
 	</select>
 	
 	
@@ -51,7 +52,9 @@
 	
 	<!-- 상품 게시글의 상세보기를 하는 쿼리 -->
 	<select id="selectOneProduct" resultType = "Product">
-		SELECT * FROM PRODUCT
+		SELECT P.*, PC.PCCONTENT PCATEGORY
+		  FROM PRODUCT P
+		  JOIN PCATEGORY PC ON (P.PCNO = PC.PCNO) 
 		WHERE PNO = #{pno} AND PTYPE = 1
 	</select>
 	
@@ -60,7 +63,7 @@
 		UPDATE PRODUCT 
 		<set>
 			PBUYER = #{pBuyer},
-			PSTATUS = #{pStatus}
+			PSTATUS = 2
 		</set>
 		WHERE PNO = #{pno}
 		
@@ -104,7 +107,7 @@
 	<!-- 상품 게시글 생성하는 쿼리 -->
 	<insert id = "insertProduct" parameterType = "Product">
 		INSERT INTO PRODUCT
-		VALUES(SEQ_PNO.NEXTVAL, #{pWriter}, #{pcno}, #{pImg}, #{pTitle}, #{pContent}, #{pPrice}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), DEFAULT, 1, #{pAddress}, DEFAULT, NULL, 0)
+		VALUES(SEQ_PNO.NEXTVAL, #{pWriter}, #{pcno}, #{pImg}, #{pTitle}, #{pContent}, #{pPrice}, TO_CHAR(SYSTIMESTAMP, 'YYYY/mm/dd hh24:mi:ss.ff2'), DEFAULT, 1, #{pAddress}, DEFAULT, NULL, 0, #{dMethod})
 	<!-- 
 		1과 마지막의 '진구','도라에몽'은 #{pWriter}, #{pBuyer}인데 로그인 기능이 완성되면 넣는 것으로.
 	 -->
@@ -169,7 +172,7 @@
 		 WHERE PTYPE = 1 AND PWRITER = #{nickName} AND PSTATUS = 1
 	</select>
 	
-	<select id="selectLoveList" parameterType="string" resultType = "PRODUCT">
+	<select id="selectLoveList" parameterType="string" resultType = "Product">
       	SELECT * FROM PRODUCT P
 		WHERE P.PNO IN (
 		SELECT L.PNO FROM LOVE L
@@ -187,8 +190,10 @@
 	</select>
 	
 	<!-- 구매완료 매퍼 -->
-	<select id="selectCompleteProductList" parameterType="string" resultType = "PRODUCT">
-      	SELECT * FROM PRODUCT P
+	<select id="selectCompleteProductList" parameterType="string" resultType = "Product">
+      	SELECT P.*, D.DNO dno
+         FROM PRODUCT P
+         JOIN DEAL D ON (P.PNO = D.PNO)
 		WHERE P.PNO IN (
 		SELECT D.PNO FROM DEAL D
 		WHERE D.DBID = #{nickName} AND D.DBSTATUS = 1 AND D.DSSTATUS=1 AND P.PTYPE = 1
@@ -211,7 +216,7 @@
 	</update>
 
 	
-	<select id="sellCompleteProductList" parameterType="string" resultType = "PRODUCT">
+	<select id="sellCompleteProductList" parameterType="string" resultType = "Product">
       	SELECT * FROM PRODUCT P
 		WHERE P.PNO IN (
 		SELECT D.PNO FROM DEAL D
@@ -220,7 +225,7 @@
       
    </select>
    
-   <select id="goTradeProduct" parameterType="string" resultType = "PRODUCT">
+   <select id="goTradeProduct" parameterType="string" resultType = "Product">
       	SELECT * FROM PRODUCT P
 		WHERE P.PNO IN (
 		SELECT D.PNO FROM DEAL D
@@ -236,7 +241,7 @@
 		   AND PTYPE = 1
    </select>
    
-   <select id="selectProductTypeList" resultType="PRODUCT">
+   <select id="selectProductTypeList" resultType="Product">
 		SELECT *
 		FROM PRODUCT
 		WHERE PTYPE = 1
@@ -284,4 +289,25 @@
 		</where>
 	</select>
 	
+	<update id="productPurchaseUpdateMember" parameterType="Member">
+		UPDATE MEMBER
+		   SET NOWPOINT = NOWPOINT - #{pPrice}
+		 WHERE USERID = #{pBuyer}
+	</update>
+	
+	<insert id="productPurchaseInsertUPoint" parameterType="UsedPoint">
+		INSERT INTO USEDPOINT
+		VALUES(SEQ_UPNO.NEXTVAL, #{pno}, #{pBuyer}, 2, SYSDATE, #{pPrice})
+	</insert>
+	
+	<insert id="productPurchaseInsertHistory" parameterType="PointHistory">
+		INSERT INTO POINTHISTORY
+		VALUES (SEQ_PHNO.NEXTVAL ,#{pBuyer}, NULL, (SELECT MAX(UPNO) FROM USEDPOINT), #{pPrice})
+	</insert>
+	
+	<select id="giveMeDeal" resultType="_int">
+		SELECT DNO
+		  FROM DEAL
+		 WHERE PNO = #{pno}
+	</select>
 </mapper>

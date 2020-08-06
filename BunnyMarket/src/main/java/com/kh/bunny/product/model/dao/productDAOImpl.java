@@ -149,7 +149,7 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.update("productMapper.selectOnemakeZero", pno);
 	}
 
-	public int productPuserchase(Product product) {
+	public int productPurchase(Product product) {
 		return sqlSession.update("productMapper.purchaseProduct", product);
 	}
 
@@ -209,6 +209,26 @@ public class productDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("productMapper.selectSproductTotalContent", hmap);
 	}
 
+
+	@Override
+	public int productPurchaseUpdateMember(Product product) {
+		return sqlSession.update("productMapper.productPurchaseUpdateMember", product);
+	}
+
+	@Override
+	public int productPurchaseInsertUPoint(Product product) {
+		return sqlSession.insert("productMapper.productPurchaseInsertUPoint", product);
+	}
+
+	@Override
+	public int productPurchaseInsertHistory(Product product) {
+		return sqlSession.insert("productMapper.productPurchaseInsertHistory", product);
+	}
+
+	@Override
+	public int giveMeDeal(int pno) {
+		return sqlSession.selectOne("productMapper.giveMeDeal", pno);
+	}
 	
 	
 }

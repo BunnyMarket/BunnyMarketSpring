@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.bunny.product.model.dao.ProductDAO;
+import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.vo.PComment;
 import com.kh.bunny.product.model.vo.Product;
 
@@ -139,7 +140,29 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int productPurchase(Product product) {
-		return productDAO.productPuserchase(product);
+		
+		int result = 0;
+		
+		try {
+
+			result = productDAO.productPurchase(product);
+			if(result == PRODUCT_SERVICE_ERROR) throw new ProductException("상품 구매 중 에러 발생");
+			
+			result = productDAO.productPurchaseUpdateMember(product);
+			if(result == PRODUCT_SERVICE_ERROR) throw new ProductException("상품 구매 중 에러 발생");
+			
+			result = productDAO.productPurchaseInsertUPoint(product);
+			if(result == PRODUCT_SERVICE_ERROR) throw new ProductException("상품 구매 중 에러 발생");
+			
+			result = productDAO.productPurchaseInsertHistory(product);
+			if(result == PRODUCT_SERVICE_ERROR) throw new ProductException("상품 구매 중 에러 발생");
+			
+			
+		} catch (Exception e) {
+			throw new ProductException("상품 구매 중 문제 발생함." + e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -185,5 +208,19 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int selectSproductTotalContents(String keyword, String condition) {
 		return productDAO.selectSproductTotalContents(keyword, condition);
+	}
+
+	@Override
+	public int giveMeDno(int pno) {
+		return productDAO.giveMeDeal(pno);
+	}
+
+	@Override
+	public int productPurchaseRequest(Product p) {
+		
+		int result = 0;
+		
+		
+		return result;
 	}
 }

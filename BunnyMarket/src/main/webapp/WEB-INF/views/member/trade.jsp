@@ -37,22 +37,15 @@
                         <div class="shop-page-count">
                             <p>판매중인 목록</p>
                         </div>
-                        <!-- Search by Terms -->
+                        <!-- <!-- Search by Terms
                         <div class="search_by_terms">
-                            <form action="#" method="post" class="form-inline">
-                            
-                                <!-- <select class="custom-select widget-title">
-                                  <option selected>최신글 보기</option>
-                                  <option value="1">예전글 보기</option>
+                            <form class="form-inline">
+                                <select class="custom-select widget-title" id="orderBySelect">
+                                  <option value="1">최신글 보기</option>
+                                  <option value="2">예전글 보기</option>
                                 </select>
-                                <select class="custom-select widget-title">
-                                  <option selected></option>
-                                  <option value="1">20개씩 보기</option>
-                                  <option value="2">50개씩 보기</option>
-                                </select> -->
-                                
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -68,7 +61,7 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${member.nickName}');" id="customCheck1">
+                                    <input type="radio" name="customCheck" class="custom-control-input" onclick="goAuctionProduct('${member.nickName}');" id="customCheck1" checked="checked">
                                     <label class="custom-control-label" for="customCheck1">경매중인 상품 <span class="text-muted"></span></label>
                                     
                                 </div>
@@ -117,65 +110,56 @@
                 <!-- All Products Area -->
                 <div class="col-12 col-md-8 col-lg-9">
                     <div class="shop-products-area">
-                        <div class="row" id="auctionTrade">
+                        <div class="row" id="auctionTrade"></div>
+                        <div class="row" id="productAll">
+                            <!-- Single Product Area -->
+                            <c:forEach items="${list}" var="p" varStatus="st">
+	                            <div class="col-12 col-sm-6 col-lg-4">
+	                                <div class="single-product-area mb-50">
+	                                    <!-- Product Image -->
+	                                    <div class="product-img" style="height: 300px; width: 255px;" id="pImg-${st.index}">
+	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
+	                                        	<img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg}" style="height: 300px; width: 255px;">
+	                                        </a>
+	                                        <div class="product-meta d-flex">
+	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
+	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+	                                        </div> 
+	                                    </div>
+	                                    <!-- Product Info -->
+	                                    <div class="product-info mt-15 text-center">
+	                                        <a href="${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}">
+	                                            <p>${p.PTitle}</p>
+	                                        </a>
+	                                        <input type="hidden" id="originPrice-${st.index }" value="${p.PPrice}"/>
+	                                        <h6><span id="pCarrot-${st.index }"></span>당근</h6>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <script>
+							    	$(function(){
+							    		var origin = $("#originPrice-${st.index }").val();
+							    		$("#pCarrot-${st.index }").text(parseInt(origin).toLocaleString());
+							    		
+							    		var Pstatus = '${p.PStatus}';
+							    		if(Pstatus == 2){
+							    			$('<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료</h4>').appendTo('#pImg-${st.index}');
+							    			$('#pImg-${st.index} img').css('opacity', '0.2');
+							    		}
+							    	});
+							    </script>
+                            </c:forEach>
                         </div>
-                        </div>
-                        </div>
-              
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     <!-- ##### Shop Area End ##### -->
-      <script>
-     
-  
-      
-      
-      
-  
+<script>
     function goAuctionProduct(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/auction/auctionTradeList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/auction/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	   +'	<p id="bidderCount-'+i + '"></p>'
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	 
-    		}
-    		
-    	});
+    	goPage("/auction/auctionTradeList.do", "/auction/auctionDetail.do?pno=", nickName);
     };
     
     
@@ -226,48 +210,7 @@
     
     
     function goLoveProduct(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/product/loveProductList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    
-    		}
-    		
-    	});
+    	goPage("/product/loveProductList.do", "/product/productDetail.do?pno=", nickName);
     };
     
     function goCompleteProduct(nickName){
@@ -316,140 +259,190 @@
     };
     
     function goCompleteAuction(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/auction/completeAuctionList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	 
-    		}
-    		
-    	});
+    	goPage("/auction/completeAuctionList.do", "/auction/auctionDetail.do?pno=", nickName);
     };
-    
     function goSellCompleteProduct(nickName){
-    	$.ajax({
-    		url : "${pageContext.request.contextPath}/product/sellCompleteProductList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
-						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
-						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
-						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
-						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
-						    	    	   +'			</div>'
-						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/product/productDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
-						    	    	   +'	</div>'
-						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	
-    		}
-    		
-    	});
+    	goPage("/product/sellCompleteProductList.do", "/product/productDetail.do?pno=", nickName);
     };
-    
     function goSellCompleteAuction(nickName){
+    	goPage("/auction/sellCompleteAuctionList.do", "/auction/auctionDetail.do?pno=", nickName);
+    };
+    function goTradeProduct(nickName){
     	$.ajax({
-    		url : "${pageContext.request.contextPath}/auction/sellCompleteAuctionList.do",
-    		data :{
-    			nickName : nickName
-    		}, dataType : "json",
-    		success : function(result){
-    				$("#auctionTrade").empty();
-    	    	   for(var i in result.list){
-    	    	   $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+			  url : "${pageContext.request.contextPath}/product/goTradeProduct.do"
+			, data : {
+					 nickName : nickName
+					 //, order : order
+				}
+			, dataType : "json"
+			, success : function(data){
+				$("#productAll").empty();
+				$("#auctionTrade").empty();
+		 	    for(var i in data.list){
+		 	    	var pprice = data.list[i].pprice;
+		 	    	var bprice = data.list[i].bprice;
+		 	    	var price = 0;
+		 	    	if(pprice > bprice){
+		 	    		price = parseInt(pprice).toLocaleString();
+		 	    	} else {
+		 	    		price = parseInt(bprice).toLocaleString();
+		 	    	}
+			    	price = parseInt(pprice).toLocaleString();
+			    	console.log("dno ? : " + data.list[i].dno);
+			    	console.log("pno ? : " + data.list[i].pno);
+	    	    	$("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+							    	    	   +'	<div class="single-product-area mb-50">'
+							    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+				 						   	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ data.list[i].pno+'">'
+											   +'			<a href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno='+ data.list[i].dno+'">'
+						   					   +'				<img style="height: 300px; width: 255px;" src="${ pageContext.request.contextPath }/resources/upload/product/'+data.list[i].pimg+'">'
+					    	   				   +'			</a>'
+											   +'			<div class="product-meta d-flex">'
+							    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+							    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+							    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+							    	    	   +'			</div>'
+							    	    	   +'		</div>'
+							    	    	   +'		<div class="product-info mt-15 text-center">'
+							    	    	   +'			<p><a href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno='+ data.list[i].dno+'">'
+							    	    	   +				data.list[i].ptitle
+							    	    	   +'			</a></p>'
+							    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+							    	    	   +'		</div>'
+							    	    	   +'	</div>'
+							    	    	   +'</div>'
+		    	   );
+				}
+			}
+		});
+    }
+	function goTradeAuction(nickName){
+		$.ajax({
+			  url : "${pageContext.request.contextPath}/auction/goTradeAuction.do"
+			, data : {
+					 nickName : nickName
+					 //, order : order
+				}
+			, dataType : "json"
+			, success : function(data){
+				$("#productAll").empty();
+				$("#auctionTrade").empty();
+		 	    for(var i in data.list){
+		 	    	var pprice = data.list[i].pprice;
+		 	    	var bprice = data.list[i].bprice;
+		 	    	var price = 0;
+		 	    	if(pprice > bprice){
+		 	    		price = parseInt(pprice).toLocaleString();
+		 	    	} else {
+		 	    		price = parseInt(bprice).toLocaleString();
+		 	    	}
+			    	price = parseInt(pprice).toLocaleString();
+			    	console.log("dno ? : " + data.list[i].dno);
+			    	console.log("pno ? : " + data.list[i].pno);
+	    	    	$("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+							    	    	   +'	<div class="single-product-area mb-50">'
+							    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+				 						   	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ data.list[i].dno+'">'
+											   +'			<a href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno='+ data.list[i].dno+'">'
+						   					   +'				<img style="height: 300px; width: 255px;" src="${ pageContext.request.contextPath }/resources/upload/product/'+data.list[i].pimg+'">'
+					    	   				   +'			</a>'
+											   +'			<div class="product-meta d-flex">'
+							    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+							    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+							    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+							    	    	   +'			</div>'
+							    	    	   +'		</div>'
+							    	    	   +'		<div class="product-info mt-15 text-center">'
+							    	    	   +'			<p><a href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno='+ data.list[i].dno+'">'
+							    	    	   +				data.list[i].ptitle
+							    	    	   +'			</a></p>'
+							    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+							    	    	   +'		</div>'
+							    	    	   +'	</div>'
+							    	    	   +'</div>'
+		    	   );
+				}
+			}
+		});
+    }
+    function goPage(ajaxUrl, url, nickName){
+		// var order = $("#orderBySelect option:selected").val();
+		$.ajax({
+			  url : "${pageContext.request.contextPath}" + ajaxUrl
+			, data : {
+					 nickName : nickName
+					 //, order : order
+				}
+			, dataType : "json"
+			, success : function(data){
+				console.log("여기까지는 오냐?");
+				appendHTML(data.list, url);
+			}
+		});
+   	}
+    function appendHTML(list, url){
+		$("#productAll").empty();
+		$("#auctionTrade").empty();
+ 	    for(var i in list){
+ 	    	var pprice = list[i].pprice;
+ 	    	var bprice = list[i].bprice;
+ 	    	var price = 0;
+ 	    	if(pprice > bprice){
+ 	    		price = parseInt(pprice).toLocaleString();
+ 	    	} else {
+ 	    		price = parseInt(bprice).toLocaleString();
+ 	    	}
+	    	price = parseInt(pprice).toLocaleString();
+    	    if(list[i].pstatus == 2){
+	    	    $("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
 						    	    	   +'	<div class="single-product-area mb-50">'
-						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" >'
-						    	    	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+result.list[i].pno+'">'
-						    	    	   +'			<a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'"><img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/'+result.list[i].pimg+'" alt=""></a>'			
-						    	    	   +'			<div class="product-meta d-flex">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+	    	    						   +'			<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료</h4>'
+	    	    						   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+    	    							   +'			<a href="${ pageContext.request.contextPath }'+ url + list[i].pno+'">'
+					   					   +'				<img style="height: 300px; width: 255px; opacity: 0.2;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+		    	    	   				   +'			</a>'
+										   +'			<div class="product-meta d-flex">'
 						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
 						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
 						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
 						    	    	   +'			</div>'
 						    	    	   +'		</div>'
-						    	    	   +'	</div>'
-						    	    	   +'	<div class="product-info mt-15 text-center">'
-						    	    	   +'	<p><a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno='+result.list[i].pno+'">'
-						    	    	   +		result.list[i].ptitle
-						    	    	   +'	</a></p>'
-						    	    	
-						//    	    	   +'<c:if test="${p.PPrice gt p.BPrice }">'
-						    	    	   +'	<h6>${p.PPrice} 당근</h6>'
-						//    	    	   +'</c:if>'
-						//    	    	   +'<c:if test="${p.PPrice lt p.BPrice }">'
-						 //   	    	   +'<h6>${p.BPrice} 당근</h6>'
-						 //   	    	   +'</c:if>'
+						    	    	   +'		<div class="product-info mt-15 text-center">'
+						    	    	   +'			<p><a href="${ pageContext.request.contextPath }'+ url + list[i].pno+'">'
+						    	    	   +				list[i].ptitle
+						    	    	   +'			</a></p>'
+						    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+						    	    	   +'		</div>'
 						    	    	   +'	</div>'
 						    	    	   +'</div>'
-						    	   );
-    	    	   
-    	    	   
-    					
-    	    	   }
-    	    	  
-    		}
-    		
-    	});
-    };
-    
-  </script>
+					    	   );
+    	    } else {
+    	    	$("#auctionTrade").append('<div class="col-12 col-sm-6 col-lg-4">'
+						    	    	   +'	<div class="single-product-area mb-50">'
+						    	    	   +'		<div class="product-img" style="height: 300px; width: 255px;" id="pImg-'+i+'">'
+			 						   	   +'			<input type="hidden" name="pno-'+ i + '" id="pno-'+ i + '" value="'+ list[i].pno+'">'
+										   +'			<a href="${ pageContext.request.contextPath }'+url + list[i].pno+'">'
+					   					   +'				<img style="height: 300px; width: 255px;" src="${ pageContext.request.contextPath }/resources/upload/product/'+list[i].pimg+'">'
+				    	   				   +'			</a>'
+										   +'			<div class="product-meta d-flex">'
+						    	    	   +'				<a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>'
+						    	    	   +'				<a href="#" class="add-to-cart-btn">Add to cart</a>'
+						    	    	   +'				<a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>'
+						    	    	   +'			</div>'
+						    	    	   +'		</div>'
+						    	    	   +'		<div class="product-info mt-15 text-center">'
+						    	    	   +'			<p><a href="${ pageContext.request.contextPath }'+ url + list[i].pno+'">'
+						    	    	   +				list[i].ptitle
+						    	    	   +'			</a></p>'
+						    	    	   +'			<h6><span>'+price+'</span>당근</h6>'
+						    	    	   +'		</div>'
+						    	    	   +'	</div>'
+						    	    	   +'</div>'
+	    	   );
+    	    }
+		}
+	}
+</script>
 
 <c:import url="../../views/common/footer.jsp"/>

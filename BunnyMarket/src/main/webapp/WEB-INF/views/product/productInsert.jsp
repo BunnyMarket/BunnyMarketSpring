@@ -61,26 +61,6 @@
 							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 가격 설정" required />
 							<br />
 
-							<!-- <label for="pEndDate">경매 종료일 *</label>
-							<input type = "date" class = "form-control"  required />
-							
-								필요에 따라 해당 attribute추가  
-								value : 기본날짜 설정, 
-								min : 입력 가능한 가장 빠른 날짜, 
-								max : 입력 가능한 가장 늦은 날짜 
-							
-							<br />
-							
-							<label for="pEndTime">경매 종료 시각 *</label>
-							<input type = "time" class = "form-control"  required />
-							
-								value : 기본 시간 설정, 
-								min : 입력 가능한 가장 빠른 시간, 
-								max : 입력 가능한 가장 늦은 시간
-							
-							<br /> -->
-							
-							
 							<label for="pcno" style="float: none;">카테고리 설정 *</label>
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
@@ -94,8 +74,19 @@
                                   <option value="7">기타</option>
                                 </select>
 	                        </div>
+	                        <br />
 	                        
-	                        <br /><br /><br /><br /><br />
+	                        <label for="pcno" style="float: none;">거래방식 설정 *</label>
+	                        <div class="search_by_terms">
+                                <select class="custom-select widget-title" name="gMethod" style="width: 100%" required="required">
+                                  <option value="" hidden>거래방식을 선택해주세요</option>
+                                  <option value="3">미결정</option>
+                                  <option value="2">택배</option>
+                                  <option value="1">직거래</option>
+                                </select>
+	                        </div>
+	                        
+	                        <br /><br />
 								<label for="pAddress">주소 입력 </label>
 								<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
 								<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
@@ -320,10 +311,6 @@
 			                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			                map.setCenter(coords);
 			                
-			                
-			                
-			                
-			                
 			            } 
 			        });    
 			        
@@ -333,13 +320,6 @@
 	        }).open();
 	        
 	    };
-	    
-	    
-	    
-		
-		
-		    
-	
 	</script>
 
 

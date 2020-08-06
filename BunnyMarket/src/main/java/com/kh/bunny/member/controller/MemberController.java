@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
@@ -45,7 +47,9 @@ public class MemberController {
 	@Autowired
 	JavaMailSender mailSender; // 메일 서비스를 사용하기 위해 의존성을 주입함.
 	@Autowired
-	ReviewService reviewService;	
+	ReviewService reviewService;
+	@Autowired
+	AuctionService auctionService;
 
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -59,7 +63,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/tradeView.do")
-	public String tradeView() {
+	public String tradeView( @RequestParam(value = "aPage", required = false, defaultValue = "1") int aPage
+			,Model model, HttpServletRequest request, HttpSession session) {
+		
+		int numPerPage = 100;
+		
+		String nickName = ((Member)session.getAttribute("member")).getNickName();
+		
+		List<Map<String, String>> tlist = auctionService.selectTradeList(aPage, numPerPage,nickName);
+		
+		System.out.println("무엇이 들어있느냐? : " + tlist);
+		System.out.println("무엇이 들어있느냐? : " + tlist.size());
+		
+		int totalContents = auctionService.selectTradeTotalContents(nickName);
+		
+		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "/auction/auctionTradeList.do?PWRITER="+nickName);
+		
+		model.addAttribute("list", tlist)
+			 .addAttribute("totalContents", totalContents)
+			 .addAttribute("numPerPage", numPerPage)
+			 .addAttribute("pageBar", pageBar);
+		
 		return "member/trade";
 	}
 	
