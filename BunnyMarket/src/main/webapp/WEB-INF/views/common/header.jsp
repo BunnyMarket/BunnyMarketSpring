@@ -329,7 +329,7 @@
 
               <div class="modal-footer" style="align:center;">
               
-        <button type="button" class="btn btn-secondary" style="background : red;">신고하기</button>
+        <button type="button" class="btn btn-secondary" style="background : red;" onclick = "reportMember();">신고하기</button>
         <button type="button" class="btn btn-success">쪽지</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
       </div>

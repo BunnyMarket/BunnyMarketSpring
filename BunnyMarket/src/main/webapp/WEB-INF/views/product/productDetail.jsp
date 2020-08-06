@@ -443,6 +443,54 @@
 	</div>
 </div>
 
+<div class="modal fade" id="reportMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">신고하기</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form action="${pageContext.request.contextPath }/report/reportMember.do" id="reportMember" method="post">
+				<input type="hidden" name="pno" value = "${ a.pno }"/>
+				<input type="hidden" name="pType" value = "${ a.PType }" />
+				<input type="hidden" name="reported" id="reportedName" value="${a.PWriter }" />
+				<div class="modal-body row">
+				
+					<div class="col-12">
+						<div class="form-group">
+							<h4 class="title"><font color = "orange">${a.PWriter}</font> 님에 대한 신고 사유가 무엇인가요?</h4>
+							<select name="rcNo" id="" class = "form-control" required>
+								<option value="">----</option>
+								<option value="11">전문 판매업자로 의심</option>
+								<option value="12">욕설 혹은 비방</option>
+								<option value="13">거래/환불 분쟁 신고</option>
+								<option value="14">사기 신고</option>
+								<option value="15">기타</option>
+							</select>
+							<br />
+							<label for="">신고글 제목</label>
+							<input type="text" class="form-control" name="rTitle" id="rTitle" style="border: 1px solid #e1e1e1;" required/>
+							<br />
+							<label for="">신고글 내용</label>
+							<textarea class = "form-control" name="rContent" id="rContent" cols="30" rows="10" required></textarea>
+		            		<div class="Bfail" style="color: orange; font-weight: bold; font-size: 20px;"></div>
+		            		<div class="BfailMax" style="color: orange; font-weight: bold; font-size: 20px;"></div>
+							<br />
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="reportMemberBtn" class="btn alazea-btn mt-15" style="float: right">신고하기</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <script>
 //관리자 admin
 
@@ -789,6 +837,16 @@ $(function(){
 			return;
 		}
 	}
+	
+	function reportMember(){
+		if(confirm("${a.PWriter}님을 신고하시겠습니까?"))
+			{
+				//location.href = "${pageContext.request.contextPath}/report/reportMember.do";
+				$('#handleModal').modal("hide");
+				$('#reportMemberModal').modal();
+				
+			} 
+	} 
 	
 	var sellCount = 0;
 	$('#sellerInfo').click(function(){
