@@ -71,4 +71,9 @@ public class AdminServiceImpl implements AdminService {
 	public int selectSAdminMemberTotalContents(String keyword, String condition) {
 		return adminDAO.selectSAdminMemberTotalContents(keyword, condition);
 	}
+
+	@Override
+	public List<Map<String, Object>> chartReportCount() {
+		return adminDAO.selectChartReportCount();
+	}
 }

@@ -58,7 +58,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Override
 	public List<Map<String, Object>> selectChartMonthCount() {
-		return sqlSession.selectList("adminMapper.chartChartMonthCount");
+		return sqlSession.selectList("adminMapper.chartMonthCount");
 	}
 
 	@Override
@@ -80,5 +80,11 @@ public class AdminDAOImpl implements AdminDAO {
 		
 		return sqlSession.selectOne("adminMapper.selectSAdminMemberTotalContent", hmap);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectChartReportCount() {
+		return sqlSession.selectList("adminMapper.chartReportCount");
+	}
 }
+
 

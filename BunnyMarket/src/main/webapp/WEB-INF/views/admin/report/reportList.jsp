@@ -8,8 +8,6 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../../resources/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-  </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -20,49 +18,36 @@
   <link href="../../resources/demo/demo.css" rel="stylesheet" />
   <style>
   .btn {
-	box-shadow:inset 0px 0px 0px 0px #97c4fe;
-	background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
-	background-color:#3d94f6;
-	border-radius:9px;
-	border:1px solid #337fed;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #1570cd;}
-	
-	.btn:hover {
-	background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
-	background-color:#1e62d0;}
-	
+  background: #fc913a;
+  background-image: -webkit-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -moz-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -ms-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -o-linear-gradient(top, #fc913a, #f06b05);
+  background-image: linear-gradient(to bottom, #fc913a, #f06b05);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 7px 20px 7px 20px;
+  border: solid #ff9645 2px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #ff6f00;
+  background-image: -webkit-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -moz-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -ms-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -o-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: linear-gradient(to bottom, #ff6f00, #ff6f00);
+  text-decoration: none;
+}
 	.btn:active {
 	position:relative;
 	top:1px;}
 	
-	#btn {
-	box-shadow: 3px 4px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-	background-color:#ededed;
-	border-radius:5px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#777777;
-	font-family:Arial;
-	font-size:17px;
-	font-weight:bold;
-	padding:12px 44px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;}
-	
-   #btn:hover {
-	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-	background-color:#dfdfdf;}
-
 	.pagingArea{
 	width: 100%;
  	text-align: center;}
@@ -88,9 +73,7 @@
 	 text-align: center;
 	 border-radius:5px;
 	 }
-	  table{
-	 text-align : center; 
-	 }
+	
   	
   th{
 		color : black;
@@ -158,15 +141,14 @@
                       </tbody>
                     </table>
                   </div>
+            <div class="pageAdmin">
+             <c:out value="${pageBar}" escapeXml="false"/>
+            </div>
                 </div>
-              </div>
             </div>
 	<br/>
-<div class="pagingArea" >
-	<div class="pa">
-     <div>
-      	<c:out value="${pageBar}" escapeXml="false"/>
-     </div>
+              </div>
+
 	</div>
 </div>
 <br/>
@@ -178,7 +160,8 @@
 		<option value="writer">작성자</option>
 		<option value="type">유형</option>
 	</select>&nbsp;&nbsp;
-	<input type="search" id="keyword"> &nbsp;
+	<input type="search" id="keyword"
+	 onkeypress="if(event.keyCode==13) {search();}"> &nbsp;
 	<button class=" btn paging" onclick="search();">검색</button>
 </div>
 <br>

@@ -7,9 +7,11 @@
 <html lang="ko" class="zc-html">
 
 <head>
+<title> Admin Bunny</title>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../../resources/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
+<link rel="icon"
+   href="${ pageContext.request.contextPath }/resources/img/core-img/favicon-bunny2.ico">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
  
@@ -66,41 +68,6 @@ chartJson.forEach(function(item){
 });
 
 // 월별 json
-/* var monthPJson = JSON.parse('${monthPJson}');
-var monthAJson = JSON.parse('${monthAJson}');
-var chartMonthP = [];
-var chartMonthcntP =[];
-var chartMonthTypeP=[];
-var chartMonthA = [];
-var chartMonthcntA =[];
-var chartMonthTypeA=[];
-var chartMonth =[];
-
-if(chartMonthP.length>= chartMonthA.length){
-monthPJson.forEach(function(item){
-	chartMonth.push(item.MONTH);
-	chartMonthcntP.push(item.C);
-	chartMonthTypeP.push(item.PTYPE);
-});
-
-monthAJson.forEach(function(item){
-	chartMonthcntA.push(item.C);
-	chartMonthTypeA.push(item.PTYPE);
-});
-} else {
-	monthPJson.forEach(function(item){
-		chartMonthcntP.push(item.C);
-		chartMonthTypeP.push(item.PTYPE);
-	});
-
-	monthAJson.forEach(function(item){
-		chartMonth.push(item.MONTH);
-		chartMonthcntA.push(item.C);
-		chartMonthTypeA.push(item.PTYPE);
-	});
-	
-} */
-
 var monthJson = JSON.parse('${ monthJson }');
 var chartMonth = []; 
 var chartMonthcntP=[]; 
@@ -114,6 +81,18 @@ monthJson.forEach(function(item){
 		chartMonthcntA.push(item.AC);
 		chartMonthTypeP.push(item.P);
 		chartMonthTypeA.push(item.A);
+});
+
+// 신고 유형별
+var reportJson = JSON.parse('${ reportJson }');
+var chartRate = [];
+var chartRcategory =[];
+var chartCount = [];
+
+reportJson.forEach(function (item){
+		chartRate.push(item.RATE);
+		chartCount.push(item.C);
+		chartRcategory.push(item.RCCONTENT);
 });
 
 
@@ -255,7 +234,7 @@ let chartConfig = {
 		      x: '2%',
 		      y: '35.2%',
 		      title: {
-		        text: '연령대별',
+		        text: '신고 카테고리 별',
 		        marginTop: '7px',
 		        marginLeft: '9px',
 		        backgroundColor: 'none',
@@ -277,8 +256,8 @@ let chartConfig = {
 		          visible: false
 		        }
 		      },
-		      scaleX: { // 연령 목록
-		        values: ['Kenmore', 'Craftsman', 'DieHard', 'Land\'s End', 'Laclyn Smith', 'Joe Boxer'],
+		      scaleX: { // 신고 카테고리 목록
+		        values: chartRcategory,
 		        guide: {
 		          visible: false
 		        },
@@ -322,9 +301,9 @@ let chartConfig = {
 		        margin: '50px 15px 10px 15px'
 		      },
 		      series: [
-		        {	// 연령대별 값
-		          values: [103902, 112352, 121823, 154092, 182023, 263523],
-		          styles: [
+		        {	//  신고 카테고리 값
+		          values: chartCount
+		          /*styles: [
 		            {
 		              backgroundColor: '#4dbac0'
 		            },
@@ -343,14 +322,14 @@ let chartConfig = {
 		            {
 		              backgroundColor: '#4dbac0'
 		            }
-		          ],
-		          tooltipText: '$%node-value',
+		          ]*/,
+		          tooltipText: '%node-value',
 		          zIndex: 2
 		        },
 		        {
-		          values: [300000, 300000, 300000, 300000, 300000, 300000],
+		          values: chartRate, // 비율 값
 		          valueBox: {
-		            text: '$%data-rvalues',
+		            text: ' ',
 		            paddingBottom: '8px',
 		            fontColor: '#8391a5',
 		            fontFamily: 'Arial',
@@ -361,7 +340,7 @@ let chartConfig = {
 		            visible: true
 		          },
 		          backgroundColor: '#d9e4eb',
-		          dataRvalues: [103902, 112352, 121823, 154092, 182023, 263523],
+		          dataRvalues: chartCount, 
 		          maxTrackers: 0,
 		          zIndex: 1
 		        }
