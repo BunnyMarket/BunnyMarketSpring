@@ -113,14 +113,14 @@ public class QNAController {
 		
 		QNA q = qnaService.selectOneQNA(qno);
 
-		model.addAttribute("qna", q);
-
         
 		List<Object> QComments = qnaService.selectQCommentList(qno);
 		System.out.println("qcomments: " + QComments);
 		System.out.println("qcomments : " + QComments.size());
 		
-		model.addAttribute("qna", q).addAttribute("qcomments", QComments).addAttribute("qcommentSize", QComments.size());
+		model.addAttribute("qna", q)
+				   .addAttribute("qcomments", QComments)
+				   .addAttribute("qcommentSize", QComments.size());
 
 		return "QNA/QNA_Detail";
 
@@ -290,13 +290,16 @@ public class QNAController {
 			adminMember am = (adminMember)session.getAttribute("admin");
 			Member m = (Member)session.getAttribute("member");
 			
+			String userImg ="";
 			if(m != null) {String userId = m.getUserId();
 							qcomment.setQWriter(userId);
+							userImg = m.getPhoto();
 			}else if(am != null ){
 				String adminId = am.getAdminId();
 				qcomment.setQWriter(adminId);		
 			}
 			
+			System.out.println("userImg : " + userImg);
 			
 			System.out.println("댓글아 달아졌니" + qcomment);
 			String msg = "";
@@ -316,7 +319,7 @@ public class QNAController {
 		  }
 		  
 		  model.addAttribute("loc", loc)
-		  		     .addAttribute("msg", msg);
+		  		     .addAttribute("msg", msg).addAttribute("userImg", userImg);
 		  
 		  return "common/msg";
 		  		

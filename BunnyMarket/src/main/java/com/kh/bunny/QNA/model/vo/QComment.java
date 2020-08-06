@@ -20,5 +20,6 @@ public class QComment implements Serializable {
 	private String qcDate;
 	private int ref_qcno;
 	private int qcLevel;
+	private String photo;
 
 }

@@ -45,8 +45,10 @@
    </select>
    
    <select  id="selectQCommentList" resultType= "QComment">
-    SELECT * FROM QCOMMENT
-    WHERE QNO =#{qno}
+	SELECT QC.*, M.PHOTO 
+	  FROM QCOMMENT QC
+	  JOIN MEMBER M ON M.USERID = QC.QWRITER
+	 WHERE QC.QNO = #{qno}
     ORDER BY QCDATE DESC
    </select>
    

@@ -215,7 +215,14 @@
 													<div class="comment-wrapper d-flex">
 														<!-- Comment Meta -->
 														<div class="comment-author">
-															<img src="${ pageContext.request.contextPath }/resources/img/bg-img/37.jpg" alt=""><!-- member의 대표이미지 경로 적어주기 -->
+															<c:if test="${sellerPhoto == null }">
+																<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg" />
+															</c:if>
+															<c:if test="${sellerPhoto != null }">
+																<img src="/bunny/resources/member/profile/${ sellerPhoto }" id="userImg" class="circleImg" width="150px" height="150px"
+																alt="userImg"/>
+															</c:if> <br />
 														</div>
 														<!-- Comment Content -->
 														<div class="comment-content">
@@ -280,8 +287,15 @@
 																<li class="single_comment_area">
 																	<div class="comment-wrapper d-flex">
 																		<!-- Comment Meta -->
-																		<div class="comment-author">
-																			<img src="${ pageContext.request.contextPath }/resources/img/bg-img/38.jpg" alt="">
+																			<div class="comment-author">
+																			<c:if test="${userImg == null }">
+																				<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg" />
+																			</c:if>
+																			<c:if test="${userImg != null }">
+																				<img src="/bunny/resources/member/profile/${ userImg }" id="userImg" class="circleImg" width="150px" height="150px"
+																				alt="userImg"/>
+																			</c:if> <br />
 																		</div>
 																		<!-- Comment Content -->
 																		<div class="comment-content">
