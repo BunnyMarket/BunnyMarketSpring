@@ -149,6 +149,41 @@ public class ReportController {
 		
 	}
 	
+	@RequestMapping("/report/reportMember.do")
+	public String reportMember(Report report, Model model, HttpSession session, int pType) {
+		System.out.println("report잘 가져오나 확인 : " + report);
+		System.out.println("pType 잘 가져와?" + pType);
+		
+		String rWriter = ((Member)session.getAttribute("member")).getUserId();
+		
+		report.setRWriter(rWriter);
+		
+		int result = reportService.insertReport(report);
+		String msg = "";
+		String loc = "";
+		
+		//int pType = (productService.selectOneProduct(report.getPno())).getPType(); 
+		
+		if(result > 0) {
+			msg = report.getReported() + "님에 대한 신고가 접수되었습니다.";
+			
+			if (pType == 1) {
+				loc = "/product/productDetail.do?pno="+report.getPno();
+			} else if (pType == 2) {
+				loc = "/auction/auctionDetail.do?pno="+report.getPno();
+			}
+			
+		} else {
+			msg = "신고 접수 실패";
+			loc = "/";
+		}
+		
+		model.addAttribute("loc", loc)
+			 .addAttribute("msg", msg);
+		
+		return "common/msg";
+	}
+	
 	
 	// 첨부파일
 	@RequestMapping("/report/reportImgInsert.do")
