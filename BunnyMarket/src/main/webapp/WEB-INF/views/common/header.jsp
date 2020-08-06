@@ -307,10 +307,10 @@
       </div>
       <div class="modal-body">
       
-        <div style="height:150px;">
+        <div style="width:500px; height:150px; word-break:break-all;" >
         <img src="${ pageContext.request.contextPath }/resources/img/usericon.png" class="circleImg" id="sellerPhoto"style="width:25%;"class="userimg" alt="userimg" /> <br /> 
         <h6 style="font-weight:bold;" id="sellerName"></h6> 
-        <p style="color:#a3a3a3; font-size:15px" id="sellerIntroduce"></p>
+        <p style="color:#a3a3a3;word-break:break-all; font-size:15px" id="sellerIntroduce"></p>
 
         </div>
 		<div>

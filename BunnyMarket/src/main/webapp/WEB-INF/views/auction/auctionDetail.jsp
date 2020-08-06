@@ -180,12 +180,12 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${a.PWriter}</h4>
-										<c:if test="${sellerPhoto == null }">
+										<c:if test="${seller.photo == null }">
 											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg" />
 										</c:if>
-										<c:if test="${sellerPhoto != null }">
-											<img src="/bunny/resources/member/profile/${sellerPhoto}" id="userImg" class="circleImg" width="150px" height="150px"
+										<c:if test="${seller.photo != null }">
+											<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
 										</c:if> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
@@ -865,7 +865,9 @@ $(function(){
 				var photo = data.seller.photo;
 				$('#sellerName').text("아이디 : " + data.seller.nickName);
 				$('#sellerIntroduce').text("자기소개 : " + data.seller.introduce);
+				if(photo != null){
 				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
+				}
 				$('#sellerReport').text("신고 당한 횟수 : " + data.seller.count + "회");
 				$('#sellCount').text("총거래 : " + sellCount + "회");
 				

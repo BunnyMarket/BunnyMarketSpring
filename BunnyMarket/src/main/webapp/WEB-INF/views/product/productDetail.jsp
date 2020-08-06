@@ -191,12 +191,12 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${product.PWriter}</h4>
-										<c:if test="${userImg == null }">
+										<c:if test="${seller.photo == null }">
 											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg" />
 										</c:if>
-										<c:if test="${userImg != null }">
-											<img src="/bunny/resources/member/profile/${ sellerPhoto }" id="userImg" class="circleImg" width="150px" height="150px"
+										<c:if test="${seller.photo != null }">
+											<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
 										</c:if> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>

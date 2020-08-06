@@ -136,8 +136,9 @@ public class ProductController {
 		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
 		System.out.println("PComment객체 갯수 : " + PComments.size());
-		
+		Member seller = memberService.findSeller2(p.getPWriter());
 		model.addAttribute("product", p)
+			 .addAttribute("seller",seller)
 		     .addAttribute("pcomments", PComments)
 		     .addAttribute("pcommentSize", PComments.size()) // 댓글 갯수 출력
 		     .addAttribute("sellerPhoto", sellerPhoto);
