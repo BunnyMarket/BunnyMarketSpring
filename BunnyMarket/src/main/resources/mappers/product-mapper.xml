@@ -289,6 +289,15 @@
 		</where>
 	</select>
 	
+	<select id="selectProductTopList" resultType = "Product">
+		SELECT * 
+		FROM (SELECT ROWNUM, P.* 
+		      FROM PRODUCT P 
+		      WHERE PTYPE = 1 AND PSTATUS = 1
+		      ORDER BY PDATE DESC) 
+		WHERE ROWNUM &lt;= 4
+	</select>
+	
 	<update id="productPurchaseUpdateMember" parameterType="Member">
 		UPDATE MEMBER
 		   SET NOWPOINT = NOWPOINT - #{pPrice}

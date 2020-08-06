@@ -8,6 +8,7 @@ import java.util.Map;
 import com.kh.bunny.auction.model.vo.Auction;
 import com.kh.bunny.auction.model.vo.Bidder;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
 
 public interface AuctionDAO {
 
@@ -58,6 +59,8 @@ public interface AuctionDAO {
 	List<Map<String, String>> goTradeAuction(int aPage, int numPerPage, String nickName);
 
 	Integer selectTypeCount(int pcno);
+
+	List<Auction> selectAuctionTopList();
 
 	
 }

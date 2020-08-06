@@ -253,6 +253,15 @@
 		 WHERE PCNO = #{pcno}
 		   AND PTYPE = 2
    </select>
+   
+   <select id="selectAuctionTopList" resultType = "Auction">
+		SELECT * 
+		FROM (SELECT ROWNUM, P.* 
+		      FROM PRODUCT P 
+		      WHERE PTYPE = 2 AND PSTATUS = 1
+		      ORDER BY PDATE DESC) 
+		WHERE ROWNUM &lt;= 4
+	</select>
 
 </mapper>
 

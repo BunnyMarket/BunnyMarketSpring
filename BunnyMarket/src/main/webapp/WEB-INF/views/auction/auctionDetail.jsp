@@ -99,10 +99,12 @@
 						<div class="modal-layout"></div>
 						<br />
 						<c:if test="${a.PStatus eq 1 }">
+							<c:if test="${sessionScope.member.nickName ne a.PWriter}">
 							<br /><br />
 	                        <button type="button" class="btn alazea-btn mt-15" style="float: right"
 									onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
 							<br />
+							</c:if>
 						</c:if>
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
@@ -164,10 +166,8 @@
 						<ul class="nav nav-tabs" role="tablist" id="product-details-tab">
 							<li class="nav-item"><a href="#description"
 								class="nav-link active" data-toggle="tab" role="tab">상세 설명</a></li>
-								<c:if test="${sessionScope.member.nickName ne a.PWriter}">
 							<li class="nav-item"><a href="#addi-info" class="nav-link"
 								data-toggle="tab" role="tab">추가 정보</a></li>
-								</c:if>
 							<li class="nav-item"><a href="#reviews" class="nav-link"
 								data-toggle="tab" role="tab"> 댓글<span class="text-muted">(${pcommentSize })</span>
 							</a></li>

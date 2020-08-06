@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.vo.adminMember;
 import com.kh.bunny.auction.model.vo.Auction;
+import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.common.util.ProductAjaxUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
@@ -40,6 +41,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService; 
+	
+	@Autowired
+	AuctionService auctionService;
 	
 	@Autowired
 	MemberService memberService;
@@ -778,5 +782,37 @@ public class ProductController {
 		
 		return "common/msg";
 	}
+	
+	@RequestMapping("/product/productTopList.do")
+	@ResponseBody
+	public Map<String, Object> productTopList(Model model) {
+	
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<Product> list = productService.selectProductTopList();
+		
+		result.put("list", list);
+		model.addAttribute("list", list);		
+		
+		return result;
+	}
+	
+	@RequestMapping("/product/auctionTopList.do")
+	@ResponseBody
+	public Map<String, Object> auctionTopList(Model model) {
+	
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<Auction> list = auctionService.selectAuctionTopList();
+		
+		result.put("list", list);
+	
+		
+		System.out.println("pList잘 뽑아옴? : " + list);
+		
+		model.addAttribute("list", list);		
+		
+		return result;
+	}
+	
 }
 

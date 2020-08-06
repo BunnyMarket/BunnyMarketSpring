@@ -223,4 +223,9 @@ public class ProductServiceImpl implements ProductService {
 		
 		return result;
 	}
+	
+	@Override
+	public List<Product> selectProductTopList() {
+		return productDAO.selectProductTopList();
+	}
 }
