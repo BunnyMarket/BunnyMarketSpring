@@ -48,7 +48,7 @@
 		 RIGHT JOIN PCATEGORY C ON c.pcno = P.PCNO
 	</select>
 	
-	<select id="chartChartMonthCount" resultType="HashMap">
+	<select id="chartMonthCount" resultType="HashMap">
 		SELECT A.*, NVL(A.MONTH,0) AS AM, P.* , NVL(P.MONTH,0)AS PM 
 		  FROM (SELECT PTYPE AS P, SUBSTR(PDATE,6,2)MONTH, COUNT(*)PC
 			  	  FROM PRODUCT
@@ -61,6 +61,14 @@
 						 	GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
 				         	ORDER BY MONTH ASC)A ON A.MONTH = P.MONTH
 		 ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END)   
+	</select>
+	
+	<select  id="chartReportCount" resultType = "HashMap">
+		SELECT C.RCNO, C.RCCONTENT, COUNT(R.RCNO) AS C, '1000' AS RATE
+		  FROM REPORT R
+		FULL OUTER JOIN RCATEGORY C ON R.RCNO = C.RCNO
+		  GROUP BY C.RCNO , C.RCCONTENT
+		  ORDER BY C.RCNO
 	</select>
 	
 	<select id="searchAdminMemberList" parameterType = "hashmap" resultType = "AdminMember">

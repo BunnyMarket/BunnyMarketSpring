@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.service.AdminService;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
@@ -41,25 +42,25 @@ public class adminMemberController {
 		
 		List<Map<String, Object>> list = adminService.chartCategoryCount();
 		List<Map<String, Object>> month = adminService.chartMonthCount();
-		
+		List<Map<String, Object>> report = adminService.chartReportCount();
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String chartJson = null;
 		String monthJson = null;
-		
+		String reportJson = null;
 		
 		try {
 			chartJson = mapper.writeValueAsString(list);
 			monthJson =mapper.writeValueAsString(month);
+			reportJson =mapper.writeValueAsString(report);
 		
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		System.out.println("monthJson : " + monthJson );
-	
 		model.addAttribute("list", list)
 				.addAttribute("chartJson", chartJson)
-				.addAttribute("monthJson", monthJson);
+				.addAttribute("monthJson", monthJson)
+				.addAttribute("reportJson", reportJson);
 		
 		return "admin/dashboard";
 	}
@@ -243,7 +244,7 @@ public class adminMemberController {
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/admin/member/adminMemberId.do?condition="+condition+"&keyword=" + keyword);

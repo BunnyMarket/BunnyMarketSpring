@@ -11,7 +11,7 @@
 <meta charset="utf-8" />
 <link rel="apple-touch-icon" sizes="76x76"
 	href="../../resources/img/apple-icon.png">
-<link rel="icon" type="image/png" href="../../resources/img/favicon.png">
+<link rel="icon" type="image/png" href="../../resources/img/core-img/favicon-bunny2.ico"> <!-- 파비콘 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
 	name='viewport' />
@@ -25,6 +25,7 @@
 	rel="stylesheet" />
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="../../resources/demo/demo.css" rel="stylesheet" />
+<title>Admin Bunny</title>
 <script
 	src="${ pageContext.request.contextPath }/resources/js/jquery/jquery-3.5.1.min.js"></script>
 <!-- 섬머노트 -->
@@ -46,6 +47,88 @@
 	.dropdown-menu a:hover, .dropdown-menu a:focus, .dropdown-menu a:active{
 	background-color: ligthgreen;
 }
+
+.pageAdmin{
+	font-weight: 500 ;
+}
+table{
+	text-align : center;
+}
+
+.btn {
+  background: #fc913a;
+  background-image: -webkit-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -moz-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -ms-linear-gradient(top, #fc913a, #f06b05);
+  background-image: -o-linear-gradient(top, #fc913a, #f06b05);
+  background-image: linear-gradient(to bottom, #fc913a, #f06b05);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 7px 20px 7px 20px;
+  border: solid #ff9645 2px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #ff6f00;
+  background-image: -webkit-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -moz-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -ms-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: -o-linear-gradient(top, #ff6f00, #ff6f00);
+  background-image: linear-gradient(to bottom, #ff6f00, #ff6f00);
+  text-decoration: none;
+}
+select{
+    text-align:center;
+    margin-left:35px;
+    border:1px solid #ff6f00;
+    padding:5px;
+    border-radius:2px;
+}
+select:hover{
+    background:#fff;
+    border:1px solid #ff6f00;
+}
+
+select:focus {
+        -webkit-box-shadow: 0 0 3px 1px #ff6f00;
+        -moz-box-shadow: 0 0 3px 1px #ff6f00;
+        box-shadow: 0 0 3px 1px #ff6f00;
+    }
+    select:before{
+        content: "▼";
+    }
+option{
+    background:#fff;
+    border-color:#ff6f00;
+    border-radius:2px;
+    line-height: 18px;
+    outline:none;
+    -webkit-box-shadow: 0 0 3px 1px #ff6f00;
+    -moz-box-shadow: 0 0 3px 1px #ff6f00 ;
+    box-shadow: 0 0 3px 1px #ff6f00;
+}
+option:focus{
+    -webkit-box-shadow: 0 0 3px 1px #ff6f00;
+        -moz-box-shadow: 0 0 3px 1px #ff6f00;
+        box-shadow: 0 0 3px 1px #ff6f00;
+}
+option:hover{
+		 background : #fabd8e;
+}
+
+.searchArea input {
+  border: none;
+  border-bottom:1px solid #757575;
+  background: #eeeeee;
+}
+
+
+
 </style>
 </head>
 
@@ -86,11 +169,6 @@
 						 <i	class="material-icons">library_books</i>
 							<p class="li-menu">Q&A </p>
 					</a></li>
-				<%-- 	<li class="nav-item "><a class="nav-link"
-						href="${ pageContext.request.contextPath }/views/admin/message.jsp">
-							<i class="material-icons">library_books</i>
-							<p>메세지</p>
-					</a></li> --%>
 					<c:if test="${admin.adminId eq 'admin'}">
 						<li class="nav-item "><a class="nav-link"
 							href="${ pageContext.request.contextPath }/admin/member/adminMemberId.do">
@@ -148,35 +226,12 @@
 					<div class="collapse navbar-collapse justify-content-end">
 						<form class="navbar-form">
 							<div class="input-group no-border">
-								<input type="text" value="" class="form-control"
-									placeholder="Search...">
-								<button type="submit"
-									class="btn btn-white btn-round btn-just-icon">
-									<i class="material-icons">search</i>
-									<div class="ripple-container"></div>
-								</button>
+							
 							</div>
 						</form>
 						<ul class="navbar-nav">
-							<li class="nav-item"><a class="nav-link" href="javascript:;">
-									<i class="material-icons">dashboard</i>
-									<p class="d-lg-none d-md-block">Stats</p>
-							</a></li>
-							<li class="nav-item dropdown"><a class="nav-link"
-								href="http://example.com" id="navbarDropdownMenuLink"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"> <i class="material-icons">notifications</i>
-									<span class="notification">5</span>
-									<p class="d-lg-none d-md-block">Some Actions</p>
-							</a>
-								<div class="dropdown-menu dropdown-menu-right"
-									aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="#">Mike John responded to
-										your email</a> <a class="dropdown-item" href="#">You have 5
-										new tasks</a> <a class="dropdown-item" href="#">You're now
-										friend with Andrew</a> <a class="dropdown-item" href="#">Another
-										Notification</a> <a class="dropdown-item" href="#">Another One</a>
-								</div></li>
+							
+						
 							<li class="nav-item dropdown"><a class="nav-link"
 								href="javascript:;" id="navbarDropdownProfile"
 								data-toggle="dropdown" aria-haspopup="true"
