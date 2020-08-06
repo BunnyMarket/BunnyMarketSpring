@@ -124,27 +124,6 @@
 		</where>
 	</select>
 	
-		 <select id="searchMemberList" parameterType = "hashmap" resultType = "Member">
-		SELECT * FROM MEMBER
-		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
-		
-		<where>
-			<if test="condition == 'userId'">
-				USERID LIKE #{myPattern}
-			</if>
-			<if test="condition == 'userName'">
-				USERNAME LIKE #{myPattern}
-			</if>
-			<if test="condition == 'userNickName'">
-				NICKNAME LIKE #{myPattern}
-			</if>
-			
-			<if test="condition == 'all'">
-				 USERID LIKE #{myPattern} OR USERNAME LIKE #{myPattern}  OR NICKNAME LIKE #{myPattern} 
-			</if> 
-		</where>
-	</select>
-	
 		<select id="selectSMemberTotalContent" parameterType = "hashmap" resultType = "_int">
 		SELECT COUNT(*) 
 		  FROM MEMBER		  
