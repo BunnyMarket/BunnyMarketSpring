@@ -138,33 +138,32 @@
 						<h5 class="title--">판매 금액</h5>
 						<div class="products">
 							<div class="products-data">
-								<div
-									class="single-products d-flex justify-content-between align-items-center">
+								<div class="single-products d-flex justify-content-between align-items-center">
 									<h5>제품 가격 :</h5>
-									<h5>${ product.PPrice*100 }원 &nbsp;&nbsp;(${ product.PPrice }당근)</h5>
+									<input type="hidden" id="originCarrot" value="${ product.PPrice }"/>
+									<h5><span style="color:orange" id="commaCarrot"></span> 당근</h5>
 								</div>
 							</div>
 						</div>
 						<c:if test="${ product.PType == 2 }">
-							<div
-								class="subtotal d-flex justify-content-between align-items-center">
-								<h5>입찰 가격 :</h5>
-								<h5>${ product.BPrice*100 }원 &nbsp;&nbsp;(${ product.BPrice }당근)</h5>
+							<div class="subtotal d-flex justify-content-between align-items-center">
+								<input type="hidden" id="originBCarrot" value="${ product.BPrice }"/>
+								<h5><span style="color:orange" id="BcommaCarrot"></span> 당근</h5>
 							</div>
 						</c:if>
 						<div
 							class="shipping d-flex justify-content-between align-items-center">
 							<h5>수수료</h5>
-							<h5>1,000 won</h5>
+							<h5><span style="color:orange">10</span> 당근</h5>
 						</div>
 						<div
 							class="order-total d-flex justify-content-between align-items-center">
 							<h5>Order Total</h5>
 							<c:if test="${ product.PType == 1 }">
-								<h5>${ product.PPrice*100 - 1000} won</h5>
+								<h5><span style="color:orange" id="TcommaCarrot1"></span> 당근</h5>
 							</c:if>
 							<c:if test="${ product.PType == 2 }">
-								<h5>${ product.BPrice*100 - 1000} won</h5>
+								<h5><span style="color:orange" id="TcommaCarrot2"></span> 당근</h5>
 							</c:if>
 						</div>
 						<div class="checkout-btn mt-30">
@@ -177,5 +176,17 @@
 	</form>
 </div>
 <!-- ##### Checkout Area End ##### -->
+
+<script type = "text/javascript">
+
+	$(function(){
+		$("#commaCarrot").text(parseInt($("#originCarrot").val()).toLocaleString());
+		$("#BcommaCarrot").text(parseInt($("#BoriginCarrot").val()).toLocaleString());
+		$("#TcommaCarrot1").text(parseInt($("#originCarrot").val()-10).toLocaleString());
+		$("#TcommaCarrot2").text(parseInt($("#BoriginCarrot").val()-10).toLocaleString());
+	});
+  	
+  	
+</script>
 
 <%@ include file="../common/footer.jsp"%>

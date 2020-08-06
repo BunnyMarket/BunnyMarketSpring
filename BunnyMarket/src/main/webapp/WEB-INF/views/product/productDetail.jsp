@@ -97,14 +97,16 @@
                         <button type="button" class="btn alazea-btn mt-15"
 								style="float: right"
 								onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+							<br /><br /><br />
 						</c:if>
-						<br /><br /><br />
+						
 						<c:if test="${!empty admin}">
-						<button type="button" id="warn" class="btn alazea-btn mt-15"
-							style="float: right">잠금</button>
+							<button type="button" id="warn" class="btn alazea-btn mt-15"
+								style="float: right">잠금</button>
+								<br/><br/><br/>
 						</c:if>
 								
-						<br/><br/><br/>
+						
 						
 						
 						<c:if test="${sessionScope.member.userId ne product.PWriter}">
@@ -114,33 +116,49 @@
 								</button>
 								<br /><br /><br />
 							</c:if>
-						<c:if test="${product.PStatus != 2}">
-							 <button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-										data-toggle="modal" data-target="#myModal3">
-									구매하기
-							</button>
-						</c:if>
-						<c:if test="${product.PStatus == 2}">
-							<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>구매 완료된 상품입니다.</button>
-						</c:if>
+							<c:if test="${product.PStatus != 2}">
+								 <button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+											data-toggle="modal" onclick="goBuy();">
+										구매하기
+								</button>
+							</c:if>
+							<c:if test="${product.PStatus == 2}">
+								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>구매 완료된 상품입니다.</button>
+							</c:if>
 						</c:if>
 							
 						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>
 						<h4 class="price"><span id="pCarrot" style="color:orange; font: bold;"></span>당근</h4>
 						<br />
 						
+						<h4>카테고리</h4>
+						<h5 style="color:orange; font: bold;">${product.PCategory}</h5>
+						<br />
+						
+						<h4>거래방식</h4>
+						<h5 style="color:orange; font: bold;" id="dMethod"></h5>
+						<br />
+						
+						<h4>글 작성날짜</h4>
+						<h5 style="color:orange; font: bold;">${ product.PDate }</h5>
+						<br />
+
 						<script type="text/javascript">
 						   	$(function(){
 								var originP = $("#originPPrice").val();
 					    		$("#pCarrot").text(parseInt(originP).toLocaleString());
+					    		
+					    		var dMethod = '${product.DMethod}';
+					    		if(dMethod == 1){
+					    			$("#dMethod").text("직거래");
+					    		} else if(dMethod == 2){
+					    			$("#dMethod").text("택배");
+					    		} else {
+					    			$("#dMethod").text("미결정");
+					    		}
 						   	});
 						   	
 						</script>
-
-						<h5>글 작성날짜</h5>
-						<p>${ product.PDate }</p>
-						<br />
-
 					</div>
 				</div>
 			</div>
@@ -422,20 +440,36 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title" id="myModalLabel">구매창</h3>
+				<h3 class="modal-title" id="myModalLabel">구매</h3>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
-			<form id="goBuyer" action="${pageContext.request.contextPath }/product/buyingProduct.do" method="post">
+			<form id="goBuyer" method="post">
 				<input type="hidden" name="pno" id="BidderPno" value="${product.pno }" />
 				<div class="modal-body row">
 					<div class="col-12">
-					<input type="hidden" id="BoriginPPrice" value="${product.PPrice}"/>
-					<h4>상품의 가격 : <span style="color:orange; font: bold;" id="bidPrice">${ product.PPrice }</span>당근</h4>
-						<br />
+						<div class="form-group">
+							<input type="hidden" id="BoriginPPrice" value="${product.PPrice}"/>
+							
+							<label for="Ptitle" style="font-size: 23px;">상품명</label>
+							<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${product.PTitle}</h5>
+							<br />
+							
+							<label for="price" style="font-size: 23px;">상품의 가격</label>
+							<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:orange; font: bold;" id="bidPrice">${ product.PPrice }</span>당근</h5>
+							<br />
+						</div>
+					</div>
+					<div class="col-12 mb-4">
+						<!-- <input type="radio" name="dMethod" value = "0" /> 거래중지 -->
+						<div class="search_by_terms">
+							<label for="dMethodCheck" style="font-size: 23px;">거래수단 확인</label>
+							<input type="checkbox" id="dMethodCheck"/>
+							<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:orange; font: bold;" id="dMethodModal"></span></h5>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn alazea-btn mt-15" style="float: right">구매하기</button>
+					<button type="button" class="btn alazea-btn mt-15" onclick="goBuyer();" style="float: right">구매하기</button>
 					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
 				</div>
 			</form>
@@ -504,7 +538,9 @@ $(function(){
 $(function(){
 	console.log('${product.PStatus}')});
 
-
+function goBuy(){
+	$('#myModal3').modal();
+}
 
 $(function(){
 	$("#warn").click(function(){
@@ -530,7 +566,60 @@ $(function(){
 			}
 		});
 	});
+	
+	var dMethod = '${product.DMethod}';
+	if(dMethod == 1){
+		$("#dMethodModal").text("직거래");
+	} else if(dMethod == 2){
+		$("#dMethodModal").text("택배");
+	} else {
+		$("#dMethodModal").text("미결정");
+	}
+	
 });
+
+
+
+function goBuyer(){
+	console.log("눌렸나요?");
+	var buyPno = '${product.pno}';
+	
+	var check = $("#dMethodCheck").is(":checked");
+	
+	console.log(check);
+	if(check){
+		
+		$.ajax({
+			  url : '${pageContext.request.contextPath }/product/buyingCheckInvalid.do'
+			, data : {
+				  pno : buyPno
+			}
+			, dataType : 'json'
+			, success : function(data){
+				if(data.msg == 0){
+					if(confirm("당근이 부족하여 구매 할 수 없습니다. \n당근을 구매하시겠습니까?")){
+						window.open('${ pageContext.request.contextPath }/point/pointChargeViewProduct.do?pno='+buyPno, '_blank', 'width=600px, height=800px');
+					} else {
+						alert("구매가 취소되었습니다.");
+					}
+				} else if(data.msg == 1){
+					$("#goBuyer").attr("action", "${pageContext.request.contextPath }/product/buyingProduct.do").submit();
+				}
+			}, error : function(jqxhr, textStatus, errorThrown){
+	               console.log("ajax 처리 실패");
+	               //에러로그
+	               console.log(jqxhr);
+	               console.log(textStatus);
+	               console.log(errorThrown);
+	           }
+		})
+	} else {
+		alert("거래수단을 확인해주세요.");
+		$("#dMethodCheck").focus();
+	}
+	
+}
+
 
 
 </script>
@@ -582,12 +671,6 @@ $(function(){
 	    // 정상적으로 검색이 완료됐으면 
 	    if (status === kakao.maps.services.Status.OK) {
 	    	coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	    	/*
-	    		sellerLat = result[0].y;
-	    		sellerLong = result[0].x;
-	    		
-	    		coords.getLat(), .getLng()으로 위경도를 가져올 수 있다. 
-	    	*/
 		}
 	    
 	    
@@ -599,9 +682,6 @@ $(function(){
 	        
 	    });
 	    
-	    /* console.log("coords : " + coords);
-	    console.log("lat : " + sellerLat);
-	    console.log("long : " + sellerLong); */
 	    
 	    var sellerURL = 'https://map.kakao.com/link/to/${product.PAddress},'+coords.getLat()+','+coords.getLng();
 	    // console.log(sellerURL); 
@@ -624,75 +704,11 @@ $(function(){
 	        yAnchor: 1 
 	    });
 	
-	    /* // 인포윈도우로 장소에 대한 설명을 표시합니다
-	    var infowindow = new kakao.maps.InfoWindow({
-	        				content: '<div style="width:180px;text-align:center;padding:6px 0;">거래자가 원하는 거래 지역</div>'
-		});
-		infowindow.open(map, marker);  */
-	
 		// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		map.setCenter(coords);
 		
 	    
 	});
-	    
-	/* 
-	// geolocation을 통해 사용자 위치 표시를 받아서 판매자와 사용자의 위경도를 받아 url에 한번에 도착지와 출발지로 이어주려고 했지만 
-	// 웹용 길찾기 URL에서는 출발지를 지정하는 기능을 현재 제공하지 않는 이유로 도착지만을 지정해주었다. 
-	// 그래서 사용자 위치 표시를 위한 geolocation을 쓰는 코드는 주석 처리 
-	// 참고 : https://devtalk.kakao.com/t/url/60474
-	
-	// 사용자 위치 표시 
-	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	if (navigator.geolocation) {
-	    
-	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-	    navigator.geolocation.getCurrentPosition(function(position) {
-	        
-	        var lat = position.coords.latitude, // 위도
-	            lon = position.coords.longitude; // 경도
-	        
-	        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-	            // 인포윈도우에 표시될 내용 
-	            message = '<div class = "contents" style="width : 200px; padding:5px;">당신은 지금 여기에 있나요..?</div>'; 
-	        // 마커와 인포윈도우를 표시합니다
-	        displayMarker(locPosition, message);
-	            
-	      });
-	    
-	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-	    
-	    //var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
-	    var locPosition = coords, // GeoLocation을 사용할 수 없을 때 사용자의 위치를 판매자가 거래하고싶은 위치로 설정해주기 
-	        message = 'geolocation을 사용할수 없어요..'
-	        
-	    displayMarker(locPosition, message);
-	}
-	
-	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-	function displayMarker(locPosition, message) {
-	
-	    // 마커를 생성합니다
-	    var marker = new kakao.maps.Marker({  
-	        map: map, 
-	        position: locPosition
-	    }); 
-	    
-	    var iwContent = message, // 인포윈도우에 표시할 내용
-	        iwRemoveable = true;
-	
-	    // 인포윈도우를 생성합니다
-	    var infowindow = new kakao.maps.InfoWindow({
-	        content : iwContent,
-	        removable : iwRemoveable
-	    });
-	    
-	    // 인포윈도우를 마커위에 표시합니다 
-	    infowindow.open(map, marker);
-	    
-	    // 지도 중심좌표를 접속위치로 변경합니다
-	    map.setCenter(locPosition);      
-	}  */
 	    
 	
 	
@@ -891,6 +907,9 @@ $(function(){
 		});
 		
 	});
+	
+
+	
 	
 </script>
 

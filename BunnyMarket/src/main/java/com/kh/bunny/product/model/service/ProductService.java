@@ -85,4 +85,8 @@ public interface ProductService {
 
 	int selectSproductTotalContents(String keyword, String condition);
 
+	int giveMeDno(int pno);
+
+	int productPurchaseRequest(Product p);
+
 }

@@ -5,11 +5,12 @@
 <mapper namespace="auctionMapper">
 	
 	<sql id="selectSQL">
-		SELECT P.*, A.AEDATE , (SELECT COUNT(*)
-							      FROM BIDDER
-							     WHERE PNO = P.PNO) BCOUNT
+		SELECT P.*, PC.PCCONTENT PCATEGORY, A.AEDATE , (SELECT COUNT(*)
+													      FROM BIDDER
+													     WHERE PNO = P.PNO) BCOUNT
 		 FROM PRODUCT P
 		 JOIN AUCTION A ON(A.PNO = P.PNO)
+		 JOIN PCATEGORY PC ON (P.PCNO = PC.PCNO)
 	</sql>
 	
 
@@ -76,7 +77,8 @@
 			  , #{pAddress}
 			  , DEFAULT
 			  , NULL
-			  , 0)
+			  , 0
+			  , #{dMethod})
 	</insert>
 	
 	<insert id="insertAuction" parameterType="Auction">
@@ -232,11 +234,17 @@
 
    <select id="goTradeAuction" parameterType="string" resultType = "Auction">
       
-       SELECT * FROM PRODUCT P
+       SELECT P.*, D.DNO 
+         FROM PRODUCT P
+         JOIN DEAL D ON (P.PNO = D.PNO)
 		WHERE P.PNO IN (
-		SELECT D.PNO FROM DEAL D
-		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS!=1 AND P.PTYPE = 2
+						SELECT D.PNO 
+						  FROM DEAL D
+						 WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} 
+						   OR D.DBSTATUS != 1 
+						   OR D.DSSTATUS != 1
 		)
+		AND P.PTYPE = 2
    </select>
    
    <select id="selectTypeCount" resultType="_int">

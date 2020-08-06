@@ -70,7 +70,7 @@ public interface ProductDAO {
 	List<Map<String, String>> sellCompleteProductList(int aPage, int numPerPage, String nickName);
 
 
-	int productPuserchase(Product product);
+	int productPurchase(Product product);
 
 	List<Map<String, String>> goTradeProduct(int aPage, int numPerPage, String nickName);
 
@@ -84,7 +84,14 @@ public interface ProductDAO {
 
 	int selectSproductTotalContents(String keyword, String condition);
 
-	
+	int productPurchaseUpdateMember(Product product);
+
+	int productPurchaseInsertUPoint(Product product);
+
+	int productPurchaseInsertHistory(Product product);
+
+	int giveMeDeal(int pno);
+
 	
 
 }

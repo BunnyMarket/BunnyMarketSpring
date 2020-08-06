@@ -77,16 +77,41 @@
 							<div class="col-12 mb-4">
 								<!-- <input type="radio" name="dMethod" value = "0" /> 거래중지 -->
 								<div class="search_by_terms">
-								<label for="phone_number">거래수단 *</label>
-	                                <select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%">
-	                                  <option value="" hidden>거래 수단을 선택해주세요.</option>
-	                                  <option value="3">미결정</option>
-	                                  <option value="2">택배</option>
-	                                  <option value="1">직거래</option>
-	                                </select>
+									<label for="phone_number">거래수단 *</label>
+									<c:if test="${product.DMethod eq 1}">
+										<select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%" disabled="disabled">
+		                                  <option value="3">미결정</option>
+		                                  <option value="2">택배</option>
+		                                  <option value="1" selected="selected">직거래</option>
+		                                </select>
+									</c:if>
+									<c:if test="${product.DMethod eq 2}">
+										<select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%" disabled="disabled">
+		                                  <option value="3">미결정</option>
+		                                  <option value="2" selected="selected">택배</option>
+		                                  <option value="1">직거래</option>
+		                                </select>
+									</c:if>
+									<c:if test="${product.DMethod eq 3}">
+		                                <select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%">
+		                                  <option value="" hidden>거래 수단을 선택해주세요.</option>
+		                                  <option value="2">택배</option>
+		                                  <option value="1">직거래</option>
+		                                </select>
+	                                </c:if>
 	                        	</div>
 								
 							</div>
+							<c:if test="${product.DMethod eq 2}">
+								<div class="col-12 mb-4" id = "dAddressDiv">
+									<label for="address">주소 *</label> <input type="text"
+										name="dAddress1" class="form-control" id="address1" 
+										placeholder="주소를 입력하세요." onclick = "addrSearch();"> <br />
+									<label for="address">상세 주소 *</label> <input type="text"
+										name = "dAddress2" class="form-control" id="address2">
+									<input type="hidden" name="dno" id = "dAddressPlus" value = "${ deal.dno }" /> 
+								</div>
+							</c:if>
 							<div class="col-12 mb-4" id = "dAddressDiv" style = "display : none;">
 								<label for="address">주소 *</label> <input type="text"
 									name="dAddress1" class="form-control" id="address1" 
@@ -95,7 +120,6 @@
 									name = "dAddress2" class="form-control" id="address2">
 								<input type="hidden" name="dno" id = "dAddressPlus" value = "${ deal.dno }" /> 
 							</div>
-							
 							<!-- <div class="col-md-12 mb-4">
 								<label for="order-notes">주문 시 요청 사항</label>
 								<textarea class="form-control" id="order-notes" cols="30" rows="10"
@@ -130,34 +154,22 @@
 						<h5 class="title--">구매 금액</h5>
 						<div class="products">
 							<div class="products-data">
-								<div
-									class="single-products d-flex justify-content-between align-items-center">
+								<div class="single-products d-flex justify-content-between align-items-center">
 									<h5>제품 가격 :</h5>
-									<h5>${ product.PPrice*100 }원 &nbsp;&nbsp;(${ product.PPrice }당근)</h5>
+									<input type="hidden" id="originCarrot" value="${ product.PPrice }"/>
+									<h5><span style="color:orange" id="commaCarrot"></span> 당근</h5>
 								</div>
 							</div>
 						</div>
 						<c:if test = "${ product.PType == 2 }">
 							<div class="subtotal d-flex justify-content-between align-items-center">
 								<h5>입찰 가격 :</h5>
-								<h5>${ product.BPrice*100 }원 &nbsp;&nbsp;(${ product.BPrice }당근)</h5>
+								<input type="hidden" id="originBCarrot" value="${ product.BPrice }"/>
+								<h5><span style="color:orange" id="BcommaCarrot"></span> 당근</h5>
 							</div>
 						</c:if>
-						<div class="shipping d-flex justify-content-between align-items-center">
-							<h5>수수료</h5>
-							<h5>1,000 won</h5>
-						</div>
-						<div class="order-total d-flex justify-content-between align-items-center">
-							<h5>Order Total</h5>
-							<c:if test = "${ product.PType == 1 }">
-								<h5>${ product.PPrice*100 + 1000}won</h5>
-							</c:if>
-							<c:if test = "${ product.PType == 2 }">
-								<h5>${ product.BPrice*100 + 1000}won</h5>
-							</c:if>
-						</div>
 						<div class="checkout-btn mt-30">
-							<button type="submit" class="btn alazea-btn w-100">구매 확인</button>
+							<button type="submit" class="btn alazea-btn w-100">구매 확정</button>
 						</div>
 					</div>
 				</div>
@@ -184,7 +196,8 @@
 				$('#address2').attr("required", false);
 			}
 		});
-		
+		$("#commaCarrot").text(parseInt($("#originCarrot").val()).toLocaleString());
+		$("#BcommaCarrot").text(parseInt($("#BoriginCarrot").val()).toLocaleString());
 	});
   	
   	
