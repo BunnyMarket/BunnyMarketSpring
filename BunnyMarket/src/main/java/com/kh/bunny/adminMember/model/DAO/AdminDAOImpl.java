@@ -1,5 +1,6 @@
 package com.kh.bunny.adminMember.model.DAO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,26 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public List<Map<String, Object>> selectChartMonthCount() {
 		return sqlSession.selectList("adminMapper.chartChartMonthCount");
+	}
+
+	@Override
+	public List<Object> searchAdminList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("adminMapper.searchAdminMemberList", hmap, rows);
+	}
+
+	@Override
+	public int selectSAdminMemberTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("adminMapper.selectSAdminMemberTotalContent", hmap);
 	}
 }
 

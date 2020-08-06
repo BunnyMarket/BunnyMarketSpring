@@ -20,4 +20,9 @@ public interface NoticeService {
 	
 	int deleteNotice(int nno);
 
+	List<Object> searchNoticeList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSNoticeTotalContents(String keyword, String condition);
+
+
 }

@@ -27,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.service.MemberService;
@@ -565,5 +566,34 @@ public class MemberController {
 		return map; 
 	}
 	
+	@RequestMapping(value = "/admin/member/searchMember.do", method = RequestMethod.GET)
+	public String searchMember(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 
+								@RequestParam (value= "condition", required = false, defaultValue = "") String condition, 
+								Model model,
+								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
+		
+		int numPerPage = 15; // 10개씩 나오도록 
+		List<Object> list = memberService.searchMemberList(keyword, condition, pPage, numPerPage);
 
+		
+		// 페이지 계산을 위한 총 페이지 개수 
+		int totalContents =  memberService.selectSMemberTotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"/member/searchMember.do?condition="+condition+"&keyword=" + keyword);
+		
+		
+		model.addAttribute("keyword", keyword)
+		.addAttribute("list", list)
+		.addAttribute("totalContents", totalContents)
+		.addAttribute("pageBar", pageBar);
+		
+		return "admin/customerList";	
+	}
+
+	
 }

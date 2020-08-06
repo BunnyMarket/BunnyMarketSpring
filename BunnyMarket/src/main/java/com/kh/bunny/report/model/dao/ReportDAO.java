@@ -25,4 +25,8 @@ public interface ReportDAO {
 	int insertDirectReport(Report r);
 
 	Product selectOneProduct(int pno);
+
+	List<Object> searchReportList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSReportTotalContents(String keyword, String condition);
 }

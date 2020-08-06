@@ -48,34 +48,34 @@
 		 RIGHT JOIN PCATEGORY C ON c.pcno = P.PCNO
 	</select>
 	
-	<select id="chartChartMonthPCount" resultType="HashMap">
-		 SELECT PTYPE, SUBSTR(PDATE,6,2)MONTH, COUNT(*)C
-		  FROM PRODUCT
-           WHERE PTYPE =1
-		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
-		 ORDER BY MONTH ASC
-	</select>
-	<select id="chartChartMonthACount" resultType="HashMap">
-		 SELECT PTYPE, SUBSTR(PDATE,6,2)MONTH, COUNT(*)C
-		  FROM PRODUCT
-           WHERE PTYPE =2
-		 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
-		 ORDER BY MONTH ASC
+	<select id="chartChartMonthCount" resultType="HashMap">
+		SELECT A.*, NVL(A.MONTH,0) AS AM, P.* , NVL(P.MONTH,0)AS PM 
+		  FROM (SELECT PTYPE AS P, SUBSTR(PDATE,6,2)MONTH, COUNT(*)PC
+			  	  FROM PRODUCT
+	             WHERE PTYPE =1
+			 	 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+	        	 ORDER BY MONTH ASC)P
+		  FULL OUTER JOIN (SELECT PTYPE AS A, SUBSTR(PDATE,6,2)MONTH, COUNT(*)AC
+						     FROM PRODUCT
+				            WHERE PTYPE =2
+						 	GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
+				         	ORDER BY MONTH ASC)A ON A.MONTH = P.MONTH
+		 ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END)   
 	</select>
 	
-		<select id="chartChartMonthCount" resultType="HashMap">
-	SELECT A.*, NVL(A.MONTH,0) AS AM, P.* , NVL(P.MONTH,0)AS PM 
-	  FROM (SELECT PTYPE AS P, SUBSTR(PDATE,6,2)MONTH, COUNT(*)PC
-		  	  FROM PRODUCT
-             WHERE PTYPE =1
-		 	 GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
-        	 ORDER BY MONTH ASC)P
-	  FULL OUTER JOIN (SELECT PTYPE AS A, SUBSTR(PDATE,6,2)MONTH, COUNT(*)AC
-					     FROM PRODUCT
-			            WHERE PTYPE =2
-					 	GROUP BY PTYPE ,SUBSTR(PDATE,6,2) 
-			         	ORDER BY MONTH ASC)A ON A.MONTH = P.MONTH
-	 ORDER BY (CASE WHEN AM > PM THEN PM ELSE AM END)   
+	<select id="searchAdminMemberList" parameterType = "hashmap" resultType = "AdminMember">
+		SELECT * FROM ADMIN
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+			WHERE ADMINID LIKE #{myPattern}
+			ORDER BY ADMINID DESC
+	</select>
+	
+	<select id="selectSAdminMemberTotalContent" parameterType = "hashmap" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM ADMIN		  
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 	WHERE ADMINID LIKE #{myPattern}
+		 	ORDER BY ADMINID DESC
 	</select>
 </mapper>
 

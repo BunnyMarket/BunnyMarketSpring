@@ -41,5 +41,9 @@ public interface QNADAO {
 	List<Map<String, String>> selectQnAList(int cPage, int numPerPage);
 	
 	List<Object> selectQCommentList();
+
+	List<Object> searchQnAList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSQnATotalContents(String keyword, String condition);
 	
 }

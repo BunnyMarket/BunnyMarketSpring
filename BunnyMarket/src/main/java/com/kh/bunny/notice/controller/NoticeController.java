@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.notice.model.service.NoticeService;
 import com.kh.bunny.notice.model.vo.Notice;
@@ -158,10 +160,36 @@ public class NoticeController {
 		}
 		
 		return loc;	
-		
 	}
 	
-	
+	@RequestMapping(value = "/admin/notice/searchNotice.do", method = RequestMethod.GET)
+	public String searchNotice(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 
+								@RequestParam (value= "condition", required = false, defaultValue = "") String condition, 
+								Model model,
+								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
+		
+		int numPerPage = 15; // 10개씩 나오도록 
+		List<Object> list = noticeService.searchNoticeList(keyword, condition, pPage, numPerPage);
+
+		
+		// 페이지 계산을 위한 총 페이지 개수 
+		int totalContents =  noticeService.selectSNoticeTotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);
+		
+		
+		model.addAttribute("keyword", keyword)
+		.addAttribute("list", list)
+		.addAttribute("totalContents", totalContents)
+		.addAttribute("pageBar", pageBar);
+		
+		return "notice/noticeList";	
+	}
 
 }
 

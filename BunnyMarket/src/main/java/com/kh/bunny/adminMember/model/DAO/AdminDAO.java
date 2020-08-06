@@ -23,4 +23,8 @@ public interface AdminDAO {
 	List<Map<String, Object>> selectChartCategoryCount();
 
 	List<Map<String, Object>> selectChartMonthCount();
+
+	List<Object> searchAdminList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSAdminMemberTotalContents(String keyword, String condition);
 }

@@ -1,5 +1,6 @@
 package com.kh.bunny.QNA.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,28 @@ public class QNADAOImpl implements QNADAO {
 	@Override
 	public List<Object> selectQCommentList() {
 		return sqlSession.selectList("qnaMapper.selectQCommentAllList");
+	}
+
+	@Override
+	public List<Object> searchQnAList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("qnaMapper.searchQnAList", hmap, rows);
+	
+	}
+
+	@Override
+	public int selectSQnATotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("qnaMapper.selectSQnATotalContent", hmap);
+	
 	}
 
 }

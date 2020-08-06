@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ import com.kh.bunny.QNA.model.service.QNAService;
 import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -391,5 +393,35 @@ public class QNAController {
 		return "admin/QnAList";
 
 	}
+	
+	@RequestMapping(value = "/admin/QnA/searchQnA.do", method = RequestMethod.GET)
+	public String searchQnA(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 
+								@RequestParam (value= "condition", required = false, defaultValue = "") String condition, 
+								Model model,
+								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
+		
+		int numPerPage = 15; // 10개씩 나오도록 
+		List<Object> list = qnaService.searchQnAList(keyword, condition, pPage, numPerPage);
+
+		
+		// 페이지 계산을 위한 총 페이지 개수 
+		int totalContents =  qnaService.selectSQnATotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"/admin/QnA/searchQnA.do?condition="+condition+"&keyword=" + keyword);
+		
+		
+		model.addAttribute("keyword", keyword)
+		.addAttribute("list", list)
+		.addAttribute("totalContents", totalContents)
+		.addAttribute("pageBar", pageBar);
+		
+		return "admin/QnAList";	
+	}
+
 	
 }

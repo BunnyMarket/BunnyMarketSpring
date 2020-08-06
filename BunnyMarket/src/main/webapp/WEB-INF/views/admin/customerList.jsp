@@ -210,7 +210,7 @@ input:checked + .slider:before {
                       	</tr>
                       </thead>
                       <tbody>
-                      <c:forEach items="${user}" var="c" varStatus="st">
+                      <c:forEach items="${list}" var="c" varStatus="st">
                         <tr id="${c.userId}" >
                         <%-- <td  id="${st.count}" style="display:none;">${st.count}</td>  --%>
                           <td>${c.userId}</td>
@@ -310,12 +310,12 @@ input:checked + .slider:before {
 <br/>
 <div class="searchArea">
 	<select id="searchCondition" name="searchCondition" >
-		<option value="id">회원아이디</option>
-		<option value="report">경고수</option>
+		<option value="userId">아이디</option>
+		<option value="userName">이름</option>
+		<option value="userNickName">닉네임</option>
 	</select>&nbsp;&nbsp;
 	<input type="search" id="keyword"> &nbsp;
-	<button class="paging" >검색</button>
-
+	<button class=" btn paging" onclick="search();">검색</button>
 </div>
 <br>
 <br>

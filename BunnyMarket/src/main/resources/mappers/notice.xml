@@ -40,6 +40,43 @@
 	<delete id="deleteNotice" parameterType="_int">
 		DELETE FROM NOTICE WHERE NNO = #{nno}
 	</delete>
+	
+	<select id="searchNoticeList" parameterType = "hashmap" resultType = "Notice">
+		SELECT * FROM NOTICE
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		
+		<where>
+			<if test="condition == 'content'">
+				NCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				NTITLE LIKE #{myPattern}
+			</if>
+			
+			<if test="condition == 'all'">
+				 NCONTENT LIKE #{myPattern} OR NTITLE LIKE #{myPattern} 
+			</if> 
+		</where>
+	</select>
+	
+		<select id="selectSNoticeTotalContent" parameterType = "hashmap" resultType = "_int">
+		SELECT COUNT(*) 
+		  FROM NOTICE		  
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 <where>
+			<if test="condition == 'content'">
+				NCONTENT LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				NTITLE LIKE #{myPattern}
+			</if>
+			
+			<if test="condition == 'all'">
+				 NCONTENT LIKE #{myPattern} OR NTITLE LIKE #{myPattern} 
+			</if> 
+		</where>
+	</select>
+	
 </mapper>
 
 

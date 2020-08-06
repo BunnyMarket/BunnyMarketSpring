@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.bunny.adminMember.model.service.AdminService;
 import com.kh.bunny.adminMember.model.vo.adminMember;
+import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
 
@@ -64,23 +65,29 @@ public class adminMemberController {
 	}
 	
 	// 리스트
-	@RequestMapping("/admin/adminMember/adminList.do")
-	public String selectAdminList(
-			 @RequestParam(
-					 value="pPage",
-					 required=false, 
-					 defaultValue="1")
-				int cPage, Model model
-			) {
-		int numPerPage = 10; 
-		
-		List<Map<String, String>> list 
-			= adminService.selectAdminList(cPage, numPerPage);
-	
-		int totalContents = adminService.selectAdminTotalContents();
-		
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "adminList.do");
-		
+	/*
+	 * @RequestMapping("/admin/adminMember/adminList.do") public String
+	 * selectAdminList(
+	 * 
+	 * @RequestParam( value="pPage", required=false, defaultValue="1") int cPage,
+	 * Model model ) { int numPerPage = 10;
+	 * 
+	 * List<Map<String, String>> list = adminService.selectAdminList(cPage,
+	 * numPerPage);
+	 * 
+	 * int totalContents = adminService.selectAdminTotalContents();
+	 * 
+	 * String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage,
+	 * "adminList.do");
+	 * 
+	 * 
+	 * model.addAttribute("list", list); model.addAttribute("totalContents",
+	 * totalContents); model.addAttribute("numPerPage",numPerPage);
+	 * model.addAttribute("pageBar", pageBar);
+	 * 
+	 * 
+	 * return "admin/member/adminMember"; }
+	 */
 	
 		model.addAttribute("list", list);
 		model.addAttribute("totalContents", totalContents);
@@ -214,17 +221,41 @@ public class adminMemberController {
 	// 로그아웃
 	@RequestMapping(value="/admin/adminLogout.do", method=RequestMethod.POST)
 	public String adminLogout(SessionStatus status,Model model,HttpSession session) {
-		/*
-		 * String loc=""; String msg="노우";
-		 */
-	
 		if (!status.isComplete()) {
 			status.setComplete();
-			session.invalidate();
-			
+			session.invalidate();	
 		}
-		
-		/* model.addAttribute("loc", loc).addAttribute("msg",msg); */
 		return "redirect:/admin/adminLogin.do";
 	}
+	
+	@RequestMapping(value = "/admin/member/adminMemberId.do", method = RequestMethod.GET)
+	public String searchNotice(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 
+								@RequestParam (value= "condition", required = false, defaultValue = "") String condition, 
+								Model model,
+								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
+		
+		int numPerPage = 15; // 10개씩 나오도록 
+		List<Object> list = adminService.searchAdminMemberList(keyword, condition, pPage, numPerPage);
+
+		
+		// 페이지 계산을 위한 총 페이지 개수 
+		int totalContents =  adminService.selectSAdminMemberTotalContents(keyword, condition);
+		
+		System.out.println("totalContents : " + totalContents);
+		
+		String pageBar = SearchUtils.getPageBar(totalContents, 
+												pPage, 
+												numPerPage, 
+												"/admin/member/adminMemberId.do?condition="+condition+"&keyword=" + keyword);
+		
+		
+		model.addAttribute("keyword", keyword)
+		.addAttribute("list", list)
+		.addAttribute("totalContents", totalContents)
+		.addAttribute("pageBar", pageBar);
+		
+		return "admin/member/adminMember";	
+	}
+
+	
 }

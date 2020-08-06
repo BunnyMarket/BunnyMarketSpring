@@ -137,7 +137,9 @@
 <div class="searchArea">
 	<select id="searchCondition" name="searchCondition" >
 		<option value="title">제목</option>
+		<option value="writer">작성자</option>
 		<option value="content">내용</option>
+		<option value="check">확인 여부</option>
 	</select>&nbsp;&nbsp;
 	<input type="search" id="keyword"> &nbsp;
 	<button class=" btn paging" onclick="search();">검색</button>
@@ -146,7 +148,7 @@
 <br>
 <br>
  <script>
- 	
+
   	// 메뉴 바 색
   	 	$(function(){
   		$("#tableArea td").mouseenter(function(){
@@ -161,7 +163,7 @@
   	}); 
   	
   	function search(){
-  		location.href="${ pageContext.request.contextPath}/admin/notice/searchNotice.do?con="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+  		location.href="${ pageContext.request.contextPath}/admin/QnA/searchQnA.do?condition="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
   	}
   	
   </script>

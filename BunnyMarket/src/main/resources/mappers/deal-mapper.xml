@@ -76,4 +76,38 @@
 			WHERE USERID = #{dbId}
 	</update>
 	
+	<select id="searchDealList" parameterType = "hashmap" resultType = "Deal">
+		SELECT D.*, P.PTITLE FROM DEAL D, PRODUCT P
+		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		<where>
+		D.PNO = P.PNO
+			<if test="condition == 'seller'">
+			 	AND D.DSID LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				AND P.PTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'all'">
+				AND D.DSID LIKE #{myPattern} OR P.PTITLE LIKE #{myPattern}
+			</if>
+		</where>
+	</select>
+	
+		<select id="selectSDealTotalContent" parameterType = "hashmap" resultType = "_int">
+		SELECT COUNT(*)
+			FROM (SELECT D.*, P.PTITLE FROM DEAL D, PRODUCT P
+				  WHERE D.PNO = P.PNO)
+		 <bind name = "myPattern" value = "'%' + keyword + '%'"/>
+		 <where>
+			<if test="condition == 'seller'">
+				DSID LIKE #{myPattern}
+			</if>
+			<if test="condition == 'title'">
+				 PTITLE LIKE #{myPattern}
+			</if>
+			<if test="condition == 'all'">
+				DSID LIKE #{myPattern} OR PTITLE LIKE #{myPattern}
+			</if>
+		</where>
+	</select>
 </mapper>

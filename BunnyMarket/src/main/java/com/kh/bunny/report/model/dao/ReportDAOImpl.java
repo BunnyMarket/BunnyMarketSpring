@@ -1,5 +1,6 @@
 package com.kh.bunny.report.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,27 @@ public class ReportDAOImpl implements ReportDAO {
 	@Override
 	public Product selectOneProduct(int pno) {
 		return sqlSession.selectOne("reportMapper.oneProduct", pno);
+	}
+
+	@Override
+	public List<Object> searchReportList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("reportMapper.searchReportList", hmap, rows);
+	}
+
+	@Override
+	public int selectSReportTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("reportMapper.selectSReportTotalContent", hmap);
+	
 	}
 
 }

@@ -60,4 +60,14 @@ public class DealServiceImpl implements DealService {
 	public int selectdealRefund(Deal deal) {
 		return dealDAO.selectdealRefund(deal);
 	}
+
+	@Override
+	public List<Object> searchDealList(String keyword, String condition, int pPage, int numPerPage) {
+		return  dealDAO.searchDealList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSDealTotalContents(String keyword, String condition) {
+		return dealDAO.selectSDealTotalContents(keyword, condition);
+	}
 }

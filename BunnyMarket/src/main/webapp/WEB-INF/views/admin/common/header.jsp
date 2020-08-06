@@ -62,27 +62,27 @@
 							<p class="li-menu">관리자 홈 </p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						href=" ${ pageContext.request.contextPath }/admin/deal/dealList.do">
+						href=" ${ pageContext.request.contextPath }/admin/deal/searchDeal.do">
 							<i class="material-icons">content_paste</i>
 							<p>거래 현황</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						href=" ${ pageContext.request.contextPath }/admin/report/reportList.do">
+						href=" ${ pageContext.request.contextPath }/admin/report/searchReport.do">
 							<i class="material-icons">notifications</i>
 							<p class="li-menu">신고 현황</p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						href="${ pageContext.request.contextPath }/admin/member/memberList.do">
+						href="${ pageContext.request.contextPath }/admin/member/searchMember.do">
 							<i class="material-icons">person</i>
 							<p>회원 리스트 </p>
 					</a></li>
 					<li class="nav-item  "><a class="nav-link"
-						href="${ pageContext.request.contextPath }/admin/notice/noticeList.do">
+						href="${ pageContext.request.contextPath }/admin/notice/searchNotice.do">
 							<i class="material-icons">dashboard</i>
 							<p class="li-menu">공지사항 </p>
 					</a></li>
 					<li class="nav-item "><a class="nav-link"
-						 href="${ pageContext.request.contextPath }/admin/QNA/QnAList.do">	
+						 href="${ pageContext.request.contextPath }/admin/QnA/searchQnA.do">	
 						 <i	class="material-icons">library_books</i>
 							<p class="li-menu">Q&A </p>
 					</a></li>
@@ -93,7 +93,7 @@
 					</a></li> --%>
 					<c:if test="${admin.adminId eq 'admin'}">
 						<li class="nav-item "><a class="nav-link"
-							href="${ pageContext.request.contextPath }/admin/adminMember/adminList.do">
+							href="${ pageContext.request.contextPath }/admin/member/adminMemberId.do">
 								<i class="material-icons">person</i>
 								<p class="li-menu">관리자 멤버관리 </p>
 						</a></li>

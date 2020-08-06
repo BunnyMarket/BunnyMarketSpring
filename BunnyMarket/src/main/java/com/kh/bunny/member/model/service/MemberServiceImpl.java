@@ -130,7 +130,16 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDAO.findPwdUserId(email);
 	}
-		
+	
+	@Override
+	public List<Object> searchMemberList(String keyword, String condition, int pPage, int numPerPage) {
+		return  memberDAO.searchMemberList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSMemberTotalContents(String keyword, String condition) {
+		return memberDAO.selectSMemberTotalContents(keyword, condition);
+	}
 
 	
 

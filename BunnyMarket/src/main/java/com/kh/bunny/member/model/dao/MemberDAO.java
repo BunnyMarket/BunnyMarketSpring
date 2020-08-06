@@ -49,6 +49,10 @@ public interface MemberDAO {
 
 	Object findPwdUserId(String email);
 
+	List<Object> searchMemberList(String keyword, String condition, int pPage, int numPerPage);
+
+	int selectSMemberTotalContents(String keyword, String condition);
+
 	
 	
 	

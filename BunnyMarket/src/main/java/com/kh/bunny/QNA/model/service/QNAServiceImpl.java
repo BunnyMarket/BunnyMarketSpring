@@ -118,4 +118,14 @@ public class QNAServiceImpl implements QNAService {
 		return qnaDAO.selectQCommentList();
 	}
 
+	@Override
+	public List<Object> searchQnAList(String keyword, String condition, int pPage, int numPerPage) {
+		return  qnaDAO.searchQnAList(keyword, condition, pPage, numPerPage);
+	}
+
+	@Override
+	public int selectSQnATotalContents(String keyword, String condition) {
+		return qnaDAO.selectSQnATotalContents(keyword, condition);
+	}
+
 }

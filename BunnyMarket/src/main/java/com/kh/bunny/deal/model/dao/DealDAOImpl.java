@@ -1,8 +1,10 @@
 package com.kh.bunny.deal.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,5 +62,27 @@ public class DealDAOImpl implements DealDAO {
 	@Override
 	public int selectdealRefund(Deal deal) {
 		return sqlSession.update("dealMapper.updateBuyerRefund", deal);
+	}
+
+	@Override
+	public List<Object> searchDealList(String keyword, String condition, int pPage, int numPerPage) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		RowBounds rows = new RowBounds((pPage-1)*numPerPage, numPerPage);
+		
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+	
+		return sqlSession.selectList("dealMapper.searchDealList", hmap, rows);
+	
+	}
+
+	@Override
+	public int selectSDealTotalContents(String keyword, String condition) {
+		HashMap<Object, Object> hmap = new HashMap<>();
+		hmap.put("keyword", keyword);
+		hmap.put("condition", condition);
+		
+		return sqlSession.selectOne("dealMapper.selectSDealTotalContent", hmap);
+
 	}
 }
