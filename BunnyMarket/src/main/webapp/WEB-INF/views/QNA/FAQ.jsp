@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-c:import url="../../views/common/header.jsp" />
 <c:import url="../../views/common/header.jsp" />
 <!DOCTYPE html>
 <html>
@@ -104,7 +103,7 @@ c:import url="../../views/common/header.jsp" />
 							<li class="breadcrumb-item"><a
 								href="${ pageContext.request.contextPath }/index.jsp"><i
 									class="fa fa-home"></i>홈화면</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Q&A</li>
+							<li class="breadcrumb-item active" aria-current="page">F A Q</li>
 						</ol>
 					</nav>
 				</div>

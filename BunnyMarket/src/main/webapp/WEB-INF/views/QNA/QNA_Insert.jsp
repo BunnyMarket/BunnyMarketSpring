@@ -15,7 +15,7 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
 								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 					</ol>
@@ -40,7 +40,7 @@
 					<div class="col-12 col-md-10">
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
-							<input type="hidden" name="qWriter"  value="${member.userId}">
+							<input type="hidden" name="qWriter"  value="${member.nickName}">
 							<input type="text" class="form-control" id="qTitle"  name="qTitle" placeholder="게시글 제목을 입력" required />
 							<br />
 						</div>

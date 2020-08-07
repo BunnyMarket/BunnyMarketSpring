@@ -25,9 +25,9 @@ public class QNADAOImpl implements QNADAO {
 	}
 
 	@Override
-	public int selectQNATotalContents() {
+	public int selectQNATotalContents(String userId) {
 		
-		return sqlSession.selectOne("qnaMapper.selectQNATotalContent");
+		return sqlSession.selectOne("qnaMapper.selectQNATotalContent", userId);
 	}
 
 	@Override

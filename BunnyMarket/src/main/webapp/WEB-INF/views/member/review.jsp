@@ -16,7 +16,7 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i>홈화면</a></li>
+                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i>Home</a></li>
                             <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/views/member/myPage.jsp">마이페이지</a></li>
                             <li class="breadcrumb-item active" aria-current="page">후기작성하기</li>
                         </ol>

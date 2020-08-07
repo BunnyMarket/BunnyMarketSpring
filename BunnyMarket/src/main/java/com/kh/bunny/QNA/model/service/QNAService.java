@@ -12,7 +12,7 @@ public interface QNAService {
    
    List<Map<String, String>> selectQNAList (int cPage, int numPerPage, String userId);
    
-   int selectQNATotalContents();
+   int selectQNATotalContents(String userId);
    
    int insertQNA(QNA qna);
    

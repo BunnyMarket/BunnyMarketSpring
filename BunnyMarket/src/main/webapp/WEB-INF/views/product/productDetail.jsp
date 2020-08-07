@@ -47,7 +47,7 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="${ pageContext.request.contextPath }/"> <i class="fa fa-home"></i> 홈화면</a>
+							<a href="${ pageContext.request.contextPath }/"> <i class="fa fa-home"></i> Home</a>
 						</li>
 						<li class="breadcrumb-item">
 							<a href="${ pageContext.request.contextPath }/product/productList.do">상품</a>
@@ -81,7 +81,7 @@
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
 
-						<c:if test="${sessionScope.member.userId eq product.PWriter}">
+						<c:if test="${sessionScope.member.nickName eq product.PWriter}">
 							<c:if test="${product.PStatus == 2}">
 								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>
 								<br /><br /><br />

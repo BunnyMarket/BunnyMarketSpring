@@ -49,7 +49,7 @@ public class QNAController {
 			Model model, HttpServletRequest request, HttpSession session) {
 		
 		Member m = (Member)session.getAttribute("member");
-		String userId = m.getUserId();
+		String userId = m.getNickName();
 			
 		// 한 페이지 당 게시글 수
 		int numPerPage = 10;
@@ -59,7 +59,7 @@ public class QNAController {
 		/*
 		 * System.out.println("qnaList 가져오는지 확인: " + list);
 		 */
-		int totalContents = qnaService.selectQNATotalContents();
+		int totalContents = qnaService.selectQNATotalContents(userId);
 
 		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QNAList.do");
 		
@@ -206,12 +206,12 @@ public class QNAController {
 		Member m = (Member) session.getAttribute("member");
 
 		System.out.println("qwriter: " + q.getQWriter());
-		System.out.println("userid : " + m.getUserId());
+		System.out.println("userid : " + m.getNickName());
 		System.out.println("checkPwd : " + checkPwd);
 		System.out.println("userpwd : " + m.getUserPwd());
 
 		System.out.println("복호화 후  : " + bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd()));
-		if (q.getQWriter().equals(m.getUserId()) && bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
+		if (q.getQWriter().equals(m.getNickName()) && bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
 			System.out.println("비번가져오나: " + m.getUserPwd());
 
 			msg = "입력 성공!";
@@ -291,7 +291,7 @@ public class QNAController {
 			Member m = (Member)session.getAttribute("member");
 			
 			String userImg ="";
-			if(m != null) {String userId = m.getUserId();
+			if(m != null) {String userId = m.getNickName();
 							qcomment.setQWriter(userId);
 							userImg = m.getPhoto();
 			}else if(am != null ){
@@ -377,25 +377,25 @@ public class QNAController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/admin/QNA/QnAList.do")
-	public String selectAdminQnAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
-			Model model, HttpServletRequest request) {
-
-		int numPerPage = 10;
-
-		List<Map<String, String>> list = qnaService.selectQnAList(cPage, numPerPage);
-
-		int totalContents = qnaService.selectQNATotalContents();
-
-		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QnAList.do");
-		
-		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
-				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
-		
-		System.out.println("model : " + model);
-		return "admin/QnAList";
-
-	}
+//	@RequestMapping("/admin/QNA/QnAList.do")
+//	public String selectAdminQnAList(@RequestParam(value = "pPage", required = false, defaultValue = "1") int cPage,
+//			Model model, HttpServletRequest request) {
+//
+//		int numPerPage = 10;
+//
+//		List<Map<String, String>> list = qnaService.selectQnAList(cPage, numPerPage);
+//
+//		int totalContents = qnaService.selectQNATotalContents();
+//
+//		String pageBar = Utils.getPageBar(totalContents, cPage, numPerPage, "QnAList.do");
+//		
+//		model.addAttribute("list", list).addAttribute("totalContents", totalContents)
+//				.addAttribute("numPerPage", numPerPage).addAttribute("pageBar", pageBar);
+//		
+//		System.out.println("model : " + model);
+//		return "admin/QnAList";
+//
+//	}
 	
 	@RequestMapping(value = "/admin/QnA/searchQnA.do", method = RequestMethod.GET)
 	public String searchQnA(@RequestParam(value= "keyword", required = false, defaultValue = "") String keyword, 

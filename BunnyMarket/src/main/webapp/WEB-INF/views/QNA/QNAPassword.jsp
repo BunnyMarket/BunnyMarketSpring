@@ -15,8 +15,8 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
-								class="fa fa-home"></i> Home</a></li>
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
+								class="fa fa-home"></i>Home</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 					</ol>
 				</nav>
@@ -46,7 +46,7 @@
                             <h2 class="respond-title"><b>비밀번호 입력</b></h2>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <label for="password">비밀번호 : <span class="required">*</span></label>
+                                        <label for="password">비밀번호 : </label>
                                         <input id="checkPwd" name="checkPwd" type="password" size="30" aria-required="true"/>
                                     </div>
                                    

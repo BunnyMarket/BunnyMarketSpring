@@ -154,7 +154,7 @@ public class ReportController {
 		System.out.println("report잘 가져오나 확인 : " + report);
 		System.out.println("pType 잘 가져와?" + pType);
 		
-		String rWriter = ((Member)session.getAttribute("member")).getUserId();
+		String rWriter = ((Member)session.getAttribute("member")).getNickName();
 		
 		report.setRWriter(rWriter);
 		
@@ -244,7 +244,7 @@ public class ReportController {
 		System.out.println(session.getAttribute("member"));
 		Member m = (Member)session.getAttribute("member");
 		
-		if(r.getRWriter().equals(m.getUserId())&& bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
+		if(r.getRWriter().equals(m.getNickName())&& bcryptPasswordEncoder.matches(checkPwd, m.getUserPwd())) {
 			System.out.println("비번 : " + m.getUserPwd());
 			
 			msg = "입력 성공!";

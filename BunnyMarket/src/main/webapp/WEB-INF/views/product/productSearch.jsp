@@ -31,7 +31,7 @@ th{
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }"><i class="fa fa-home"></i>홈화면</a></li>
+                            <li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i class="fa fa-home"></i>Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">검색</li>
                         </ol>
                     </nav>

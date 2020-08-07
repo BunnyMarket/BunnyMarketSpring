@@ -261,7 +261,7 @@ public class AuctionController {
 		Member m = (Member)session.getAttribute("member");
 		
 		Auction a = auctionService.selectOneAuction(pno);
-		Member bM = memberService.selectOne(m.getUserId());
+		Member bM = memberService.selectOne(m.getNickName());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("잘 들어오고 있나요?" + pno + bPrice);
