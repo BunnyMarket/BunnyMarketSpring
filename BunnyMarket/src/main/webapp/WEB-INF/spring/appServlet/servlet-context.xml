@@ -71,11 +71,14 @@
 			<!-- 특정 URL 경로를 로그인 여부로 차단하기 -->
 			<mapping path="/member/memberView.do" />
 			<mapping path="/member/memberUpdate.do" />
+			
+			<mapping path="/auction/*.do" />
 			<mapping path="/auction/insertBidder.do" />
 			<mapping path="/auction/auctionInsertForm.do" />
 			<mapping path="/auction/auctionInsertEnd.do" />
 			<mapping path="/auction/auctionDetail.do" />
 
+			<mapping path="/product/*.do" />
 			<mapping path="/product/productDetail.do" />
 			<mapping path="/product/productInsert.do" />
 			<mapping path="/product/productInsertEnd.do" />
@@ -86,9 +89,11 @@
 			<mapping path="/product/pcommentUpdate.do" />
 			<mapping path="/product/pcommentDelete.do" />
 			
+			<mapping path="/point/*.do" />
 			<mapping path="/point/pointChargeView.do" />
 			<mapping path="/point/pointCharge.do" />
 			
+			<mapping path="/report/*.do" />
 			<mapping path="/report/reportDirectInsertView.do" />
 			<mapping path="/report/reportInsertView.do" />
 			<mapping path="/report/reportInsert.do" />
@@ -99,6 +104,8 @@
 			<mapping path="/report/reportUpdate.do" />
 			<mapping path="/report/reportDelete.do" />
 			
+			
+			<mapping path="/deal/*.do" />
 			<!-- <mapping path="/QNA/**/*.do" /> -->
 			<!-- <exclude-mapping path="/QNA/QNAImgInsert.do" /> -->
 			
