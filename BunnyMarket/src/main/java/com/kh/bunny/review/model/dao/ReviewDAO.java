@@ -15,6 +15,8 @@ public interface ReviewDAO {
 	List<Map<String, String>> selectSellerReview(String userId);
 
 	int insertReview(Review review, String userId);
+
+	int selectOneReCount(int pno, String userId);
 	
 
 	

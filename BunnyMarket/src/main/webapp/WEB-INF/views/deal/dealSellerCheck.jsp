@@ -62,6 +62,7 @@
 			<div class="col-12">
 				<div class="checkout_details_area clearfix">
 					<h4>구매자 정보</h4>
+					<br />
 					<div class="row">
 						<div class="col-12 mb-4">
 							<label for="name">받는 이 성함 : </label>${ member.userName }
@@ -93,12 +94,16 @@
 			<br />
 				<div class="checkout_details_area clearfix">
 					<h4>판매자 정보</h4>
+					<br />
 					<div class="row">
 						<div class="col-12 mb-4">
 							<label for="name">보낸 이 성함 : </label>${ other.userName }
 						</div>
 						<div class="col-12 mb-4">
 							<label for="name">닉네임 : </label>${ other.nickName }
+						</div>
+						<div class="col-12 mb-4">
+							<label for="name">연락처 : </label>${ other.phone }
 						</div>
 						<div class="col-12 mb-4">
 							<label for="name">연락처 : </label>${ other.phone }

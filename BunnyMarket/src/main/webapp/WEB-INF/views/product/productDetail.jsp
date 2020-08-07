@@ -114,7 +114,11 @@
 								style="float: right">잠금</button>
 								<br/><br/><br/>
 						</c:if>
-								
+						<c:if test="${reCount == 0}">
+							<button type="button" onclick="goReview();" class="btn alazea-btn mt-15"
+								style="float: right">리뷰 작성하러 가기</button>
+								<br/><br/><br/>
+						</c:if>	
 						
 						
 						
@@ -224,14 +228,14 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${product.PWriter}</h4>
-										<c:if test="${seller.photo == null }">
+										<%-- <c:if test="${seller.photo == null }">
 											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg" />
-										</c:if>
-										<c:if test="${seller.photo != null }">
+										</c:if> --%>
+										<%-- <c:if test="${seller.photo != null }"> --%>
 											<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
-										</c:if> <br />
+										<%-- </c:if> --%> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button> <br/>
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>

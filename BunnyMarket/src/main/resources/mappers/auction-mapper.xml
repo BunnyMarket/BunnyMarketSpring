@@ -245,6 +245,7 @@
 						   OR D.DSSTATUS != 1
 		)
 		AND P.PTYPE = 2
+		AND P.PSTATUS = 2
    </select>
    
    <select id="selectTypeCount" resultType="_int">

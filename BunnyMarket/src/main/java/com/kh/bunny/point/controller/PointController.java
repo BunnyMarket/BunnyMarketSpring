@@ -91,6 +91,7 @@ public class PointController {
 			throw new PointException();
 		}
 		
+		System.out.println("전부 다 내놔봐 : 아이디, 포인트, 토탈 " + userId +", " + list + nowPoint);
 		String pageBar = Utils.getPageBar(totalContents, pPage, numPerPage, "point/myPointView.do");
 		
 		model.addAttribute("myPoint", list)

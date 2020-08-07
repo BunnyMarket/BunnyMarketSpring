@@ -231,7 +231,7 @@
 		SELECT D.PNO FROM DEAL D
 		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS != 1 AND P.PTYPE = 1
 		)
-      
+        AND P.PSTATUS = 2
    </select>
    
    <select id="selectTypeCount" resultType="_int">

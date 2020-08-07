@@ -23,5 +23,9 @@ public class ReviewServiceImpl implements ReviewService {
 
 		return reviewDAO.insertReview(review,userId);
 	}
+	@Override
+	public int selectOneReCount(int pno, String userId) {
+		return reviewDAO.selectOneReCount(pno, userId);
+	}
 
 }
