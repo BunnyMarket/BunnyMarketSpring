@@ -57,6 +57,7 @@
 				 NCONTENT LIKE #{myPattern} OR NTITLE LIKE #{myPattern} 
 			</if> 
 		</where>
+		ORDER BY NNO DESC
 	</select>
 	
 		<select id="selectSNoticeTotalContent" parameterType = "hashmap" resultType = "_int">
