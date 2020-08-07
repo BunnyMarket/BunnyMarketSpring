@@ -16,9 +16,9 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
 								class="fa fa-home"></i> Home</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
+						<li class="breadcrumb-item active" aria-current="page">공지사항</li>
 					</ol>
 				</nav>
 			</div>
@@ -67,17 +67,26 @@
 							href="${pageContext.request.contextPath}">메인으로 </a><br />
 						<br />
 					</div>
-					<!-- Pagination -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                        	<c:out value="${pageBar}"  escapeXml="false"/>
-                        </ul>
-                    </nav>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- ##### Shop Area Start ##### -->
+<section class="shop-page section-padding-0-100">
+    <div class="container">
+        <div class="row">
+            <!-- All Products Area -->
+            <div class="col-12 col-md-8 col-lg-9">
+                <div class="shop-products-area" style="margin-left: 250px;">
+                    <div>
+                     <c:out value="${pageBar}" escapeXml="false"/>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</section>
  <script>
   	 	$(function(){
   		$("#tableArea td").mouseenter(function(){

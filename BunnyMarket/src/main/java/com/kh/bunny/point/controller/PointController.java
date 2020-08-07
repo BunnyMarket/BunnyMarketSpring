@@ -124,7 +124,7 @@ public class PointController {
 		Member m = (Member)session.getAttribute("member");
 		Product p = pointService.selectOneProduct(pno);
 		
-		Member m2 = memberService.selectOne(m.getUserId());
+		Member m2 = memberService.selectOne(m.getNickName());
 		
 		int realPrice = p.getPPrice() - m2.getNowPoint();
 		

@@ -17,7 +17,7 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/index.jsp"><i class="fa fa-home"></i> 홈화면</a></li>
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i class="fa fa-home"></i>Home</a></li>
 						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/views/auction/auctionList.jsp">경매</a></li>
 						<li class="breadcrumb-item active" aria-current="page">경매 상품 등록</li>
 					</ol>

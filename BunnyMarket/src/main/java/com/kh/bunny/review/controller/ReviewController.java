@@ -38,13 +38,13 @@ public class ReviewController {
 		String nickName = userId;
 		 Member m = memberService.findSeller2(nickName);
 		 
-		 review.setSellerid(m.getUserId());
+		 review.setSellerid(m.getNickName());
 		 
 		 Member reviewM = (Member)session.getAttribute("member");
 		 review.setRewriter(reviewM.getNickName());
 		
 		 
-		 String loc = "/review/sellerReview.do?userId="+m.getUserId();
+		 String loc = "/review/sellerReview.do?userId="+m.getNickName();
 		 String msg = "";
 
 		try {
@@ -79,7 +79,7 @@ public class ReviewController {
 		Member m = memberService.findSeller2(nickName);
 		
 		
-		List<Map<String, String>> slist = reviewService.selectSellerReview(m.getUserId());
+		List<Map<String, String>> slist = reviewService.selectSellerReview(m.getNickName());
 		model.addAttribute("ReviewList", slist);
 		
 		

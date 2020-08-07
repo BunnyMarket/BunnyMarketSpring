@@ -15,7 +15,7 @@
 			<div class="col-12">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><i
+						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
 								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item active" aria-current="page">Q&A</li>
 					</ol>
@@ -47,7 +47,7 @@
 								<p>${qna.QContent}</p>
 								<br /> <br /> <br /><br /><br />
 								<br /><br /><br />
-								<c:if test="${qna.QWriter eq member.userId }">
+								<c:if test="${qna.QWriter eq member.nickName }">
 									<button type="button" class="btn alazea-btn mt-15"
 											onclick="location.href='${ pageContext.request.contextPath }/QNA/QNAUpdateView.do?qno=${qna.qno}'">수정하기</button>
 								</c:if>

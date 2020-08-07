@@ -58,12 +58,12 @@ public class DealController {
 		
 		String loc = "";
 		
-		if ((member.getUserId()).equals(deal.getDsId())) {
+		if ((member.getNickName()).equals(deal.getDsId())) {
 			// 로그인 한 회원이 seller(판매자). other가 구매자인 경우 
 			other = dealService.selectOtherMember(deal.getDbId());
 			
 			
-		} else if((member.getUserId()).equals(deal.getDbId())) {
+		} else if((member.getNickName()).equals(deal.getDbId())) {
 			// 로그인 한 회원이 buyer(구매자). other가 판매자인 경우 
 			other = dealService.selectOtherMember(deal.getDsId());
 			
@@ -84,12 +84,12 @@ public class DealController {
 			 .addAttribute("sellerPhoto", sellerPhoto);
 		
 		
-		if ((member.getUserId()).equals(deal.getDsId())) {
+		if ((member.getNickName()).equals(deal.getDsId())) {
 			// 로그인 한 회원의 아이디가 deal의 seller(판매자)와 같은 경우
 			System.out.println("내가 판매자다!!");
 			loc = "deal/dealSeller";
 			
-		} else if((member.getUserId()).equals(deal.getDbId())) {
+		} else if((member.getNickName()).equals(deal.getDbId())) {
 			// 로그인 한 회원의 아이디가 deal의 buyer(구매자)와 같은 경우 
 			System.out.println("내가 구매자다!!");
 			loc = "deal/dealBuyer";
@@ -141,12 +141,12 @@ public class DealController {
 		
 		Member other = new Member();
 		Member member = (Member)session.getAttribute("member");
-		if ((member.getUserId()).equals(deal.getDsId())) {
+		if ((member.getNickName()).equals(deal.getDsId())) {
 			// 로그인 한 회원이 seller(판매자). other가 구매자인 경우 
 			other = dealService.selectOtherMember(deal.getDbId());
 			
 			
-		} else if((member.getUserId()).equals(deal.getDbId())) {
+		} else if((member.getNickName()).equals(deal.getDbId())) {
 			// 로그인 한 회원이 buyer(구매자). other가 판매자인 경우 
 			other = dealService.selectOtherMember(deal.getDsId());
 			
@@ -192,12 +192,12 @@ public class DealController {
 		
 		Member other = new Member();
 		Member member = (Member)session.getAttribute("member");
-		if ((member.getUserId()).equals(deal.getDsId())) {
+		if ((member.getNickName()).equals(deal.getDsId())) {
 			// 로그인 한 회원이 seller(판매자). other가 구매자인 경우 
 			other = dealService.selectOtherMember(deal.getDbId());
 			
 			
-		} else if((member.getUserId()).equals(deal.getDbId())) {
+		} else if((member.getNickName()).equals(deal.getDbId())) {
 			// 로그인 한 회원이 buyer(구매자). other가 판매자인 경우 
 			other = dealService.selectOtherMember(deal.getDsId());
 			

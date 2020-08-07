@@ -51,8 +51,8 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a
-							href="${ pageContext.request.contextPath }"><i
-								class="fa fa-home"></i> 홈화면</a></li>
+							href="${ pageContext.request.contextPath }/"><i
+								class="fa fa-home"></i> Home</a></li>
 						<li class="breadcrumb-item"><a
 							href="${ pageContext.request.contextPath }/views/product/productList.jsp">상품</a></li>
 						<li class="breadcrumb-item active" aria-current="page">상품 지도로 보기</li>

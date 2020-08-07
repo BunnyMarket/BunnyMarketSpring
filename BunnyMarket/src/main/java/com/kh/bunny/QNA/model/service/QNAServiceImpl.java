@@ -27,9 +27,9 @@ public class QNAServiceImpl implements QNAService {
 	}
 
 	@Override
-	public int selectQNATotalContents() {
+	public int selectQNATotalContents(String userId) {
 		
-		return qnaDAO.selectQNATotalContents();
+		return qnaDAO.selectQNATotalContents(userId);
 	}
 
 	@Override

@@ -334,7 +334,7 @@ public class ProductController {
 	public String buyingProduct(@RequestParam int pno, HttpSession session, Model model) {
 		String msg = "";
 		String loc = "";
-		String userId = ((Member)session.getAttribute("member")).getUserId();
+		String userId = ((Member)session.getAttribute("member")).getNickName();
 		
 		Product p = productService.selectOneProduct(pno);
 		
@@ -741,7 +741,7 @@ public class ProductController {
 		Member m = (Member)session.getAttribute("member");
 		
 		Product p = productService.selectOneProduct(pno);
-		Member bM = memberService.selectOne(m.getUserId());
+		Member bM = memberService.selectOne(m.getNickName());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("잘 들어오고 있나요?" + pno);
@@ -764,7 +764,7 @@ public class ProductController {
 		
 		String msg = "";
 		String loc = "";
-		String userId = ((Member)session.getAttribute("member")).getUserId();
+		String userId = ((Member)session.getAttribute("member")).getNickName();
 		
 		Product p = productService.selectOneProduct(pno);
 		

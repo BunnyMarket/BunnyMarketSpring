@@ -16,6 +16,7 @@
 	<select id="selectQNATotalContent" resultType="_int">
 		SELECT COUNT(*)
 		FROM QNA
+		WHERE QWRITER = #{userId} 
 	</select>
 
    <insert id="insertQNA">
