@@ -81,70 +81,55 @@
 					<div class="single_product_desc">
 						<h4 class="title">${ product.PTitle }</h4>
 
+						<!-- 판매자 -->
 						<c:if test="${sessionScope.member.nickName eq product.PWriter}">
+							
 							<c:if test="${product.PStatus == 2 or product.PStatus == 3}">
-								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>
+								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>  <!-- pstatus 2 or 3-->
 								<br /><br /><br />
-								<c:if test="${product.PStatus == 2}">
-									<c:if test="${dno ne 0 }">
-										<button type = "button" class="btn alazea-btn mt-15" style="float: right"
-												onclick="goDealPlz();">거래페이지로 이동</button>
-												<br /><br /><br />
-									</c:if>
-										<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>구매 완료된 상품입니다.</button>
-										<br /><br /><br />
-									<c:if test="${product.PBuyer eq sessionScope.member.nickName and dno ne 0}">
-										<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
+								<%-- <c:if test="${product.PStatus == 2}"> --%>
+									<c:if test="${dno ne 0 }"> 
+										<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button> <!-- pstatus2 or 3-->
 										<br /><br /><br />
 									</c:if>
-								</c:if>
-								<c:if test="${product.PStatus == 3}">
-									<c:if test="${reCount == 0}">
-										<button type="button" onclick="goReview();" class="btn alazea-btn mt-15"
-											style="float: right">리뷰 작성하러 가기</button>
-											<br/><br/><br/>
-									</c:if>	
-								</c:if>
-								
+								<%-- </c:if> --%>
 							</c:if>
+							
 							<c:if test="${product.PStatus == 1}">
-								<button type="button" class="btn alazea-btn mt-15"
-									style="float: right"
-									onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
-								<br /><br /><br />
-								<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-											data-toggle="modal" onclick="goBuy();">
-										구매하기
-								</button>
-								<br /><br /><br />
-								<c:if test="${sessionScope.member.nickName ne product.PWriter}">
-		                        	<button type="button" class="btn alazea-btn mt-15"
-										style="float: right"
-										onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+								<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/product/productView.do?pno=${ product.pno }'">수정하기</button>
+							</c:if>
+						
+						</c:if>
+						
+						<!-- 구매자-->
+						<c:if test="${sessionScope.member.nickName ne product.PWriter}">
+							<c:if test = "${sessionScope.member.nickName eq product.PBuyer}">
+								<c:if test="${product.PStatus == 2}">
+									<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
+									<br /><br /><br />
+									
+									
+									<c:if test="${reCount == 0}">
+										<button type="button" onclick="goReview();" class="btn alazea-btn mt-15" style="float: right">리뷰 작성하러 가기</button>
+										<br/><br/><br/>
+									</c:if>	
+								
+								</c:if>
+							</c:if>
+							
+							<c:if test="${product.PStatus == 1}">
+								<c:if test="${dno ne 0 }">
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" data-toggle="modal" onclick="goBuy();"> 구매하기 </button>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">찜하기</button>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
 									<br /><br /><br />
 								</c:if>
 							</c:if>
+						
 						</c:if>
 						
 						<c:if test="${!empty admin}">
-							<button type="button" id="warn" class="btn alazea-btn mt-15"
-								style="float: right">잠금</button>
-								<br/><br/><br/>
-						</c:if>
-						
-						
-						
-						
-						<c:if test="${sessionScope.member.nickName ne product.PWriter}">
-							<c:if test="${product.PStatus != 2}">
-								<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">
-								찜하기
-								</button>
-								<br /><br /><br />
-							</c:if>
-							<c:if test="${product.PStatus == 2}">
-								
-							</c:if>
+							<button type="button" id="warn" class="btn alazea-btn mt-15" style="float: right">잠금</button>
 						</c:if>
 							
 						<input type="hidden" id="originPPrice" value="${product.PPrice}"/>

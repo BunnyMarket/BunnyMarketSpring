@@ -79,20 +79,66 @@
 				</div>
 				<div class="col-12 col-md-6">
 					<div class="single_product_desc">
-						<h3 class="title">${a.PTitle}</h3>
-						<c:if test="${sessionScope.member.nickName ne a.PWriter}">
-							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
-									data-toggle="modal" data-target="#myModal">
-								입찰하기
-							</button>
-						</c:if>
+					<h4 class="title">${a.PTitle}</h4>
+					<!-- 판매자 -->
 						<c:if test="${sessionScope.member.nickName eq a.PWriter}">
-							<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
-									data-toggle="modal" data-target="#myModal">
-								입찰자 명단 보기
-							</button>
+							
+							<c:if test="${a.PStatus == 2 or a.PStatus == 3}">
+								<button type = "button" class="btn alazea-btn mt-15" style="float: right" disabled>축하해요! 구매가 완료되었네요!</button>  <!-- pstatus 2 or 3-->
+								<br /><br /><br />
+								<%-- <c:if test="${product.PStatus == 2}"> --%>
+									<c:if test="${dno ne 0 }"> 
+										<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button> <!-- pstatus2 or 3-->
+										<br /><br /><br />
+									</c:if>
+								<%-- </c:if> --%>
+							</c:if>
+							<c:if test="${a.PStatus == 1 }">
+								<button type="button" class="btn alazea-btn mt-15" style="float: right" id="giveBidder" 
+										data-toggle="modal" data-target="#myModal">
+									입찰자 명단 보기
+								</button>
+							</c:if>
+							
 						</c:if>
+						
+						<!-- 구매자-->
+						<c:if test="${sessionScope.member.nickName ne a.PWriter}">
+							<c:if test = "${sessionScope.member.nickName eq a.PBuyer}">
+								<c:if test="${a.PStatus == 2}">
+									<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
+									<br /><br /><br />
+									
+									
+									<c:if test="${reCount == 0}">
+										<button type="button" onclick="goReview();" class="btn alazea-btn mt-15" style="float: right">리뷰 작성하러 가기</button>
+										<br/><br/><br/>
+									</c:if>	
+								
+								</c:if>
+							</c:if>
+							
+							<c:if test="${a.PStatus == 1}">
+								<c:if test="${dno ne 0 }">
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
+											data-toggle="modal" data-target="#myModal">
+										입찰하기
+									</button>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${a.pno}'">찜하기</button>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
+									<br /><br /><br />
+								</c:if>
+							</c:if>
+						
+						</c:if>
+						
 						<c:if test="${!empty sessionScope.admin.adminId}">
+							<button type="button" id="warn" class="btn alazea-btn mt-15" style="float: right">잠금</button>
+						</c:if>
+						
+						
+						
+						<%-- <c:if test="${!empty sessionScope.admin.adminId}">
 						<button type="button" id="blur" class="btn alazea-btn mt-15"
 							style="float: right">잠금</button>
 						</c:if>
@@ -108,7 +154,7 @@
 						</c:if>
 						<c:if test="${dno ne 0 and (sessionScope.member.nickName eq a.PBuyer or sessionScope.member.nickName eq a.PWriter)}">
 							<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
-						</c:if>
+						</c:if> --%>
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
                        	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>
@@ -1028,6 +1074,10 @@ $(function(){
 		
 	
 	});
+	
+	function goDealPlz(){
+		location.href="${ pageContext.request.contextPath }/deal/dealDetail.do?dno=${ dno }";
+	}
 </script>
 
 
