@@ -139,7 +139,7 @@ public class adminMemberController {
 		
 		adminMember.setAdminPw(encryptPassword);
 		
-		String loc = "/admin/adminMember/adminList.do";
+		String loc = "/admin/member/adminMemberId.do";
 		String msg = "";
 		
 		try {
