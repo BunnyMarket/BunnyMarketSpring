@@ -18,7 +18,7 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
-								class="fa fa-home"></i> 홈 화면</a></li>
+								class="fa fa-home"></i>Home</a></li>
 						<li class="breadcrumb-item active" aria-current="page">거래 페이지</li>
 					</ol>
 				</nav>

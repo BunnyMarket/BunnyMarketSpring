@@ -33,6 +33,7 @@ import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
 import com.kh.bunny.review.model.service.ReviewService;
 
 @Controller
@@ -247,7 +248,7 @@ public class AuctionController {
 		
 		String msg = "";
 		String loc = "/auction/auctionDetail.do?pno="+pno;
-		
+		System.out.println("pno  / bPrice : " + pno + ", " + bPrice);
 		try {
 			Bidder b = new Bidder(pno, userId, bPrice);
 			System.out.println("b가 뭐라구? : " + b);
@@ -258,6 +259,7 @@ public class AuctionController {
 			} else {
 				msg = "입찰 실패!";
 			}
+			
 		} catch (Exception e) {
 			throw new AuctionException();
 		}

@@ -167,7 +167,7 @@
 											success : function(fileUrl) {
 												check.summernote('insertImage',
 														fileUrl);
-												alert("이미지 등록 성공!" + fileUrl);
+												alert("이미지 등록 성공!");
 											},
 											error : function(request, status,
 													error) {
