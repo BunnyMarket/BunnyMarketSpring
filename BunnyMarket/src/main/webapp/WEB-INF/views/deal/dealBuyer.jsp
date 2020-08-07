@@ -18,7 +18,7 @@
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="${ pageContext.request.contextPath }/"><i
-								class="fa fa-home"></i> 홈 화면</a></li>
+								class="fa fa-home"></i>Home</a></li>
 						<li class="breadcrumb-item active" aria-current="page">거래 페이지</li>
 					</ol>
 				</nav>
@@ -78,22 +78,23 @@
 								<!-- <input type="radio" name="dMethod" value = "0" /> 거래중지 -->
 								<div class="search_by_terms">
 									<label for="phone_number">거래수단 *</label>
+									<input type="hidden"  name="dMethod" value="${product.DMethod }"/>
 									<c:if test="${product.DMethod eq 1}">
-										<select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%" disabled="disabled">
+										<select class="custom-select widget-title" id = "dMethod" style="width: 100%" disabled="disabled">
 		                                  <option value="3">미결정</option>
 		                                  <option value="2">택배</option>
 		                                  <option value="1" selected="selected">직거래</option>
 		                                </select>
 									</c:if>
 									<c:if test="${product.DMethod eq 2}">
-										<select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%" disabled="disabled">
+										<select class="custom-select widget-title" id = "dMethod" style="width: 100%" disabled="disabled">
 		                                  <option value="3">미결정</option>
 		                                  <option value="2" selected="selected">택배</option>
 		                                  <option value="1">직거래</option>
 		                                </select>
 									</c:if>
 									<c:if test="${product.DMethod eq 3}">
-		                                <select class="custom-select widget-title" name="dMethod" id = "dMethod" style="width: 100%">
+		                                <select class="custom-select widget-title" id = "dMethod" style="width: 100%">
 		                                  <option value="" hidden>거래 수단을 선택해주세요.</option>
 		                                  <option value="2">택배</option>
 		                                  <option value="1">직거래</option>

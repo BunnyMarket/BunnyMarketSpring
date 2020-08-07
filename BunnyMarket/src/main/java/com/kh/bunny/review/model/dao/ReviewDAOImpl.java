@@ -35,4 +35,16 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return sqlSession.insert("reviewMapper.insertReview", hmap);
 	}
 
+
+	@Override
+	public int selectOneReCount(int pno, String userId) {
+		
+		Map<String, Object> hmap = new HashMap<String, Object>();
+		
+		hmap.put("userId", userId);
+		hmap.put("pno", pno);
+		
+		return sqlSession.selectOne("reivewMapper.selectOneReCount", hmap);
+	}
+
 }

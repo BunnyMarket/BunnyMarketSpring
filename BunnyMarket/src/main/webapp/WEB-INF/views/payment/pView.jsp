@@ -165,6 +165,7 @@
 			$("#giveMeMoney").text((parseInt(origin) + parseInt(price)).toLocaleString());
 			$("#giveMeCarrot").text(((parseInt(origin) + parseInt(price))/100).toLocaleString());
 			$("#bPoint").val(parseInt(origin) + parseInt(price));
+			
 		}
 		
 		var IMP = window.IMP; // 생략가능
@@ -173,7 +174,7 @@
 		});
 		
 		function payByKakao(){
-			
+			var carrotPoint = parseInt($("#bPoint").val()/100);
 			if($("input:checkbox[id='termsCheck']").is(":checked")){
 				
 				IMP.request_pay({
@@ -197,12 +198,12 @@
 							type : 'POST',
 							dataType : 'json',
 							data : {
-								bPoint : $('#bPoint').val(),
+								bPoint : carrotPoint,
 								bpStatus : $("#bpstatus").val()
 							//기타 필요한 데이터가 있으면 추가 전달
 							}, success : function(data){
 								if(data.fineCharge == true){
-									var point = $('#bPoint').val();
+									var point = carrotPoint;
 									console.log("성공쓰~");
 									$("#chargeDiv").css("display", "none");
 									successCharge(data.nowPoint, point);
@@ -230,9 +231,9 @@
 		}
 		
 		function successCharge(nowPoint, bPoint){
-			var carrot = (bPoint/100).toLocaleString();
-			var comma = (bPoint/1).toLocaleString();
-			var memberCarrot = (nowPoint/100).toLocaleString();
+			var carrot = (bPoint/1).toLocaleString();
+			var comma = (bPoint*100).toLocaleString();
+			var memberCarrot = (nowPoint/1).toLocaleString();
 			var html = '<table class="table table-responsive">'
 					 + '	<thead>'
 					 + '		<tr>'
@@ -255,7 +256,7 @@
 	                 + '		</tr>'
 					 + '		<tr>'
 					 + '			<td>'
-					 + '				<h5 style="padding-top: 10px">원래 포인트</h5>'
+					 + '				<h5 style="padding-top: 10px">현재 포인트</h5>'
 					 + '			</td>'
 					 + '			<td>'
 					 + '				<div class="price" style="padding-top: 20px">'

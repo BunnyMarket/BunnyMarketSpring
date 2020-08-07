@@ -164,8 +164,8 @@ public class DealController {
 	// 판매자 거래 생성 
 	@RequestMapping("/deal/dealSellerChk.do")
 	public String dealSellerChk(@RequestParam int dno, 
-							    @RequestParam String delNum1,
-							    @RequestParam String delNum2,
+							    @RequestParam(value="delNum1", required = false, defaultValue = " ") String delNum1,
+							    @RequestParam(value="delNum2", required = false, defaultValue = " ") String delNum2,
 							    Model model, HttpSession session) {
 		System.out.println("dealSellerChk로 들어옴.");
 		System.out.println("dno : " + dno);

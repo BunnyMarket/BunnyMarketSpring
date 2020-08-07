@@ -11,10 +11,14 @@
 	</select>
 	
 	<insert id="insertReview" parameterType="Review">
-		INSERT INTO REVIEW VALUES(SEQ_RENO.NEXTVAL, 2, #{review.rewriter},#{review.recontent},#{userId},#{review.rating} )
+		INSERT INTO REVIEW VALUES(SEQ_RENO.NEXTVAL, 2, #{review.rewriter},#{review.recontent},#{userId},#{review.rating}, 1)
 	</insert>
 
-	
+	<select id="selectOneReCount" resultType="_int">
+		SELECT COUNT(RECOUNT)
+		  FROM REVIEW R
+		 WHERE R.DNO = (SELECT D.DNO FROM DEAL D WHERE PNO = #{pno} AND DBID = #{userId})
+	</select>
     
     
 	

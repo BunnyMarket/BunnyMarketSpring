@@ -35,6 +35,7 @@ import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.PComment;
 import com.kh.bunny.product.model.vo.Product;
+import com.kh.bunny.review.model.service.ReviewService;
 
 @Controller
 public class ProductController {
@@ -47,6 +48,9 @@ public class ProductController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ReviewService reviewService;
 	
 	@RequestMapping("/product/productList.do")
 	public String selectBoardList(
@@ -136,25 +140,35 @@ public class ProductController {
 		
 		adminMember am = (adminMember)session.getAttribute("admin");
 		Member m = (Member)session.getAttribute("member");
-		String sellerPhoto = (memberService.selectOne(p.getPWriter())).getPhoto();
+//		String sellerPhoto = (memberService.selectOne(p.getPWriter())).getPhoto();
 
 		System.out.println("productDetail Cont에서 product객체 확인 : " + p);
 		System.out.println("productDetail cont에서 PComment객체 확인 : " + PComments);
 		System.out.println("PComment객체 갯수 : " + PComments.size());
 		Member seller = memberService.findSeller2(p.getPWriter());
 		
+		
 		int dno = 0;
-		if(p.getPBuyer() != null) {
+		int reCount = 0;
+		if(p.getPBuyer() != null && p.getPType() == 1) {
 			dno = productService.giveMeDno(pno);
 			System.out.println("dno 있어요?" + dno);
+		} else if(p.getPBuyer() != null && p.getPType() == 2 && p.getPStatus() == 2) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+		} else if(p.getPStatus() == 3) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+			reCount = reviewService.selectOneReCount(pno, m.getUserId());
 		}
 		
 		model.addAttribute("product", p)
 			 .addAttribute("seller",seller)
 		     .addAttribute("pcomments", PComments)
 		     .addAttribute("pcommentSize", PComments.size()) // 댓글 갯수 출력
-		     .addAttribute("sellerPhoto", sellerPhoto)
-		     .addAttribute("dno", dno);
+//		     .addAttribute("sellerPhoto", sellerPhoto)
+		     .addAttribute("dno", dno)
+		     .addAttribute("reCount", reCount);
 		
 		
 		return "product/productDetail";
@@ -771,7 +785,6 @@ public class ProductController {
 		p.setPBuyer(userId);
 		
 		int result = productService.productPurchaseRequest(p);
-		
 		
 		if (result >0) {
 			msg = "구매 요청 완료!";

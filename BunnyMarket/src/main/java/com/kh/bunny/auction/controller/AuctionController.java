@@ -33,6 +33,8 @@ import com.kh.bunny.member.model.vo.Member;
 import com.kh.bunny.product.model.exception.ProductException;
 import com.kh.bunny.product.model.service.ProductService;
 import com.kh.bunny.product.model.vo.PComment;
+import com.kh.bunny.product.model.vo.Product;
+import com.kh.bunny.review.model.service.ReviewService;
 
 @Controller
 public class AuctionController {
@@ -45,6 +47,9 @@ public class AuctionController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ReviewService reviewService;
 	
 	@RequestMapping("/auction/auctionList.do")
 	public String selectAuctionList(
@@ -91,10 +96,11 @@ public class AuctionController {
 	}
 	
 	@RequestMapping("/auction/auctionDetail.do")
-	public String auctionDetail(@RequestParam int pno, Model model) {
+	public String auctionDetail(@RequestParam int pno, Model model, HttpSession session) {
+		
 		System.out.println("pno : "+pno);
 		Auction a = auctionService.selectOneAuction(pno);
-		
+		Member m = (Member)session.getAttribute("member");
 		int bidderCount = auctionService.selectOneBidderCount(pno);
 		
 		List<Object> PComments = productService.selectPCommentList(pno);
@@ -103,9 +109,17 @@ public class AuctionController {
 		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
 		
 		int dno = 0;
-		if(a.getPBuyer() != null) {
+		int reCount = 0;
+		if(a.getPBuyer() != null && a.getPType() == 1) {
 			dno = productService.giveMeDno(pno);
 			System.out.println("dno 있어요?" + dno);
+		} else if(a.getPBuyer() != null && a.getPType() == 2 && a.getPStatus() == 2) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+		} else if(a.getPStatus() == 3) {
+			dno = productService.giveMeDno(pno);
+			System.out.println("dno 있어요?" + dno);
+			reCount = reviewService.selectOneReCount(pno, m.getUserId());
 		}
 		
 		model.addAttribute("auction", a)
@@ -113,6 +127,7 @@ public class AuctionController {
 			 .addAttribute("bList" , bList)
 			 .addAttribute("pcomments", PComments)
 			 .addAttribute("dno", dno)
+			 .addAttribute("reCount", reCount)
 			 .addAttribute("pcommentSize", PComments.size()); // 댓글 갯수 출력 
 		
 		return "auction/auctionDetail";
@@ -233,7 +248,7 @@ public class AuctionController {
 		
 		String msg = "";
 		String loc = "/auction/auctionDetail.do?pno="+pno;
-		
+		System.out.println("pno  / bPrice : " + pno + ", " + bPrice);
 		try {
 			Bidder b = new Bidder(pno, userId, bPrice);
 			System.out.println("b가 뭐라구? : " + b);
@@ -244,6 +259,7 @@ public class AuctionController {
 			} else {
 				msg = "입찰 실패!";
 			}
+			
 		} catch (Exception e) {
 			throw new AuctionException();
 		}
@@ -273,7 +289,7 @@ public class AuctionController {
 			msg = 1; //"입찰 하려는 금액이 기존 금액보다 작습니다.";
 		} else if(bPrice % 10 != 0) {
 			msg = 2; //"입찰은 10당근 씩 해주시기 바랍니다.";
-		} else if(a.getPBuyer() != null && a.getPBuyer().equals(m.getNickName())) { 
+		} else if(a.getPBuyer() != null && a.getPBuyer().equals(bM.getNickName())) { 
 			msg = 3; //"최고가로 입찰중인 회원은 입찰할 수 없습니다.";
 		} else if((a.getBPrice() > a.getPPrice() && bM.getNowPoint() < a.getBPrice()) 
 					|| (a.getPPrice() > a.getBPrice() && bM.getNowPoint() < a.getPPrice())) {

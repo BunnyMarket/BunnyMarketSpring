@@ -82,11 +82,16 @@ public class AuctionServiceImpl implements AuctionService {
 		int result = 0;
 		
 		try {
-			
-			result = auctionDAO.insertBidder(b);
-			if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 문제 발생");
-			
-			if(b.getBPrice() > 0) {
+			int bCount = auctionDAO.selectOneBidderCount(b.getPno());
+			if(bCount == 0) {
+				result = auctionDAO.insertBidder(b);
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 문제 발생");
+				
+			} else {
+				
+				result = auctionDAO.insertBidder(b);
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 문제 발생");
+				
 				result = auctionDAO.updateBeforeBidderMember(b.getPno());
 				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 회원 포인트 차감 할 때 문제발생함");
 				
@@ -94,7 +99,8 @@ public class AuctionServiceImpl implements AuctionService {
 				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 입찰자에서 문제발생함");
 				
 				result = auctionDAO.updateBeforeUsedPoint(b.getPno());
-				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 사용포인트에서 문제발생함");				
+				if(result == AUCTION_SERVICE_ERROR) throw new AuctionException("입찰 중 사용포인트에서 문제발생함");
+				System.out.println("b 입찰 들어왔습니다. " + b);
 			}
 			
 		} catch (Exception e) {

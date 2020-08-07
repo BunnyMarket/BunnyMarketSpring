@@ -14,4 +14,6 @@ public interface ReviewService {
 
 	int insertReview(Review review, String userId);
 
+	int selectOneReCount(int pno, String userId);
+
 }
