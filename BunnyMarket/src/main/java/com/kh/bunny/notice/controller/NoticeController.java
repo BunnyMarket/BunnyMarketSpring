@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.bunny.common.util.SearchUtils;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.notice.model.service.NoticeService;
 import com.kh.bunny.notice.model.vo.Notice;
@@ -177,7 +177,7 @@ public class NoticeController {
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);

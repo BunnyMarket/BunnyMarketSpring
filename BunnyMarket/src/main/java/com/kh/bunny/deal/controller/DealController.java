@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.bunny.common.util.SearchUtils;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.deal.model.service.DealService;
 import com.kh.bunny.deal.model.vo.Deal;
@@ -269,7 +269,7 @@ public class DealController {
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/admin/deal/searchDeal.do?condition="+condition+"&keyword=" + keyword);

@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.bunny.auction.model.service.AuctionService;
-import com.kh.bunny.common.util.SearchUtils;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
 import com.kh.bunny.member.model.service.MemberService;
@@ -605,7 +605,7 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/member/searchMember.do?condition="+condition+"&keyword=" + keyword);

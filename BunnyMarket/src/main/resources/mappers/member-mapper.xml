@@ -122,7 +122,7 @@
 				 USERID LIKE #{myPattern} OR USERNAME LIKE #{myPattern}  OR NICKNAME LIKE #{myPattern} 
 			</if> 
 		</where>
-	    ORDER BY COUNT DESC
+		ORDER BY COUNT DESC
 	</select>
 	
 		<select id="selectSMemberTotalContent" parameterType = "hashmap" resultType = "_int">
