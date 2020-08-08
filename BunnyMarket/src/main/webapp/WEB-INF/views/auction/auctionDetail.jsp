@@ -108,12 +108,12 @@
 								<c:if test="${a.PStatus == 2}">
 									<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
 									<br /><br /><br />
-									
-									
 									<c:if test="${reCount == 0}">
-										<button type="button" onclick="goReview();" class="btn alazea-btn mt-15" style="float: right">리뷰 작성하러 가기</button>
-										<br/><br/><br/>
+										<button type="button" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'" class="btn alazea-btn mt-15" style="float: right">리뷰 작성하러 가기</button>
 									</c:if>	
+									
+									
+										<br/><br/><br/>
 								
 								</c:if>
 							</c:if>

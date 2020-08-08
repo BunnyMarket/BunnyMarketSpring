@@ -94,7 +94,7 @@
                                         </li>
                                     </ul>
                                 </div>
-
+								<c:if test="${reCount == 0}">
                                 <div class="submit_a_review_area mt-50">
                                     <h3>후기 작성하기</h3>
                                     <form action="${pageContext.request.contextPath}/review/reviewInsert.do?userId=${seller.userId}" method="post">
@@ -135,6 +135,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                </c:if>
                             </div>
 
                         </div>
