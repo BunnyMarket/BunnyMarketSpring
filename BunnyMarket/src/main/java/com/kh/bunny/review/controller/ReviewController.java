@@ -73,7 +73,7 @@ public class ReviewController {
 	 
 	
 	@RequestMapping("/review/sellerReview.do")
-	public String selectReviewList(@RequestParam String userId, Model model) {
+	public String selectReviewList(@RequestParam String userId, Model model, int reCount) {
 		String nickName = userId;
 		
 		Member m = memberService.findSeller2(nickName);
@@ -81,6 +81,9 @@ public class ReviewController {
 		
 		List<Map<String, String>> slist = reviewService.selectSellerReview(m.getNickName());
 		model.addAttribute("ReviewList", slist);
+		if(reCount == 0) {
+		model.addAttribute("reCount",reCount);
+		}
 		
 		
 		 
