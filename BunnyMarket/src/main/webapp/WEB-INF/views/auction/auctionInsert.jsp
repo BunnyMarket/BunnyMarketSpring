@@ -44,7 +44,7 @@
 								
 								<div id="pImgFileArea">
 									<input type="file" id="titleImgArea" name="pImage" 
-										onchange="loadImg(this, 1);" />
+										onchange="loadImg(this, 1);" required />
 								</div>
 							</div>
 						</div>

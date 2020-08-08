@@ -119,16 +119,11 @@
 	                            <div class="col-12 col-sm-6 col-lg-4">
 	                                <div class="single-product-area mb-50">
 	                                    <!-- Product Image -->
-	                                    <div class="product-img" style="height: 300px; width: 255px;" id="pImg-${st.index}">
+	                                    <div style="height: 300px; width: 255px;" id="pImg-${st.index}">
 	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
 	                                        	<img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/${p.PImg}" alt="">
 	                                        </a>
-	                                        <div class="product-meta d-flex">
-	                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-	                                            <a href="#" class="add-to-cart-btn">Add to cart</a>
-	                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
-	                                        </div>
 	                                    </div>
 	                                    <!-- Product Info -->
 	                                    <div class="product-info mt-15 text-center">
@@ -138,8 +133,8 @@
 	                                        <p id="bidderCount-${st.index}">경매 참가자 : ${p.BCount}명</p>
 	                                    	<input type="hidden" id="originPPrice-${st.index }" value="${p.PPrice}"/>
 	                                    	<input type="hidden" id="originBPrice-${st.index }" value="${p.BPrice}"/>
-											<h6><span id="pCarrot-${st.index }"></span>당근</h6> 
-                                            
+											<h6><span id="pCarrot-${st.index }"></span>당근</h6>
+											<p>조회수 : ${p.PTotal }</p>
 	                                    </div>
 	                                </div>
 	                            </div>

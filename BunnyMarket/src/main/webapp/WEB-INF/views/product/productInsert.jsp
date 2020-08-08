@@ -43,7 +43,7 @@
 								</div>
 								<div id="pImgFileArea">
 									<input type="file" id="titleImgArea" name = "pTitleImg"
-										onchange="loadImg(this, 1);" required="required"/>
+										onchange="loadImg(this, 1);" required />
 								</div>
 							</div>
 						</div>
