@@ -11,31 +11,6 @@
       <div class="single-hero-post bg-overlay">
          <!-- Post Image -->
          <div class="slide-img bg-img"
-            style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/1.jpg);"></div>
-         <div class="container h-100">
-            <div class="row h-100 align-items-center">
-               <div class="col-12">
-                  <!-- Post Content -->
-                  <div class="hero-slides-content text-center">
-                     <h2>Welcome. Bunny Market</h2>
-                     <p>
-                        <span><b>바</b></span>로, 당신의 <span><b>니</b></span>즈가 존재하는 마켓<br />
-                        좋은 제품 안전하게 구매하세요 
-                     </p>
-                     <div class="welcome-btn-group">
-                        <a href="${ pageContext.request.contextPath }/product/productList.do" class="btn alazea-btn mr-30">일반 상품 보러가기</a> <a
-                           href="${ pageContext.request.contextPath }/auction/auctionList.do" class="btn alazea-btn active">경매 상품 보러가기</a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
-      <!-- Single Hero Post -->
-      <div class="single-hero-post bg-overlay">
-         <!-- Post Image -->
-         <div class="slide-img bg-img"
             style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/2.jpg);"></div>
          <div class="container h-100">
             <div class="row h-100 align-items-center">
@@ -56,6 +31,81 @@
             </div>
          </div>
       </div>
+      
+      <!-- Single Hero Post -->
+      <div class="single-hero-post bg-overlay">
+         <!-- Post Image -->
+         <div class="slide-img bg-img"
+            style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test1.jpg);"></div>
+         <div class="container h-100">
+            <div class="row h-100 align-items-center">
+               <div class="col-12">
+                  <!-- Post Content -->
+                  <div class="hero-slides-content text-center">
+                     <h2>Welcome. Bunny Market</h2>
+                     <p>
+                        <span><b>바</b></span>로, 당신의 <span><b>니</b></span>즈가 존재하는 마켓<br />
+                        좋은 제품 안전하게 구매하세요 
+                     </p>
+                     <div class="welcome-btn-group">
+                        <a href="#" class="btn alazea-btn mr-30">GET STARTED</a> <a
+                           href="#" class="btn alazea-btn active">CONTACT US</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <!-- Single Hero Post -->
+      <div class="single-hero-post bg-overlay">
+         <!-- Post Image -->
+         <div class="slide-img bg-img"
+            style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test2.jpg);"></div>
+         <div class="container h-100">
+            <div class="row h-100 align-items-center">
+               <div class="col-12">
+                  <!-- Post Content -->
+                  <div class="hero-slides-content text-center">
+                     <h2>Welcome. Bunny Market</h2>
+                     <p>
+                        <span><b>바</b></span>로, 당신의 <span><b>니</b></span>즈가 존재하는 마켓<br />
+                        좋은 제품 안전하게 구매하세요 
+                     </p>
+                     <div class="welcome-btn-group">
+                        <a href="#" class="btn alazea-btn mr-30">GET STARTED</a> <a
+                           href="#" class="btn alazea-btn active">CONTACT US</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <div class="single-hero-post bg-overlay">
+         <div class="slide-img bg-img"
+            style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test3.jpg);"></div>
+         <div class="container h-100">
+            <div class="row h-100 align-items-center">
+               <div class="col-12">
+                  <div class="hero-slides-content text-center">
+                     <h2>Welcome. Bunny Market</h2>
+                     <p>
+                        <span><b>바</b></span>로, 당신의 <span><b>니</b></span>즈가 존재하는 마켓<br />
+                        좋은 제품 안전하게 구매하세요 
+                     </p>
+                     <div class="welcome-btn-group">
+                        <a href="#" class="btn alazea-btn mr-30">GET STARTED</a> <a
+                           href="#" class="btn alazea-btn active">CONTACT US</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      
+      
 
    </div>
 </section>
@@ -107,7 +157,7 @@
          <div class="col-12">
             <div class="testimonials-slides owl-carousel">
 
-               <!-- Single Testimonial Slide -->
+               <!-- 보스바니 적으세요 여기 -->
                <div class="single-testimonial-slide">
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
@@ -128,15 +178,15 @@
                               equally excellent we have a beautiful but also manageable
                               garden as a result. Thank you!”</p>
                            <div class="testimonial-author-info">
-                              <h6>Mr. Nick Jonas</h6>
-                              <p>CEO of NAVATECH</p>
+                              <h6>강민정</h6>
+                              <p>Boss Bunny</p>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
 
-               <!-- Single Testimonial Slide -->
+               <!-- 은젼니 여기 적으세요 -->
                <div class="single-testimonial-slide">
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
@@ -157,15 +207,15 @@
                               equally excellent we have a beautiful but also manageable
                               garden as a result. Thank you!”</p>
                            <div class="testimonial-author-info">
-                              <h6>Mr. Nazrul Islam</h6>
-                              <p>CEO of NAVATECH</p>
+                              <h6>권은지</h6>
+                              <p>Yes Bunny</p>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
 
-               <!-- Single Testimonial Slide -->
+               <!-- 아이언바니 -->
                <div class="single-testimonial-slide">
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
@@ -186,8 +236,66 @@
                               equally excellent we have a beautiful but also manageable
                               garden as a result. Thank you!”</p>
                            <div class="testimonial-author-info">
-                              <h6>Mr. Jonas Nick</h6>
-                              <p>CEO of NAVATECH</p>
+                              <h6>김소영</h6>
+                              <p>Iron Bunny</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- 봉바니 -->
+               <div class="single-testimonial-slide">
+                  <div class="row align-items-center">
+                     <div class="col-12 col-md-6">
+                        <div class="testimonial-thumb">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/15.jpg" alt="">
+                        </div>
+                     </div>
+                     <div class="col-12 col-md-6">
+                        <div class="testimonial-content">
+                           <!-- Section Heading -->
+                           <div class="section-heading">
+                              <h2>TESTIMONIAL</h2>
+                              <p>Some kind words from clients about Alazea</p>
+                           </div>
+                           <p>“Alazea is a pleasure to work with. Their ideas are
+                              creative, they came up with imaginative solutions to some
+                              tricky issues, their landscaping and planting contacts are
+                              equally excellent we have a beautiful but also manageable
+                              garden as a result. Thank you!”</p>
+                           <div class="testimonial-author-info">
+                              <h6>봉창희</h6>
+                              <p>Bong Bunny</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+               <!-- 영바니 -->
+               <div class="single-testimonial-slide">
+                  <div class="row align-items-center">
+                     <div class="col-12 col-md-6">
+                        <div class="testimonial-thumb">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/15.jpg" alt="">
+                        </div>
+                     </div>
+                     <div class="col-12 col-md-6">
+                        <div class="testimonial-content">
+                           <!-- Section Heading -->
+                           <div class="section-heading">
+                              <h2>TESTIMONIAL</h2>
+                              <p>Some kind words from clients about Alazea</p>
+                           </div>
+                           <p>“Alazea is a pleasure to work with. Their ideas are
+                              creative, they came up with imaginative solutions to some
+                              tricky issues, their landscaping and planting contacts are
+                              equally excellent we have a beautiful but also manageable
+                              garden as a result. Thank you!”</p>
+                           <div class="testimonial-author-info">
+                              <h6>이상아</h6>
+                              <p>Young Bunny</p>
                            </div>
                         </div>
                      </div>
