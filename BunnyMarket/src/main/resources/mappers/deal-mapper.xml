@@ -77,7 +77,7 @@
 	</update>
 	
 	<select id="searchDealList" parameterType = "hashmap" resultType = "Deal">
-		SELECT D.*, P.PTITLE FROM DEAL D, PRODUCT P
+		SELECT D.*, P.PTITLE, P.PPRICE FROM DEAL D, PRODUCT P
 		<bind name = "myPattern" value = "'%' + keyword + '%'"/>
 		<where>
 		D.PNO = P.PNO
