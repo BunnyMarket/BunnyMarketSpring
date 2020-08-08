@@ -38,7 +38,7 @@
 					<h3 class="title--">나의 당근</h3>
 					<div class="products" align="right">
 						<h4>현재 포인트</h4>
-						<h4 id="nowPoint" style="color: orange"></h4>
+						<h4 class="nowPoint" style="color: orange"></h4>
 					</div>
 					<div align="center">
 						<div class="checkout-btn mt-30" style="width: 45%; display: inline-block;">
@@ -46,7 +46,7 @@
 							   class="btn alazea-btn w-100">당근 충전하러 가기☆</a>
 						</div>
 						<div class="checkout-btn mt-30" style="width: 45%; display: inline-block; background-color: yellow;">
-							<a href="javascript:void(window.open('${ pageContext.request.contextPath }/point/pointChargeView.do', '_blank', 'width=600px, height=800px'))" 
+							<a href="#" onclick="goRefundModal();" 
 							   class="btn alazea-btn w-100">당근 환급하러 가기☆</a>
 						</div>
 					</div>
@@ -135,6 +135,38 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="myModalLabel">환급</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<form id="goRefunds" method="post">
+				<div class="modal-body row">
+					<div class="col-12">
+						<div class="form-group">
+						
+							<label for="price" style="font-size: 23px;">현재 당근</label>
+							<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:orange; font: bold;" class="nowPoint"></span>당근</h5>
+							<br />
+							
+							<label for="price" style="font-size: 23px;">환급 요청 금액</label> <br />
+							<input type="text" class="form-control" id="refundsPlz" name="nowPoint" />
+							<br />
+							
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn alazea-btn mt-15" onclick="goRefund();" style="float: right">요청하기</button>
+					<button type="button" class="btn alazea-btn mt-15" data-dismiss="modal">닫기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script>
 	
 	var size = ${myPoint.size()};
@@ -144,8 +176,28 @@
 	}
 	
 	var nowPoint = ${nowPoint};
-	$("#nowPoint").text(nowPoint.toLocaleString());
+	$(".nowPoint").text(nowPoint.toLocaleString());
 	
+	function goRefundModal(){
+		$("#refundModal").modal();
+	}
+	
+	function goRefund(){
+		
+		var refundPrice = $("#refundsPlz").val();
+		if(refundPrice > nowPoint) {
+			alert("가진 당근보다 많이 환급할 수 없습니다.");
+		} else if(refundPrice < 10) {
+			alert("10당근보다 적은 금액은 환급할 수 없습니다.")
+		} else {
+			if(confirm("당근을 환급하시겠습니까?")){
+				alert("관리자에게 당근 환급을 요청 하였습니다.");
+			} else {
+				alert("환급을 취소합니다.");
+				$('.modal').modal('hide');
+			}
+		}
+	}
 </script>
 
 

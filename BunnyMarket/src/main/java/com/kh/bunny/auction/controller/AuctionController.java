@@ -188,11 +188,11 @@ public class AuctionController {
 		String msg = "";
 		
 		if (result >0) {
-			msg = "Success Insert Auction";
+			msg = "경매 등록 성공";
 			loc = "/auction/auctionDetail.do?pno="+auction.getPno();
 			System.out.println("경매상품 등록 성공");
 		} else {
-			msg = "Fail Insert Auction";
+			msg = "경매 등록 실패";
 			System.out.println("경매상품 등록 실패");
 		}
 		

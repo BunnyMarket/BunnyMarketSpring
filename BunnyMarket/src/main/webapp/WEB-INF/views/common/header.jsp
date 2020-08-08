@@ -151,18 +151,9 @@
 							<!-- Navbar Start -->
 							<div class="classynav">
 								<ul>
-									<%-- <li><a href="#">관리자</a>
-										<ul class="dropdown">
+									<%-- 
 											<li><a href="${ pageContext.request.contextPath }/admin/adminLoginCheck.do">관리자-메세지</a></li>
-										</ul></li> --%>
-									<%-- <li><a href="javascript:void(window.open('${ pageContext.request.contextPath }/views/mail/mailList.jsp', '_blank', 'width=600px, height=800px'))">쪽지함</a></li> --%>
-									<%-- <li><a href="#">상품</a>
-										<ul class="dropdown">
-											<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 중고 상품</a></li>
-											<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
-											<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">상품 지도로 보기</a></li>
-										</ul>
-									</li> --%>
+										--%>
 									<li><a href="${ pageContext.request.contextPath }/product/productList.do">일반 상품</a></li>
 									<li><a href="${ pageContext.request.contextPath }/auction/auctionList.do">경매 상품</a></li>
 									<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">지도로 보기</a></li>

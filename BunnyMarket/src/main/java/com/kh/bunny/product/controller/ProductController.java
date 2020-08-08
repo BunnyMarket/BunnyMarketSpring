@@ -835,5 +835,11 @@ public class ProductController {
 		return result;
 	}
 	
+	@RequestMapping("/product/productCaution.do")
+	public String cautionCheck() {
+		
+		return "common/productTerm";
+	}
+	
 }
 

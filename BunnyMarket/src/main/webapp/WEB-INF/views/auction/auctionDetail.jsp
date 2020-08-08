@@ -119,13 +119,13 @@
 							</c:if>
 							
 							<c:if test="${a.PStatus == 1}">
-								<c:if test="${dno ne 0 }">
+								<c:if test="${dno eq 0 }">
 									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" 
 											data-toggle="modal" data-target="#myModal">
 										입찰하기
-									</button>
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${a.pno}'">찜하기</button>
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
+									</button><br /><br /><br />
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${a.pno}'">찜하기</button><br /><br /><br />
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button><br /><br /><br />
 									<br /><br /><br />
 								</c:if>
 							</c:if>
@@ -256,7 +256,7 @@
 											alt="userImg"/>
 										</c:if> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
-										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}'">판매자 리뷰</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}&reCount=${reCount }'">판매자 리뷰</button> <br/>
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->

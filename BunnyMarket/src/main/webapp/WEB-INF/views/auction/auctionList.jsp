@@ -122,7 +122,7 @@
 	                                    <div style="height: 300px; width: 255px;" id="pImg-${st.index}">
 	                                        <input type="hidden" name="pno-${st.index}" id="pno-${st.index}" value="${p.pno}">
 	                                        <a href="${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}">
-	                                        	<img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/${p.PImg}" alt="">
+	                                        	<img style="height: 300px; width: 255px;"  src="${ pageContext.request.contextPath }/resources/upload/product/${p.PImg}" id="imgimg">
 	                                        </a>
 	                                    </div>
 	                                    <!-- Product Info -->
@@ -140,25 +140,25 @@
 	                            </div>
 	                            <script>
 		                            $(function(){
-		                        		   	var pno = $("#pno-${st.index }").val();
-		                        			
-		                        			var originP = $("#originPPrice-${st.index }").val();
-		                        			var originB = $("#originBPrice-${st.index }").val();
-		                        			
-		                        			console.log("pno : " + pno + " / p.pPrice" + originP+ " / p.bPrice" +originB);
-		                        	   		
-		                        			if(originP > originB){
-		                        	    		$("#pCarrot-${st.index }").text(parseInt(originP).toLocaleString());
-		                        			} else {
-		                        				$("#pCarrot-${st.index }").text(parseInt(originB).toLocaleString());
-		                        			}
-		                        	   		
-		                        			var Pstatus = '${p.PStatus}';
-		 		                    		if(Pstatus == 2){
-		 		                    			$('<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료된 상품입니다.</h4>').appendTo('#pImg-${st.index}');
-		 		                    			$('#pImg-${st.index} img').css('opacity', '0.2');
-		 		                    		}
-		                        			
+	                        		   	var pno = $("#pno-${st.index }").val();
+	                        			
+	                        			var originP = $("#originPPrice-${st.index }").val();
+	                        			var originB = $("#originBPrice-${st.index }").val();
+	                        			
+	                        			console.log("pno : " + pno + " / p.pPrice" + originP+ " / p.bPrice" +originB);
+	                        	   		
+	                        			if(originP > originB){
+	                        	    		$("#pCarrot-${st.index }").text(parseInt(originP).toLocaleString());
+	                        			} else {
+	                        				$("#pCarrot-${st.index }").text(parseInt(originB).toLocaleString());
+	                        			}
+	                        	   		
+	                        			var Pstatus = '${p.PStatus}';
+	 		                    		if(Pstatus == 2){
+	 		                    			$('<h4 style="position: absolute;top: 43%; left: 30%;">판매 완료된 상품입니다.</h4>').appendTo('#pImg-${st.index}');
+	 		                    			$('#pImg-${st.index} img').css('opacity', '0.2');
+	 		                    		}
+	 		                    		
 		                           	});
 	                            
 		                           
