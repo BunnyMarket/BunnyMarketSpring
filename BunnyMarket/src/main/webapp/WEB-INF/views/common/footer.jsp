@@ -44,7 +44,13 @@
 									<li><a href="${ pageContext.request.contextPath }/product/productListMap.do">지도로 보기</a></li>
 									<li><a href="${ pageContext.request.contextPath }/QNA/QNAList.do">Q & A</a></li>
 									<li><a href="${ pageContext.request.contextPath }/report/reportList.do">신고하기</a></li>
-									<li><a href="${pageContext.request.contextPath}/login.do">로그인</a></li>
+									<c:if test="${empty member}">
+										<li><a href="${pageContext.request.contextPath}/login.do">로그인</a></li>
+									</c:if>
+									<c:if test="${!empty member}">
+										<li><a href="#" title="내정보보기" onclick="javascript:document.myForm.submit();">마이페이지</a></li>
+									</c:if>
+									
 								</ul>
 							</nav>
 						</div>
@@ -60,11 +66,11 @@
 							<!-- Single Best Seller Products -->
 							<div class="single-best-seller-product d-flex align-items-center">
 								<div class="product-thumbnail">
-									<a href="shop-details.html"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/4.jpg"
+									<a href="#"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/4.jpg"
 										alt=""></a>
 								</div>
 								<div class="product-info">
-									<a href="shop-details.html">Cactus Flower</a>
+									<a href="#">Cactus Flower</a>
 									<p>$10.99</p>
 								</div>
 							</div>
@@ -72,11 +78,11 @@
 							<!-- Single Best Seller Products -->
 							<div class="single-best-seller-product d-flex align-items-center">
 								<div class="product-thumbnail">
-									<a href="shop-details.html"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/5.jpg"
+									<a href="#"><img src="${ pageContext.request.contextPath }/resources/img/bg-img/5.jpg"
 										alt=""></a>
 								</div>
 								<div class="product-info">
-									<a href="shop-details.html">Tulip Flower</a>
+									<a href="#">Tulip Flower</a>
 									<p>$11.99</p>
 								</div>
 							</div>

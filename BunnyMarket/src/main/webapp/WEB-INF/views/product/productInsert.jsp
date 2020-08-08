@@ -53,18 +53,18 @@
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" required />
+							<input type = "text" name = "pTitle" class = "form-control" id = "pTitle" placeholder="게시글 제목을 입력" value="" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
 							<input type="hidden" name="pPrice" id="pPriceOrigin" value="0"/>
-							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 가격 설정" required />
+							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 가격 설정" value="" required />
 							<br />
 
 							<label for="pcno" style="float: none;">카테고리 설정 *</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="pcno" style="width: 100%" required="required">
-                                  <option value="" hidden>물품의 종류를 선택해주세요.</option>
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%" id="pcnoCheck" required="required">
+                                  <option value="0" hidden>물품의 종류를 선택해주세요.</option>
                                   <option value="1">전자기기</option>
                                   <option value="2">가구</option>
                                   <option value="3">악세서리</option>
@@ -78,8 +78,8 @@
 	                        
 	                        <label for="pcno" style="float: none;">거래방식 설정 *</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="gMethod" style="width: 100%" required="required">
-                                  <option value="" hidden>거래방식을 선택해주세요</option>
+                                <select class="custom-select widget-title" name="gMethod" style="width: 100%" required="required" id="dMethodCheck">
+                                  <option value="0" hidden>거래방식을 선택해주세요</option>
                                   <option value="3">미결정</option>
                                   <option value="2">택배</option>
                                   <option value="1">직거래</option>
@@ -116,23 +116,63 @@
 					<!-- 주의사항 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<label for="Precautions"><a href="#">주의 사항 *</a></label>
-						<label for="checkCaution">주의사항을 확인하였습니다. </label> <input type="checkbox" required="required">
+						<a href="javascript:void(window.open('${pageContext.request.contextPath }/product/productCaution.do', '_blank', 'width=1000px, height=800px'))">주의 사항 *
+						<label for="checkCaution">주의사항을 확인하였습니다. </label></a> <input type="checkbox" id="termCheck" value="0">
 					</div>
-					
+					<script>
+						var check = $("#termCheck").val();
+						if(check == 0){
+							$("#termCheck").on("click", function(){
+								window.open('${pageContext.request.contextPath }/product/productCaution.do', '_blank', 'width=1000px, height=800px');
+								$("#termCheck").val(1);
+							});
+						} else {
+							$("#termCheck").attr("readonly", "readonly");
+						}
+					</script>
 				</div>
 				<div align="center">
-					<button type="submit" class="btn alazea-btn mt-15">작성 완료</button>
+					<button type="button" id="submitBtn" class="btn alazea-btn mt-15">작성 완료</button>
 				</div>
 			</form>
 		</div>
 	</div>
-
+<!-- 990 * 800 -->
 	
 </section>
 <!-- ##### Single Product Details Area End ##### -->
 
 	<script>
+	
+	$(function(){
+		$("#submitBtn").on("click", function(){
+			if($("#titleImgArea").val() == 0){
+				alert("메인 이미지를 등록해주시기 바랍니다.");
+				$("#titleImgArea").focus();
+			} else if($("#pTitle").val() == ""){
+				alert("상품 제목을 등록해주시기 바랍니다.");
+				$("#pTitle").focus();
+			} else if($("#pPriceComma").val() ==  "") {
+				alert("상품 가격을 등록해주시기 바랍니다.");
+				$("#pPriceComma").focus();
+			} else if($("#pcnoCheck").val() == 0) {
+				alert("카테고리를 선택해주시기 바랍니다.");
+				$("#pcnoCheck").focus();
+			} else if($("#dMethodCheck").val()== 0){
+				alert("거래 방식을 선택해주시기 바랍니다.");
+				$("#dMethodCheck").focus();
+			} else if($("#showpAddress").val() == null){
+				alert("주소를 등록해주시기 바랍니다.");
+				$("#showpAddress").focus();
+			} else {
+				if(confirm("상품을 등록하시겠습니까?")){
+					$("#productInsert").submit();
+				} else {
+					alert("등록을 취소합니다.");
+				}
+			}
+		});
+	});
 	$("#pPriceComma").focusout(function(){
 		$("#pPriceOrigin").val($("#pPriceComma").val());
 		var origin = $("#pPriceOrigin").val();
@@ -147,6 +187,12 @@
 				$('#titleImgArea').click();
 			});
 			
+			$("#submitBtn").on("click", function(){
+				if($("#termCheck").val() == 1){
+					$("#productInsert").submit();	
+				}
+				
+			});
 		}); 
 	</script>
 	

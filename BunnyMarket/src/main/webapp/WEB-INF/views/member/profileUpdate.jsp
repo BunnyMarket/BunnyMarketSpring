@@ -75,7 +75,7 @@
 							<input type="password" id="userPwd2" name="userPwd2" class = "form-control" required  />
 							
 							<label for="nickName">닉네임</label>
-							<input type="text" id="nickName" value="${member.nickName}" class = "form-control" name="nickName" required>
+							<input type="text" id="nickName" value="${member.nickName}" class = "form-control" name="nickName" readonly>
 							
 							<label for="birth">생년월일</label>
 							<input type="text" name="birth" value="${member.birth}" class = "form-control" readonly>

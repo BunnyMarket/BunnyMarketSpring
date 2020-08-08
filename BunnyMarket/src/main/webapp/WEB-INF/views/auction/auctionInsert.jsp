@@ -43,7 +43,7 @@
 								</div>
 								
 								<div id="pImgFileArea">
-									<input type="file" id="titleImgArea" name="pImage" 
+									<input type="file" id="titleImgArea" name="pImage" value="0"
 										onchange="loadImg(this, 1);" required />
 								</div>
 							</div>
@@ -54,19 +54,20 @@
 						<div class="single_product_desc">
 							<!-- <h4 class="title">상품 제목</h4> -->
 							<label for="pTitle">상품 제목 *</label>
-							<input type="text" class="form-control" id="pTitle" name="pTitle" placeholder="게시글 제목을 입력" required />
+							<input type="text" class="form-control" id="pTitle" name="pTitle" placeholder="게시글 제목을 입력" value="" required />
 							<br />
 							
 							<label for="pPrice">가격 설정 *</label>
 							<input type="hidden" name="pPrice" id="pPriceOrigin" value="0"/>
-							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 하한가 설정" required />
+							<input type="text" class="form-control" id="pPriceComma" placeholder="상품 하한가 설정" value="" required />
 							<br />
 							
 							
-							<label for="aeDate">경매 기간 설정</label><label style="float: right;" id="pEndDate" for="pEndDate">경매 종료날짜 :</label>
+							<label for="aeDate">경매 기간 설정</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="aeTime">
-                                  <option value="6" selected>6시간</option>
+                                <select class="custom-select widget-title" name="aeTime" id="adDateCheck">
+                                  <option value="0" hidden>경매 기간을 설정해주세요</option>
+                                  <option value="6">6시간</option>
                                   <option value="12">12시간</option>
                                   <option value="24">24시간(1일)</option>
                                   <option value="48">48시간(2일)</option>
@@ -79,7 +80,8 @@
 							
 							<label for="pcno" style="float: none;">카테고리 설정</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="pcno" style="width: 100%">
+                                <select class="custom-select widget-title" name="pcno" style="width: 100%" id="pcnoCheck">
+                                  <option value="0" hidden>물품의 종류를 선택해주세요.</option>
                                   <option value="1">전자기기</option>
                                   <option value="2">가구</option>
                                   <option value="3">악세서리</option>
@@ -91,10 +93,10 @@
 	                        </div>
 							<br />
 							
-							<label for="pcno" style="float: none;">거래방식 설정(선택하지 않으면 미결정으로 등록됩니다.) *</label>
+							<label for="dMethod" style="float: none;">거래방식 설정 *</label>
 	                        <div class="search_by_terms">
-                                <select class="custom-select widget-title" name="gMethod" style="width: 100%" required="required">
-                                  <option value="" hidden>거래방식을 선택해주세요</option>
+                                <select class="custom-select widget-title" name="dMethod" style="width: 100%" id="dMethodCheck">
+                                  <option value="0" hidden>거래방식을 선택해주세요</option>
                                   <option value="3">미결정</option>
                                   <option value="2">택배</option>
                                   <option value="1">직거래</option>
@@ -103,7 +105,7 @@
 	                        
 	                        <br />
 							<label for="pAddress">주소 입력 </label>
-							<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required />
+							<input type = "text" id = "showpAddress" class = "form-control pAddress" placeholder = "원하는 거래 장소를 입력" onclick = "addrSearch();" required="required"/>
 							<input type = "hidden" id = "pAddress" class = "form-control pAddress" name = "pAddress" />
 							<input type="hidden" name="pWriter" value="TEST1">
 						</div>
@@ -124,16 +126,27 @@
 					<!-- 썸머노트 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<textarea name="pContent" class="summernote" placeholder = "내용 입력"></textarea>
+						<textarea name="pContent" class="summernote" placeholder = "내용 입력" required="required"></textarea>
 					</div>
 					
 					<!-- 주의사항 -->
 					<div class = "col-12 col-md-12">
 						<br />
-						<label for="Precautions"><a href="/auction/checkCautions.do">주의 사항 *</a></label>
-						<label for="checkCaution">주의사항을 확인하였습니다.</label> <input type="checkbox" required="required">
+						<a href="javascript:void(window.open('${pageContext.request.contextPath }/product/productCaution.do', '_blank', 'width=1000px, height=800px'))">주의 사항 *
+						<label for="checkCaution">주의사항을 확인하였습니다. </label></a> <input type="checkbox" id="termCheck" value="0">
 					</div>
 				</div>
+				<script>
+						var check = $("#termCheck").val();
+						if(check == 0){
+							$("#termCheck").on("click", function(){
+								window.open('${pageContext.request.contextPath }/product/productCaution.do', '_blank', 'width=1000px, height=800px');
+								$("#termCheck").val(1);
+							});
+						} else {
+							$("#termCheck").attr("readonly", "readonly");
+						}
+					</script>
 				<div align="center">
 					<button type="button" id="finalCheck" class="btn alazea-btn mt-15">등록완료</button>
 				</div>
@@ -148,10 +161,33 @@
 	
 	$(function(){
 		$("#finalCheck").on("click", function(){
-			if(confirm("경매상품은 수정하실 수 없습니다. \n상품을 등록하시겠습니까?")){
-				$("#auctionInsert").submit();
+			if($("#titleImgArea").val() == 0){
+				alert("메인 이미지를 등록해주시기 바랍니다.");
+				$("#titleImgArea").focus();
+			} else if($("#pTitle").val() == ""){
+				alert("상품 제목을 등록해주시기 바랍니다.");
+				$("#pTitle").focus();
+			} else if($("#pPriceComma").val() ==  "") {
+				alert("상품 가격을 등록해주시기 바랍니다.");
+				$("#pPriceComma").focus();
+			} else if($("#adDateCheck").val() == 0){
+				alert("입찰 기간을 등록해주시기 바랍니다.");
+				$("#adDateCheck").focus();
+			} else if($("#pcnoCheck").val() == 0) {
+				alert("카테고리를 선택해주시기 바랍니다.");
+				$("#pcnoCheck").focus();
+			} else if($("#dMethodCheck").val()== 0){
+				alert("거래 방식을 선택해주시기 바랍니다.");
+				$("#dMethodCheck").focus();
+			} else if($("#showpAddress").val() == null){
+				alert("주소를 등록해주시기 바랍니다.");
+				$("#showpAddress").focus();
 			} else {
-				alert("등록을 취소합니다.");
+				if(confirm("경매상품은 수정하실 수 없습니다. \n상품을 등록하시겠습니까?")){
+					$("#auctionInsert").submit();
+				} else {
+					alert("등록을 취소합니다.");
+				}
 			}
 		});
 	});
@@ -195,7 +231,7 @@
 	        height : 600 // 에디터 높이
 	      , minHeight : null // 최소 높이
 	      , maxHeight : null // 최대 높이
-	      , focus : true  // 에디터 로딩후 포커스를 맞출지 여부
+	      , focus : false  // 에디터 로딩후 포커스를 맞출지 여부
 	      , lang : "ko-KR" // 한글 설정
 	      , placeholder : '최대 2048자까지 쓸 수 있습니다' //placeholder 설정
 	      , toolbar: [

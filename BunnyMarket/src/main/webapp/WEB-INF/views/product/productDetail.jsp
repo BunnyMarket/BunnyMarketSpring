@@ -119,10 +119,10 @@
 							</c:if>
 							
 							<c:if test="${product.PStatus == 1}">
-								<c:if test="${dno ne 0 }">
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" data-toggle="modal" onclick="goBuy();"> 구매하기 </button>
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">찜하기</button>
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+								<c:if test="${dno eq 0 }">
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" data-toggle="modal" onclick="goBuy();"> 구매하기 </button><br /><br /><br />
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">찜하기</button><br /><br /><br />
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button><br /><br /><br />
 									<br /><br /><br />
 								</c:if>
 							</c:if>
@@ -215,16 +215,16 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${product.PWriter}</h4>
-										<%-- <c:if test="${seller.photo == null }">
+										<c:if test="${sellerPhoto == null }">
 											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg" />
-										</c:if> --%>
-										<%-- <c:if test="${seller.photo != null }"> --%>
+										</c:if>
+										<c:if test="${sellerPhoto != null }">
 											<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
-										<%-- </c:if> --%> <br />
+										</c:if> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
-										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}'">판매자 리뷰</button> <br/>
+										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}&reCount=${reCount }'">판매자 리뷰</button> <br/>
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->

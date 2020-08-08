@@ -165,7 +165,12 @@
 			$("#giveMeMoney").text((parseInt(origin) + parseInt(price)).toLocaleString());
 			$("#giveMeCarrot").text(((parseInt(origin) + parseInt(price))/100).toLocaleString());
 			$("#bPoint").val(parseInt(origin) + parseInt(price));
-			
+			if($("#bPoint").val() > 1000000) {
+				alert("백만원을 초과하는 금액은 결제할 수 없습니다. \n다시 입력해주시기 바랍니다.");
+				$("#giveMeMoney").text(0);
+				$("#giveMeCarrot").text(0);
+				$("#bPoint").val(0);
+			}
 		}
 		
 		var IMP = window.IMP; // 생략가능
@@ -204,13 +209,12 @@
 							}, success : function(data){
 								if(data.fineCharge == true){
 									var point = carrotPoint;
-									console.log("성공쓰~");
 									$("#chargeDiv").css("display", "none");
 									successCharge(data.nowPoint, point);
 								}
 							}
 						});
-						alert("잘 들어왔습지요");
+						alert("결제가 완료되었습니다.");
 						console.log(parseInt($('#bPoint').val()));
 						console.log( $("#bpstatus").val());
 						var msg = '결제가 완료되었습니다.';
