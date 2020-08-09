@@ -78,20 +78,16 @@ public class ReviewController {
 		
 		Member m = memberService.findSeller2(nickName);
 		
-		
-		List<Map<String, String>> slist = reviewService.selectSellerReview(m.getNickName());
+		List<Map<String, String>> slist 
+			= reviewService.selectSellerReview(m.getNickName());
 		model.addAttribute("ReviewList", slist);
+		
 		if(reCount == 0) {
-		model.addAttribute("reCount",reCount);
+			model.addAttribute("reCount",reCount);
 		}
 		
-		
-		 
-		
-		
 		model.addAttribute("sellerList", slist)
-		 .addAttribute("seller", m) ;
-		
+		 	 .addAttribute("seller", m) ;
 
 		return "member/sellerPage";
 		

@@ -170,13 +170,10 @@
                            <!-- Section Heading -->
                            <div class="section-heading">
                               <h2>Captain Bunny</h2>
-                              <p>Some kind words from clients about Alazea</p>
+                              <p>Auction and Point Charge</p>
                            </div>
-                           <p>“Alazea is a pleasure to work with. Their ideas are
-                              creative, they came up with imaginative solutions to some
-                              tricky issues, their landscaping and planting contacts are
-                              equally excellent we have a beautiful but also manageable
-                              garden as a result. Thank you!”</p>
+                           <p>“많이 배우고 많은 것을 얻게 된 프로젝트 였고, 조원들이 모두 열심히 해 준 덕분에 잘 마무리 된 것 같아 기쁩니다.  
+                           		누구나 알아주는 플랫폼을 만들 수 있을 때 까지 계속해서 업그레이드 되는 개발자가 되겠습니다.”</p>
                            <div class="testimonial-author-info">
                               <h6>강민정</h6>
                               <p>Captain Bunny</p>
@@ -191,7 +188,7 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/14.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/kej.jpg" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">
@@ -199,7 +196,7 @@
                            <!-- Section Heading -->
                            <div class="section-heading">
                               <h2>Yes Bunny</h2>
-                              <p>Admin </p>
+                              <p>Admin Management And Chart</p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are
                               creative, they came up with imaginative solutions to some
@@ -228,13 +225,9 @@
                            <!-- Section Heading -->
                            <div class="section-heading">
                               <h2>Iron Bunny</h2>
-                              <p>Some kind words from clients about Alazea</p>
+                              <p>Product, Map And Deal</p>
                            </div>
-                           <p>“Alazea is a pleasure to work with. Their ideas are
-                              creative, they came up with imaginative solutions to some
-                              tricky issues, their landscaping and planting contacts are
-                              equally excellent we have a beautiful but also manageable
-                              garden as a result. Thank you!”</p>
+                           <p>“언젠가 사람들에게 자주 사용될 플랫폼 가운데 하나로 자리잡길 바라는 마음으로 프로젝트에 임하였습니다. 이 플랫폼이 언젠가 당신의 화면 가운데에서 빛나는 그 순간까지 열심히 개발하겠습니다.”</p>
                            <div class="testimonial-author-info">
                               <h6>김소영</h6>
                               <p>Iron Bunny</p>
@@ -274,7 +267,7 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/15.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/lsa.png" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">
@@ -282,7 +275,7 @@
                            <!-- Section Heading -->
                            <div class="section-heading">
                               <h2>Young Bunny</h2>
-                              <p>Some kind words from clients about Alazea</p>
+                              <p>Consumer Satisfaction</p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are
                               creative, they came up with imaginative solutions to some

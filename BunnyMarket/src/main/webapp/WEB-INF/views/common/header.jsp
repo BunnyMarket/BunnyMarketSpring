@@ -79,7 +79,7 @@
 									<c:when test="${!empty admin}">
 										<!-- Login -->
 										<div class="login">
-											<a href="#"><i class="fa fa-user" aria-hidden="true"></i>
+											<a href="${ pageContext.request.contextPath }/admin/adminLoginCheck.do"><i class="fa fa-user" aria-hidden="true"></i>
 												<span>관리자님이 접속하셨습니다.(${admin.adminId})</span>
 											</a>
 		
