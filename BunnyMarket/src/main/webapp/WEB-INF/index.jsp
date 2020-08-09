@@ -220,7 +220,7 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/ksy4.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/ksy.jpg" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">
@@ -249,21 +249,17 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/15.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/bch.jpg" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">
                         <div class="testimonial-content">
                            <!-- Section Heading -->
                            <div class="section-heading">
-                              <h2>TESTIMONIAL</h2>
-                              <p>Some kind words from clients about Alazea</p>
+                              <h2>Bong Bunny</h2>
+                              <p>Member Management</p>
                            </div>
-                           <p>“Alazea is a pleasure to work with. Their ideas are
-                              creative, they came up with imaginative solutions to some
-                              tricky issues, their landscaping and planting contacts are
-                              equally excellent we have a beautiful but also manageable
-                              garden as a result. Thank you!”</p>
+                           <p>“많은 것을 배워갑니다.”</p>
                            <div class="testimonial-author-info">
                               <h6>봉창희</h6>
                               <p>Bong Bunny</p>
@@ -285,7 +281,7 @@
                         <div class="testimonial-content">
                            <!-- Section Heading -->
                            <div class="section-heading">
-                              <h2>TESTIMONIAL</h2>
+                              <h2>Young Bunny</h2>
                               <p>Some kind words from clients about Alazea</p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are

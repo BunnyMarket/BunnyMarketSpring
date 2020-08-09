@@ -180,7 +180,7 @@ public class NoticeController {
 		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
-												"/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);
+												"admin/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);
 		
 		
 		model.addAttribute("keyword", keyword)
