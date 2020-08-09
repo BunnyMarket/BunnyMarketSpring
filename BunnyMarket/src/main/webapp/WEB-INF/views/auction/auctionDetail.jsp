@@ -686,8 +686,8 @@
 
 					</div>
 					<div line-height="1.5em">
-						<span>판매중인 상품 : </span>&nbsp;<span><a href="${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}&reCount=2">목록보기</a></span> <br />
-						<span>최근 리뷰 :</span>&nbsp;&nbsp;<span><a href="${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}">목록보기</a></span>
+						<span>판매중인 상품 : </span>&nbsp;<span><a href="${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${a.PWriter}">목록보기</a></span> <br />
+						<span>최근 리뷰 :</span>&nbsp;&nbsp;<span><a href="${pageContext.request.contextPath }/review/sellerReview.do?userId=${a.PWriter}&reCount=2">목록보기</a></span>
 					</div>
 
 

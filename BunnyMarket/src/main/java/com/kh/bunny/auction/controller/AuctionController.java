@@ -107,6 +107,7 @@ public class AuctionController {
 		System.out.println("pcomments : " + PComments);
 		System.out.println("pcomments : " + PComments.size());
 		ArrayList<Bidder> bList = auctionService.selectAllBidder(pno);
+		Member seller = memberService.findSeller2(a.getPWriter());
 		
 		int dno = 0;
 		int reCount = 0;
@@ -125,6 +126,7 @@ public class AuctionController {
 		model.addAttribute("auction", a)
 			 .addAttribute("bCount", bidderCount)
 			 .addAttribute("bList" , bList)
+			 .addAttribute("seller",seller)
 			 .addAttribute("pcomments", PComments)
 			 .addAttribute("dno", dno)
 			 .addAttribute("reCount", reCount)

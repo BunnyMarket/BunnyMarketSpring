@@ -221,11 +221,11 @@
 										<br /> <br />
 										<h4>판매자 정보</h4>
 										<h4>${product.PWriter}</h4>
-										<c:if test="${sellerPhoto == null }">
+										<c:if test="${seller.photo == null }">
 											<img src="/bunny/resources/img/usericon.png" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg" />
 										</c:if>
-										<c:if test="${sellerPhoto != null }">
+										<c:if test="${seller.photo != null }">
 											<img src="/bunny/resources/member/profile/${seller.photo}" id="userImg" class="circleImg" width="150px" height="150px"
 											alt="userImg"/>
 										</c:if> <br />
@@ -564,8 +564,8 @@
 
 					</div>
 					<div line-height="1.5em">
-						<span>판매중인 상품 : </span>&nbsp;<span><a href="${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}&reCount=2">목록보기</a></span> <br />
-						<span>최근 리뷰 :</span>&nbsp;&nbsp;<span><a href="${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}">목록보기</a></span>
+						<span>판매중인 상품 : </span>&nbsp;<span><a href="${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}">목록보기</a></span> <br />
+						<span>최근 리뷰 :</span>&nbsp;&nbsp;<span><a href="${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}&reCount=2">목록보기</a></span>
 					</div>
 
 

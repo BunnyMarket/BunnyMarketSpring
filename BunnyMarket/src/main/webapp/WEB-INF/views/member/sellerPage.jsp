@@ -43,7 +43,7 @@
                   <h3>${seller.nickName}님의 상점</h3>
                </div>
                <div>
-                  <p><a href="${pageContext.request.contextPath }/member/tradeView.do?userId=${seller.nickName}">판매중인 상품 보기</a> </p>
+                  <p><a href="${pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${seller.nickName}">판매중인 상품 보기</a> </p>
                   <br /><br />
                </div>
             </div>
