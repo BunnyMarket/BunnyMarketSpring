@@ -8,7 +8,7 @@
 <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
-        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(img/bg-img/24.jpg);">
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test3.jpg);">
             <h2>Cart</h2>
         </div>
 
@@ -76,7 +76,7 @@
                         <!-- Tabs -->
                         <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
                             <li class="nav-item">
-                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${member.userId}님의 Reviews <span class="text-muted"></span></a>
+                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${member.nickName}님의 Reviews <span class="text-muted"></span></a>
                             </li>
                         </ul>
                         <!-- Tab Content -->

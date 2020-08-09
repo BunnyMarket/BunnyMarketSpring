@@ -22,7 +22,7 @@ th{
 <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
-        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(img/bg-img/24.jpg);">
+        <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test3.jpg);">
             <h2>'${keyword}'의 검색 결과</h2>
         </div>
 
@@ -61,9 +61,18 @@ th{
 		        <div class="container">
 		        
 		        	<c:forEach items="${list}" var="p">
-			            <div class="row align-items-center justify-content-between" 
-			                 style = "padding-bottom : 30px; padding-top : 30px; border-bottom:0.5px solid #dde3ed;"
-			                 onclick = "window.open('${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}')">
+		        		<c:if test = "${p.PType == 1}">
+				            <div class="row align-items-center justify-content-between" 
+				                 style = "padding-bottom : 30px; padding-top : 30px; border-bottom:0.5px solid #dde3ed;"
+				                 onclick = "window.open('${ pageContext.request.contextPath }/product/productDetail.do?pno=${p.pno}')">
+		        		
+		        		</c:if>
+		        		<c:if test = "${p.PType == 2}">
+		        			<div class="row align-items-center justify-content-between" 
+				                 style = "padding-bottom : 30px; padding-top : 30px; border-bottom:0.5px solid #dde3ed;"
+				                 onclick = "window.open('${ pageContext.request.contextPath }/auction/auctionDetail.do?pno=${p.pno}')">
+		        		
+		        		</c:if>
 			                <!-- Contact Thumbnail -->
 			                <div class="col-12 col-md-2">
 			                        <img src="${ pageContext.request.contextPath }/resources/upload/product/${ p.PImg }" class="d-block w-100" alt="" width="200px" height="200px">
@@ -126,7 +135,7 @@ th{
 
 
 </section>
-    <!-- ##### Shop Area End ##### -->
+    <!— ##### Shop Area End ##### —>
 
 <script>
 	function search(){

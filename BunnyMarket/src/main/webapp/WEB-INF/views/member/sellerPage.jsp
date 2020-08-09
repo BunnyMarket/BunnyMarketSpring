@@ -62,7 +62,7 @@
                         <!-- Tabs -->
                         <ul class="nav nav-tabs" role="tablist" id="product-details-tab">
                             <li class="nav-item">
-                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${seller.userId}님의 Reviews 
+                                <a href="#reviews" class="nav-link active" data-toggle="tab" role="tab" style="font-size: 24px;">${seller.nickName}님의 Reviews 
                                 <span class="text-muted"></span></a>
                             </li>
                         </ul>

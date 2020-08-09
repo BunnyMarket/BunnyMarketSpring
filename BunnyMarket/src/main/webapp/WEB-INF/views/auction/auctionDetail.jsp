@@ -34,7 +34,7 @@
 	<!-- Top Breadcrumb Area -->
 	<div
 		class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-		style="background-image: url(img/bg-img/test3.jpg);">
+		style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test3.jpg);">
 		<h2>상품 상세보기</h2>
 	</div>
 
@@ -124,7 +124,6 @@
 											data-toggle="modal" data-target="#myModal">
 										입찰하기
 									</button><br /><br /><br />
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${a.pno}'">찜하기</button><br /><br /><br />
 									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button><br /><br /><br />
 									<br /><br /><br />
 								</c:if>
@@ -136,25 +135,6 @@
 							<button type="button" id="warn" class="btn alazea-btn mt-15" style="float: right">잠금</button>
 						</c:if>
 						
-						
-						
-						<%-- <c:if test="${!empty sessionScope.admin.adminId}">
-						<button type="button" id="blur" class="btn alazea-btn mt-15"
-							style="float: right">잠금</button>
-						</c:if>
-						<div class="modal-layout"></div>
-						<br />
-						<c:if test="${a.PStatus eq 1 }">
-							<c:if test="${sessionScope.member.nickName ne a.PWriter}">
-							<br /><br />
-	                        <button type="button" class="btn alazea-btn mt-15" style="float: right"
-									onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ a.pno }&pTitle=${ a.PTitle }'">신고하기</button>
-							<br />
-							</c:if>
-						</c:if>
-						<c:if test="${dno ne 0 and (sessionScope.member.nickName eq a.PBuyer or sessionScope.member.nickName eq a.PWriter)}">
-							<button type = "button" class="btn alazea-btn mt-15" style="float: right" onclick="goDealPlz();">거래페이지로 이동</button>
-						</c:if> --%>
 						
 						<input type="hidden" id="originPPrice" value="${a.PPrice}"/>
                        	<input type="hidden" id="originBPrice" value="${a.BPrice}"/>

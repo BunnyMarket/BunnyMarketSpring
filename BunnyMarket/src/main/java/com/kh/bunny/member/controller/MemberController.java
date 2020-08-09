@@ -73,9 +73,6 @@ public class MemberController {
 		
 		List<Map<String, String>> tlist = auctionService.selectTradeList(aPage, numPerPage,nickName);
 		
-		System.out.println("무엇이 들어있느냐? : " + tlist);
-		System.out.println("무엇이 들어있느냐? : " + tlist.size());
-		
 		int totalContents = auctionService.selectTradeTotalContents(nickName);
 		
 		String pageBar = Utils.getPageBar(totalContents, aPage, numPerPage, "/auction/auctionTradeList.do?PWRITER="+nickName);
@@ -95,7 +92,6 @@ public class MemberController {
 		ArrayList<Member> seList = memberService.findSeller(nickName);
 		
 		Member m = memberService.findSeller2(nickName);
-		System.out.println("멤버는 나오니? + " + m);
 		
 		System.out.println("seList : "+seList);
 		// 신고횟수 자기소개, 닉네임, 이미지, 판매중인 상품 개수
@@ -115,7 +111,6 @@ public class MemberController {
 	// 회원 가입 기능 실행하기
 	@RequestMapping("memberEnrollEnd.do")
 	public String memberEnrollEnd(Member member, Model model) {
-System.out.println("member 되라 좋은말로할때: "+member);
 		logger.debug("회원 가입 처리 메소드");
 		
 		String plainPassword = member.getUserPwd();
@@ -257,7 +252,6 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		logger.debug("회원 정보 수정 발생!");
 
 		String plainPassword = member.getUserPwd();
-		System.out.println("비밀번호 암호화 전 : " + plainPassword);
 
 		/************* 암호화 Start ! ***************/
 
@@ -269,12 +263,8 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		// 6S/RUoGEWhtu8ryznONhwCheROJkSm. : 실제 암호화된 결과 (31글자)
 
 		/*************** 암호화 End ! ***************/
-		System.out.println("비밀번호 암호화 후 : " + encryptPassword);
 
 		member.setUserPwd(encryptPassword);
-
-		System.out.println("나옵니까 이미지11? :" + userPhoto);
-		System.out.println("전부 다 뽑아주세요 : " + member);
 
 		String saveDir = session.getServletContext().getRealPath("resources/member/profile");
 
@@ -432,7 +422,6 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		String msg = "";
 
 		String plainPassword = m.getUserPwd();
-		System.out.println("비밀번호 암호화 전 : " + plainPassword);
 
 		/************* 암호화 Start ! ***************/
 
@@ -445,7 +434,6 @@ System.out.println("member 되라 좋은말로할때: "+member);
 
 		/*************** 암호화 End ! ***************/
 
-		System.out.println("비밀번호 암호화 후 : " + encryptPassword);
 
 		m.setUserPwd(encryptPassword);
 
@@ -523,7 +511,6 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		ArrayList<Member> seList = memberService.findSeller(nickName);
 		
 		Member m = memberService.findSeller2(nickName);
-		System.out.println("멤버는 나오니? + " + m);
 		
 		System.out.println("seList : "+seList);
 		// 신고횟수 자기소개, 닉네임, 이미지, 판매중인 상품 개수

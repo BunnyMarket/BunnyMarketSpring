@@ -229,7 +229,7 @@
       	SELECT * FROM PRODUCT P
 		WHERE P.PNO IN (
 		SELECT D.PNO FROM DEAL D
-		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 AND D.DSSTATUS != 1 AND P.PTYPE = 1
+		WHERE D.DSID = #{nickName} OR D.DBID = #{nickName} AND D.DBSTATUS != 1 OR D.DSSTATUS != 1 AND P.PTYPE = 1
 		)
         AND P.PSTATUS = 2
    </select>

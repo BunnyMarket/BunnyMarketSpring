@@ -169,7 +169,7 @@
                         <div class="testimonial-content">
                            <!-- Section Heading -->
                            <div class="section-heading">
-                              <h2>TESTIMONIAL</h2>
+                              <h2>Captain Bunny</h2>
                               <p>Some kind words from clients about Alazea</p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are
@@ -198,8 +198,8 @@
                         <div class="testimonial-content">
                            <!-- Section Heading -->
                            <div class="section-heading">
-                              <h2>TESTIMONIAL</h2>
-                              <p>Some kind words from clients about Alazea</p>
+                              <h2>Yes Bunny</h2>
+                              <p>Admin </p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are
                               creative, they came up with imaginative solutions to some
@@ -227,7 +227,7 @@
                         <div class="testimonial-content">
                            <!-- Section Heading -->
                            <div class="section-heading">
-                              <h2>TESTIMONIAL</h2>
+                              <h2>Iron Bunny</h2>
                               <p>Some kind words from clients about Alazea</p>
                            </div>
                            <p>“Alazea is a pleasure to work with. Their ideas are

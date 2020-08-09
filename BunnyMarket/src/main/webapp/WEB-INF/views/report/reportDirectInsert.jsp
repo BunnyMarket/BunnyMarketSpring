@@ -6,7 +6,7 @@
 	<!-- Top Breadcrumb Area -->
 	<div
 		class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-		style="background-image: url(img/bg-img/24.jpg);">
+		style="background-image: url(${ pageContext.request.contextPath }/resources/img/bg-img/test3.jpg);">
 		<h2>신고글 등록</h2>
 	</div>
 
@@ -147,7 +147,7 @@
 											success : function(fileUrl) {
 												check.summernote('insertImage',
 														fileUrl);
-												alert("이미지 등록 성공!" + fileUrl);
+												alert("이미지 등록 성공!");
 											},
 											error : function(request, status,
 													error) {
