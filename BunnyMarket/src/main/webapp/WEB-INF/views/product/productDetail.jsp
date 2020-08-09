@@ -120,9 +120,15 @@
 							
 							<c:if test="${product.PStatus == 1}">
 								<c:if test="${dno eq 0 }">
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" data-toggle="modal" onclick="goBuy();"> 구매하기 </button><br /><br /><br />
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">찜하기</button><br /><br /><br />
-									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button><br /><br /><br />
+
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" id="bidding" data-toggle="modal" onclick="goBuy();"> 구매하기 </button>
+									<br/><br/><br/>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/love/loveInsert.do?pno=${product.pno}'">찜하기</button>
+									<br/><br/><br/>
+									<button type="button" class="btn alazea-btn mt-15" style="float: right" onclick="location.href='${ pageContext.request.contextPath }/report/reportInsertView.do?pno=${ product.pno }&pTitle=${ product.PTitle }'">신고하기</button>
+
+									
+
 									<br /><br /><br />
 								</c:if>
 							</c:if>
@@ -224,8 +230,6 @@
 											alt="userImg"/>
 										</c:if> <br />
 										<button type="button" class="btn alazea-btn mt-15"  id="sellerInfo" data-toggle="modal" data-target="#handleModal">프로필 보기</button> <br/>
-										<button type="button" class="btn alazea-btn mt-15"  id="sellerReview" onclick="location.href='${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}&reCount=${reCount }'">판매자 리뷰</button> <br/>
-										<button type="button" class="btn alazea-btn mt-15"  id="sellerProductList" onclick="location.href='${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}'" class="btn btn-success">판매중인 상품 보기</button>
 										<br />
 										<!-- 여기다가 판매자 정보 적어주기 -->
 									</div>
@@ -530,6 +534,58 @@
 		</div>
 	</div>
 </div>
+	<!-- the modal -->
+	<div style="text-align: center;" class="modal fade" id="handleModal"
+		tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header ">
+					<h4 class="col-12 modal-title text-center" id="exampleModalLabel">Profile</h4>
+				</div>
+				<div class="modal-body">
+
+					<div style="width: 500px; height: 150px; word-break: break-all;">
+						<img
+							src="${ pageContext.request.contextPath }/resources/img/usericon.png"
+							class="circleImg" id="sellerPhoto" style="width: 25%;"
+							class="userimg" alt="userimg" /> <br />
+						<h6 style="font-weight: bold;" id="sellerName"></h6>
+						<br/>
+						<br/><br/>
+						<p style="color: #a3a3a3; word-break: break-all; font-size: 15px"
+						
+							id="sellerIntroduce"></p>
+
+					</div>
+					<div>
+						<span id="sellCount"></span>&nbsp;&nbsp;&nbsp; <span
+							style="color: red;" id="sellerReport"></span>
+
+					</div>
+					<div line-height="1.5em">
+						<span>판매중인 상품 : </span>&nbsp;<span><a href="${pageContext.request.contextPath }/review/sellerReview.do?userId=${product.PWriter}&reCount=2">목록보기</a></span> <br />
+						<span>최근 리뷰 :</span>&nbsp;&nbsp;<span><a href="${ pageContext.request.contextPath }/member/sellerTradeView.do?nickName=${product.PWriter}">목록보기</a></span>
+					</div>
+
+
+				</div>
+				<br />
+
+				<div class="modal-footer" style="align: center;">
+
+					<button type="button" class="btn btn-secondary"
+						style="background: red;" onclick="reportMember();">신고하기</button>
+					<button type="button" class="btn btn-success">쪽지</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
 
 <script>
 //관리자 admin
@@ -899,9 +955,26 @@ function goBuyer(){
 				/* $.each(result , function(idx, val) {
 					console.log(idx + " " + val.introduce);
 				}); */
-				var photo = data.seller.photo;
+				var introduce = "";
+				var photo =  "";
+				if(data.seller.photo == null){
+					photo = "usericon.png";
+				}else{
+					photo = data.seller.photo;
+				}
+				
+				
+				
+				if(data.seller.introduce == null){
+					introduce = "자기소개가 없습니다.";
+					}else{
+						introduce = data.seller.introduce;
+					}
+				
+				
+				
 				$('#sellerName').text("아이디 : " + data.seller.nickName);
-				$('#sellerIntroduce').text("자기소개 : " + data.seller.introduce);
+				$('#sellerIntroduce').text("자기소개 : " + introduce);
 				$('#sellerPhoto').attr('src','/bunny/resources/member/profile/'+photo);
 				$('#sellerReport').text("신고 당한 횟수 : " + data.seller.count + "회");
 				$('#sellCount').text("총거래 : " + sellCount + "회");
