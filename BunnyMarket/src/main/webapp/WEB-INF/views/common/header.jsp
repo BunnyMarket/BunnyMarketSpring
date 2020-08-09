@@ -57,11 +57,11 @@
 							<!-- Top Header Content -->
 							<div class="top-header-meta">
 								<a href="#" data-toggle="tooltip" data-placement="bottom"
-									title="infodeercreative@gmail.com"> <i
+									title="bunnyYaho@naver.com"> <i
 									class="fa fa-envelope-o" aria-hidden="true"></i> 
 									<span style="font-weight: bold;">Email : bunnyYaho@naver.com</span>
 								</a> <a href="#" data-toggle="tooltip" data-placement="bottom"
-									title="+1 234 122 122"> <i class="fa fa-phone"
+									title="+82 010 8282 8282"> <i class="fa fa-phone"
 									aria-hidden="true"></i> <span>Call +82 010 8282 8282</span></a>
 							</div>
 

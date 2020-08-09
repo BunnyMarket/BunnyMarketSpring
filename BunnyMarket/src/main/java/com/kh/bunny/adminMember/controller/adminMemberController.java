@@ -235,7 +235,7 @@ public class adminMemberController {
 								Model model,
 								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
 		
-		int numPerPage = 15; // 10개씩 나오도록 
+		int numPerPage = 10; // 10개씩 나오도록 
 		List<Object> list = adminService.searchAdminMemberList(keyword, condition, pPage, numPerPage);
 
 		

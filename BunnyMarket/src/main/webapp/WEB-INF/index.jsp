@@ -162,7 +162,7 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/13.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/kmj.jpg" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">
@@ -179,7 +179,7 @@
                               garden as a result. Thank you!”</p>
                            <div class="testimonial-author-info">
                               <h6>강민정</h6>
-                              <p>Boss Bunny</p>
+                              <p>Captain Bunny</p>
                            </div>
                         </div>
                      </div>
@@ -220,7 +220,7 @@
                   <div class="row align-items-center">
                      <div class="col-12 col-md-6">
                         <div class="testimonial-thumb">
-                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/15.jpg" alt="">
+                           <img src="${ pageContext.request.contextPath }/resources/img/bg-img/ksy4.jpg" alt="">
                         </div>
                      </div>
                      <div class="col-12 col-md-6">

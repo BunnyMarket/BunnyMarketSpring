@@ -105,7 +105,7 @@
        
   
 	
-	 <button class="btn paging" style="float: left;"  onclick="location.href='${pageContext.request.contextPath}/admin/notice/noticeList.do'">리스트로</button>
+	 <button class="btn paging" style="float: left;"  onclick="location.href='${pageContext.request.contextPath}/admin/report/searchReport.do'">리스트로</button>
 		    &nbsp; &nbsp; &nbsp;
 
 

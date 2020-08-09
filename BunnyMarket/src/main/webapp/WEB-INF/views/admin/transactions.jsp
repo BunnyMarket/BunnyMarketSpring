@@ -125,6 +125,7 @@
 					    		var dt = $('#dt-${st.index}').val();
 					    		var par = $('#par-${st.index}').val();
 					    		var nd = $('#nd-${st.index}').val();
+					    		console.log('${st.index} , ' + stop + ", " + dt + ", " + par + ", " + nd);
 					    		if(stop == 0){
 					    			$('#stop-${st.index}').attr('checked', 'checked');
 					    		}
@@ -138,7 +139,6 @@
 					    			$('#nd-${st.index}').attr('checked', 'checked');
 					    		}
 					    	});
-					    	refund
 					    	  $(function(){
 			                   		$('#btn-${st.index}').on('click',function(){
 			                   				$.ajax({
@@ -149,7 +149,7 @@
 			                 					success: function(data){
 			                 						if(data.refund == true){
 			                 							alert("포인트 돌려주기 성공");
-			                 						
+			                 							$('#btn-${st.index}').attr("disabled", "disabled");
 			                 						} else {
 			                 							console.log(data);
 			                 						}

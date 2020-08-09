@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.bunny.auction.model.service.AuctionService;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.exception.MemberException;
@@ -596,7 +597,7 @@ System.out.println("member 되라 좋은말로할때: "+member);
 								Model model,
 								@RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
 		
-		int numPerPage = 15; // 10개씩 나오도록 
+		int numPerPage = 10; // 10개씩 나오도록 
 		List<Object> list = memberService.searchMemberList(keyword, condition, pPage, numPerPage);
 
 		
@@ -605,10 +606,10 @@ System.out.println("member 되라 좋은말로할때: "+member);
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
-												"/member/searchMember.do?condition="+condition+"&keyword=" + keyword);
+												"admin/member/searchMember.do?condition="+condition+"&keyword=" + keyword);
 		
 		
 		model.addAttribute("keyword", keyword)

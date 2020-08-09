@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.deal.model.service.DealService;
@@ -262,17 +263,17 @@ public class DealController {
 									 Model model,
 									 @RequestParam(value = "pPage", required = false, defaultValue = "1") int pPage) {
 
-		int numPerPage = 15; 
+		int numPerPage = 10; 
 		List<Object> list = dealService.searchDealList(keyword, condition, pPage, numPerPage);
 		
 		int totalContents =  dealService.selectSDealTotalContents(keyword, condition);
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
-												"/admin/deal/searchDeal.do?condition="+condition+"&keyword=" + keyword);
+												"admin/deal/searchDeal.do?condition="+condition+"&keyword=" + keyword);
 
 		
 		model.addAttribute("keyword", keyword)

@@ -34,7 +34,7 @@
 	<!-- Top Breadcrumb Area -->
 	<div
 		class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
-		style="background-image: url(img/bg-img/24.jpg);">
+		style="background-image: url(img/bg-img/test3.jpg);">
 		<h2>상품 상세보기</h2>
 	</div>
 

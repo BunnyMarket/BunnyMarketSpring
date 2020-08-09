@@ -81,7 +81,7 @@
 							<label for="pcno" style="float: none;">카테고리 설정</label>
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="pcno" style="width: 100%" id="pcnoCheck">
-                                  <option value="0" hidden>물품의 종류를 선택해주세요.</option>
+                                  <option value="9" hidden>물품의 종류를 선택해주세요.</option>
                                   <option value="1">전자기기</option>
                                   <option value="2">가구</option>
                                   <option value="3">악세서리</option>
@@ -96,7 +96,7 @@
 							<label for="dMethod" style="float: none;">거래방식 설정 *</label>
 	                        <div class="search_by_terms">
                                 <select class="custom-select widget-title" name="dMethod" style="width: 100%" id="dMethodCheck">
-                                  <option value="0" hidden>거래방식을 선택해주세요</option>
+                                  <option value="9" hidden>거래방식을 선택해주세요</option>
                                   <option value="3">미결정</option>
                                   <option value="2">택배</option>
                                   <option value="1">직거래</option>
@@ -173,10 +173,10 @@
 			} else if($("#adDateCheck").val() == 0){
 				alert("입찰 기간을 등록해주시기 바랍니다.");
 				$("#adDateCheck").focus();
-			} else if($("#pcnoCheck").val() == 0) {
+			} else if($("#pcnoCheck").val() == 9) {
 				alert("카테고리를 선택해주시기 바랍니다.");
 				$("#pcnoCheck").focus();
-			} else if($("#dMethodCheck").val()== 0){
+			} else if($("#dMethodCheck").val()== 9){
 				alert("거래 방식을 선택해주시기 바랍니다.");
 				$("#dMethodCheck").focus();
 			} else if($("#showpAddress").val() == null){

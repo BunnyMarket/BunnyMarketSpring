@@ -283,7 +283,12 @@ input:checked + .slider:before {
 </div>
 <br>
 <br>
-
+<script>
+   function search(){
+        location.href="${ pageContext.request.contextPath}/admin/member/searchMember.do?condition="+$('#searchCondition').val()+"&keyword="+$('#keyword').val();
+     }
+     
+</script>
     <%@ include file="common/footer.jsp" %>
 
 
