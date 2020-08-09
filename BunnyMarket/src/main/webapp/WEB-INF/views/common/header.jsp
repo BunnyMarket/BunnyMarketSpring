@@ -72,7 +72,7 @@
 										<!-- Login -->
 										<div class="login">
 											<a href="${pageContext.request.contextPath}/login.do"><i class="fa fa-user" aria-hidden="true"></i>
-												<span>Login</span>
+												<span>Login/Register</span>
 											</a>
 										</div>
 									</c:when>
