@@ -8,10 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+package com.kh.bunny.QNA.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +36,7 @@ import com.kh.bunny.QNA.model.service.QNAService;
 import com.kh.bunny.QNA.model.vo.QComment;
 import com.kh.bunny.QNA.model.vo.QNA;
 import com.kh.bunny.adminMember.model.vo.adminMember;
-import com.kh.bunny.common.util.SearchUtils;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -412,7 +421,7 @@ public class QNAController {
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/admin/QnA/searchQnA.do?condition="+condition+"&keyword=" + keyword);
