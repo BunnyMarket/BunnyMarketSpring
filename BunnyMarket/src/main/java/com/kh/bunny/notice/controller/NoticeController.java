@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.bunny.common.util.AdminUtils;
-import com.kh.bunny.common.util.SearchUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.notice.model.service.NoticeService;
 import com.kh.bunny.notice.model.vo.Notice;
@@ -95,11 +94,11 @@ public class NoticeController {
 		if(result > 0 ) {
 			loc ="/admin/notice/noticeDetail.do?no="+notice.getNno();
 		} else {
-			loc ="/admin/notice/noticeList.do";
+			loc ="/admin/notice/searchNotice.do";
 		}
 		
 		
-		return "redirect:/admin/notice/noticeList.do";
+		return "redirect:/admin/notice/searchNotice.do";
 	}
 	
 	// detail
@@ -139,7 +138,7 @@ public class NoticeController {
 		if(result > 0 ) {
 			loc ="/admin/notice/noticeDetail.do?no="+notice.getNno();
 		} else {
-			loc ="/admin/notice/noticeList.do";
+			loc ="/admin/notice/searchNotice.do";
 		}
 		
 		
@@ -155,7 +154,7 @@ public class NoticeController {
 		String loc ="";
 		
 		if(result > 0 ) {
-			loc ="redirect:/admin/notice/noticeList.do";
+			loc ="redirect:/admin/notice/searchNotice.do";
 		} else {
 			
 		}
@@ -181,7 +180,7 @@ public class NoticeController {
 		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
-												"admin/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);
+												"/notice/searchNotice.do?condition="+condition+"&keyword=" + keyword);
 		
 		
 		model.addAttribute("keyword", keyword)
