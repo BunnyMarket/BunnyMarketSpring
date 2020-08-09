@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.bunny.auction.model.service.AuctionService;
 import com.kh.bunny.auction.model.vo.Auction;
-import com.kh.bunny.common.util.SearchUtils;
+import com.kh.bunny.common.util.AdminUtils;
 import com.kh.bunny.common.util.Utils;
 import com.kh.bunny.member.model.service.MemberService;
 import com.kh.bunny.member.model.vo.Member;
@@ -371,7 +371,7 @@ public class ReportController {
 		
 		System.out.println("totalContents : " + totalContents);
 		
-		String pageBar = SearchUtils.getPageBar(totalContents, 
+		String pageBar = AdminUtils.getPageBar(totalContents, 
 												pPage, 
 												numPerPage, 
 												"/report/searchReport.do?condition="+condition+"&keyword=" + keyword);
